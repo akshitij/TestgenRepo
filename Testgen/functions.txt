@@ -1,0 +1,4 @@
+swap
+partition
+quickSort
+printArr
