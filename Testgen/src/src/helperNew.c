@@ -4,7 +4,7 @@
 #include "uthash.h"
 
 extern int programFlag = 0;
-/*
+
 typedef struct functionArgument{
      char funcName[100];
      int type;// 1 for int ; 2 for real
@@ -264,10 +264,10 @@ void funcExit(char* funcName){
     //free(fv);
     printf("Stack depth %d\n", stackSize(symStack));
     
-}*/
+}
 
 void testgen_exit(){
-    //programFlag = 1;
+    programFlag = 1;
     return;
 }
 

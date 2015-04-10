@@ -19,9 +19,11 @@ int dec(int x){
 int add(int a,int b){
 	int c = a+b;
 	printf("what");
-	while(a>0){
-	exit(0);
-		a = dec(a);
+	while(a<0){
+	if(b<0){
+		exit(0);
+	}
+	a = dec(a);
 	}
 	return c;
 }

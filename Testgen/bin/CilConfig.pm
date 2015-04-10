@@ -1,6 +1,6 @@
 
 $::archos    = "x86_LINUX";
 $::cc        = "gcc";
-$::cilhome   = "/home/raj/Desktop/RAJ/Testgen";
+$::cilhome   = "/home/akshitij/Desktop/thesis/Testgen";
 $::default_mode = "GNUCC";
 

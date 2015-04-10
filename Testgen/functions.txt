@@ -1,4 +1,2 @@
-swap
-partition
-quickSort
-printArr
+foo
+main

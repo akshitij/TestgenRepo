@@ -60,6 +60,7 @@ let get_func () =
       let n = read_int() in
       func := (List.nth !func_list n);
       if !func = "main" then
+        func_list := !func_list @ ["main1"];
         func := "main1";
     end
 
