@@ -151,8 +151,8 @@ class extractStructVisitorClass (fdec : fundec) = object (self)
                      
 end   
                                                     
-let extractStruct (f: file) : unit =
-  let funName = !Param.func in
+let extractStruct (f: file) (funName: string) : unit =
+  (*let funName = !Param.func in*)
   let doGlobal = function
     | GVarDecl (v, _) when v.vname = !printFunctionName -> 
        if !printf = None then
@@ -172,13 +172,27 @@ let extractStruct (f: file) : unit =
       in 
       f.globals <- GVarDecl (p, locUnknown) :: f.globals
     end  
+    
+let resetGlobalValues () : unit =
+  stmtlist := [];
+  stmtlist := [];
+  aindex := 0
+      
+let iterExtractStruct (f: file) : unit =
+  List.iter (
+           fun funcName ->
+           if funcName <> "main" then begin
+             extractStruct f funcName;
+             resetGlobalValues ();
+             end
+         ) !Param.func_list
 
 let feature : featureDescr = {
   fd_name = "extractStruct";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = extractStruct;
+  fd_doit = iterExtractStruct;
   fd_post_check = true
 } 
 
