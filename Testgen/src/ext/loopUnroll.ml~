@@ -356,14 +356,16 @@ let isCopyOfCallList c =
 
 
 
-let resetGlobalValues : unit = 
+let resetGlobalValues () : unit = 
+  E.log "loopUnroll hash table reset\n";
   loopConditions := [];
   newblk := [];
   newStmt := [];
   unrolledStmts := [];
   arrayInput := 0;
   opr := 0 ;
-  qnty := 0
+  qnty := 0;
+  ()
 
   
 (* Go through every loop of the said function in the file and unroll it *)
@@ -375,13 +377,12 @@ let loopUnroll (f: file) : unit =
     | GFun (fdec, loc) ->
        if (List.mem fdec.svar.vname !Param.func_list) then
          begin
-           resetGlobalValues;
+           E.log "hash table reset34\n";
+           resetGlobalValues () ;
+           E.log "hash table reset54\n";
            let loopUnrollVisitor = new loopUnrollVisitorClass fdec
            in
            ignore (visitCilFunction loopUnrollVisitor fdec);
-           (* Cfg.cfgFun fdec; *)
-           (* let copies = collateCopies fdec.sallstmts in  *)
-           (* insertIsCopyOfHolder copies f funName; *)
            ()
          end   
 

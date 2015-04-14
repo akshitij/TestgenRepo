@@ -356,14 +356,15 @@ let isCopyOfCallList c =
 
 
 
-let resetGlobalValues : unit = 
+let resetGlobalValues () : unit = 
   loopConditions := [];
   newblk := [];
   newStmt := [];
   unrolledStmts := [];
   arrayInput := 0;
   opr := 0 ;
-  qnty := 0
+  qnty := 0;
+  ()
 
   
 (* Go through every loop of the said function in the file and unroll it *)
@@ -375,13 +376,10 @@ let loopUnroll (f: file) : unit =
     | GFun (fdec, loc) ->
        if (List.mem fdec.svar.vname !Param.func_list) then
          begin
-           resetGlobalValues;
+           resetGlobalValues () ;
            let loopUnrollVisitor = new loopUnrollVisitorClass fdec
            in
            ignore (visitCilFunction loopUnrollVisitor fdec);
-           (* Cfg.cfgFun fdec; *)
-           (* let copies = collateCopies fdec.sallstmts in  *)
-           (* insertIsCopyOfHolder copies f funName; *)
            ()
          end   
 

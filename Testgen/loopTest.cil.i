@@ -14572,6 +14572,35 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./loopTest.i","-g,-g")
+void createCDG_foo(void)
+{
+
+
+  {
+  addtoCDGnode(0, 0, 0);
+  addtoCDGnode(1, 0, 1);
+  addtoCDGnode(2, 0, 1);
+  addtoCDGnode(3, 0, 1);
+  setArray(3, "(< y foo_a)");
+  addtoCDGnode(4, 3, 1);
+  addtoCDGnode(5, 0, 1);
+  setArray(5, "(< y foo_a)");
+  addtoCDGnode(5, 0, 1);
+  setArray(5, "(< y foo_a)");
+  addtoCDGnode(6, 5, 1);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(8, 0, 1);
+}
+}
+void isCopyOfHolder(void)
+{
+
+
+  {
+
+}
+}
 int foo(int foo_foo_a )
 {
   int s ;
@@ -14594,26 +14623,26 @@ int foo(int foo_foo_a )
   return (s);
 }
 }
-void createCDG(void)
+void createCDG_main1(void)
 {
 
 
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(< b 8)");
-  addtoCDGnode(4, 3, 1);
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(< b 8)");
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(< b 8)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(8, 0, 1);
-  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(10, 0, 1);
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(< b 8)");
+  addtoCDGnode(12, 11, 1);
+  addtoCDGnode(13, 0, 1);
+  setArray(13, "(< b 8)");
+  addtoCDGnode(13, 0, 1);
+  setArray(13, "(< b 8)");
+  addtoCDGnode(14, 13, 1);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(16, 0, 1);
+  addtoCDGnode(17, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -14629,8 +14658,8 @@ void createSidTable(void)
 
 
   {
-  add_condition(3, "(< b 8)", "(not (< b 8))", 0, 0);
-  add_condition(5, "(< b 8)", "(not (< b 8))", 0, 0);
+  add_condition(11, "(< b 8)", "(not (< b 8))", 0, 0);
+  add_condition(13, "(< b 8)", "(not (< b 8))", 0, 0);
 }
 }
 struct arguments {
@@ -14653,7 +14682,7 @@ int main1(void)
   __cil_tmp5 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
   sprintf(__cil_tmp5, "\n");
-  printTestCase("loopTest_main1_1428659964.tc", __cil_tmp5);
+  printTestCase("loopTest_main1_1429038207.tc", __cil_tmp5);
   b = 0;
   add_entryToSTable("b", "Constant", & b, & b, 1);
   {
@@ -14661,22 +14690,22 @@ int main1(void)
   exp_outcome = b < 8;
   handleAssignmentSymbolically("exp_outcome", "(< b 8)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(< b 8)");
-    setFalseExpr(3, "(not (< b 8))");
-    addToTree(3, 1, "(< b 8)", "(not (< b 8))", 0, 1);
+    setBranchInfo(11, 1, 0);
+    setTrueExpr(11, "(< b 8)");
+    setFalseExpr(11, "(not (< b 8))");
+    addToTree(11, 1, "(< b 8)", "(not (< b 8))", 0, 1);
     delete_allVariableTableEntry();
     b ++;
     handleAssignmentSymbolically("b", "(+ b 1)", & b, & b, 1);
     b ++;
     handleAssignmentSymbolically("b", "(+ b 1)", & b, & b, 1);
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(< b 8)");
-    setFalseExpr(3, "(not (< b 8))");
-    addToTree(3, 1, "(< b 8)", "(not (< b 8))", 0, 0);
+    setBranchInfo(11, 0, 1);
+    setTrueExpr(11, "(< b 8)");
+    setFalseExpr(11, "(not (< b 8))");
+    addToTree(11, 1, "(< b 8)", "(not (< b 8))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
@@ -14684,22 +14713,22 @@ int main1(void)
   exp_outcome = b < 8;
   handleAssignmentSymbolically("exp_outcome", "(< b 8)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(< b 8)");
-    setFalseExpr(5, "(not (< b 8))");
-    addToTree(5, 1, "(< b 8)", "(not (< b 8))", 0, 1);
+    setBranchInfo(13, 1, 0);
+    setTrueExpr(13, "(< b 8)");
+    setFalseExpr(13, "(not (< b 8))");
+    addToTree(13, 1, "(< b 8)", "(not (< b 8))", 0, 1);
     delete_allVariableTableEntry();
     b ++;
     handleAssignmentSymbolically("b", "(+ b 1)", & b, & b, 1);
     b ++;
     handleAssignmentSymbolically("b", "(+ b 1)", & b, & b, 1);
   } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(< b 8)");
-    setFalseExpr(5, "(not (< b 8))");
-    addToTree(5, 1, "(< b 8)", "(not (< b 8))", 0, 0);
+    setBranchInfo(13, 0, 1);
+    setTrueExpr(13, "(< b 8)");
+    setFalseExpr(13, "(not (< b 8))");
+    addToTree(13, 1, "(< b 8)", "(not (< b 8))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
@@ -14762,6 +14791,8 @@ void main(void)
   int temp ;
 
   {
+  initSID();
+  isCopyOfHolder();
   initSID();
   isCopyOfHolder();
   createCDG();
