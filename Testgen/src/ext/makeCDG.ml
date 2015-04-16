@@ -300,6 +300,7 @@ let isCopyOfCallList c =
   ) c;
   mkBlock !callList
 
+(* Not Used *)
 let insertIsCopyOfHolder c f funName=
   let fn = emptyFunction ("isCopyOfHolder_" ^ funName)
   in

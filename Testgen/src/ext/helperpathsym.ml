@@ -158,8 +158,7 @@ let helperpathsym (f: file) (fname: string) : unit =
            if fdec.svar.vname="main" then 
            begin      
                     if !occFlag == 0 then begin        
-                    let pre = mkmainfxn () in                 
-                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr initSIDCall; mkStmtOneInstr (mkCDGcreatefxn fname) ;mkStmtOneInstr (mkcreatetablefxn fname);])) in
+                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr (mkCDGcreatefxn fname) ;mkStmtOneInstr (mkcreatetablefxn fname);])) in
                        fdec.sbody <- fcall;
                        occFlag := 1
                     end
@@ -192,7 +191,7 @@ let iterHelperPathSymbol (f: file) : unit =
 	       if fdec.svar.vname="main" then 
            	begin      
                     let pre = mkmainfxn () in                 
-                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr pre ;])) in
+                    let fcall =  (mkBlock ([mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts @ [mkStmtOneInstr pre ;])) in
                        fdec.sbody <- fcall;
            	end
 	     |_ -> ())
