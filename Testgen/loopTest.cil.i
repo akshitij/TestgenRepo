@@ -14593,12 +14593,13 @@ void createCDG_foo(void)
   addtoCDGnode(8, 0, 1);
 }
 }
-void isCopyOfHolder(void)
+void createSidTableOf_foo(void)
 {
 
 
   {
-
+  add_condition(3, "(< y foo_a)", "(not (< y foo_a))", 0, 0);
+  add_condition(5, "(< y foo_a)", "(not (< y foo_a))", 0, 0);
 }
 }
 int foo(int foo_foo_a )
@@ -14645,15 +14646,7 @@ void createCDG_main1(void)
   addtoCDGnode(17, 0, 1);
 }
 }
-void isCopyOfHolder(void)
-{
-
-
-  {
-
-}
-}
-void createSidTable(void)
+void createSidTableOf_main1(void)
 {
 
 
@@ -14682,7 +14675,7 @@ int main1(void)
   __cil_tmp5 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
   sprintf(__cil_tmp5, "\n");
-  printTestCase("loopTest_main1_1429051896.tc", __cil_tmp5);
+  printTestCase("loopTest_main1_1429177927.tc", __cil_tmp5);
   b = 0;
   add_entryToSTable("b", "Constant", & b, & b, 1);
   {
@@ -14792,11 +14785,10 @@ void main(void)
 
   {
   initSID();
-  isCopyOfHolder();
-  initSID();
-  isCopyOfHolder();
-  createCDG();
-  createSidTable();
+  createCDG_foo();
+  createSidTableOf_foo();
+  createCDG_main1();
+  createSidTableOf_main1();
   callInstrumentedFun();
 }
 }

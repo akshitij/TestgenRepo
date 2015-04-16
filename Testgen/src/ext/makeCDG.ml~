@@ -301,7 +301,7 @@ let isCopyOfCallList c =
   mkBlock !callList
 
 let insertIsCopyOfHolder c f funName=
-  let fn = emptyFunction "isCopyOfHolder"
+  let fn = emptyFunction ("isCopyOfHolder_" ^ funName)
   in
   fn.sbody <- isCopyOfCallList c;
 
@@ -588,10 +588,9 @@ let resetGlobalValues () : unit =
     flag := 0;
     trueFalseFlag := 1;
     outcome := 0;
-    addProto := false;
-    Hashtbl.reset labelToBlock;
-    E.log "wvvavarev\n";
-    Hashtbl.reset edges
+    addProto := false
+    (*Hashtbl.reset labelToBlock;
+    Hashtbl.reset edges*)
     
     
 

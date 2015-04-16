@@ -301,7 +301,7 @@ let isCopyOfCallList c =
   mkBlock !callList
 
 let insertIsCopyOfHolder c f funName=
-  let fn = emptyFunction "isCopyOfHolder"
+  let fn = emptyFunction ("isCopyOfHolder_" ^ funName)
   in
   fn.sbody <- isCopyOfCallList c;
 
@@ -568,8 +568,8 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
       | _ -> [g]
         
     ) f.globals) ;
-  fd.sbody  <- mkBlock !stmtlist;
-  let doGlobal2 = function
+  fd.sbody  <- mkBlock !stmtlist
+  (*let doGlobal2 = function
     | GFun (fdec, loc) ->
        if fdec.svar.vname = fname then
          begin
@@ -580,7 +580,7 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
 
     | _ -> ()
   in
-  Stats.time "loopUnroll" (iterGlobals f) doGlobal2
+  Stats.time "loopUnroll" (iterGlobals f) doGlobal2*)
 
 let resetGlobalValues () : unit =
     stmtlist := [];
