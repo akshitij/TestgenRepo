@@ -14575,12 +14575,12 @@ void createCDG_foo(void)
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
   addtoCDGnode(3, 0, 1);
-  setArray(3, "(< y foo_a)");
+  setArray(3, "(< y a)");
   addtoCDGnode(4, 3, 1);
   addtoCDGnode(5, 0, 1);
-  setArray(5, "(< y foo_a)");
+  setArray(5, "(< y a)");
   addtoCDGnode(5, 0, 1);
-  setArray(5, "(< y foo_a)");
+  setArray(5, "(< y a)");
   addtoCDGnode(6, 5, 1);
   addtoCDGnode(7, 0, 1);
   addtoCDGnode(7, 0, 1);
@@ -14592,27 +14592,59 @@ void createSidTableOf_foo(void)
 
 
   {
-  add_condition(3, "(< y foo_a)", "(not (< y foo_a))", 0, 0);
-  add_condition(5, "(< y foo_a)", "(not (< y foo_a))", 0, 0);
+  add_condition(3, "(< y a)", "(not (< y a))", 0, 0);
+  add_condition(5, "(< y a)", "(not (< y a))", 0, 0);
 }
 }
-int foo(int foo_foo_a ) 
+int foo(int foo_a ) 
 { 
   int s ;
   int y ;
+  int exp_outcome ;
+  int overall_outcome ;
 
   {
   s = 0;
   y = 0;
   y = 0;
   {
-  if (y < foo_foo_a) {
+  {
+  exp_outcome = y < foo_a;
+  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(3, 1, 0);
+    setTrueExpr(3, "(< y a)");
+    setFalseExpr(3, "(not (< y a))");
+    addToTree(3, 1, "(< y a)", "(not (< y a))", 0, 1);
+    delete_allVariableTableEntry();
     s += y;
     y ++;
+  } else {
+    setBranchInfo(3, 0, 1);
+    setTrueExpr(3, "(< y a)");
+    setFalseExpr(3, "(not (< y a))");
+    addToTree(3, 1, "(< y a)", "(not (< y a))", 0, 0);
+    delete_allVariableTableEntry();
   }
-  if (y < foo_foo_a) {
+  }
+  {
+  exp_outcome = y < foo_a;
+  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(5, 1, 0);
+    setTrueExpr(5, "(< y a)");
+    setFalseExpr(5, "(not (< y a))");
+    addToTree(5, 1, "(< y a)", "(not (< y a))", 0, 1);
+    delete_allVariableTableEntry();
     s += y;
     y ++;
+  } else {
+    setBranchInfo(5, 0, 1);
+    setTrueExpr(5, "(< y a)");
+    setFalseExpr(5, "(not (< y a))");
+    addToTree(5, 1, "(< y a)", "(not (< y a))", 0, 0);
+    delete_allVariableTableEntry();
+  }
   }
   }
   return (s);
@@ -14637,7 +14669,6 @@ void createCDG_main1(void)
   addtoCDGnode(15, 0, 1);
   addtoCDGnode(15, 0, 1);
   addtoCDGnode(16, 0, 1);
-  addtoCDGnode(17, 0, 1);
 }
 }
 void createSidTableOf_main1(void) 
@@ -14669,7 +14700,7 @@ int main1(void)
   __cil_tmp5 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
   sprintf(__cil_tmp5, "\n");
-  printTestCase("loopTest_main1_1429179057.tc", __cil_tmp5);
+  printTestCase("loopTest_main1_1429443106.tc", __cil_tmp5);
   b = 0;
   add_entryToSTable("b", "Constant", & b, & b, 1);
   {
@@ -14719,14 +14750,6 @@ int main1(void)
     delete_allVariableTableEntry();
   }
   }
-  }
-  {
-  funcEntry("(type,formals,actuals,CorV)", "(int,foo_a,constant,2)", "foo");
-  if (programFlag == 1) {
-    return ((int )0);
-  }
-  foo(2);
-  funcExit("foo");
   }
   __cil_tmp4 = isNotQueueEmpty();
   if (__cil_tmp4) {

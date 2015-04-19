@@ -17,6 +17,6 @@ int main(){
  for(b=0;b<8;b++){
   b++;
  }
- foo(2);
+
  return 0;
 }

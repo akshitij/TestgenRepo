@@ -444,8 +444,8 @@ class level_structVisitor e_vi o_vi = object
     end
 end
 
-let level_struct (f:file) : unit = 
-  let funName = !Param.func in
+let level_struct (f:file) (funName: string): unit = 
+  (*let funName = !Param.func in*)
   List.iter (fun g ->
              match g with
              |GFun (fd, loc) when fd.svar.vname=funName-> 
@@ -456,13 +456,32 @@ let level_struct (f:file) : unit =
                ignore (visitCilFunction level_structVisitor fd)
                       
              | _ -> ()) f.globals
+
+let resetGlobalValues () : unit =
+  parentExp :=  "";
+  (*parentId :=  0;*)
+  save  :=  [];
+  testNesting :=  0;
+  stmtlist :=  [];
+  countif :=  0;
+  aindex :=  0
+             
+let iterLevelStruct (f: file) : unit =
+  List.iter (
+           fun funcName ->
+           if funcName <> "main" then begin
+             level_struct f funcName;
+             resetGlobalValues ();
+             end
+         ) !Param.func_list
+  
             
 let feature : featureDescr = {
   fd_name = "level_struct";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = level_struct;
+  fd_doit = iterLevelStruct;
   fd_post_check = true
 } 
 
