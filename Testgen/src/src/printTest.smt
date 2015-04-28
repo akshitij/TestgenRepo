@@ -1,6 +1,6 @@
 (benchmark res
   :logic AUFLIA
-:extrafuns ()
-  :assumption (< y a)
-  :assumption (< y a)
+:extrafuns ((s0 Int)(0 Int))
+  :assumption (< b2___0 8)
+  :assumption (< b2___0 8)
  ) 

@@ -797,8 +797,8 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
 end   
  
 
-let pathSymbol (f: file) : unit =
-  let fname = !Param.func in
+let pathSymbol (f: file) (fname:string) : unit =
+  (*let fname = !Param.func in*)
   let doGlobal = function
     | GVarDecl (v, _) when v.vname = !printFunctionName -> 
           if !printf = None then
@@ -822,12 +822,28 @@ let pathSymbol (f: file) : unit =
          f.globals <- GVarDecl (p, locUnknown) :: f.globals
   end  
 
+let resetGlobalValues () : unit =
+  stmtlist := [];
+  stlist := []
+
+
+let iterPathSymbol (f: file) =
+  List.iter (
+           fun funcName ->
+           if funcName <> "main" then begin
+             pathSymbol f funcName;
+             resetGlobalValues ();
+             end
+         ) !Param.func_list
+  
+
+
 let feature : featureDescr = 
   { fd_name = "pathSymbol";
     fd_enabled = ref false;
     fd_description = "";
     fd_extraopt = [];
-    fd_doit = pathSymbol;
+    fd_doit = iterPathSymbol;
     fd_post_check = true
   } 
 

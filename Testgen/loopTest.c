@@ -1,15 +1,16 @@
-int foo(int a){
-	int s = 0,y = 0;
-	for(y=0; y<a; y++){
-		s = s + y;
+int foo(int b2){
+	int c,b2=0;
+	for(b2=0;b2<8;b2++){
+		c = b2++;
 	}
-	return s;
+	return c;
 }
 
 int main(){
-	int b;
+	int c,b;
+	scanf("%d",&b);
 	for(b=0;b<8;b++){
-		b++;
+		c = b++;
 	}
 	//foo(2);
 	return 0;
