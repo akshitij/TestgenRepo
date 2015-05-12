@@ -836,11 +836,23 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 # 943 "/usr/include/stdio.h" 3 4
 
 # 2 "loopTest.c" 2
+int foo(int x){
+ int y;
+ if(x>2)
+  y=2;
+ else
+  y=4;
+
+
+
+ return y;
+}
+
 int main(){
- int i,j;
+ int i;
  scanf("%d",&i);
  for(;i<8;i++){
-  j = i+2;
+  i = i+2;
  }
 
  return 0;
