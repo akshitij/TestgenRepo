@@ -312,7 +312,7 @@ let insertIsCopyOfHolder c f funName=
       GFun(fn, locUnknown) :: [g]
     | GFun(fdec, _) when fdec.svar.vname = "main" ->
       fdec.sbody.bstmts <-  [mkStmtOneInstr( Call(None, Lval(var fn.svar), [], !currentLoc))] @ fdec.sbody.bstmts; 
-      fdec.sbody.bstmts <-  [mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts;   
+      (*fdec.sbody.bstmts <-  [mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts;*)   
       [g]
     | _ -> [g]
     ) f.globals);
@@ -569,8 +569,8 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
       | _ -> [g]
         
     ) f.globals) ;
-  fd.sbody  <- mkBlock !stmtlist
-  (*let doGlobal2 = function
+  fd.sbody  <- mkBlock !stmtlist;
+  let doGlobal2 = function
     | GFun (fdec, loc) ->
        if fdec.svar.vname = fname then
          begin
@@ -581,7 +581,7 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
 
     | _ -> ()
   in
-  Stats.time "loopUnroll" (iterGlobals f) doGlobal2*)
+  Stats.time "loopUnroll" (iterGlobals f) doGlobal2
 
 let resetGlobalValues () : unit =
     stmtlist := [];

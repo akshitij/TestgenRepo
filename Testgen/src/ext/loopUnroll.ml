@@ -134,11 +134,11 @@ let rec constructStmts (v: stmt) =
                ) v.labels
      in
      s.labels <- x;
-     (*if not marked then
+     if not marked then
        begin 
          s.labels <- s.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
          v.labels <- v.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
-       end;*)
+       end;
      dummyLabelCnt := !dummyLabelCnt + 1;
      Hashtbl.add labelMapping v.labels s;
      s
@@ -354,8 +354,23 @@ let isCopyOfCallList c =
   ) c;
   mkBlock !callList
 
-
-
+let insertIsCopyOfHolder c f funName=
+  let fn = emptyFunction "isCopyOfHolder"
+  in
+  fn.sbody <- isCopyOfCallList c;
+  f.globals <- List.concat (
+    List.map (fun g -> match g with
+    | GFun(fdec, _) when fdec.svar.vname = funName ->
+      GFun(fn, locUnknown) :: [g]
+    | GFun(fdec, _) when fdec.svar.vname = "main" ->
+      fdec.sbody.bstmts <-  [mkStmtOneInstr( Call(None, Lval(var fn.svar), [], !currentLoc))] @ fdec.sbody.bstmts; 
+      fdec.sbody.bstmts <-  [mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts;   
+      [g]
+    | _ -> [g]
+    ) f.globals);
+  ()
+  
+  
 let resetGlobalValues () : unit = 
   loopConditions := [];
   newblk := [];
@@ -365,33 +380,43 @@ let resetGlobalValues () : unit =
   opr := 0 ;
   qnty := 0;
   ()
-
+  
   
 (* Go through every loop of the said function in the file and unroll it *)
-let loopUnroll (f: file) : unit =
-  let funName = !Param.func
-  in
+let loopUnroll (f: file) (funName:string) : unit =
+  (*let funName = !Param.func in*)
   count := 2;  
   let doGlobal = function
     | GFun (fdec, loc) ->
-       if (List.mem fdec.svar.vname !Param.func_list) then
+       if fdec.svar.vname = funName then
          begin
-           resetGlobalValues () ;
            let loopUnrollVisitor = new loopUnrollVisitorClass fdec
            in
            ignore (visitCilFunction loopUnrollVisitor fdec);
+           (* Cfg.cfgFun fdec; *)
+           (* let copies = collateCopies fdec.sallstmts in  *)
+           (* insertIsCopyOfHolder copies f funName; *)
            ()
          end   
 
     | _ -> ()
   in
   Stats.time "loopUnroll" (iterGlobals f) doGlobal
+  
+let iterLoopUnroll  (f: file) : unit =
+  List.iter (
+           fun funcName ->
+           if funcName <> "main" then begin
+             loopUnroll f funcName ;
+             resetGlobalValues ();
+             end
+         ) !Param.func_list
              
 let feature : featureDescr = {
   fd_name = "loopUnroll";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = loopUnroll;
+  fd_doit = iterLoopUnroll;
   fd_post_check = true
 } 

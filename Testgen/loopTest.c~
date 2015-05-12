@@ -1,16 +1,9 @@
-int foo(int a1){
-	int c,a1=0;
-	for(a1=0;a1<8;a1++){
-		c = a1++;
-	}
-	return c;
-}
-
+#include <stdio.h>
 int main(){
-	int c,b;
-	scanf("%d",&b);
-	for(b=0;b<8;b++){
-		c = b++;
+	int i,j;
+	scanf("%d",&i);
+	for(;i<8;i++){
+		j = i+2;
 	}
 	//foo(2);
 	return 0;
