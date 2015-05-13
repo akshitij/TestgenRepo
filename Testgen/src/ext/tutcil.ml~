@@ -120,6 +120,20 @@ let genArgString (explist : exp list) : (string * string) list =
   explist;
   !argActual
   
+let programFlagVi : varinfo list ref = ref []
+let funcSig : exp list ref = ref []
+
+let generateIfStmt () : stmt =
+  if (List.length !programFlagVi > 0) && (List.length !funcSig > 0) then begin
+ 	 E.log "length is positive\n";
+ 	 let (rt,_,_,_) = splitFunctionType (typeOf (List.nth !funcSig 0)) in
+ 	 let cond = BinOp(Eq, (v2e (List.nth !programFlagVi 0)), integer 1, intType) in
+ 	 mkStmt (If(cond,(mkBlock [mkStmt (Return(Some(CastE(rt,integer 0)),locUnknown))]),(mkBlock []),locUnknown))
+  end
+  else begin
+ 	 E.log "length is 0\n";
+ 	 mkEmptyStmt ()
+  end
   
 let rec processBlock (blk : block) : unit =
   List.iter (fun st ->
@@ -128,9 +142,10 @@ let rec processBlock (blk : block) : unit =
 	   	List.iter (fun inst ->	
 	   		   match inst with
 	     		      |Call (lv,funcsignexp,expList,loc) ->
-	     		        (*E.log "function call was found here: %a\nwith exp type: %a\n" d_loc loc d_type (typeOf funcsignexp);*)
-	     		        (*let instrumentCallStmt = makeInstrStmts expList f loc in
-	                        il := !il @ [instrumentCallStmt];*)
+	     		        let fnam = Pretty.sprint max_int (d_exp () funcsignexp) in
+				if (List.mem fnam !Param.func_list) then begin
+	                        funcSig := [] ; 
+	                        funcSig := !funcSig @ [funcsignexp];
 	                        let (formals,funcName),actuals = (analyse funcsignexp), (genArgString expList) in
 	                        let str = ref "" in begin
 	                        	E.log "%s: " funcName;
@@ -141,23 +156,27 @@ let rec processBlock (blk : block) : unit =
 	                        			str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ") ")
 	                        	formals actuals
 	                        	end;
-	                        	E.log "%s \n" !str;
+	                        	E.log "%s\n" !str;
 	                        	let f = "(type,formals,actuals,CorV)" in
 	                        	let p = String.trim !str in
 	                        	let func = funcName in begin
 	                        		let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ([constS2e f] @ [constS2e p] @ [constS2e func]) loc in
 	                        		let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [constS2e func] loc in
 	                        		il := !il @ [instrumentEntryFunc] @ [inst] @ [instrumentExitFunc];	
-	                        	end;
-	                        end; 
+	                        	end
+	                        end;
+	                        end
+	                        else begin
+	                        	il := !il @ [inst]
+	                        end;	 
 	                        ()
 	     		      |_ -> 
 	     		        il := !il @ [inst];
 	     		        ())
   	       iList;
-  	       st.skind <- Instr !il;
-  	       il := [];    
-	                        		E.log "dssavag\n";
+  	       (*E.log "lenght of funcSig %d\n" (List.length !funcSig);
+  	       st.skind <- Block (mkBlock [mkStmt (Instr !il); generateIfStmt ()]);
+  	       il := [];*)    
 	       ()
              |If (_,ib,eb,_) ->
 	       processBlock ib;
@@ -175,6 +194,9 @@ let rec processBlock (blk : block) : unit =
 
 let addCallInstr (f : file) : unit =
   initInstFunctions f;
+  programFlagVi := !programFlagVi @ [makeGlobalVar "programFlag" intType];
+  E.log "lenght of programFlagVi %d\n" (List.length !programFlagVi);
+  f.globals <- GVar(List.nth !programFlagVi 0, {init=None}, locUnknown) :: f.globals;
   List.iter (fun g ->
 	     match g with
 	     |GFun (fd, loc) ->
@@ -183,6 +205,10 @@ let addCallInstr (f : file) : unit =
 	          changeFormals fd;
 	          processBlock fd.sbody
 	       end
+	       (*if fd.svar.vname = "main1" then begin
+	          E.log "main1 found\n";
+	          fd.sbody.bstmts <- (mkStmtOneInstr (Set(var (List.nth !programFlagVi 0), zero, locUnknown))) :: fd.sbody.bstmts
+	       end*)
 	     |_ -> ())
   f.globals
 

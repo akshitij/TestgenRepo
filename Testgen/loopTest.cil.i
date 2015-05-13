@@ -212,6 +212,28 @@ struct CDGContext {
    struct CDGPath *topPaths ;
 };
 typedef struct CDGContext CDGContext;
+struct functionArgument {
+   char funcName[100] ;
+   int type ;
+   char vname[50] ;
+   void *val ;
+   char apname[50] ;
+   int isConstant ;
+};
+typedef struct functionArgument funcArg;
+struct __anonstruct_funcVars_26 {
+   char **vars ;
+   int noOfVars ;
+   char funcName[100] ;
+   int occurence ;
+};
+typedef struct __anonstruct_funcVars_26 funcVars;
+struct __anonstruct_vnameHash_27 {
+   char vname[50] ;
+   char vname_occ[55] ;
+   UT_hash_handle hh ;
+};
+typedef struct __anonstruct_vnameHash_27 vnameHash;
 #pragma merger("0","./utils.i","-g,-g")
 extern struct _IO_FILE *stderr ;
 extern int fclose(FILE *__stream ) ;
@@ -279,16 +301,16 @@ void initUnrolledCopies(void)
 {
   int maxCopies ;
   void *tmp ;
-  int i ;
+  int i___0 ;
 
   {
   maxCopies = 500;
   tmp = malloc(sizeof(int ) * (unsigned long )maxCopies);
   unrolledCopies = (int *)tmp;
-  i = 0;
-  while (i < maxCopies) {
-    *(unrolledCopies + i) = -1;
-    i ++;
+  i___0 = 0;
+  while (i___0 < maxCopies) {
+    *(unrolledCopies + i___0) = -1;
+    i___0 ++;
   }
   return;
 }
@@ -2641,15 +2663,15 @@ void constructStringToWriteinFile(char *str1 )
 char *getRearPathCondition(void)
 {
   char *str ;
-  int i ;
+  int i___0 ;
   void *tmp ;
   struct treeNode *ptr ;
 
   {
-  i = 1;
+  i___0 = 1;
   tmp = malloc((size_t )1500);
   str = (char *)tmp;
-  ptr = (queue.rear)->levelptr[i];
+  ptr = (queue.rear)->levelptr[i___0];
   strcpy((char * __restrict )str, (char const * __restrict )"");
   while ((unsigned long )ptr != (unsigned long )((void *)0)) {
     if (ptr->outcome) {
@@ -2660,8 +2682,8 @@ char *getRearPathCondition(void)
     strcat((char * __restrict )str, (char const * __restrict )"##");
     ptr = getNextnode(ptr);
     if ((unsigned long )ptr == (unsigned long )((void *)0)) {
-      i ++;
-      ptr = (queue.rear)->levelptr[i];
+      i___0 ++;
+      ptr = (queue.rear)->levelptr[i___0];
     }
   }
   strcat((char * __restrict )str, (char const * __restrict )"\000");
@@ -2671,15 +2693,15 @@ char *getRearPathCondition(void)
 char *getFrontPathCondition(void)
 {
   char *str ;
-  int i ;
+  int i___0 ;
   void *tmp ;
   struct treeNode *ptr ;
 
   {
-  i = 1;
+  i___0 = 1;
   tmp = malloc((size_t )1500);
   str = (char *)tmp;
-  ptr = (queue.front)->levelptr[i];
+  ptr = (queue.front)->levelptr[i___0];
   strcpy((char * __restrict )str, (char const * __restrict )"");
   while ((unsigned long )ptr != (unsigned long )((void *)0)) {
     if (ptr->outcome) {
@@ -2690,8 +2712,8 @@ char *getFrontPathCondition(void)
     strcat((char * __restrict )str, (char const * __restrict )"##");
     ptr = getNextnode(ptr);
     if ((unsigned long )ptr == (unsigned long )((void *)0)) {
-      i ++;
-      ptr = (queue.front)->levelptr[i];
+      i___0 ++;
+      ptr = (queue.front)->levelptr[i___0];
     }
   }
   strcat((char * __restrict )str, (char const * __restrict )"\000");
@@ -2730,7 +2752,7 @@ int getOutputFromConstraintSolver(void)
 {
   char *token ;
   char *save ;
-  int i ;
+  int i___0 ;
   int len ;
   int value ;
   int negative ;
@@ -2744,7 +2766,7 @@ int getOutputFromConstraintSolver(void)
   int tmp___3 ;
 
   {
-  i = 0;
+  i___0 = 0;
   negative = 0;
   tmp = popen("z3 -smt src/src/printTest.smt", "r");
   pipe = tmp;
@@ -2765,7 +2787,7 @@ int getOutputFromConstraintSolver(void)
   pclose(pipe);
   tmp___2 = strlen((char const *)(result));
   len = (int )tmp___2;
-  token = getNextTokenFromConstraintSolver((char const *)(result), & i, len);
+  token = getNextTokenFromConstraintSolver((char const *)(result), & i___0, len);
   if ((unsigned long )((void *)0) != (unsigned long )token) {
     tmp___3 = strcmp("unsat", (char const *)token);
     if (tmp___3 == 0) {
@@ -2794,7 +2816,8 @@ int getOutputFromConstraintSolver(void)
     save = token;
     break;
     }
-    token = getNextTokenFromConstraintSolver((char const *)(& result[i]), & i, len);
+    token = getNextTokenFromConstraintSolver((char const *)(& result[i___0]), & i___0,
+                                             len);
   }
   return (1);
 }
@@ -2808,39 +2831,41 @@ void directPathConditions(void)
   struct treeNode *parent ;
   struct treeNode *temp ;
   int atleastOneConditionNotCovered ;
-  int i ;
+  int i___0 ;
   float percent ;
   float orgPercent ;
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
+  int tmp___2 ;
+  int tmp___3 ;
   FILE *coveragefile ;
-  FILE *tmp___2 ;
+  FILE *tmp___4 ;
   char *fpc ;
-  char *tmp___3 ;
-  int tmp___4 ;
-  void *tmp___5 ;
+  char *tmp___5 ;
   int tmp___6 ;
-  int tmp___7 ;
+  void *tmp___7 ;
   int tmp___8 ;
   int tmp___9 ;
   int tmp___10 ;
   int tmp___11 ;
-  struct treeNode *tmp___12 ;
+  int tmp___12 ;
   int tmp___13 ;
-  int tmp___14 ;
+  struct treeNode *tmp___14 ;
   int tmp___15 ;
   int tmp___16 ;
   int tmp___17 ;
   int tmp___18 ;
   int tmp___19 ;
   int tmp___20 ;
-  struct treeNode *tmp___21 ;
+  int tmp___21 ;
   int tmp___22 ;
+  struct treeNode *tmp___23 ;
+  int tmp___24 ;
 
   {
   atleastOneConditionNotCovered = 0;
-  i = 1;
+  i___0 = 1;
   tmp___1 = countOrgTotalConditions();
   if (tmp___1 == 0) {
     orgPercent = (float )100;
@@ -2849,9 +2874,12 @@ void directPathConditions(void)
     tmp___0 = countOrgTotalConditions();
     orgPercent = (float )((tmp * 100) / (2 * tmp___0));
   }
-  printf((char const * __restrict )"COVERAGE = %f....\n", (double )orgPercent);
-  tmp___2 = fopen((char const * __restrict )"src/src/coverage.txt", (char const * __restrict )"ab+");
-  coveragefile = tmp___2;
+  tmp___2 = countOrgTotalConditions();
+  tmp___3 = countOrgCoveredConditions();
+  printf((char const * __restrict )"COVERAGE = %f....(%d*100/2*%d)\n", (double )orgPercent,
+         tmp___3, tmp___2);
+  tmp___4 = fopen((char const * __restrict )"src/src/coverage.txt", (char const * __restrict )"ab+");
+  coveragefile = tmp___4;
   fprintf((FILE * __restrict )coveragefile, (char const * __restrict )"%.1f\n",
           (double )orgPercent);
   if (queue.totalElements == 0) {
@@ -2862,12 +2890,12 @@ void directPathConditions(void)
     emptyQueue();
     return;
   }
-  tmp___3 = getFrontPathCondition();
-  fpc = tmp___3;
+  tmp___5 = getFrontPathCondition();
+  fpc = tmp___5;
   fpc = (char *)((void *)0);
   free((void *)fpc);
-  tmp___4 = countTotalConditions();
-  if (tmp___4) {
+  tmp___6 = countTotalConditions();
+  if (tmp___6) {
     if (execution_flag == 1) {
       if (previousRunCoverage != percent) {
         countNoNewConditionAttempts = 0;
@@ -2883,8 +2911,8 @@ void directPathConditions(void)
     }
     previousRunCoverage = percent;
   }
-  tmp___5 = malloc((size_t )1500);
-  newPathCondition = (char *)tmp___5;
+  tmp___7 = malloc((size_t )1500);
+  newPathCondition = (char *)tmp___7;
   *newPathCondition = (char)0;
   if (check_position >= 1) {
     if ((unsigned long )(queue.front)->levelptr[check_level + 1] == (unsigned long )((void *)0)) {
@@ -2905,25 +2933,25 @@ void directPathConditions(void)
     if (check_position == 0) {
       while ((unsigned long )curr != (unsigned long )((void *)0)) {
         if (curr->outcome) {
-          tmp___6 = checkForAllConstants(curr->fexp);
-          if (! tmp___6) {
+          tmp___8 = checkForAllConstants(curr->fexp);
+          if (! tmp___8) {
             strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->fexp);
             strcat((char * __restrict )newPathCondition, (char const * __restrict )"##");
           }
-          tmp___7 = getSid(curr);
-          tmp___8 = getBranchInfo(tmp___7, 0);
-          if (! tmp___8) {
+          tmp___9 = getSid(curr);
+          tmp___10 = getBranchInfo(tmp___9, 0);
+          if (! tmp___10) {
             atleastOneConditionNotCovered = 1;
           }
         } else {
-          tmp___9 = checkForAllConstants(curr->texp);
-          if (! tmp___9) {
+          tmp___11 = checkForAllConstants(curr->texp);
+          if (! tmp___11) {
             strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->texp);
             strcat((char * __restrict )newPathCondition, (char const * __restrict )"##");
           }
-          tmp___10 = getSid(curr);
-          tmp___11 = getBranchInfo(tmp___10, 1);
-          if (! tmp___11) {
+          tmp___12 = getSid(curr);
+          tmp___13 = getBranchInfo(tmp___12, 1);
+          if (! tmp___13) {
             atleastOneConditionNotCovered = 1;
           }
         }
@@ -2936,9 +2964,9 @@ void directPathConditions(void)
     }
   } else {
     _L___2:
-    i = 1;
+    i___0 = 1;
     while (1) {
-      if (i < check_position) {
+      if (i___0 < check_position) {
         if (! ((unsigned long )curr != (unsigned long )((void *)0))) {
           break;
         }
@@ -2946,12 +2974,12 @@ void directPathConditions(void)
         break;
       }
       curr = getNextnode(curr);
-      i ++;
+      i___0 ++;
     }
-    if (i < check_position) {
+    if (i___0 < check_position) {
       goto _L___0;
     } else
-    if (i == check_position) {
+    if (i___0 == check_position) {
       if ((unsigned long )curr == (unsigned long )((void *)0)) {
         _L___0:
         check_level ++;
@@ -2965,8 +2993,8 @@ void directPathConditions(void)
         return;
       }
     }
-    tmp___12 = getFchild(curr);
-    if ((unsigned long )tmp___12 == (unsigned long )((void *)0)) {
+    tmp___14 = getFchild(curr);
+    if ((unsigned long )tmp___14 == (unsigned long )((void *)0)) {
       check_position ++;
       if ((unsigned long )newPathCondition != (unsigned long )((void *)0)) {
         newPathCondition = (char *)((void *)0);
@@ -2991,25 +3019,25 @@ void directPathConditions(void)
         break;
       }
       if (curr->outcome) {
-        tmp___13 = checkForAllConstants(curr->fexp);
-        if (! tmp___13) {
+        tmp___15 = checkForAllConstants(curr->fexp);
+        if (! tmp___15) {
           strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->fexp);
           strcat((char * __restrict )newPathCondition, (char const * __restrict )"##");
         }
-        tmp___14 = getSid(curr);
-        tmp___15 = getBranchInfo(tmp___14, 0);
-        if (! tmp___15) {
+        tmp___16 = getSid(curr);
+        tmp___17 = getBranchInfo(tmp___16, 0);
+        if (! tmp___17) {
           atleastOneConditionNotCovered = 1;
         }
       } else {
-        tmp___16 = checkForAllConstants(curr->texp);
-        if (! tmp___16) {
+        tmp___18 = checkForAllConstants(curr->texp);
+        if (! tmp___18) {
           strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->texp);
           strcat((char * __restrict )newPathCondition, (char const * __restrict )"##");
         }
-        tmp___17 = getSid(curr);
-        tmp___18 = getBranchInfo(tmp___17, 1);
-        if (! tmp___18) {
+        tmp___19 = getSid(curr);
+        tmp___20 = getBranchInfo(tmp___19, 1);
+        if (! tmp___20) {
           atleastOneConditionNotCovered = 1;
         }
       }
@@ -3018,8 +3046,8 @@ void directPathConditions(void)
     curr = parent;
     while ((unsigned long )curr != (unsigned long )((void *)0)) {
       if (curr->outcome) {
-        tmp___20 = checkForAllConstants(curr->texp);
-        if (tmp___20) {
+        tmp___22 = checkForAllConstants(curr->texp);
+        if (tmp___22) {
           goto _L___1;
         } else {
           strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->texp);
@@ -3027,8 +3055,8 @@ void directPathConditions(void)
         }
       } else {
         _L___1:
-        tmp___19 = checkForAllConstants(curr->fexp);
-        if (! tmp___19) {
+        tmp___21 = checkForAllConstants(curr->fexp);
+        if (! tmp___21) {
           strcat((char * __restrict )newPathCondition, (char const * __restrict )curr->fexp);
           strcat((char * __restrict )newPathCondition, (char const * __restrict )"##");
         }
@@ -3036,8 +3064,8 @@ void directPathConditions(void)
       curr = getNodeParent(curr);
     }
     curr = (queue.front)->levelptr[check_level];
-    tmp___21 = getNextnode(curr);
-    if ((unsigned long )tmp___21 == (unsigned long )((void *)0)) {
+    tmp___23 = getNextnode(curr);
+    if ((unsigned long )tmp___23 == (unsigned long )((void *)0)) {
       check_level ++;
       check_position = 1;
     } else {
@@ -3050,8 +3078,8 @@ void directPathConditions(void)
       getPrint();
       writeProgramSVariables();
       writeConditionsToFile(newPathCondition);
-      tmp___22 = getOutputFromConstraintSolver();
-      if (! tmp___22) {
+      tmp___24 = getOutputFromConstraintSolver();
+      if (! tmp___24) {
         remove("src/src/printTest.smt");
         newPathCondition = (char *)((void *)0);
         free((void *)newPathCondition);
@@ -4821,7 +4849,7 @@ char *getAllSymbolicNamesinAPath(char *rhs )
 {
   char *token ;
   char *result ;
-  int i ;
+  int i___0 ;
   int len ;
   void *tmp ;
   size_t tmp___0 ;
@@ -4831,15 +4859,15 @@ char *getAllSymbolicNamesinAPath(char *rhs )
   int tmp___4 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = calloc((size_t )2, sizeof(char ));
   result = (char *)tmp;
   tmp___0 = strlen((char const *)rhs);
   len = (int )tmp___0;
-  token = getNextToken((char const *)rhs, & i, len);
+  token = getNextToken((char const *)rhs, & i___0, len);
   while ((unsigned long )token != (unsigned long )((void *)0)) {
     free((void *)token);
-    token = getNextToken((char const *)(rhs + i), & i, len);
+    token = getNextToken((char const *)(rhs + i___0), & i___0, len);
     switch ((int )token_type) {
     case 2:
     case 1:
@@ -4866,7 +4894,7 @@ char *getArrayName(char const *str ) ;
 void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *address ,
                                   int type )
 {
-  int i ;
+  int i___0 ;
   int len ;
   int parameter ;
   int j ;
@@ -4925,12 +4953,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
   int tmp___45 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = calloc((size_t )2, sizeof(char ));
   result = (char *)tmp;
   tmp___0 = strlen((char const *)rhs);
   len = (int )tmp___0;
-  token = getNextToken((char const *)rhs, & i, len);
+  token = getNextToken((char const *)rhs, & i___0, len);
   while ((unsigned long )token != (unsigned long )((void *)0)) {
     switch ((int )token_type) {
     case 2:
@@ -5056,7 +5084,7 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
     }
     break;
     }
-    token = getNextToken((char const *)(rhs + i), & i, len);
+    token = getNextToken((char const *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict )result, (char const * __restrict )"\000");
   add_entryToSTable(lhs, result, val, address, type);
@@ -5067,7 +5095,7 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
 char *getPointerName(char const *str ) ;
 char *getPrepositionalFormula(char *expr )
 {
-  int i ;
+  int i___0 ;
   int len ;
   int parameter ;
   int j ;
@@ -5130,12 +5158,12 @@ char *getPrepositionalFormula(char *expr )
   int tmp___50 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = calloc((size_t )2, sizeof(char ));
   result = (char *)tmp;
   tmp___0 = strlen((char const *)expr);
   len = (int )tmp___0;
-  token = getNextToken((char const *)expr, & i, len);
+  token = getNextToken((char const *)expr, & i___0, len);
   while ((unsigned long )token != (unsigned long )((void *)0)) {
     switch ((int )token_type) {
     case 2:
@@ -5273,7 +5301,7 @@ char *getPrepositionalFormula(char *expr )
     break;
     }
     free((void *)token);
-    token = getNextToken((char const *)(expr + i), & i, len);
+    token = getNextToken((char const *)(expr + i___0), & i___0, len);
   }
   strcat((char * __restrict )result, (char const * __restrict )"\000");
   return (result);
@@ -5285,22 +5313,22 @@ int isQueueEmpty(void) ;
 int isNotQueueEmpty(void) ;
 void enQueue(void)
 {
-  int i ;
+  int i___0 ;
   struct qnode *newNode___0 ;
   void *tmp ;
 
   {
-  i = 0;
+  i___0 = 0;
   if (CDG_Module) {
     return;
   }
   tmp = malloc(sizeof(struct qnode ));
   newNode___0 = (struct qnode *)tmp;
   newNode___0->next = (struct qnode *)((void *)0);
-  i = 0;
-  while (i < 50) {
-    newNode___0->levelptr[i] = (struct treeNode *)((void *)0);
-    i ++;
+  i___0 = 0;
+  while (i___0 < 50) {
+    newNode___0->levelptr[i___0] = (struct treeNode *)((void *)0);
+    i___0 ++;
   }
   newNode___0->symbolicNames = (char *)((void *)0);
   if ((unsigned long )queue.front == (unsigned long )((void *)0)) {
@@ -5633,13 +5661,13 @@ void printLevel(void)
 }
 void clearTreeNodes(void)
 {
-  int i ;
+  int i___0 ;
 
   {
-  i = 0;
-  while (i < 100) {
-    tree_nodes[i] = (struct treeNode *)((void *)0);
-    i ++;
+  i___0 = 0;
+  while (i___0 < 100) {
+    tree_nodes[i___0] = (struct treeNode *)((void *)0);
+    i___0 ++;
   }
   return;
 }
@@ -5737,7 +5765,7 @@ int isDigit(char const c )
 }
 char *getNextToken(char const *str , int *pos , int length )
 {
-  int i ;
+  int i___0 ;
   char *res ;
   int countPars ;
   void *tmp ;
@@ -5754,7 +5782,7 @@ char *getNextToken(char const *str , int *pos , int length )
   int tmp___10 ;
 
   {
-  i = 0;
+  i___0 = 0;
   countPars = 0;
   tmp = malloc((size_t )(length + 1));
   res = (char *)tmp;
@@ -5763,22 +5791,22 @@ char *getNextToken(char const *str , int *pos , int length )
     if (! tmp___0) {
       break;
     }
-    *(res + i) = (char )*str;
+    *(res + i___0) = (char )*str;
     str ++;
     (*pos) ++;
-    i ++;
-    *(res + i) = (char )'\000';
+    i___0 ++;
+    *(res + i___0) = (char )'\000';
     token_type = (enum TOKENTYPE )0;
     return (res);
   }
   if ((int const )*str == 35) {
     while ((int const )*str == 35) {
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
       (*pos) ++;
-      i ++;
+      i___0 ++;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     token_type = (enum TOKENTYPE )0;
     return (res);
   }
@@ -5794,18 +5822,18 @@ char *getNextToken(char const *str , int *pos , int length )
   } else
   if ((int const )*str == 41) {
     _L:
-    *(res + i) = (char )*str;
+    *(res + i___0) = (char )*str;
     str ++;
     (*pos) ++;
-    i ++;
-    *(res + i) = (char )'\000';
+    i___0 ++;
+    *(res + i___0) = (char )'\000';
     token_type = (enum TOKENTYPE )0;
     return (res);
   }
   if ((int const )*str == 42) {
     if ((int const )*(str + 1) == 40) {
       while (1) {
-        *(res + i) = (char )*str;
+        *(res + i___0) = (char )*str;
         if ((int const )*str == 41) {
           countPars --;
         }
@@ -5814,23 +5842,23 @@ char *getNextToken(char const *str , int *pos , int length )
           countPars ++;
         }
         (*pos) ++;
-        i ++;
+        i___0 ++;
         token_type = (enum TOKENTYPE )4;
         if (countPars == 0) {
           break;
         }
       }
-      *(res + i) = (char )'\000';
+      *(res + i___0) = (char )'\000';
       return (res);
     }
   }
   if ((int const )*str == 42) {
     if ((int const )*(str + 1) != 32) {
       while ((int const )*str == 42) {
-        *(res + i) = (char )*str;
+        *(res + i___0) = (char )*str;
         str ++;
         (*pos) ++;
-        i ++;
+        i___0 ++;
       }
       while (1) {
         tmp___1 = isAlpha(*str);
@@ -5840,24 +5868,24 @@ char *getNextToken(char const *str , int *pos , int length )
             break;
           }
         }
-        *(res + i) = (char )*str;
+        *(res + i___0) = (char )*str;
         str ++;
         (*pos) ++;
-        i ++;
+        i___0 ++;
         token_type = (enum TOKENTYPE )4;
       }
-      *(res + i) = (char )'\000';
+      *(res + i___0) = (char )'\000';
       return (res);
     }
   }
   if ((int const )*str == 37) {
-    *(res + i) = (char )'m';
-    i ++;
-    *(res + i) = (char )'o';
-    i ++;
-    *(res + i) = (char )'d';
-    i ++;
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'m';
+    i___0 ++;
+    *(res + i___0) = (char )'o';
+    i___0 ++;
+    *(res + i___0) = (char )'d';
+    i___0 ++;
+    *(res + i___0) = (char )'\000';
     str ++;
     (*pos) ++;
     token_type = (enum TOKENTYPE )1;
@@ -5870,13 +5898,13 @@ char *getNextToken(char const *str , int *pos , int length )
       if (! tmp___3) {
         break;
       }
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
       (*pos) ++;
-      i ++;
+      i___0 ++;
       token_type = (enum TOKENTYPE )1;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     return (res);
   }
   tmp___6 = isDigitDot(*str);
@@ -5886,13 +5914,13 @@ char *getNextToken(char const *str , int *pos , int length )
       if (! tmp___5) {
         break;
       }
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       (*pos) ++;
-      i ++;
+      i___0 ++;
       str ++;
       token_type = (enum TOKENTYPE )2;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     return (res);
   }
   tmp___10 = isAlpha(*str);
@@ -5905,10 +5933,10 @@ char *getNextToken(char const *str , int *pos , int length )
           break;
         }
       }
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
       (*pos) ++;
-      i ++;
+      i___0 ++;
       token_type = (enum TOKENTYPE )5;
     }
     if ((int const )*str == 40) {
@@ -5925,8 +5953,8 @@ char *getNextToken(char const *str , int *pos , int length )
     if ((int const )*str == 91) {
       token_type = (enum TOKENTYPE )4;
       while (1) {
-        *(res + i) = (char )*str;
-        i ++;
+        *(res + i___0) = (char )*str;
+        i___0 ++;
         (*pos) ++;
         if ((int const )*str == 93) {
           break;
@@ -5936,7 +5964,7 @@ char *getNextToken(char const *str , int *pos , int length )
     } else {
       token_type = (enum TOKENTYPE )5;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     return (res);
   }
   return ((char *)((void *)0));
@@ -5944,7 +5972,7 @@ char *getNextToken(char const *str , int *pos , int length )
 }
 char *getArrayName(char const *str )
 {
-  int i ;
+  int i___0 ;
   char *res ;
   size_t tmp ;
   void *tmp___0 ;
@@ -5952,17 +5980,17 @@ char *getArrayName(char const *str )
   int tmp___2 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = strlen(str);
   tmp___0 = malloc(tmp);
   res = (char *)tmp___0;
   if ((int const )*str != 42) {
     while ((int const )*str != 91) {
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
-      i ++;
+      i___0 ++;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
   } else
   if ((int const )*str == 42) {
     tmp___2 = isAlpha(*(str + 1));
@@ -5977,24 +6005,24 @@ char *getArrayName(char const *str )
     str ++;
     str ++;
     while ((int const )*str != 32) {
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
-      i ++;
+      i___0 ++;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
   }
   return (res);
 }
 }
 char *getPointerName(char const *str )
 {
-  int i ;
+  int i___0 ;
   char *res ;
   size_t tmp ;
   void *tmp___0 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = strlen(str);
   tmp___0 = malloc(tmp);
   res = (char *)tmp___0;
@@ -6002,17 +6030,17 @@ char *getPointerName(char const *str )
     str ++;
   }
   while ((int const )*str != 0) {
-    *(res + i) = (char )*str;
+    *(res + i___0) = (char )*str;
     str ++;
-    i ++;
+    i___0 ++;
   }
-  *(res + i) = (char )'\000';
+  *(res + i___0) = (char )'\000';
   return (res);
 }
 }
 char *getNextTokenFromConstraintSolver(char const *str , int *pos , int length )
 {
-  int i ;
+  int i___0 ;
   char *res ;
   void *tmp ;
   int tmp___0 ;
@@ -6026,20 +6054,20 @@ char *getNextTokenFromConstraintSolver(char const *str , int *pos , int length )
   int tmp___8 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = malloc((size_t )(length + 1));
   res = (char *)tmp;
   if ((int const )*str == 45) {
     tmp___0 = isDigitDot(*(str + 2));
     if (tmp___0) {
       while ((int const )*str != 41) {
-        *(res + i) = (char )*str;
+        *(res + i___0) = (char )*str;
         (*pos) ++;
-        i ++;
+        i___0 ++;
         str ++;
         token_type = (enum TOKENTYPE )2;
       }
-      *(res + i) = (char )'\000';
+      *(res + i___0) = (char )'\000';
       return (res);
     }
   }
@@ -6065,11 +6093,11 @@ char *getNextTokenFromConstraintSolver(char const *str , int *pos , int length )
   } else
   if ((int const )*str == 41) {
     _L:
-    *(res + i) = (char )*str;
+    *(res + i___0) = (char )*str;
     str ++;
     (*pos) ++;
-    i ++;
-    *(res + i) = (char )'\000';
+    i___0 ++;
+    *(res + i___0) = (char )'\000';
     token_type = (enum TOKENTYPE )0;
     return (res);
   }
@@ -6080,13 +6108,13 @@ char *getNextTokenFromConstraintSolver(char const *str , int *pos , int length )
       if (! tmp___3) {
         break;
       }
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       (*pos) ++;
-      i ++;
+      i___0 ++;
       str ++;
       token_type = (enum TOKENTYPE )2;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     return (res);
   }
   tmp___8 = isAlpha(*str);
@@ -6099,13 +6127,13 @@ char *getNextTokenFromConstraintSolver(char const *str , int *pos , int length )
           break;
         }
       }
-      *(res + i) = (char )*str;
+      *(res + i___0) = (char )*str;
       str ++;
       (*pos) ++;
-      i ++;
+      i___0 ++;
       token_type = (enum TOKENTYPE )5;
     }
-    *(res + i) = (char )'\000';
+    *(res + i___0) = (char )'\000';
     if ((int const )*str == 40) {
       token_type = (enum TOKENTYPE )6;
       while (1) {
@@ -6598,7 +6626,7 @@ void deleteArrayTable(void)
 void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val , void *address ,
                              int type )
 {
-  int i ;
+  int i___0 ;
   int len ;
   int parameter ;
   int j ;
@@ -6657,12 +6685,12 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   int tmp___45 ;
 
   {
-  i = 0;
+  i___0 = 0;
   tmp = calloc((size_t )2, sizeof(char ));
   result = (char *)tmp;
   tmp___0 = strlen((char const *)rhs);
   len = (int )tmp___0;
-  token = getNextToken((char const *)rhs, & i, len);
+  token = getNextToken((char const *)rhs, & i___0, len);
   while ((unsigned long )token != (unsigned long )((void *)0)) {
     switch ((int )token_type) {
     case 2:
@@ -6788,7 +6816,7 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     }
     break;
     }
-    token = getNextToken((char const *)(rhs + i), & i, len);
+    token = getNextToken((char const *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict )result, (char const * __restrict )"\000");
   add_entryToArraySTable(lhs, index___0, result, val, address, type);
@@ -11697,22 +11725,22 @@ void visitChildren(CDGNode *node___0 , int outcome )
 }
 void visitIfExists(CDGNode *node___0 , CDGNode **nodes___0 , int size )
 {
-  int i ;
+  int i___0 ;
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
 
   {
-  i = 0;
-  while (i < size) {
+  i___0 = 0;
+  while (i___0 < size) {
     tmp___0 = getID(node___0);
-    tmp___1 = getID(*(nodes___0 + i));
+    tmp___1 = getID(*(nodes___0 + i___0));
     if (tmp___0 == tmp___1) {
-      tmp = getOutcome(*(nodes___0 + i));
+      tmp = getOutcome(*(nodes___0 + i___0));
       visitChildren(node___0, tmp);
       return;
     }
-    i ++;
+    i___0 ++;
   }
   return;
 }
@@ -12350,13 +12378,13 @@ void sortPath(void)
   CDGPath *next_curr ;
   CDGPath *prev_curr ;
   int l1 ;
-  int i ;
+  int i___0 ;
   int j ;
   int tmp ;
 
   {
   curr = newSATPath;
-  i = 1;
+  i___0 = 1;
   prev_curr = newSATPath;
   while ((unsigned long )curr != (unsigned long )((void *)0)) {
     printf((char const * __restrict )"id = %d\n", (curr->node)->id);
@@ -12366,7 +12394,7 @@ void sortPath(void)
     temp = newSATPath;
     next_curr = curr->next;
     while (1) {
-      if (j < i) {
+      if (j < i___0) {
         tmp = getPathLength(temp->node);
         if (! (l1 < tmp)) {
           break;
@@ -12378,10 +12406,10 @@ void sortPath(void)
       temp = getNextPath(temp);
       j ++;
     }
-    if (j == i) {
+    if (j == i___0) {
       prev_curr = curr;
       curr = next_curr;
-      i ++;
+      i___0 ++;
       continue;
     }
     if ((unsigned long )save == (unsigned long )temp) {
@@ -12393,7 +12421,7 @@ void sortPath(void)
       curr->next = temp;
       prev_curr->next = next_curr;
     }
-    i ++;
+    i___0 ++;
     curr = next_curr;
   }
   curr = newSATPath;
@@ -12531,7 +12559,7 @@ int getMaxFeasible(void)
   char *token ;
   char *condition ;
   int infeasible ;
-  int i ;
+  int i___0 ;
   void *tmp___0 ;
   int tmp___1 ;
   size_t tmp___2 ;
@@ -12543,22 +12571,22 @@ int getMaxFeasible(void)
   char result[1000] ;
   char *tmp___6 ;
   int tmp___7 ;
-  int i___0 ;
+  int i___1 ;
 
   {
   tmp = newBlankNode();
   pathNode___0 = (CDGPath *)tmp;
-  i = 0;
+  i___0 = 0;
   tmp___0 = malloc(2UL * sizeof(char ));
   condition = (char *)tmp___0;
   currPath = pathHead;
   strcpy((char * __restrict )condition, (char const * __restrict )"");
-  while (i < pathRank) {
+  while (i___0 < pathRank) {
     currPath = currPath->next;
     if ((unsigned long )currPath == (unsigned long )((void *)0)) {
       return (0);
     }
-    i ++;
+    i___0 ++;
   }
   new_head = newNode((currPath->node)->id, (currPath->node)->score, (currPath->node)->outcome,
                      (char const *)(currPath->node)->expr, (CDGNode *)((void *)0),
@@ -12614,24 +12642,24 @@ int getMaxFeasible(void)
   curr = (currPath->node)->next;
   save = new_head;
   if ((int )result[0] != 0) {
-    i___0 = 0;
+    i___1 = 0;
     token = strtok((char * __restrict )(result), (char const * __restrict )" ");
     while ((unsigned long )token != (unsigned long )((void *)0)) {
       infeasible = atoi((char const *)token);
       token = strtok((char * __restrict )((void *)0), (char const * __restrict )" ");
-      while (i___0 < infeasible) {
+      while (i___1 < infeasible) {
         new_curr = newNode(curr->id, curr->score, curr->outcome, (char const *)curr->expr,
                            (CDGNode *)((void *)0), (CDGNode *)((void *)0), save, (CDGNode *)((void *)0));
         save->next = new_curr;
         save = new_curr;
         curr = curr->next;
-        i___0 ++;
+        i___1 ++;
       }
       if ((unsigned long )((void *)0) == (unsigned long )curr) {
         break;
       }
       curr = curr->next;
-      i___0 ++;
+      i___1 ++;
     }
   }
   while ((unsigned long )curr != (unsigned long )((void *)0)) {
@@ -12655,7 +12683,7 @@ int getTestCases(void)
   float percent ;
   float orgPercent ;
   int atleastOneConditionNotCovered ;
-  int i ;
+  int i___0 ;
   int tmp ;
   int tmp___0 ;
   int tmp___1 ;
@@ -12678,7 +12706,7 @@ int getTestCases(void)
 
   {
   atleastOneConditionNotCovered = 0;
-  i = 0;
+  i___0 = 0;
   currPath = newSATPath;
   tmp___1 = countOrgTotalConditions();
   if (tmp___1 == 0) {
@@ -12708,7 +12736,7 @@ int getTestCases(void)
       countAttempts = 0;
     }
   }
-  while (i < pathRank) {
+  while (i___0 < pathRank) {
     currPath = currPath->next;
     if ((unsigned long )currPath == (unsigned long )((void *)0)) {
       print_conditions();
@@ -12731,7 +12759,7 @@ int getTestCases(void)
       CDG_Module = 0;
       return (0);
     }
-    i ++;
+    i___0 ++;
   }
   curr = currPath->node;
   savePath = currPath->node;
@@ -12784,9 +12812,1661 @@ int getTestCases(void)
   return (1);
 }
 }
-#pragma merger("0","./stack.i","-g,-g")
-int stackSize(Stack *s ) ;
+#pragma merger("0","./helperNew.i","-g,-g")
+extern __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2), __leaf__)) strncpy)(char * __restrict __dest ,
+                                                                                                  char const * __restrict __src ,
+                                                                                                  size_t __n ) ;
+extern __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1), __leaf__)) strdup)(char const *__s ) __attribute__((__malloc__)) ;
+extern __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1), __leaf__)) strrchr)(char const *__s ,
+                                                                                                int __c ) __attribute__((__pure__)) ;
+extern __attribute__((__nothrow__)) double ( __attribute__((__nonnull__(1), __leaf__)) atof)(char const *__nptr ) __attribute__((__pure__)) ;
+int programFlag = 0;
+vnameHash *vnames = (vnameHash *)((void *)0);
+int stackInitFlag = 0;
+void *symStack = (void *)0;
+int i = 0;
+char **varNames = (char **)((void *)0);
+void add_vnameHash(char *key , char *value )
+{
+  vnameHash *v ;
+  unsigned int _hf_bkt ;
+  unsigned int _hf_hashv ;
+  unsigned int _hj_i ;
+  unsigned int _hj_j ;
+  unsigned int _hj_k ;
+  unsigned char *_hj_key ;
+  size_t tmp ;
+  size_t tmp___0 ;
+  size_t tmp___1 ;
+  int tmp___2 ;
+  size_t tmp___3 ;
+  void *tmp___4 ;
+  unsigned int _ha_bkt ;
+  size_t tmp___5 ;
+  void *tmp___6 ;
+  void *tmp___7 ;
+  unsigned int _hj_i___0 ;
+  unsigned int _hj_j___0 ;
+  unsigned int _hj_k___0 ;
+  unsigned char *_hj_key___0 ;
+  size_t tmp___8 ;
+  size_t tmp___9 ;
+  unsigned int _he_bkt ;
+  unsigned int _he_bkt_i ;
+  struct UT_hash_handle *_he_thh ;
+  struct UT_hash_handle *_he_hh_nxt ;
+  UT_hash_bucket *_he_new_buckets ;
+  UT_hash_bucket *_he_newbkt ;
+  void *tmp___10 ;
+  int tmp___11 ;
+  unsigned int _hd_bkt ;
+  struct UT_hash_handle *_hd_hh_del ;
+  void *tmp___12 ;
+  unsigned int _ha_bkt___0 ;
+  size_t tmp___13 ;
+  void *tmp___14 ;
+  void *tmp___15 ;
+  unsigned int _hj_i___1 ;
+  unsigned int _hj_j___1 ;
+  unsigned int _hj_k___1 ;
+  unsigned char *_hj_key___1 ;
+  size_t tmp___16 ;
+  size_t tmp___17 ;
+  unsigned int _he_bkt___0 ;
+  unsigned int _he_bkt_i___0 ;
+  struct UT_hash_handle *_he_thh___0 ;
+  struct UT_hash_handle *_he_hh_nxt___0 ;
+  UT_hash_bucket *_he_new_buckets___0 ;
+  UT_hash_bucket *_he_newbkt___0 ;
+  void *tmp___18 ;
+  int tmp___19 ;
+
+  {
+  while (1) {
+    v = (vnameHash *)((void *)0);
+    if (vnames) {
+      while (1) {
+        _hj_key = (unsigned char *)key;
+        _hf_hashv = 4276993775U;
+        _hj_j = 2654435769U;
+        _hj_i = _hj_j;
+        tmp = strlen((char const *)key);
+        _hj_k = (unsigned int )tmp;
+        while (_hj_k >= 12U) {
+          _hj_i += (((unsigned int )*(_hj_key + 0) + ((unsigned int )*(_hj_key + 1) << 8)) + ((unsigned int )*(_hj_key + 2) << 16)) + ((unsigned int )*(_hj_key + 3) << 24);
+          _hj_j += (((unsigned int )*(_hj_key + 4) + ((unsigned int )*(_hj_key + 5) << 8)) + ((unsigned int )*(_hj_key + 6) << 16)) + ((unsigned int )*(_hj_key + 7) << 24);
+          _hf_hashv += (((unsigned int )*(_hj_key + 8) + ((unsigned int )*(_hj_key + 9) << 8)) + ((unsigned int )*(_hj_key + 10) << 16)) + ((unsigned int )*(_hj_key + 11) << 24);
+          while (1) {
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 13;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 8;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 13;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 12;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 16;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 5;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 3;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 10;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 15;
+            break;
+          }
+          _hj_key += 12;
+          _hj_k -= 12U;
+        }
+        tmp___0 = strlen((char const *)key);
+        _hf_hashv = (unsigned int )((size_t )_hf_hashv + tmp___0);
+        switch (_hj_k) {
+        case 11U:
+        _hf_hashv += (unsigned int )*(_hj_key + 10) << 24;
+        case 10U:
+        _hf_hashv += (unsigned int )*(_hj_key + 9) << 16;
+        case 9U:
+        _hf_hashv += (unsigned int )*(_hj_key + 8) << 8;
+        case 8U:
+        _hj_j += (unsigned int )*(_hj_key + 7) << 24;
+        case 7U:
+        _hj_j += (unsigned int )*(_hj_key + 6) << 16;
+        case 6U:
+        _hj_j += (unsigned int )*(_hj_key + 5) << 8;
+        case 5U:
+        _hj_j += (unsigned int )*(_hj_key + 4);
+        case 4U:
+        _hj_i += (unsigned int )*(_hj_key + 3) << 24;
+        case 3U:
+        _hj_i += (unsigned int )*(_hj_key + 2) << 16;
+        case 2U:
+        _hj_i += (unsigned int )*(_hj_key + 1) << 8;
+        case 1U:
+        _hj_i += (unsigned int )*(_hj_key + 0);
+        }
+        while (1) {
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 13;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 8;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 13;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 12;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 16;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 5;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 3;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 10;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 15;
+          break;
+        }
+        _hf_bkt = _hf_hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        if (((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head) {
+          while (1) {
+            v = (vnameHash *)((void *)((char *)((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head - (vnames->hh.tbl)->hho));
+            break;
+          }
+        } else {
+          v = (vnameHash *)((void *)0);
+        }
+        while (v) {
+          tmp___3 = strlen((char const *)key);
+          if ((size_t )v->hh.keylen == tmp___3) {
+            tmp___1 = strlen((char const *)key);
+            tmp___2 = memcmp((void const *)v->hh.key, (void const *)key, tmp___1);
+            if (tmp___2 == 0) {
+              break;
+            }
+          }
+          if (v->hh.hh_next) {
+            while (1) {
+              v = (vnameHash *)((void *)((char *)v->hh.hh_next - (vnames->hh.tbl)->hho));
+              break;
+            }
+          } else {
+            v = (vnameHash *)((void *)0);
+          }
+        }
+        break;
+      }
+    }
+    break;
+  }
+  if ((unsigned long )v == (unsigned long )((void *)0)) {
+    tmp___4 = malloc(sizeof(vnameHash ));
+    v = (vnameHash *)tmp___4;
+    strcpy((char * __restrict )(v->vname_occ), (char const * __restrict )value);
+    strcpy((char * __restrict )(v->vname), (char const * __restrict )key);
+    while (1) {
+      v->hh.next = (void *)0;
+      v->hh.key = (void *)(& v->vname[0]);
+      tmp___5 = strlen((char const *)(v->vname));
+      v->hh.keylen = (unsigned int )tmp___5;
+      if (! vnames) {
+        vnames = v;
+        vnames->hh.prev = (void *)0;
+        while (1) {
+          tmp___6 = malloc(sizeof(UT_hash_table ));
+          vnames->hh.tbl = (UT_hash_table *)tmp___6;
+          if (! vnames->hh.tbl) {
+            exit(-1);
+          }
+          memset((void *)vnames->hh.tbl, 0, sizeof(UT_hash_table ));
+          (vnames->hh.tbl)->tail = & vnames->hh;
+          (vnames->hh.tbl)->num_buckets = 32U;
+          (vnames->hh.tbl)->log2_num_buckets = 5U;
+          (vnames->hh.tbl)->hho = (char *)(& vnames->hh) - (char *)vnames;
+          tmp___7 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (vnames->hh.tbl)->buckets = (UT_hash_bucket *)tmp___7;
+          if (! (vnames->hh.tbl)->buckets) {
+            exit(-1);
+          }
+          memset((void *)(vnames->hh.tbl)->buckets, 0, 32UL * sizeof(struct UT_hash_bucket ));
+          (vnames->hh.tbl)->signature = 2685476833U;
+          break;
+        }
+      } else {
+        ((vnames->hh.tbl)->tail)->next = (void *)v;
+        v->hh.prev = (void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho);
+        (vnames->hh.tbl)->tail = & v->hh;
+      }
+      ((vnames->hh.tbl)->num_items) ++;
+      v->hh.tbl = vnames->hh.tbl;
+      while (1) {
+        _hj_key___0 = (unsigned char *)(& v->vname[0]);
+        v->hh.hashv = 4276993775U;
+        _hj_j___0 = 2654435769U;
+        _hj_i___0 = _hj_j___0;
+        tmp___8 = strlen((char const *)(v->vname));
+        _hj_k___0 = (unsigned int )tmp___8;
+        while (_hj_k___0 >= 12U) {
+          _hj_i___0 += (((unsigned int )*(_hj_key___0 + 0) + ((unsigned int )*(_hj_key___0 + 1) << 8)) + ((unsigned int )*(_hj_key___0 + 2) << 16)) + ((unsigned int )*(_hj_key___0 + 3) << 24);
+          _hj_j___0 += (((unsigned int )*(_hj_key___0 + 4) + ((unsigned int )*(_hj_key___0 + 5) << 8)) + ((unsigned int )*(_hj_key___0 + 6) << 16)) + ((unsigned int )*(_hj_key___0 + 7) << 24);
+          v->hh.hashv += (((unsigned int )*(_hj_key___0 + 8) + ((unsigned int )*(_hj_key___0 + 9) << 8)) + ((unsigned int )*(_hj_key___0 + 10) << 16)) + ((unsigned int )*(_hj_key___0 + 11) << 24);
+          while (1) {
+            _hj_i___0 -= _hj_j___0;
+            _hj_i___0 -= v->hh.hashv;
+            _hj_i___0 ^= v->hh.hashv >> 13;
+            _hj_j___0 -= v->hh.hashv;
+            _hj_j___0 -= _hj_i___0;
+            _hj_j___0 ^= _hj_i___0 << 8;
+            v->hh.hashv -= _hj_i___0;
+            v->hh.hashv -= _hj_j___0;
+            v->hh.hashv ^= _hj_j___0 >> 13;
+            _hj_i___0 -= _hj_j___0;
+            _hj_i___0 -= v->hh.hashv;
+            _hj_i___0 ^= v->hh.hashv >> 12;
+            _hj_j___0 -= v->hh.hashv;
+            _hj_j___0 -= _hj_i___0;
+            _hj_j___0 ^= _hj_i___0 << 16;
+            v->hh.hashv -= _hj_i___0;
+            v->hh.hashv -= _hj_j___0;
+            v->hh.hashv ^= _hj_j___0 >> 5;
+            _hj_i___0 -= _hj_j___0;
+            _hj_i___0 -= v->hh.hashv;
+            _hj_i___0 ^= v->hh.hashv >> 3;
+            _hj_j___0 -= v->hh.hashv;
+            _hj_j___0 -= _hj_i___0;
+            _hj_j___0 ^= _hj_i___0 << 10;
+            v->hh.hashv -= _hj_i___0;
+            v->hh.hashv -= _hj_j___0;
+            v->hh.hashv ^= _hj_j___0 >> 15;
+            break;
+          }
+          _hj_key___0 += 12;
+          _hj_k___0 -= 12U;
+        }
+        tmp___9 = strlen((char const *)(v->vname));
+        v->hh.hashv = (unsigned int )((size_t )v->hh.hashv + tmp___9);
+        switch (_hj_k___0) {
+        case 11U:
+        v->hh.hashv += (unsigned int )*(_hj_key___0 + 10) << 24;
+        case 10U:
+        v->hh.hashv += (unsigned int )*(_hj_key___0 + 9) << 16;
+        case 9U:
+        v->hh.hashv += (unsigned int )*(_hj_key___0 + 8) << 8;
+        case 8U:
+        _hj_j___0 += (unsigned int )*(_hj_key___0 + 7) << 24;
+        case 7U:
+        _hj_j___0 += (unsigned int )*(_hj_key___0 + 6) << 16;
+        case 6U:
+        _hj_j___0 += (unsigned int )*(_hj_key___0 + 5) << 8;
+        case 5U:
+        _hj_j___0 += (unsigned int )*(_hj_key___0 + 4);
+        case 4U:
+        _hj_i___0 += (unsigned int )*(_hj_key___0 + 3) << 24;
+        case 3U:
+        _hj_i___0 += (unsigned int )*(_hj_key___0 + 2) << 16;
+        case 2U:
+        _hj_i___0 += (unsigned int )*(_hj_key___0 + 1) << 8;
+        case 1U:
+        _hj_i___0 += (unsigned int )*(_hj_key___0 + 0);
+        }
+        while (1) {
+          _hj_i___0 -= _hj_j___0;
+          _hj_i___0 -= v->hh.hashv;
+          _hj_i___0 ^= v->hh.hashv >> 13;
+          _hj_j___0 -= v->hh.hashv;
+          _hj_j___0 -= _hj_i___0;
+          _hj_j___0 ^= _hj_i___0 << 8;
+          v->hh.hashv -= _hj_i___0;
+          v->hh.hashv -= _hj_j___0;
+          v->hh.hashv ^= _hj_j___0 >> 13;
+          _hj_i___0 -= _hj_j___0;
+          _hj_i___0 -= v->hh.hashv;
+          _hj_i___0 ^= v->hh.hashv >> 12;
+          _hj_j___0 -= v->hh.hashv;
+          _hj_j___0 -= _hj_i___0;
+          _hj_j___0 ^= _hj_i___0 << 16;
+          v->hh.hashv -= _hj_i___0;
+          v->hh.hashv -= _hj_j___0;
+          v->hh.hashv ^= _hj_j___0 >> 5;
+          _hj_i___0 -= _hj_j___0;
+          _hj_i___0 -= v->hh.hashv;
+          _hj_i___0 ^= v->hh.hashv >> 3;
+          _hj_j___0 -= v->hh.hashv;
+          _hj_j___0 -= _hj_i___0;
+          _hj_j___0 ^= _hj_i___0 << 10;
+          v->hh.hashv -= _hj_i___0;
+          v->hh.hashv -= _hj_j___0;
+          v->hh.hashv ^= _hj_j___0 >> 15;
+          break;
+        }
+        _ha_bkt = v->hh.hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        (((vnames->hh.tbl)->buckets + _ha_bkt)->count) ++;
+        v->hh.hh_next = ((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head;
+        v->hh.hh_prev = (struct UT_hash_handle *)((void *)0);
+        if (((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head) {
+          (((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head)->hh_prev = & v->hh;
+        }
+        ((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head = & v->hh;
+        if (((vnames->hh.tbl)->buckets + _ha_bkt)->count >= (((vnames->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
+          if ((v->hh.tbl)->noexpand != 1U) {
+            while (1) {
+              tmp___10 = malloc((unsigned long )(2U * (v->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets = (UT_hash_bucket *)tmp___10;
+              if (! _he_new_buckets) {
+                exit(-1);
+              }
+              memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (v->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              if ((v->hh.tbl)->num_items & ((v->hh.tbl)->num_buckets * 2U - 1U)) {
+                tmp___11 = 1;
+              } else {
+                tmp___11 = 0;
+              }
+              (v->hh.tbl)->ideal_chain_maxlen = ((v->hh.tbl)->num_items >> ((v->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___11;
+              (v->hh.tbl)->nonideal_items = 0U;
+              _he_bkt_i = 0U;
+              while (_he_bkt_i < (v->hh.tbl)->num_buckets) {
+                _he_thh = ((v->hh.tbl)->buckets + _he_bkt_i)->hh_head;
+                while (_he_thh) {
+                  _he_hh_nxt = _he_thh->hh_next;
+                  while (1) {
+                    _he_bkt = _he_thh->hashv & ((v->hh.tbl)->num_buckets * 2U - 1U);
+                    break;
+                  }
+                  _he_newbkt = _he_new_buckets + _he_bkt;
+                  (_he_newbkt->count) ++;
+                  if (_he_newbkt->count > (v->hh.tbl)->ideal_chain_maxlen) {
+                    ((v->hh.tbl)->nonideal_items) ++;
+                    _he_newbkt->expand_mult = _he_newbkt->count / (v->hh.tbl)->ideal_chain_maxlen;
+                  }
+                  _he_thh->hh_prev = (struct UT_hash_handle *)((void *)0);
+                  _he_thh->hh_next = _he_newbkt->hh_head;
+                  if (_he_newbkt->hh_head) {
+                    (_he_newbkt->hh_head)->hh_prev = _he_thh;
+                  }
+                  _he_newbkt->hh_head = _he_thh;
+                  _he_thh = _he_hh_nxt;
+                }
+                _he_bkt_i ++;
+              }
+              free((void *)(v->hh.tbl)->buckets);
+              (v->hh.tbl)->num_buckets *= 2U;
+              ((v->hh.tbl)->log2_num_buckets) ++;
+              (v->hh.tbl)->buckets = _he_new_buckets;
+              if ((v->hh.tbl)->nonideal_items > (v->hh.tbl)->num_items >> 1) {
+                ((v->hh.tbl)->ineff_expands) ++;
+              } else {
+                (v->hh.tbl)->ineff_expands = 0U;
+              }
+              if ((v->hh.tbl)->ineff_expands > 1U) {
+                (v->hh.tbl)->noexpand = 1U;
+              }
+              break;
+            }
+          }
+        }
+        break;
+      }
+      break;
+    }
+  } else {
+    while (1) {
+      if ((unsigned long )v->hh.prev == (unsigned long )((void *)0)) {
+        if ((unsigned long )v->hh.next == (unsigned long )((void *)0)) {
+          free((void *)(vnames->hh.tbl)->buckets);
+          free((void *)vnames->hh.tbl);
+          vnames = (vnameHash *)((void *)0);
+        } else {
+          goto _L;
+        }
+      } else {
+        _L:
+        _hd_hh_del = & v->hh;
+        if ((unsigned long )v == (unsigned long )((void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho))) {
+          (vnames->hh.tbl)->tail = (UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho);
+        }
+        if (v->hh.prev) {
+          ((UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho))->next = v->hh.next;
+        } else {
+          while (1) {
+            vnames = (vnameHash *)v->hh.next;
+            break;
+          }
+        }
+        if (_hd_hh_del->next) {
+          ((UT_hash_handle *)((ptrdiff_t )_hd_hh_del->next + (vnames->hh.tbl)->hho))->prev = _hd_hh_del->prev;
+        }
+        while (1) {
+          _hd_bkt = _hd_hh_del->hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+          break;
+        }
+        (((vnames->hh.tbl)->buckets + _hd_bkt)->count) --;
+        if ((unsigned long )((vnames->hh.tbl)->buckets + _hd_bkt)->hh_head == (unsigned long )_hd_hh_del) {
+          ((vnames->hh.tbl)->buckets + _hd_bkt)->hh_head = _hd_hh_del->hh_next;
+        }
+        if (_hd_hh_del->hh_prev) {
+          (_hd_hh_del->hh_prev)->hh_next = _hd_hh_del->hh_next;
+        }
+        if (_hd_hh_del->hh_next) {
+          (_hd_hh_del->hh_next)->hh_prev = _hd_hh_del->hh_prev;
+        }
+        ((vnames->hh.tbl)->num_items) --;
+      }
+      break;
+    }
+    tmp___12 = malloc(sizeof(vnameHash ));
+    v = (vnameHash *)tmp___12;
+    strcpy((char * __restrict )(v->vname_occ), (char const * __restrict )value);
+    strcpy((char * __restrict )(v->vname), (char const * __restrict )key);
+    while (1) {
+      v->hh.next = (void *)0;
+      v->hh.key = (void *)(& v->vname[0]);
+      tmp___13 = strlen((char const *)(v->vname));
+      v->hh.keylen = (unsigned int )tmp___13;
+      if (! vnames) {
+        vnames = v;
+        vnames->hh.prev = (void *)0;
+        while (1) {
+          tmp___14 = malloc(sizeof(UT_hash_table ));
+          vnames->hh.tbl = (UT_hash_table *)tmp___14;
+          if (! vnames->hh.tbl) {
+            exit(-1);
+          }
+          memset((void *)vnames->hh.tbl, 0, sizeof(UT_hash_table ));
+          (vnames->hh.tbl)->tail = & vnames->hh;
+          (vnames->hh.tbl)->num_buckets = 32U;
+          (vnames->hh.tbl)->log2_num_buckets = 5U;
+          (vnames->hh.tbl)->hho = (char *)(& vnames->hh) - (char *)vnames;
+          tmp___15 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (vnames->hh.tbl)->buckets = (UT_hash_bucket *)tmp___15;
+          if (! (vnames->hh.tbl)->buckets) {
+            exit(-1);
+          }
+          memset((void *)(vnames->hh.tbl)->buckets, 0, 32UL * sizeof(struct UT_hash_bucket ));
+          (vnames->hh.tbl)->signature = 2685476833U;
+          break;
+        }
+      } else {
+        ((vnames->hh.tbl)->tail)->next = (void *)v;
+        v->hh.prev = (void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho);
+        (vnames->hh.tbl)->tail = & v->hh;
+      }
+      ((vnames->hh.tbl)->num_items) ++;
+      v->hh.tbl = vnames->hh.tbl;
+      while (1) {
+        _hj_key___1 = (unsigned char *)(& v->vname[0]);
+        v->hh.hashv = 4276993775U;
+        _hj_j___1 = 2654435769U;
+        _hj_i___1 = _hj_j___1;
+        tmp___16 = strlen((char const *)(v->vname));
+        _hj_k___1 = (unsigned int )tmp___16;
+        while (_hj_k___1 >= 12U) {
+          _hj_i___1 += (((unsigned int )*(_hj_key___1 + 0) + ((unsigned int )*(_hj_key___1 + 1) << 8)) + ((unsigned int )*(_hj_key___1 + 2) << 16)) + ((unsigned int )*(_hj_key___1 + 3) << 24);
+          _hj_j___1 += (((unsigned int )*(_hj_key___1 + 4) + ((unsigned int )*(_hj_key___1 + 5) << 8)) + ((unsigned int )*(_hj_key___1 + 6) << 16)) + ((unsigned int )*(_hj_key___1 + 7) << 24);
+          v->hh.hashv += (((unsigned int )*(_hj_key___1 + 8) + ((unsigned int )*(_hj_key___1 + 9) << 8)) + ((unsigned int )*(_hj_key___1 + 10) << 16)) + ((unsigned int )*(_hj_key___1 + 11) << 24);
+          while (1) {
+            _hj_i___1 -= _hj_j___1;
+            _hj_i___1 -= v->hh.hashv;
+            _hj_i___1 ^= v->hh.hashv >> 13;
+            _hj_j___1 -= v->hh.hashv;
+            _hj_j___1 -= _hj_i___1;
+            _hj_j___1 ^= _hj_i___1 << 8;
+            v->hh.hashv -= _hj_i___1;
+            v->hh.hashv -= _hj_j___1;
+            v->hh.hashv ^= _hj_j___1 >> 13;
+            _hj_i___1 -= _hj_j___1;
+            _hj_i___1 -= v->hh.hashv;
+            _hj_i___1 ^= v->hh.hashv >> 12;
+            _hj_j___1 -= v->hh.hashv;
+            _hj_j___1 -= _hj_i___1;
+            _hj_j___1 ^= _hj_i___1 << 16;
+            v->hh.hashv -= _hj_i___1;
+            v->hh.hashv -= _hj_j___1;
+            v->hh.hashv ^= _hj_j___1 >> 5;
+            _hj_i___1 -= _hj_j___1;
+            _hj_i___1 -= v->hh.hashv;
+            _hj_i___1 ^= v->hh.hashv >> 3;
+            _hj_j___1 -= v->hh.hashv;
+            _hj_j___1 -= _hj_i___1;
+            _hj_j___1 ^= _hj_i___1 << 10;
+            v->hh.hashv -= _hj_i___1;
+            v->hh.hashv -= _hj_j___1;
+            v->hh.hashv ^= _hj_j___1 >> 15;
+            break;
+          }
+          _hj_key___1 += 12;
+          _hj_k___1 -= 12U;
+        }
+        tmp___17 = strlen((char const *)(v->vname));
+        v->hh.hashv = (unsigned int )((size_t )v->hh.hashv + tmp___17);
+        switch (_hj_k___1) {
+        case 11U:
+        v->hh.hashv += (unsigned int )*(_hj_key___1 + 10) << 24;
+        case 10U:
+        v->hh.hashv += (unsigned int )*(_hj_key___1 + 9) << 16;
+        case 9U:
+        v->hh.hashv += (unsigned int )*(_hj_key___1 + 8) << 8;
+        case 8U:
+        _hj_j___1 += (unsigned int )*(_hj_key___1 + 7) << 24;
+        case 7U:
+        _hj_j___1 += (unsigned int )*(_hj_key___1 + 6) << 16;
+        case 6U:
+        _hj_j___1 += (unsigned int )*(_hj_key___1 + 5) << 8;
+        case 5U:
+        _hj_j___1 += (unsigned int )*(_hj_key___1 + 4);
+        case 4U:
+        _hj_i___1 += (unsigned int )*(_hj_key___1 + 3) << 24;
+        case 3U:
+        _hj_i___1 += (unsigned int )*(_hj_key___1 + 2) << 16;
+        case 2U:
+        _hj_i___1 += (unsigned int )*(_hj_key___1 + 1) << 8;
+        case 1U:
+        _hj_i___1 += (unsigned int )*(_hj_key___1 + 0);
+        }
+        while (1) {
+          _hj_i___1 -= _hj_j___1;
+          _hj_i___1 -= v->hh.hashv;
+          _hj_i___1 ^= v->hh.hashv >> 13;
+          _hj_j___1 -= v->hh.hashv;
+          _hj_j___1 -= _hj_i___1;
+          _hj_j___1 ^= _hj_i___1 << 8;
+          v->hh.hashv -= _hj_i___1;
+          v->hh.hashv -= _hj_j___1;
+          v->hh.hashv ^= _hj_j___1 >> 13;
+          _hj_i___1 -= _hj_j___1;
+          _hj_i___1 -= v->hh.hashv;
+          _hj_i___1 ^= v->hh.hashv >> 12;
+          _hj_j___1 -= v->hh.hashv;
+          _hj_j___1 -= _hj_i___1;
+          _hj_j___1 ^= _hj_i___1 << 16;
+          v->hh.hashv -= _hj_i___1;
+          v->hh.hashv -= _hj_j___1;
+          v->hh.hashv ^= _hj_j___1 >> 5;
+          _hj_i___1 -= _hj_j___1;
+          _hj_i___1 -= v->hh.hashv;
+          _hj_i___1 ^= v->hh.hashv >> 3;
+          _hj_j___1 -= v->hh.hashv;
+          _hj_j___1 -= _hj_i___1;
+          _hj_j___1 ^= _hj_i___1 << 10;
+          v->hh.hashv -= _hj_i___1;
+          v->hh.hashv -= _hj_j___1;
+          v->hh.hashv ^= _hj_j___1 >> 15;
+          break;
+        }
+        _ha_bkt___0 = v->hh.hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        (((vnames->hh.tbl)->buckets + _ha_bkt___0)->count) ++;
+        v->hh.hh_next = ((vnames->hh.tbl)->buckets + _ha_bkt___0)->hh_head;
+        v->hh.hh_prev = (struct UT_hash_handle *)((void *)0);
+        if (((vnames->hh.tbl)->buckets + _ha_bkt___0)->hh_head) {
+          (((vnames->hh.tbl)->buckets + _ha_bkt___0)->hh_head)->hh_prev = & v->hh;
+        }
+        ((vnames->hh.tbl)->buckets + _ha_bkt___0)->hh_head = & v->hh;
+        if (((vnames->hh.tbl)->buckets + _ha_bkt___0)->count >= (((vnames->hh.tbl)->buckets + _ha_bkt___0)->expand_mult + 1U) * 10U) {
+          if ((v->hh.tbl)->noexpand != 1U) {
+            while (1) {
+              tmp___18 = malloc((unsigned long )(2U * (v->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets___0 = (UT_hash_bucket *)tmp___18;
+              if (! _he_new_buckets___0) {
+                exit(-1);
+              }
+              memset((void *)_he_new_buckets___0, 0, (unsigned long )(2U * (v->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              if ((v->hh.tbl)->num_items & ((v->hh.tbl)->num_buckets * 2U - 1U)) {
+                tmp___19 = 1;
+              } else {
+                tmp___19 = 0;
+              }
+              (v->hh.tbl)->ideal_chain_maxlen = ((v->hh.tbl)->num_items >> ((v->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___19;
+              (v->hh.tbl)->nonideal_items = 0U;
+              _he_bkt_i___0 = 0U;
+              while (_he_bkt_i___0 < (v->hh.tbl)->num_buckets) {
+                _he_thh___0 = ((v->hh.tbl)->buckets + _he_bkt_i___0)->hh_head;
+                while (_he_thh___0) {
+                  _he_hh_nxt___0 = _he_thh___0->hh_next;
+                  while (1) {
+                    _he_bkt___0 = _he_thh___0->hashv & ((v->hh.tbl)->num_buckets * 2U - 1U);
+                    break;
+                  }
+                  _he_newbkt___0 = _he_new_buckets___0 + _he_bkt___0;
+                  (_he_newbkt___0->count) ++;
+                  if (_he_newbkt___0->count > (v->hh.tbl)->ideal_chain_maxlen) {
+                    ((v->hh.tbl)->nonideal_items) ++;
+                    _he_newbkt___0->expand_mult = _he_newbkt___0->count / (v->hh.tbl)->ideal_chain_maxlen;
+                  }
+                  _he_thh___0->hh_prev = (struct UT_hash_handle *)((void *)0);
+                  _he_thh___0->hh_next = _he_newbkt___0->hh_head;
+                  if (_he_newbkt___0->hh_head) {
+                    (_he_newbkt___0->hh_head)->hh_prev = _he_thh___0;
+                  }
+                  _he_newbkt___0->hh_head = _he_thh___0;
+                  _he_thh___0 = _he_hh_nxt___0;
+                }
+                _he_bkt_i___0 ++;
+              }
+              free((void *)(v->hh.tbl)->buckets);
+              (v->hh.tbl)->num_buckets *= 2U;
+              ((v->hh.tbl)->log2_num_buckets) ++;
+              (v->hh.tbl)->buckets = _he_new_buckets___0;
+              if ((v->hh.tbl)->nonideal_items > (v->hh.tbl)->num_items >> 1) {
+                ((v->hh.tbl)->ineff_expands) ++;
+              } else {
+                (v->hh.tbl)->ineff_expands = 0U;
+              }
+              if ((v->hh.tbl)->ineff_expands > 1U) {
+                (v->hh.tbl)->noexpand = 1U;
+              }
+              break;
+            }
+          }
+        }
+        break;
+      }
+      break;
+    }
+  }
+  return;
+}
+}
+char *get_vnameHash(char *key )
+{
+  vnameHash *v ;
+  unsigned int _hf_bkt ;
+  unsigned int _hf_hashv ;
+  unsigned int _hj_i ;
+  unsigned int _hj_j ;
+  unsigned int _hj_k ;
+  unsigned char *_hj_key ;
+  size_t tmp ;
+  size_t tmp___0 ;
+  size_t tmp___1 ;
+  int tmp___2 ;
+  size_t tmp___3 ;
+
+  {
+  while (1) {
+    v = (vnameHash *)((void *)0);
+    if (vnames) {
+      while (1) {
+        _hj_key = (unsigned char *)key;
+        _hf_hashv = 4276993775U;
+        _hj_j = 2654435769U;
+        _hj_i = _hj_j;
+        tmp = strlen((char const *)key);
+        _hj_k = (unsigned int )tmp;
+        while (_hj_k >= 12U) {
+          _hj_i += (((unsigned int )*(_hj_key + 0) + ((unsigned int )*(_hj_key + 1) << 8)) + ((unsigned int )*(_hj_key + 2) << 16)) + ((unsigned int )*(_hj_key + 3) << 24);
+          _hj_j += (((unsigned int )*(_hj_key + 4) + ((unsigned int )*(_hj_key + 5) << 8)) + ((unsigned int )*(_hj_key + 6) << 16)) + ((unsigned int )*(_hj_key + 7) << 24);
+          _hf_hashv += (((unsigned int )*(_hj_key + 8) + ((unsigned int )*(_hj_key + 9) << 8)) + ((unsigned int )*(_hj_key + 10) << 16)) + ((unsigned int )*(_hj_key + 11) << 24);
+          while (1) {
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 13;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 8;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 13;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 12;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 16;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 5;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 3;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 10;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 15;
+            break;
+          }
+          _hj_key += 12;
+          _hj_k -= 12U;
+        }
+        tmp___0 = strlen((char const *)key);
+        _hf_hashv = (unsigned int )((size_t )_hf_hashv + tmp___0);
+        switch (_hj_k) {
+        case 11U:
+        _hf_hashv += (unsigned int )*(_hj_key + 10) << 24;
+        case 10U:
+        _hf_hashv += (unsigned int )*(_hj_key + 9) << 16;
+        case 9U:
+        _hf_hashv += (unsigned int )*(_hj_key + 8) << 8;
+        case 8U:
+        _hj_j += (unsigned int )*(_hj_key + 7) << 24;
+        case 7U:
+        _hj_j += (unsigned int )*(_hj_key + 6) << 16;
+        case 6U:
+        _hj_j += (unsigned int )*(_hj_key + 5) << 8;
+        case 5U:
+        _hj_j += (unsigned int )*(_hj_key + 4);
+        case 4U:
+        _hj_i += (unsigned int )*(_hj_key + 3) << 24;
+        case 3U:
+        _hj_i += (unsigned int )*(_hj_key + 2) << 16;
+        case 2U:
+        _hj_i += (unsigned int )*(_hj_key + 1) << 8;
+        case 1U:
+        _hj_i += (unsigned int )*(_hj_key + 0);
+        }
+        while (1) {
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 13;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 8;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 13;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 12;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 16;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 5;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 3;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 10;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 15;
+          break;
+        }
+        _hf_bkt = _hf_hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        if (((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head) {
+          while (1) {
+            v = (vnameHash *)((void *)((char *)((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head - (vnames->hh.tbl)->hho));
+            break;
+          }
+        } else {
+          v = (vnameHash *)((void *)0);
+        }
+        while (v) {
+          tmp___3 = strlen((char const *)key);
+          if ((size_t )v->hh.keylen == tmp___3) {
+            tmp___1 = strlen((char const *)key);
+            tmp___2 = memcmp((void const *)v->hh.key, (void const *)key, tmp___1);
+            if (tmp___2 == 0) {
+              break;
+            }
+          }
+          if (v->hh.hh_next) {
+            while (1) {
+              v = (vnameHash *)((void *)((char *)v->hh.hh_next - (vnames->hh.tbl)->hho));
+              break;
+            }
+          } else {
+            v = (vnameHash *)((void *)0);
+          }
+        }
+        break;
+      }
+    }
+    break;
+  }
+  if ((unsigned long )v != (unsigned long )((void *)0)) {
+    return (v->vname_occ);
+  }
+  return ((char *)0);
+}
+}
+void del_vnameHash(char *key )
+{
+  vnameHash *v ;
+  unsigned int _hf_bkt ;
+  unsigned int _hf_hashv ;
+  unsigned int _hj_i ;
+  unsigned int _hj_j ;
+  unsigned int _hj_k ;
+  unsigned char *_hj_key ;
+  size_t tmp ;
+  size_t tmp___0 ;
+  size_t tmp___1 ;
+  int tmp___2 ;
+  size_t tmp___3 ;
+  int occ ;
+  char find ;
+  char const *ptr ;
+  char *tmp___4 ;
+  int i___0 ;
+  size_t tmp___5 ;
+  int s ;
+  char *occStr ;
+  void *tmp___6 ;
+  unsigned int _hd_bkt ;
+  struct UT_hash_handle *_hd_hh_del ;
+  char *newVarname_occ ;
+  void *tmp___7 ;
+  char tmp___8[5] ;
+  unsigned int _hd_bkt___0 ;
+  struct UT_hash_handle *_hd_hh_del___0 ;
+  vnameHash *vnew ;
+  void *tmp___9 ;
+  unsigned int _ha_bkt ;
+  size_t tmp___10 ;
+  void *tmp___11 ;
+  void *tmp___12 ;
+  unsigned int _hj_i___0 ;
+  unsigned int _hj_j___0 ;
+  unsigned int _hj_k___0 ;
+  unsigned char *_hj_key___0 ;
+  size_t tmp___13 ;
+  size_t tmp___14 ;
+  unsigned int _he_bkt ;
+  unsigned int _he_bkt_i ;
+  struct UT_hash_handle *_he_thh ;
+  struct UT_hash_handle *_he_hh_nxt ;
+  UT_hash_bucket *_he_new_buckets ;
+  UT_hash_bucket *_he_newbkt ;
+  void *tmp___15 ;
+  int tmp___16 ;
+
+  {
+  while (1) {
+    v = (vnameHash *)((void *)0);
+    if (vnames) {
+      while (1) {
+        _hj_key = (unsigned char *)key;
+        _hf_hashv = 4276993775U;
+        _hj_j = 2654435769U;
+        _hj_i = _hj_j;
+        tmp = strlen((char const *)key);
+        _hj_k = (unsigned int )tmp;
+        while (_hj_k >= 12U) {
+          _hj_i += (((unsigned int )*(_hj_key + 0) + ((unsigned int )*(_hj_key + 1) << 8)) + ((unsigned int )*(_hj_key + 2) << 16)) + ((unsigned int )*(_hj_key + 3) << 24);
+          _hj_j += (((unsigned int )*(_hj_key + 4) + ((unsigned int )*(_hj_key + 5) << 8)) + ((unsigned int )*(_hj_key + 6) << 16)) + ((unsigned int )*(_hj_key + 7) << 24);
+          _hf_hashv += (((unsigned int )*(_hj_key + 8) + ((unsigned int )*(_hj_key + 9) << 8)) + ((unsigned int )*(_hj_key + 10) << 16)) + ((unsigned int )*(_hj_key + 11) << 24);
+          while (1) {
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 13;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 8;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 13;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 12;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 16;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 5;
+            _hj_i -= _hj_j;
+            _hj_i -= _hf_hashv;
+            _hj_i ^= _hf_hashv >> 3;
+            _hj_j -= _hf_hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 10;
+            _hf_hashv -= _hj_i;
+            _hf_hashv -= _hj_j;
+            _hf_hashv ^= _hj_j >> 15;
+            break;
+          }
+          _hj_key += 12;
+          _hj_k -= 12U;
+        }
+        tmp___0 = strlen((char const *)key);
+        _hf_hashv = (unsigned int )((size_t )_hf_hashv + tmp___0);
+        switch (_hj_k) {
+        case 11U:
+        _hf_hashv += (unsigned int )*(_hj_key + 10) << 24;
+        case 10U:
+        _hf_hashv += (unsigned int )*(_hj_key + 9) << 16;
+        case 9U:
+        _hf_hashv += (unsigned int )*(_hj_key + 8) << 8;
+        case 8U:
+        _hj_j += (unsigned int )*(_hj_key + 7) << 24;
+        case 7U:
+        _hj_j += (unsigned int )*(_hj_key + 6) << 16;
+        case 6U:
+        _hj_j += (unsigned int )*(_hj_key + 5) << 8;
+        case 5U:
+        _hj_j += (unsigned int )*(_hj_key + 4);
+        case 4U:
+        _hj_i += (unsigned int )*(_hj_key + 3) << 24;
+        case 3U:
+        _hj_i += (unsigned int )*(_hj_key + 2) << 16;
+        case 2U:
+        _hj_i += (unsigned int )*(_hj_key + 1) << 8;
+        case 1U:
+        _hj_i += (unsigned int )*(_hj_key + 0);
+        }
+        while (1) {
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 13;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 8;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 13;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 12;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 16;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 5;
+          _hj_i -= _hj_j;
+          _hj_i -= _hf_hashv;
+          _hj_i ^= _hf_hashv >> 3;
+          _hj_j -= _hf_hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 10;
+          _hf_hashv -= _hj_i;
+          _hf_hashv -= _hj_j;
+          _hf_hashv ^= _hj_j >> 15;
+          break;
+        }
+        _hf_bkt = _hf_hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        if (((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head) {
+          while (1) {
+            v = (vnameHash *)((void *)((char *)((vnames->hh.tbl)->buckets + _hf_bkt)->hh_head - (vnames->hh.tbl)->hho));
+            break;
+          }
+        } else {
+          v = (vnameHash *)((void *)0);
+        }
+        while (v) {
+          tmp___3 = strlen((char const *)key);
+          if ((size_t )v->hh.keylen == tmp___3) {
+            tmp___1 = strlen((char const *)key);
+            tmp___2 = memcmp((void const *)v->hh.key, (void const *)key, tmp___1);
+            if (tmp___2 == 0) {
+              break;
+            }
+          }
+          if (v->hh.hh_next) {
+            while (1) {
+              v = (vnameHash *)((void *)((char *)v->hh.hh_next - (vnames->hh.tbl)->hho));
+              break;
+            }
+          } else {
+            v = (vnameHash *)((void *)0);
+          }
+        }
+        break;
+      }
+    }
+    break;
+  }
+  if ((unsigned long )v != (unsigned long )((void *)0)) {
+    find = (char )'_';
+    tmp___4 = strrchr((char const *)(v->vname_occ), (int )find);
+    ptr = (char const *)tmp___4;
+    if (ptr) {
+      tmp___5 = strlen((char const *)(v->vname_occ));
+      i___0 = (int )tmp___5;
+      s = (int )((ptr - (char const *)(v->vname_occ)) + 1L);
+      tmp___6 = malloc(sizeof(char ) * (unsigned long )((i___0 - s) + 1));
+      occStr = (char *)tmp___6;
+      strncpy((char * __restrict )occStr, (char const * __restrict )(v->vname_occ + s),
+              (size_t )(i___0 - s));
+      occ = atoi((char const *)occStr);
+      if (occ == 0) {
+        while (1) {
+          if ((unsigned long )v->hh.prev == (unsigned long )((void *)0)) {
+            if ((unsigned long )v->hh.next == (unsigned long )((void *)0)) {
+              free((void *)(vnames->hh.tbl)->buckets);
+              free((void *)vnames->hh.tbl);
+              vnames = (vnameHash *)((void *)0);
+            } else {
+              goto _L;
+            }
+          } else {
+            _L:
+            _hd_hh_del = & v->hh;
+            if ((unsigned long )v == (unsigned long )((void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho))) {
+              (vnames->hh.tbl)->tail = (UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho);
+            }
+            if (v->hh.prev) {
+              ((UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho))->next = v->hh.next;
+            } else {
+              while (1) {
+                vnames = (vnameHash *)v->hh.next;
+                break;
+              }
+            }
+            if (_hd_hh_del->next) {
+              ((UT_hash_handle *)((ptrdiff_t )_hd_hh_del->next + (vnames->hh.tbl)->hho))->prev = _hd_hh_del->prev;
+            }
+            while (1) {
+              _hd_bkt = _hd_hh_del->hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+              break;
+            }
+            (((vnames->hh.tbl)->buckets + _hd_bkt)->count) --;
+            if ((unsigned long )((vnames->hh.tbl)->buckets + _hd_bkt)->hh_head == (unsigned long )_hd_hh_del) {
+              ((vnames->hh.tbl)->buckets + _hd_bkt)->hh_head = _hd_hh_del->hh_next;
+            }
+            if (_hd_hh_del->hh_prev) {
+              (_hd_hh_del->hh_prev)->hh_next = _hd_hh_del->hh_next;
+            }
+            if (_hd_hh_del->hh_next) {
+              (_hd_hh_del->hh_next)->hh_prev = _hd_hh_del->hh_prev;
+            }
+            ((vnames->hh.tbl)->num_items) --;
+          }
+          break;
+        }
+        printf((char const * __restrict )"Old Hash: %s\n", v->vname_occ);
+      } else {
+        printf((char const * __restrict )"Old Hash: %s\n", v->vname_occ);
+        occ --;
+        tmp___7 = malloc(sizeof(char ) * (unsigned long )(s + 5));
+        newVarname_occ = (char *)tmp___7;
+        strncpy((char * __restrict )newVarname_occ, (char const * __restrict )(v->vname_occ),
+                (size_t )s);
+        sprintf((char * __restrict )(tmp___8), (char const * __restrict )"%d",
+                occ);
+        strcat((char * __restrict )newVarname_occ, (char const * __restrict )(tmp___8));
+        while (1) {
+          if ((unsigned long )v->hh.prev == (unsigned long )((void *)0)) {
+            if ((unsigned long )v->hh.next == (unsigned long )((void *)0)) {
+              free((void *)(vnames->hh.tbl)->buckets);
+              free((void *)vnames->hh.tbl);
+              vnames = (vnameHash *)((void *)0);
+            } else {
+              goto _L___0;
+            }
+          } else {
+            _L___0:
+            _hd_hh_del___0 = & v->hh;
+            if ((unsigned long )v == (unsigned long )((void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho))) {
+              (vnames->hh.tbl)->tail = (UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho);
+            }
+            if (v->hh.prev) {
+              ((UT_hash_handle *)((ptrdiff_t )v->hh.prev + (vnames->hh.tbl)->hho))->next = v->hh.next;
+            } else {
+              while (1) {
+                vnames = (vnameHash *)v->hh.next;
+                break;
+              }
+            }
+            if (_hd_hh_del___0->next) {
+              ((UT_hash_handle *)((ptrdiff_t )_hd_hh_del___0->next + (vnames->hh.tbl)->hho))->prev = _hd_hh_del___0->prev;
+            }
+            while (1) {
+              _hd_bkt___0 = _hd_hh_del___0->hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+              break;
+            }
+            (((vnames->hh.tbl)->buckets + _hd_bkt___0)->count) --;
+            if ((unsigned long )((vnames->hh.tbl)->buckets + _hd_bkt___0)->hh_head == (unsigned long )_hd_hh_del___0) {
+              ((vnames->hh.tbl)->buckets + _hd_bkt___0)->hh_head = _hd_hh_del___0->hh_next;
+            }
+            if (_hd_hh_del___0->hh_prev) {
+              (_hd_hh_del___0->hh_prev)->hh_next = _hd_hh_del___0->hh_next;
+            }
+            if (_hd_hh_del___0->hh_next) {
+              (_hd_hh_del___0->hh_next)->hh_prev = _hd_hh_del___0->hh_prev;
+            }
+            ((vnames->hh.tbl)->num_items) --;
+          }
+          break;
+        }
+        tmp___9 = malloc(sizeof(vnameHash ));
+        vnew = (vnameHash *)tmp___9;
+        strcpy((char * __restrict )(vnew->vname_occ), (char const * __restrict )newVarname_occ);
+        strcpy((char * __restrict )(vnew->vname), (char const * __restrict )key);
+        printf((char const * __restrict )"New Hash: %s\n", vnew->vname_occ);
+        while (1) {
+          vnew->hh.next = (void *)0;
+          vnew->hh.key = (void *)(& vnew->vname[0]);
+          tmp___10 = strlen((char const *)(vnew->vname));
+          vnew->hh.keylen = (unsigned int )tmp___10;
+          if (! vnames) {
+            vnames = vnew;
+            vnames->hh.prev = (void *)0;
+            while (1) {
+              tmp___11 = malloc(sizeof(UT_hash_table ));
+              vnames->hh.tbl = (UT_hash_table *)tmp___11;
+              if (! vnames->hh.tbl) {
+                exit(-1);
+              }
+              memset((void *)vnames->hh.tbl, 0, sizeof(UT_hash_table ));
+              (vnames->hh.tbl)->tail = & vnames->hh;
+              (vnames->hh.tbl)->num_buckets = 32U;
+              (vnames->hh.tbl)->log2_num_buckets = 5U;
+              (vnames->hh.tbl)->hho = (char *)(& vnames->hh) - (char *)vnames;
+              tmp___12 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+              (vnames->hh.tbl)->buckets = (UT_hash_bucket *)tmp___12;
+              if (! (vnames->hh.tbl)->buckets) {
+                exit(-1);
+              }
+              memset((void *)(vnames->hh.tbl)->buckets, 0, 32UL * sizeof(struct UT_hash_bucket ));
+              (vnames->hh.tbl)->signature = 2685476833U;
+              break;
+            }
+          } else {
+            ((vnames->hh.tbl)->tail)->next = (void *)vnew;
+            vnew->hh.prev = (void *)((char *)(vnames->hh.tbl)->tail - (vnames->hh.tbl)->hho);
+            (vnames->hh.tbl)->tail = & vnew->hh;
+          }
+          ((vnames->hh.tbl)->num_items) ++;
+          vnew->hh.tbl = vnames->hh.tbl;
+          while (1) {
+            _hj_key___0 = (unsigned char *)(& vnew->vname[0]);
+            vnew->hh.hashv = 4276993775U;
+            _hj_j___0 = 2654435769U;
+            _hj_i___0 = _hj_j___0;
+            tmp___13 = strlen((char const *)(vnew->vname));
+            _hj_k___0 = (unsigned int )tmp___13;
+            while (_hj_k___0 >= 12U) {
+              _hj_i___0 += (((unsigned int )*(_hj_key___0 + 0) + ((unsigned int )*(_hj_key___0 + 1) << 8)) + ((unsigned int )*(_hj_key___0 + 2) << 16)) + ((unsigned int )*(_hj_key___0 + 3) << 24);
+              _hj_j___0 += (((unsigned int )*(_hj_key___0 + 4) + ((unsigned int )*(_hj_key___0 + 5) << 8)) + ((unsigned int )*(_hj_key___0 + 6) << 16)) + ((unsigned int )*(_hj_key___0 + 7) << 24);
+              vnew->hh.hashv += (((unsigned int )*(_hj_key___0 + 8) + ((unsigned int )*(_hj_key___0 + 9) << 8)) + ((unsigned int )*(_hj_key___0 + 10) << 16)) + ((unsigned int )*(_hj_key___0 + 11) << 24);
+              while (1) {
+                _hj_i___0 -= _hj_j___0;
+                _hj_i___0 -= vnew->hh.hashv;
+                _hj_i___0 ^= vnew->hh.hashv >> 13;
+                _hj_j___0 -= vnew->hh.hashv;
+                _hj_j___0 -= _hj_i___0;
+                _hj_j___0 ^= _hj_i___0 << 8;
+                vnew->hh.hashv -= _hj_i___0;
+                vnew->hh.hashv -= _hj_j___0;
+                vnew->hh.hashv ^= _hj_j___0 >> 13;
+                _hj_i___0 -= _hj_j___0;
+                _hj_i___0 -= vnew->hh.hashv;
+                _hj_i___0 ^= vnew->hh.hashv >> 12;
+                _hj_j___0 -= vnew->hh.hashv;
+                _hj_j___0 -= _hj_i___0;
+                _hj_j___0 ^= _hj_i___0 << 16;
+                vnew->hh.hashv -= _hj_i___0;
+                vnew->hh.hashv -= _hj_j___0;
+                vnew->hh.hashv ^= _hj_j___0 >> 5;
+                _hj_i___0 -= _hj_j___0;
+                _hj_i___0 -= vnew->hh.hashv;
+                _hj_i___0 ^= vnew->hh.hashv >> 3;
+                _hj_j___0 -= vnew->hh.hashv;
+                _hj_j___0 -= _hj_i___0;
+                _hj_j___0 ^= _hj_i___0 << 10;
+                vnew->hh.hashv -= _hj_i___0;
+                vnew->hh.hashv -= _hj_j___0;
+                vnew->hh.hashv ^= _hj_j___0 >> 15;
+                break;
+              }
+              _hj_key___0 += 12;
+              _hj_k___0 -= 12U;
+            }
+            tmp___14 = strlen((char const *)(vnew->vname));
+            vnew->hh.hashv = (unsigned int )((size_t )vnew->hh.hashv + tmp___14);
+            switch (_hj_k___0) {
+            case 11U:
+            vnew->hh.hashv += (unsigned int )*(_hj_key___0 + 10) << 24;
+            case 10U:
+            vnew->hh.hashv += (unsigned int )*(_hj_key___0 + 9) << 16;
+            case 9U:
+            vnew->hh.hashv += (unsigned int )*(_hj_key___0 + 8) << 8;
+            case 8U:
+            _hj_j___0 += (unsigned int )*(_hj_key___0 + 7) << 24;
+            case 7U:
+            _hj_j___0 += (unsigned int )*(_hj_key___0 + 6) << 16;
+            case 6U:
+            _hj_j___0 += (unsigned int )*(_hj_key___0 + 5) << 8;
+            case 5U:
+            _hj_j___0 += (unsigned int )*(_hj_key___0 + 4);
+            case 4U:
+            _hj_i___0 += (unsigned int )*(_hj_key___0 + 3) << 24;
+            case 3U:
+            _hj_i___0 += (unsigned int )*(_hj_key___0 + 2) << 16;
+            case 2U:
+            _hj_i___0 += (unsigned int )*(_hj_key___0 + 1) << 8;
+            case 1U:
+            _hj_i___0 += (unsigned int )*(_hj_key___0 + 0);
+            }
+            while (1) {
+              _hj_i___0 -= _hj_j___0;
+              _hj_i___0 -= vnew->hh.hashv;
+              _hj_i___0 ^= vnew->hh.hashv >> 13;
+              _hj_j___0 -= vnew->hh.hashv;
+              _hj_j___0 -= _hj_i___0;
+              _hj_j___0 ^= _hj_i___0 << 8;
+              vnew->hh.hashv -= _hj_i___0;
+              vnew->hh.hashv -= _hj_j___0;
+              vnew->hh.hashv ^= _hj_j___0 >> 13;
+              _hj_i___0 -= _hj_j___0;
+              _hj_i___0 -= vnew->hh.hashv;
+              _hj_i___0 ^= vnew->hh.hashv >> 12;
+              _hj_j___0 -= vnew->hh.hashv;
+              _hj_j___0 -= _hj_i___0;
+              _hj_j___0 ^= _hj_i___0 << 16;
+              vnew->hh.hashv -= _hj_i___0;
+              vnew->hh.hashv -= _hj_j___0;
+              vnew->hh.hashv ^= _hj_j___0 >> 5;
+              _hj_i___0 -= _hj_j___0;
+              _hj_i___0 -= vnew->hh.hashv;
+              _hj_i___0 ^= vnew->hh.hashv >> 3;
+              _hj_j___0 -= vnew->hh.hashv;
+              _hj_j___0 -= _hj_i___0;
+              _hj_j___0 ^= _hj_i___0 << 10;
+              vnew->hh.hashv -= _hj_i___0;
+              vnew->hh.hashv -= _hj_j___0;
+              vnew->hh.hashv ^= _hj_j___0 >> 15;
+              break;
+            }
+            _ha_bkt = vnew->hh.hashv & ((vnames->hh.tbl)->num_buckets - 1U);
+            break;
+          }
+          while (1) {
+            (((vnames->hh.tbl)->buckets + _ha_bkt)->count) ++;
+            vnew->hh.hh_next = ((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head;
+            vnew->hh.hh_prev = (struct UT_hash_handle *)((void *)0);
+            if (((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head) {
+              (((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head)->hh_prev = & vnew->hh;
+            }
+            ((vnames->hh.tbl)->buckets + _ha_bkt)->hh_head = & vnew->hh;
+            if (((vnames->hh.tbl)->buckets + _ha_bkt)->count >= (((vnames->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
+              if ((vnew->hh.tbl)->noexpand != 1U) {
+                while (1) {
+                  tmp___15 = malloc((unsigned long )(2U * (vnew->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+                  _he_new_buckets = (UT_hash_bucket *)tmp___15;
+                  if (! _he_new_buckets) {
+                    exit(-1);
+                  }
+                  memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (vnew->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+                  if ((vnew->hh.tbl)->num_items & ((vnew->hh.tbl)->num_buckets * 2U - 1U)) {
+                    tmp___16 = 1;
+                  } else {
+                    tmp___16 = 0;
+                  }
+                  (vnew->hh.tbl)->ideal_chain_maxlen = ((vnew->hh.tbl)->num_items >> ((vnew->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___16;
+                  (vnew->hh.tbl)->nonideal_items = 0U;
+                  _he_bkt_i = 0U;
+                  while (_he_bkt_i < (vnew->hh.tbl)->num_buckets) {
+                    _he_thh = ((vnew->hh.tbl)->buckets + _he_bkt_i)->hh_head;
+                    while (_he_thh) {
+                      _he_hh_nxt = _he_thh->hh_next;
+                      while (1) {
+                        _he_bkt = _he_thh->hashv & ((vnew->hh.tbl)->num_buckets * 2U - 1U);
+                        break;
+                      }
+                      _he_newbkt = _he_new_buckets + _he_bkt;
+                      (_he_newbkt->count) ++;
+                      if (_he_newbkt->count > (vnew->hh.tbl)->ideal_chain_maxlen) {
+                        ((vnew->hh.tbl)->nonideal_items) ++;
+                        _he_newbkt->expand_mult = _he_newbkt->count / (vnew->hh.tbl)->ideal_chain_maxlen;
+                      }
+                      _he_thh->hh_prev = (struct UT_hash_handle *)((void *)0);
+                      _he_thh->hh_next = _he_newbkt->hh_head;
+                      if (_he_newbkt->hh_head) {
+                        (_he_newbkt->hh_head)->hh_prev = _he_thh;
+                      }
+                      _he_newbkt->hh_head = _he_thh;
+                      _he_thh = _he_hh_nxt;
+                    }
+                    _he_bkt_i ++;
+                  }
+                  free((void *)(vnew->hh.tbl)->buckets);
+                  (vnew->hh.tbl)->num_buckets *= 2U;
+                  ((vnew->hh.tbl)->log2_num_buckets) ++;
+                  (vnew->hh.tbl)->buckets = _he_new_buckets;
+                  if ((vnew->hh.tbl)->nonideal_items > (vnew->hh.tbl)->num_items >> 1) {
+                    ((vnew->hh.tbl)->ineff_expands) ++;
+                  } else {
+                    (vnew->hh.tbl)->ineff_expands = 0U;
+                  }
+                  if ((vnew->hh.tbl)->ineff_expands > 1U) {
+                    (vnew->hh.tbl)->noexpand = 1U;
+                  }
+                  break;
+                }
+              }
+            }
+            break;
+          }
+          break;
+        }
+      }
+    }
+  }
+  return;
+}
+}
+funcArg *getArgument(char *argString , char *foo___0 )
+{
+  int i___0 ;
+  double d ;
+  char c ;
+  char s[2] ;
+  char *token ;
+  char *copy ;
+  char *tmp ;
+  size_t tmp___0 ;
+  funcArg *argument ;
+  void *tmp___1 ;
+  int tmp___2 ;
+  int tmp___3 ;
+  int tmp___4 ;
+  int tmp___5 ;
+
+  {
+  s[0] = (char )',';
+  s[1] = (char )'\000';
+  tmp = strdup((char const *)argString);
+  copy = tmp;
+  copy ++;
+  tmp___0 = strlen((char const *)copy);
+  *(copy + (tmp___0 - 1UL)) = (char)0;
+  tmp___1 = malloc(sizeof(funcArg ));
+  argument = (funcArg *)tmp___1;
+  strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo___0);
+  token = strtok((char * __restrict )copy, (char const * __restrict )(s));
+  tmp___4 = strcmp((char const *)token, "int");
+  if (tmp___4 == 0) {
+    argument->type = 1;
+  } else {
+    tmp___2 = strcmp((char const *)token, "double");
+    if (tmp___2 == 0) {
+      argument->type = 2;
+    } else {
+      tmp___3 = strcmp((char const *)token, "float");
+      if (tmp___3 == 0) {
+        argument->type = 2;
+      } else {
+        argument->type = 3;
+      }
+    }
+  }
+  token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
+  strcpy((char * __restrict )(argument->vname), (char const * __restrict )token);
+  token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
+  tmp___5 = strcmp((char const *)token, "constant");
+  if (tmp___5 == 0) {
+    argument->isConstant = 1;
+  } else {
+    argument->isConstant = 0;
+  }
+  token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
+  if (argument->isConstant) {
+    if (argument->type == 1) {
+      i___0 = atoi((char const *)token);
+      argument->val = (void *)(& i___0);
+    }
+    if (argument->type == 2) {
+      d = atof((char const *)token);
+      argument->val = (void *)(& d);
+    }
+    if (argument->type == 3) {
+      c = *token;
+      argument->val = (void *)(& c);
+    }
+  } else {
+    strcpy((char * __restrict )(argument->apname), (char const * __restrict )token);
+  }
+  return (argument);
+}
+}
 void stackPeek(Stack *s , void *element ) ;
+int getOccurence(char *funcName )
+{
+  void *backup ;
+  int tmp ;
+  int occ ;
+  funcVars *pk ;
+  void *tmp___0 ;
+  int tmp___1 ;
+  int tmp___2 ;
+  funcVars *b ;
+  void *tmp___3 ;
+  int tmp___4 ;
+
+  {
+  if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+    return (0);
+  }
+  tmp = (int )stackNew(sizeof(funcVars *));
+  backup = (void *)tmp;
+  occ = 0;
+  while (1) {
+    tmp___2 = stackIsEmpty(symStack);
+    if (tmp___2) {
+      break;
+    }
+    tmp___0 = malloc(sizeof(funcVars ));
+    pk = (funcVars *)tmp___0;
+    stackPeek(symStack, & pk);
+    tmp___1 = strcmp((char const *)(pk->funcName), (char const *)funcName);
+    if (tmp___1 == 0) {
+      occ = pk->occurence;
+      break;
+    } else {
+      stackPop(symStack, & pk);
+      stackPush(backup, & pk);
+    }
+  }
+  while (1) {
+    tmp___4 = stackIsEmpty(backup);
+    if (tmp___4) {
+      break;
+    }
+    tmp___3 = malloc(sizeof(funcVars ));
+    b = (funcVars *)tmp___3;
+    stackPop(backup, & b);
+    stackPush(symStack, & b);
+  }
+  return (occ);
+}
+}
+int stackSize(Stack *s ) ;
+void populateSTable(funcArg *a )
+{
+  char tmp[5] ;
+  int tmp___0 ;
+  char key[55] ;
+  char *sym ;
+  void *val ;
+  int tmp___1 ;
+  int tmp___2 ;
+  char *tmp___3 ;
+  int tmp___4 ;
+  char *tmp___5 ;
+  int tmp___6 ;
+  int tmp___7 ;
+
+  {
+  tmp___0 = getOccurence(a->funcName);
+  sprintf((char * __restrict )(tmp), (char const * __restrict )"_%d", tmp___0);
+  strcpy((char * __restrict )(key), (char const * __restrict )(a->vname));
+  strcat((char * __restrict )(key), (char const * __restrict )(tmp));
+  if (a->isConstant == 1) {
+    add_entryToSTable(key, "Constant", a->val, a->val, a->type);
+    printf((char const * __restrict )"%s Constant\n", key);
+  } else {
+    if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+      tmp___1 = (int )find_symVal(a->apname);
+      sym = (char *)tmp___1;
+      tmp___2 = (int )find_conVal(a->apname);
+      val = (void *)tmp___2;
+    } else {
+      tmp___7 = stackSize(symStack);
+      if (tmp___7 == 0) {
+        tmp___1 = (int )find_symVal(a->apname);
+        sym = (char *)tmp___1;
+        tmp___2 = (int )find_conVal(a->apname);
+        val = (void *)tmp___2;
+      } else {
+        tmp___3 = get_vnameHash(a->apname);
+        tmp___4 = (int )find_symVal(tmp___3);
+        sym = (char *)tmp___4;
+        tmp___5 = get_vnameHash(a->apname);
+        tmp___6 = (int )find_conVal(tmp___5);
+        val = (void *)tmp___6;
+      }
+    }
+    add_entryToSTable(key, sym, val, val, a->type);
+    printf((char const * __restrict )"%s %s\n", key, sym);
+  }
+  add_vnameHash(a->vname, key);
+  return;
+}
+}
+void funcEntry(char *format , char *args , char *funcName )
+{
+  int size ;
+  void *tmp ;
+  char s[2] ;
+  char *token ;
+  char *copy ;
+  char *tmp___0 ;
+  char *tmp___1 ;
+  int count ;
+  char *tmp___2 ;
+  char **tokens ;
+  void *tmp___3 ;
+  int i___0 ;
+  funcArg *a ;
+  funcArg *tmp___4 ;
+  int tmp___5 ;
+  funcVars *fv ;
+  void *tmp___6 ;
+  int tmp___7 ;
+  int tmp___8 ;
+  int tmp___9 ;
+
+  {
+  printf((char const * __restrict )"funcEntry: %s \"%s\" \n", funcName, args);
+  size = 0;
+  tmp = malloc(10UL * sizeof(char *));
+  varNames = (char **)tmp;
+  s[0] = (char )' ';
+  s[1] = (char )'\000';
+  tmp___0 = strdup((char const *)args);
+  copy = tmp___0;
+  tmp___1 = copy;
+  count = 1;
+  while ((int )*tmp___1 != 0) {
+    tmp___2 = tmp___1;
+    tmp___1 ++;
+    if ((int )*tmp___2 == 32) {
+      count ++;
+    }
+  }
+  tmp___3 = malloc(sizeof(char *) * (unsigned long )count);
+  tokens = (char **)tmp___3;
+  token = strtok((char * __restrict )copy, (char const * __restrict )(s));
+  i___0 = 0;
+  while ((unsigned long )token != (unsigned long )((void *)0)) {
+    *(tokens + i___0) = token;
+    token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
+    i___0 ++;
+  }
+  i___0 = 0;
+  while (i___0 < count) {
+    tmp___4 = getArgument(*(tokens + i___0), funcName);
+    a = tmp___4;
+    tmp___5 = size;
+    size ++;
+    *(varNames + tmp___5) = a->vname;
+    populateSTable(a);
+    i___0 ++;
+  }
+  tmp___6 = malloc(sizeof(funcVars ));
+  fv = (funcVars *)tmp___6;
+  fv->vars = varNames;
+  fv->noOfVars = size;
+  strcpy((char * __restrict )(fv->funcName), (char const * __restrict )funcName);
+  tmp___7 = getOccurence(funcName);
+  fv->occurence = tmp___7 + 1;
+  if (stackInitFlag) {
+    stackPush(symStack, & fv);
+  } else {
+    tmp___8 = (int )stackNew(sizeof(funcVars *));
+    symStack = (void *)tmp___8;
+    stackPush(symStack, & fv);
+    stackInitFlag = 1;
+  }
+  size = 0;
+  i___0 = 0;
+  free((void *)copy);
+  tmp___9 = stackSize(symStack);
+  printf((char const * __restrict )"Stack depth %d\n", tmp___9);
+  return;
+}
+}
+void funcExit(char *funcName )
+{
+  funcVars *fv ;
+  void *tmp ;
+  int j ;
+  int tmp___0 ;
+
+  {
+  printf((char const * __restrict )"funcExit: %s \n", funcName);
+  tmp = malloc(sizeof(funcVars ));
+  fv = (funcVars *)tmp;
+  stackPop(symStack, & fv);
+  j = 0;
+  while (j < fv->noOfVars) {
+    deleteEntryUsingVar(*(fv->vars + j));
+    del_vnameHash(*(fv->vars + j));
+    j ++;
+  }
+  tmp___0 = stackSize(symStack);
+  printf((char const * __restrict )"Stack depth %d\n", tmp___0);
+  return;
+}
+}
+void testgen_exit(void)
+{
+
+
+  {
+  programFlag = 1;
+  return;
+}
+}
+#pragma merger("0","./stack.i","-g,-g")
 Stack *stackNew(int elementSize )
 {
   Stack *s ;
@@ -12973,16 +14653,17 @@ void createCDG_main1(void)
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(7, 0, 1);
   addtoCDGnode(8, 0, 1);
-  setArray(8, "(< i 8)");
+  setArray(8, "(< i___0 8)");
   addtoCDGnode(9, 8, 1);
   addtoCDGnode(10, 0, 1);
-  setArray(10, "(< i 8)");
+  setArray(10, "(< i___0 8)");
   addtoCDGnode(10, 0, 1);
-  setArray(10, "(< i 8)");
+  setArray(10, "(< i___0 8)");
   addtoCDGnode(11, 10, 1);
   addtoCDGnode(12, 0, 1);
   addtoCDGnode(12, 0, 1);
   addtoCDGnode(13, 0, 1);
+  addtoCDGnode(14, 0, 1);
 }
 }
 void isCopyOfHolder_main1(void)
@@ -12999,15 +14680,15 @@ void createSidTableOf_main1(void)
 
 
   {
-  add_condition(8, "(< i 8)", "(not (< i 8))", 0, 0);
-  add_condition(10, "(< i 8)", "(not (< i 8))", 0, 0);
+  add_condition(8, "(< i___0 8)", "(not (< i___0 8))", 0, 0);
+  add_condition(10, "(< i___0 8)", "(not (< i___0 8))", 0, 0);
 }
 }
 struct arguments {
-   int i ;
+   int i___0 ;
 };
 struct arguments argvar ;
-int main1(int i )
+int main1(int i___0 )
 {
   int exp_outcome ;
   int overall_outcome ;
@@ -13020,71 +14701,72 @@ int main1(int i )
   {
   __cil_tmp5 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
-  sprintf(__cil_tmp5, "\t%d\n", i);
-  printTestCase("loopTest_main1_1431456152.tc", __cil_tmp5);
-  add_entryToSTable("i", "s0", & i, & i, 1);
+  sprintf(__cil_tmp5, "\t%d\n", i___0);
+  printTestCase("loopTest_main1_1431499981.tc", __cil_tmp5);
+  add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
 
   {
   {
-  exp_outcome = i < 8;
-  handleAssignmentSymbolically("exp_outcome", "(< i 8)", & exp_outcome, & exp_outcome,
+  exp_outcome = i___0 < 8;
+  handleAssignmentSymbolically("exp_outcome", "(< i___0 8)", & exp_outcome, & exp_outcome,
                                1);
   overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
   if (overall_outcome) {
     setBranchInfo(8, 1, 0);
-    setTrueExpr(8, "(< i 8)");
-    setFalseExpr(8, "(not (< i 8))");
-    addToTree(8, 1, "(< i 8)", "(not (< i 8))", 0, 1);
+    setTrueExpr(8, "(< i___0 8)");
+    setFalseExpr(8, "(not (< i___0 8))");
+    addToTree(8, 1, "(< i___0 8)", "(not (< i___0 8))", 0, 1);
     delete_allVariableTableEntry();
-    i += 2;
-    handleAssignmentSymbolically("i", "(+ i 2)", & i, & i, 1);
-    i ++;
-    handleAssignmentSymbolically("i", "(+ i 1)", & i, & i, 1);
+    i___0 += 2;
+    handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
+    i___0 ++;
+    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
   } else {
     setBranchInfo(8, 0, 1);
-    setTrueExpr(8, "(< i 8)");
-    setFalseExpr(8, "(not (< i 8))");
-    addToTree(8, 1, "(< i 8)", "(not (< i 8))", 0, 0);
+    setTrueExpr(8, "(< i___0 8)");
+    setFalseExpr(8, "(not (< i___0 8))");
+    addToTree(8, 1, "(< i___0 8)", "(not (< i___0 8))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
   {
-  exp_outcome = i < 8;
-  handleAssignmentSymbolically("exp_outcome", "(< i 8)", & exp_outcome, & exp_outcome,
+  exp_outcome = i___0 < 8;
+  handleAssignmentSymbolically("exp_outcome", "(< i___0 8)", & exp_outcome, & exp_outcome,
                                1);
   overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
   if (overall_outcome) {
     setBranchInfo(10, 1, 0);
-    setTrueExpr(10, "(< i 8)");
-    setFalseExpr(10, "(not (< i 8))");
-    addToTree(10, 1, "(< i 8)", "(not (< i 8))", 0, 1);
+    setTrueExpr(10, "(< i___0 8)");
+    setFalseExpr(10, "(not (< i___0 8))");
+    addToTree(10, 1, "(< i___0 8)", "(not (< i___0 8))", 0, 1);
     delete_allVariableTableEntry();
-    i += 2;
-    handleAssignmentSymbolically("i", "(+ i 2)", & i, & i, 1);
-    i ++;
-    handleAssignmentSymbolically("i", "(+ i 1)", & i, & i, 1);
+    i___0 += 2;
+    handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
+    i___0 ++;
+    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
   } else {
     setBranchInfo(10, 0, 1);
-    setTrueExpr(10, "(< i 8)");
-    setFalseExpr(10, "(not (< i 8))");
-    addToTree(10, 1, "(< i 8)", "(not (< i 8))", 0, 0);
+    setTrueExpr(10, "(< i___0 8)");
+    setFalseExpr(10, "(not (< i___0 8))");
+    addToTree(10, 1, "(< i___0 8)", "(not (< i___0 8))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
   }
+  foo(2);
   __cil_tmp4 = isNotQueueEmpty();
   if (__cil_tmp4) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(i);
+    main1(i___0);
   } else {
     __cil_tmp4 = startCDG();
     add_entryToSTable("__cil_tmp4", "Function", & __cil_tmp4, & __cil_tmp4, 1);
     if (__cil_tmp4) {
       __cil_tmp4 = getTestCases();
-      main1(i);
+      main1(i___0);
     }
   }
   return (0);
@@ -13104,19 +14786,19 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.i);
+  main1(argvar.i___0);
 }
 }
 void main(void)
 {
-  int i ;
+  int i___0 ;
   int temp ;
   int __cil_tmp2 ;
 
   {
   initSID();
   __cil_tmp2 = rand();
-  argvar.i = __cil_tmp2 % 20;
+  argvar.i___0 = __cil_tmp2 % 20;
   isCopyOfHolder_main1();
   isCopyOfHolder_foo();
   createCDG_foo();

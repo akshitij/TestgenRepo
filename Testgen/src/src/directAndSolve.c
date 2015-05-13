@@ -211,7 +211,7 @@ void directPathConditions() {
   orgPercent = 100 ;
   else
   orgPercent =  (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
-  printf("COVERAGE = %f....\n",orgPercent);   
+  printf("COVERAGE = %f....(%d*100/2*%d)\n",orgPercent,countOrgCoveredConditions(),countOrgTotalConditions());   
   
   FILE *coveragefile = fopen("src/src/coverage.txt","ab+");
   fprintf(coveragefile, "%.1f\n", orgPercent); 

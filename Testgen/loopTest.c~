@@ -12,7 +12,7 @@ int foo(int x){
 }
 
 int main(){
-	int i,j;
+	int i;
 	scanf("%d",&i);
 	for(;i<8;i++){
 		i = i+2;
