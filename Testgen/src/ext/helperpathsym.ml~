@@ -8,7 +8,6 @@ module H = Hashtbl
 let funcn : varinfo list ref = ref []
 let formals : exp list ref = ref []
 let printf: varinfo option ref = ref None
-let occFlag = ref 0
 
 let addProto = ref false
 
@@ -52,29 +51,16 @@ let mkmainfxn () : instr =
         Call(None, Lval(var p), [], !currentLoc)
 
 
-let initSIDCall = 
-  let v = makeGlobalVar
-            "initSID"
-            ( TFun (
-                  voidType,
-                  Some [],
-                  true,
-                  []
-                )
-            )
-  in 
-  Call(None, Lval(var v), [], !currentLoc)
-
 (* createSidTable function prototype *)
-let makeCreateSTablefxn (fname: string) : varinfo = 
-        let v = makeGlobalVar ("createSidTableOf_" ^ fname) 
+let makeCreateSTablefxn () : varinfo = 
+        let v = makeGlobalVar "createSidTable" 
                     (TFun(voidType, Some [],
                              true, [])) in
          v
 
 
-let mkcreatetablefxn (fname: string) : instr = 
-  let p: varinfo = (makeCreateSTablefxn fname) in
+let mkcreatetablefxn () : instr = 
+  let p: varinfo = makeCreateSTablefxn () in
         Call(None, Lval(var p), [], !currentLoc)
 
 
@@ -106,14 +92,14 @@ let mkmain1fxn () : instr =
 
 
 (* prototype for createCDG function *)
-let makecreateCDGFunction (fname: string) : varinfo = 
-        let v = makeGlobalVar ("createCDG_" ^ fname)
+let makecreateCDGFunction () : varinfo = 
+        let v = makeGlobalVar "createCDG"
                     (TFun(voidType, Some [],
                              true, [])) in
          v
 
-let mkCDGcreatefxn (fname: string) : instr = 
-  let i: varinfo = (makecreateCDGFunction fname) in 
+let mkCDGcreatefxn () : instr = 
+  let i: varinfo = makecreateCDGFunction () in 
   Call(None, Lval(var i), [], !currentLoc)
 
 
@@ -139,9 +125,8 @@ let d_string (fmt : ('a,unit,doc,string) format4) : 'a =
 
 let currentFunc: string ref = ref ""
 
-
-let helperpathsym (f: file) (fname: string) : unit =
- (*let fname = !Param.func in*)
+let helperpathsym (f: file) : unit =
+ let fname = !Param.func in
   let doGlobal = function
     | GVarDecl (v, _) when v.vname = !printFunctionName -> 
           if !printf = None then
@@ -157,14 +142,9 @@ let helperpathsym (f: file) (fname: string) : unit =
 
            if fdec.svar.vname="main" then 
            begin      
-                    if !occFlag == 0 then begin        
+                           
                     let pre = mkmainfxn () in                 
-                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr initSIDCall; mkStmtOneInstr (mkCDGcreatefxn fname) ;mkStmtOneInstr (mkcreatetablefxn fname);])) in
-                       fdec.sbody <- fcall;
-                       occFlag := 1
-                    end
-                    else
-                       let fcall = (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr (mkCDGcreatefxn fname) ;mkStmtOneInstr (mkcreatetablefxn fname);])) in
+                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr (mkCDGcreatefxn ()) ;(*mkStmtOneInstr (mkprintarrayfxn ()); *)mkStmtOneInstr (mkcreatetablefxn ()); mkStmtOneInstr pre ; (*mkStmtOneInstr (mkdirectPathConditionsfxn ())*)])) in
                        fdec.sbody <- fcall
            end
 
@@ -177,33 +157,13 @@ let helperpathsym (f: file) (fname: string) : unit =
      let p = makePrintfFunction () in 
      f.globals <- GVarDecl (p, locUnknown) :: f.globals
   end  
-  
-let iterHelperPathSymbol (f: file) : unit =
-  List.iter (
-           fun funcName ->
-           if funcName <> "main" then begin
-             helperpathsym f funcName;
-             (*resetGlobalValues ();*)
-             end
-         ) !Param.func_list;
-  List.iter (fun g ->
-	     match g with
-	     |GFun (fdec, loc) ->
-	       if fdec.svar.vname="main" then 
-           	begin      
-                    let pre = mkmainfxn () in                 
-                    let fcall =  (mkBlock (fdec.sbody.bstmts @ [mkStmtOneInstr pre ;])) in
-                       fdec.sbody <- fcall;
-           	end
-	     |_ -> ())
-  f.globals
 
 let feature : featureDescr = 
   { fd_name = "helperpathsym";
     fd_enabled = ref false;
     fd_description = "";
     fd_extraopt = [];
-    fd_doit = iterHelperPathSymbol;
+    fd_doit = helperpathsym;
     fd_post_check = true
   } 
 

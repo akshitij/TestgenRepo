@@ -300,27 +300,25 @@ let isCopyOfCallList c =
   ) c;
   mkBlock !callList
 
-(* Not Used *)
 let insertIsCopyOfHolder c f funName=
-  let fn = emptyFunction ("isCopyOfHolder_" ^ funName)
+  let fn = emptyFunction "isCopyOfHolder"
   in
   fn.sbody <- isCopyOfCallList c;
-
   f.globals <- List.concat (
     List.map (fun g -> match g with
     | GFun(fdec, _) when fdec.svar.vname = funName ->
       GFun(fn, locUnknown) :: [g]
     | GFun(fdec, _) when fdec.svar.vname = "main" ->
       fdec.sbody.bstmts <-  [mkStmtOneInstr( Call(None, Lval(var fn.svar), [], !currentLoc))] @ fdec.sbody.bstmts; 
-      (*fdec.sbody.bstmts <-  [mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts;*)   
+      fdec.sbody.bstmts <-  [mkStmtOneInstr initSIDCall] @ fdec.sbody.bstmts;   
       [g]
     | _ -> [g]
     ) f.globals);
   ()
 
-let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
+let makeCDG (f: file) : unit =
   let oc = open_out out_file in
-  (*let fname = !Param.func in*)
+  let fname = !Param.func in
 
   let doGlobal = function
     | GVarDecl (v, _) when v.vname = !printFunctionName -> 
@@ -559,7 +557,7 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
     | _ -> ()
   in
   Stats.time "makeCDG" (iterGlobals f) doGlobal;
-  let fd = (emptyFunction crCDGname)
+  let fd = (emptyFunction "createCDG")
   in
   f.globals <-  List.concat (
     List.map (
@@ -583,34 +581,12 @@ let makeCDG (f: file) (fname: string) (crCDGname: string): unit =
   in
   Stats.time "loopUnroll" (iterGlobals f) doGlobal2
 
-let resetGlobalValues () : unit =
-    stmtlist := [];
-    predStmt := [];
-    flag := 0;
-    trueFalseFlag := 1;
-    outcome := 0;
-    addProto := false
-    (*Hashtbl.reset labelToBlock;
-    Hashtbl.reset edges*)
-    
-    
-
-let iterMakeCDG (f: file) : unit =
-  List.iter (
-           fun funcName ->
-           if funcName <> "main" then begin
-             makeCDG f funcName ("createCDG_" ^ funcName);
-             resetGlobalValues ();
-             end
-         ) !Param.func_list
-
-
 let feature : featureDescr = {
   fd_name = "makeCDG";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = iterMakeCDG;
+  fd_doit = makeCDG;
   fd_post_check = true
 } 
   

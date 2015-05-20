@@ -107,8 +107,10 @@ class sidTableVisitorClass (fdec : fundec) = object
     end 
 end
 
-let sidTable (f: file) (funName: string) (createSidTableOf: string) : unit =
-  (*let funName =  !Param.func in*)
+
+let sidTable (f: file) : unit =
+  let funName =  !Param.func
+  in
   let doGlobal = function
     | GFun (fdec, loc) when fdec.svar.vname=funName ->
        let sidTableVisitor = new sidTableVisitorClass fdec
@@ -118,7 +120,7 @@ let sidTable (f: file) (funName: string) (createSidTableOf: string) : unit =
     | _ -> ()
   in
   Stats.time "sidTable" (iterGlobals f) doGlobal;
-  let fd = (emptyFunction createSidTableOf)
+  let fd = (emptyFunction "createSidTable")
   in
   f.globals <-  List.concat (  
                     List.map (
@@ -132,24 +134,12 @@ let sidTable (f: file) (funName: string) (createSidTableOf: string) : unit =
                   );
   fd.sbody  <- mkBlock !stmtlist
 
-let resetGlobalValues () : unit = 
-  stmtlist := []
-
-let iterSidTable (f: file) : unit =
-  List.iter (
-           fun funcName ->
-           if funcName <> "main" then begin
-             sidTable f funcName ("createSidTableOf_" ^ funcName);
-             resetGlobalValues ();
-             end
-         ) !Param.func_list
-
 let feature : featureDescr = {
   fd_name = "sidTable";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = iterSidTable;
+  fd_doit = sidTable;
   fd_post_check = true
 } 
 

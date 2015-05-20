@@ -50,6 +50,7 @@ let makeaddtotreeFunction () : varinfo =
   in
   v
 
+
 (* Returns call instruction to the addToTree function *)
 let mkaddtotreefxn (sid: int) (level : int) (te : string) (fe : string) (pid : int) (outcome : int) : instr = 
   let i: varinfo = makeaddtotreeFunction () in 
