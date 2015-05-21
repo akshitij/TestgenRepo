@@ -4,7 +4,7 @@
 #include "uthash.h"
 
 extern int programFlag = 0;
-/*
+
 typedef struct functionArgument{
      char funcName[100];
      int type;// 1 for int ; 2 for real
@@ -264,12 +264,19 @@ void funcExit(char* funcName){
     //free(fv);
     printf("Stack depth %d\n", stackSize(symStack));
     
-}*/
+}
 
 void testgen_exit(){
     programFlag = 1;
     return;
 }
+
+void mapConcolicValues (char* retVarName){
+	ret_ConValue = NULL;
+	ret_SymValue = NULL;
+	return;
+}
+
 
 /*void callFunc(int arg1, int arg2, int (*origFunc)(int,int)){
   int c = origFunc(arg1,arg2);

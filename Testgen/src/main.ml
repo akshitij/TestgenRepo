@@ -106,6 +106,7 @@ let features : C.featureDescr list =
     Liveness.feature;
     (* Our features *)
     Param.feature;
+    ModifyVars.feature;
     TestgenStub.feature;
     Tutcil.feature;
     InsertTestDriver.feature;
@@ -120,6 +121,8 @@ let features : C.featureDescr list =
     Helperpathsym.feature;
     PathSymbol.feature;
     HandleUnseenNodes.feature;
+    InstMapConcolic.feature;
+    InsertReturnHolders.feature;
     HandleExit.feature;
     (* Test features *)
     Test.feature;

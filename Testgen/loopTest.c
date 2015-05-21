@@ -1,13 +1,14 @@
 #include <stdio.h>
 int foo(int x){
+	int y;
 	if(x>2)
-		x=3*x;
+		y=3*x;
 	else
-		x=2*x;
+		y=2*x;
 	/*for(;x<5;x++){
 		y = x+1;
 	}*/
-	return x;
+	return y;
 }
 
 int main(){

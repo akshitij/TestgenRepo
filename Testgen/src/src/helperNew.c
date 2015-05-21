@@ -271,6 +271,13 @@ void testgen_exit(){
     return;
 }
 
+void mapConcolicValues (char* retVarName){
+	//ret_ConValue = NULL;
+	//ret_SymValue = NULL;
+	return;
+}
+
+
 /*void callFunc(int arg1, int arg2, int (*origFunc)(int,int)){
   int c = origFunc(arg1,arg2);
   printf("CallFunc called with arguments (%d, %d)\n",arg1,arg2);

@@ -27,6 +27,6 @@ int main(){
 	}
 	else
 		j=1;
-	j = foo(i);
+	i = foo(i);
 	return 0;
 }

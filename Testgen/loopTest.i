@@ -836,14 +836,15 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 2 "loopTest.c" 2
 int foo(int x){
+ int y;
  if(x>2)
-  x=3*x;
+  y=3*x;
  else
-  x=2*x;
+  y=2*x;
 
 
 
- return x;
+ return y;
 }
 
 int main(){

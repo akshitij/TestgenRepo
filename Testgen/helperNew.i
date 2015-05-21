@@ -2561,3 +2561,9 @@ void testgen_exit(){
     programFlag = 1;
     return;
 }
+
+void mapConcolicValues (char* retVarName){
+
+
+ return;
+}

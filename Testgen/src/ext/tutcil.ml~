@@ -17,7 +17,10 @@ let changeFormals (fd : fundec) : unit =
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
      fd.sformals;
-     setFormals fd fd.sformals
+     setFormals fd fd.sformals;
+     List.iter (fun sf ->
+     		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
+     fd.slocals
 
 
 type functions = {
@@ -174,9 +177,9 @@ let rec processBlock (blk : block) : unit =
 	     		        il := !il @ [inst];
 	     		        ())
   	       iList;
-  	       (*E.log "lenght of funcSig %d\n" (List.length !funcSig);
-  	       st.skind <- Block (mkBlock [mkStmt (Instr !il); generateIfStmt ()]);
-  	       il := [];*)    
+  	       (*E.log "lenght of funcSig %d\n" (List.length !funcSig;*)
+  	       st.skind <- Block (mkBlock [mkStmt (Instr !il)(*; generateIfStmt ()*)]);
+  	       il := [];    
 	       ()
              |If (_,ib,eb,_) ->
 	       processBlock ib;

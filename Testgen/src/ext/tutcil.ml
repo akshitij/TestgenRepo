@@ -12,13 +12,16 @@ let il : instr list ref = ref []
 let fvar = ref (None: file option) ;;
   
 
-let changeFormals (fd : fundec) : unit =
+(*let changeFormals (fd : fundec) : unit =
   if fd.svar.vname <> "main" then
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
      fd.sformals;
-     setFormals fd fd.sformals
-
+     setFormals fd fd.sformals;
+     List.iter (fun sf ->
+     		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
+     fd.slocals
+*)
 
 type functions = {
   mutable funcEntry_instfun : varinfo;
@@ -202,7 +205,7 @@ let addCallInstr (f : file) : unit =
 	     |GFun (fd, loc) ->
 	       if (List.mem fd.svar.vname !Param.func_list) then begin
 	          E.log "Running on: %s\n" fd.svar.vname;
-	          changeFormals fd;
+	          (*changeFormals fd;*)
 	          processBlock fd.sbody
 	       end
 	       (*if fd.svar.vname = "main1" then begin
