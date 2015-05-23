@@ -165,7 +165,7 @@ let rec processBlock (blk : block) : unit =
 	                        	let func = funcName in begin
 	                        		let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ([constS2e f] @ [constS2e p] @ [constS2e func]) loc in
 	                        		let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [constS2e func] loc in
-	                        		il := !il @ [instrumentEntryFunc] @ [inst] @ [instrumentExitFunc];	
+	                        		il := !il @ [instrumentEntryFunc] @ [inst] (*@ [instrumentExitFunc]*);	
 	                        	end
 	                        end;
 	                        end

@@ -4,6 +4,8 @@
 #include "uthash.h"
 
 extern int programFlag = 0;
+extern void* ret_ConValue = NULL;
+extern char* ret_SymValue = NULL;
 
 typedef struct functionArgument{
      char funcName[100];
@@ -252,8 +254,15 @@ void funcEntry(char* format, char* args, char* funcName) {
 	printf("Stack depth %d\n", stackSize(symStack));
 }
 
-void funcExit(char* funcName){
-    printf("funcExit: %s \n",funcName);
+
+void symAssignFunctionReturn(char* varname){
+	deleteEntryUsingVar(varname);
+	add_entryToSTable(varname,ret_SymValue,ret_ConValue,ret_ConValue,1);
+}
+
+void funcExit(char* AssignLval){
+    printf("AssignLval: \"%s\" \n",AssignLval);
+    symAssignFunctionReturn(AssignLval);
     funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
     stackPop(symStack, (&fv));
     int j;
@@ -273,7 +282,16 @@ void testgen_exit(){
 
 void mapConcolicValues (char* retVarName){
 	ret_ConValue = NULL;
-	ret_SymValue = NULL;
+	ret_SymValue = (char *)malloc(100*sizeof(char));
+	ret_SymValue = find_symVal(retVarName);
+	ret_ConValue = find_conVal(retVarName);
+	if(ret_SymValue == NULL){
+		printf("symValue for variable \"%s\" not found\n", retVarName);
+	}
+	else{
+		printf("symValue for variable \"%s\" is \"%s\"\n",retVarName,ret_SymValue);
+		printf("ConValue for variable \"%s\" is \"%d\"\n",retVarName,*((int *)(ret_ConValue)));
+	}
 	return;
 }
 

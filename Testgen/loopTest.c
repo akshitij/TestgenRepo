@@ -1,13 +1,12 @@
 #include <stdio.h>
 int foo(int x){
+	printf("x = %d\n",x);
 	int y;
-	if(x>2)
-		y=3*x;
+	y = 10 * x;
+	/*if(x>2)
+		x=2*x;
 	else
-		y=2*x;
-	/*for(;x<5;x++){
-		y = x+1;
-	}*/
+		x=3*x;*/
 	return y;
 }
 
@@ -17,9 +16,9 @@ int main(){
 	/*for(;i<8;){
 		i = i+2;
 	}*/
-	if(i>8888){
-		i = i/2;
-		if(i<9999){
+	if(i <= 2){
+		//i = i/2;
+		if(i>0){
 			j=2;
 		}
 		else{
@@ -27,7 +26,11 @@ int main(){
 		}
 	}
 	else
-		j=1;
 	i = foo(i);
+	if(i>100){
+		j=4;	
+	}
+	else
+		j=9;
 	return 0;
 }

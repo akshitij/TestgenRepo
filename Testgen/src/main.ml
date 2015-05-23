@@ -123,6 +123,7 @@ let features : C.featureDescr list =
     HandleUnseenNodes.feature;
     InstMapConcolic.feature;
     InsertReturnHolders.feature;
+    EntryExit.feature;
     HandleExit.feature;
     (* Test features *)
     Test.feature;

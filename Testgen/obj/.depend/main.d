@@ -12,8 +12,9 @@
       $(OBJDIR)/handleUnseenNodes.cmo   $(OBJDIR)/handleExit.cmo \
       $(OBJDIR)/frontc.cmi   $(OBJDIR)/feature_config.cmo \
       $(OBJDIR)/extractStruct.cmo  $(OBJDIR)/errormsg.cmi   $(OBJDIR)/epicenter.cmo \
-      $(OBJDIR)/dataslicing.cmi  $(OBJDIR)/cilutil.cmo  $(OBJDIR)/ciloptions.cmi  $(OBJDIR)/cil.cmi \
-     $(OBJDIR)/check.cmi   $(OBJDIR)/canonicalize.cmi   $(OBJDIR)/callgraph.cmi
+      $(OBJDIR)/entryExit.cmo   $(OBJDIR)/dataslicing.cmi  $(OBJDIR)/cilutil.cmo \
+     $(OBJDIR)/ciloptions.cmi  $(OBJDIR)/cil.cmi  $(OBJDIR)/check.cmi   $(OBJDIR)/canonicalize.cmi \
+      $(OBJDIR)/callgraph.cmi
  $(OBJDIR)/main.cmx $(OBJDIR)/:   $(OBJDIR)/vartype.cmx   $(OBJDIR)/varUpdated.cmx  $(OBJDIR)/util.cmx \
       $(OBJDIR)/tutcil.cmx   $(OBJDIR)/testgenStub.cmx  $(OBJDIR)/testcil.cmx \
       $(OBJDIR)/test.cmx   $(OBJDIR)/sym.cmx  $(OBJDIR)/stats.cmx   $(OBJDIR)/simplify.cmx \
@@ -28,5 +29,6 @@
       $(OBJDIR)/handleUnseenNodes.cmx   $(OBJDIR)/handleExit.cmx \
       $(OBJDIR)/frontc.cmx   $(OBJDIR)/feature_config.cmx \
       $(OBJDIR)/extractStruct.cmx  $(OBJDIR)/errormsg.cmx   $(OBJDIR)/epicenter.cmx \
-      $(OBJDIR)/dataslicing.cmx  $(OBJDIR)/cilutil.cmx  $(OBJDIR)/ciloptions.cmx  $(OBJDIR)/cil.cmx \
-     $(OBJDIR)/check.cmx   $(OBJDIR)/canonicalize.cmx   $(OBJDIR)/callgraph.cmx
+      $(OBJDIR)/entryExit.cmx   $(OBJDIR)/dataslicing.cmx  $(OBJDIR)/cilutil.cmx \
+     $(OBJDIR)/ciloptions.cmx  $(OBJDIR)/cil.cmx  $(OBJDIR)/check.cmx   $(OBJDIR)/canonicalize.cmx \
+      $(OBJDIR)/callgraph.cmx
