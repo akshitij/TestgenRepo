@@ -14452,6 +14452,7 @@ void funcExit(char *AssignLval )
 
   {
   printf((char const   * __restrict  )"AssignLval: \"%s\" \n", AssignLval);
+  symAssignFunctionReturn(AssignLval);
   tmp = malloc(sizeof(funcVars ));
   fv = (funcVars *)tmp;
   stackPop(symStack, & fv);
@@ -14702,7 +14703,7 @@ int main1(int programFlag , int i___0 )
   __cil_tmp6 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp6", "Function", & __cil_tmp6, & __cil_tmp6, -1);
   sprintf(__cil_tmp6, "\t%d\t%d\n", programFlag, i___0);
-  printTestCase("loopTest_main1_1432449617.tc", __cil_tmp6);
+  printTestCase("loopTest_main1_1432457773.tc", __cil_tmp6);
   add_entryToSTable("i___0", "s1", & i___0, & i___0, 1);
   add_entryToSTable("programFlag", "s0", & programFlag, & programFlag, 1);
   {

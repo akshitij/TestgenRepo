@@ -262,7 +262,7 @@ void symAssignFunctionReturn(char* varname){
 
 void funcExit(char* AssignLval){
     printf("AssignLval: \"%s\" \n",AssignLval);
-    //symAssignFunctionReturn(AssignLval);
+    symAssignFunctionReturn(AssignLval);
     funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
     stackPop(symStack, (&fv));
     int j;
