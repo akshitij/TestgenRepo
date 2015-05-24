@@ -2,7 +2,7 @@
 int foo(int x){
 	printf("x = %d\n",x);
 	int y;
-	y = x + 10;
+	y = 10 * x;
 	/*if(x>2)
 		x=2*x;
 	else
@@ -26,7 +26,7 @@ int main(){
 		}
 	}
 	else
-	i = foo(i);
+	i = foo(2);
 	if(i>100){
 		j=4;	
 	}
