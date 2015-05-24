@@ -26,7 +26,7 @@ int main(){
 		}
 	}
 	else
-	i = foo(2);
+	i=i*10;//i = foo(i);
 	if(i>100){
 		j=4;	
 	}

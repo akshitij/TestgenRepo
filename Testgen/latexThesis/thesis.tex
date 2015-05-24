@@ -33,6 +33,9 @@
    \fi
 }
 
+
+
+
 %Gummi|065|=)
 
 \date{}
@@ -160,6 +163,7 @@ I also want to express my sincere gratitude to \textit {\textbf {BRNS}} for enco
 \chapter{Introduction}
 %%\lhead{Chapter 1. \emph{Introduction}}
 
+
 \hspace {0.4 cm}
 Symbolic Execution has been a recipient of significant attention during the past few years. It is now considered an effective technique in generation of high coverage test suites. The idea has been discovered around three decades ago but it was after significant improvements the potential of idea is harnessed. One such important improvement was symbolic execution alongside keeping track of concrete values (concolic executic). The main advantage of this technique is that whenever constraint solving complications (like timeouts) occur during classical symbolic execution, it is alleviated using the concrete values.
 
@@ -169,16 +173,41 @@ More practical programs involve procedure calls. The symbolic execution goes smo
 \section{Problem Statement}
 The implementation of this thesis is built into a tool 'Testgen' that does automatic test case generation. The tool uses inbuilt concolic execution engine for the purpose. But one of the drawbacks the tool faces is whenever a procedure call is encountered, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function.  
 
-More details than abstract
+\newpage
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1]{module3.png}
+\caption{Basic Module}
+\end{figure}
+
+\textit{Figure 1.1} shown above gives a vague idea of what the tool does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the tool does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
+
+We aim at solving this problem by instrumenting the call site. For such purposes in our approach we have used a tool called CIL. We first set up an environment before commencing the callee procedure execution (in this case \textit{foo}). The operations for such tasks is carried out by \textit{funcEntry} function which is instrumented just before \textit{foo} is called. \textit{funcEntry} handles the mapping of symbolic and concolic values of actual parameters to formal parameters, the creation of symbolic stack (later explained in \textit{Chapter 3}).
+
+Similarly we instrument \textit{funcExit} function just after \textit{foo} call. The task of \textit{funcExit} is to map the symbolic state of "return variable" to appropriate variable at the call site (if any) and clear the symbolic values that were generated during call and execution of \textit{foo}. It also manages the symbolic stack appropriately. The implementation of \textit{funcEntry} and \textit{funcExit} is done in C language and is defined in included C modules.
+
+This approach ensures that symbolic execution is carried through correctly to and from the callee. The modified state of symbolic variables is in accordance with operations of concerned callee function (in our case \textit{foo}). This improves the accuracy and correctness of the test suite generation in our tool.  
 
 \section {Contributions}
-
+In this thesis we have accomplished the following:
+\begin{itemize}
+  \item Designed an approach to apply inter-procedural analysis to concolic execution. 
+  \item Application of IP analysis to improve the automatic test case generation using concolic testing.
+  \item Dynamic support to handle recursive procedure calls. 
+\end{itemize}
 
 
 \section {Organisation of thesis}
+A brief summary of the contents of other chapters of this thesis are as follows.\\
 
+\textbf{Chapter 2} deals with the concepts which are necessary to understand the thesis. Concolic execution is introduced and its advantages over classical symbolic execution and random testing. Meaning of coverage and test suite generation is also explained. Some brief approaches in interprocedural analysis has also been discussed in this chapter. We also explore the related work that has been done in this field. \\
 
+\textbf{Chapter 3} discusses our implementation in a detailed manner. Some terminology has been introduced to explain techniques employed in our work. But mostly the chapter pertains to the relevant algorithms designed to accomplish the aim of this thesis and how it should improve the scalability and accuracy of this tool.\\
+
+\textbf{Chapter 4} contains the experimental results and their analysis after we run our modified tool on a set of standard benchmark programs. Analysis in done in terms of coverage improvement and runtime of the tool.\\
+
+\textbf{Chapter 5} sheds light on future work and modifications that can be done to improve the accuracy and performance of the approach discussed in this thesis.
 
 
 \newpage
@@ -187,5 +216,11 @@ More details than abstract
 \section {Concolic Testing}
 
 \section {Intraprocedural Analysis}
+\newpage
+
+
+\chapter{Methodology}
+
+
 
 \end{document}

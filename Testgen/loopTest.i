@@ -862,7 +862,7 @@ int main(){
   }
  }
  else
- i = foo(i);
+ i=i*10;
  if(i>100){
   j=4;
  }

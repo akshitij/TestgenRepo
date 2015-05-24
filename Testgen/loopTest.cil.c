@@ -14703,7 +14703,7 @@ int main1(int programFlag , int i___0 )
   __cil_tmp6 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp6", "Function", & __cil_tmp6, & __cil_tmp6, -1);
   sprintf(__cil_tmp6, "\t%d\t%d\n", programFlag, i___0);
-  printTestCase("loopTest_main1_1432457773.tc", __cil_tmp6);
+  printTestCase("loopTest_main1_1432459059.tc", __cil_tmp6);
   add_entryToSTable("i___0", "s1", & i___0, & i___0, 1);
   add_entryToSTable("programFlag", "s0", & programFlag, & programFlag, 1);
   {
@@ -14754,10 +14754,8 @@ int main1(int programFlag , int i___0 )
     addToTree(3, 1, "(<= i___0 2)", "(not (<= i___0 2))", 0, 0);
     delete_allVariableTableEntry();
     {
-    funcEntry("(type,formals,actuals,CorV)", "(int,foo_x,variable,i___0)", "foo");
-    i___0 = foo(i___0);
-    funcExit("i___0");
-    add_entryToSTable("i___0", "Function", & i___0, & i___0, 1);
+    i___0 *= 10;
+    handleAssignmentSymbolically("i___0", "(* i___0 10)", & i___0, & i___0, 1);
     }
   }
   }
