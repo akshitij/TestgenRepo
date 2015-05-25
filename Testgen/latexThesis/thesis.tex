@@ -1,17 +1,19 @@
 \documentclass[12pt,oneside]{book}
 \usepackage{fullpage}
-\usepackage{color}
-\usepackage{mathtools}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-\usepackage{lipsum}
+
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{fancyhdr}
  
 
 \rfoot{Page \thepage}
+\fancyhead{}
+\rhead{\thepage} 
+\lhead{} 
+
 
 \geometry{
  a4paper,
@@ -211,16 +213,36 @@ A brief summary of the contents of other chapters of this thesis are as follows.
 
 
 \newpage
-\chapter{Background}
+\chapter{Background Details}
+
+\section {Intraprocedural Data-flow Analysis}
+This is a technique which is broadly defined as gathering of information across multiple procedures (typically over the entire program). Procedure call poses barrier to program analysis. Its aim is to avoid making conservative assumpions about the effect of procedures and the state at call sites.\\
+\textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize across different files (whole-program analysis), and can result in significant performance improvements. Integrating IPA with intraprocedural concolic execution will help anticipate the precise behavior of function calls on the symbolic state of the variables.\\
+\subsection {Function Inlining}
+One of the approaches is \textit{function inlining} which is the simplest and most widely used approach for accurate interprocedural symbolic execution. We simply use the copy of procedure's Control Flow Graph (CFG) at each call site. This leads to function being re-analyzed at every call site. This is can be avoided using \textit{function summaries}. They are implemented by merging all states at the function exit after computing an intraprocedural path constraint in terms of function input. 
+
+This technique does not require function calling overhead. It also saves the overhead for manipulating function stack. In increases locality of reference by utilizing instruction cache.
+
+But there are significant \textit{drawbacks} with this approach. Firstly, the performance overhead will increase if the the code size of the inlined function is increased. The caller function may not fit on the cache causing high cache miss rate. Similarly if there are too many function calls involved, inlining maybe expensive since it will cause an exponential increase in the size of the CFG.
+
+Secondly it is also going to create problems in the recursive procedures. Same can be said more generally for any scenario where there are cycles in the call graph.
+
+
 
 \section {Concolic Testing}
 
-\section {Intraprocedural Analysis}
+
+\section {Related work}
+
+
 \newpage
 
 
 \chapter{Methodology}
 
+\chapter{Experiments}
+
+\chapter{Conclusion}
 
 
 \end{document}
