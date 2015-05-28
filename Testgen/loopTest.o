@@ -844,27 +844,32 @@ int foo(int x){
 
 
 
+ y = (y>100) ? 99:y;
  return y;
 }
 
+
+
 int main(){
- int i,j;
+ int i,j,k;
  scanf("%d",&i);
 
 
 
  if(i <= 2){
 
-  if(i>0){
-   j=2;
-  }
-  else{
-   j=3;
-  }
+
+
+
+
+
+
+  j=3;
  }
  else
- i=i*10;
- if(i>100){
+
+ k = i*10;
+ if(k>100){
   j=4;
  }
  else
