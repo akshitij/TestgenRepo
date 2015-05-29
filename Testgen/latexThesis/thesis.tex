@@ -1,6 +1,7 @@
 \documentclass[12pt,oneside]{book}
 \usepackage{fullpage}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{graphicx}
 
@@ -25,15 +26,6 @@
 }
 \linespread {1.6}
 
-\newif\ifquoteopen
-\catcode`\"=\active % lets you define `"` as a macro
-\DeclareRobustCommand*{"}{%
-   \ifquoteopen
-     \quoteopenfalse ''%
-   \else
-     \quoteopentrue ``%
-   \fi
-}
 
 
 
@@ -173,13 +165,13 @@ I also want to express my sincere gratitude to \textit {\textbf {BRNS}} for enco
 \hspace {0.4 cm}
 Symbolic Execution has been a recipient of significant attention during the past few years. It is now considered an effective technique in generation of high coverage test suites. The idea has been discovered around three decades ago but it was after significant improvements the potential of idea is harnessed. One such important improvement was symbolic execution alongside keeping track of concrete values (concolic executic). The main advantage of this technique is that whenever constraint solving complications (like timeouts) occur during classical symbolic execution, it is alleviated using the concrete values.
 
-More practical programs involve procedure calls. The symbolic execution goes smoothly if there are no function calls involve. A function call tranfers the control from the caller to the callee. That function may very well modify the symbolic state of the variables. If we transition the symbolic state correctly through the function call, the symbolic execution will run as usual with the modified symbolic state.   
+More practical programs involve procedure calls. The symbolic execution goes smoothly if there are no function calls involve (\textit{intraprocedural analysis}). A function call tranfers the control from the caller to the callee. That function may very well modify the symbolic state of the variables. If we transition the symbolic state correctly through the function call, the symbolic execution will run correctly with the modified symbolic state.   
 
+\section{Motivation}
+\textit{Intraprocedural Analysis} is performed at one procedure at a time. It is simple and conservative. But almost all real world programs involve procedural calls. This poses problem for techniques such symbolic execution since they dont know how the procedure is going to modify the symbolic state. This brings us to the need of extending our analysis techniques to prgrams with functions and procedures.
 
 \section{Problem Statement}
-The implementation of this thesis is built into a tool 'Testgen' that does automatic test case generation. The tool uses inbuilt concolic execution engine for the purpose. But one of the drawbacks the tool faces is whenever a procedure call is encountered, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function.  
-
-\newpage
+This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the accuracy the tool. 
 
 \begin{figure}[htbp]
 \centering
@@ -187,7 +179,7 @@ The implementation of this thesis is built into a tool 'Testgen' that does autom
 \caption{Basic Module}
 \end{figure}
 
-\textit{Figure 1.1} shown above gives a vague idea of what the tool does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the tool does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
+\textit{Figure 1.1} shown above gives a vague idea of what our implementation does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the program does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
 
 We aim at solving this problem by instrumenting the call site. For such purposes in our approach we have used a tool called CIL. We first set up an environment before commencing the callee procedure execution (in this case \textit{foo}). The operations for such tasks is carried out by \textit{funcEntry} function which is instrumented just before \textit{foo} is called. \textit{funcEntry} handles the mapping of symbolic and concolic values of actual parameters to formal parameters, the creation of symbolic stack (later explained in \textit{Chapter 3}).
 
@@ -207,9 +199,9 @@ In this thesis we have accomplished the following:
 \section {Organisation of thesis}
 A brief summary of the contents of other chapters of this thesis are as follows.\\
 
-\textbf{Chapter 2} deals with the concepts which are necessary to understand the thesis. Concolic execution is introduced and its advantages over classical symbolic execution and random testing. Meaning of coverage and test suite generation is also explained. Some brief approaches in interprocedural analysis has also been discussed in this chapter. We also explore the related work that has been done in this field. \\
+\textbf{Chapter 2} deals with the concepts which are necessary to understand the thesis. Concolic execution is introduced and its advantages over classical symbolic execution and random testing. An overview of approaches in interprocedural analysis like Function Inlining and Call String have also been discussed in this chapter. We have also briefly mentioned the related work that has been done in this field. \\
 
-\textbf{Chapter 3} discusses our implementation in a detailed manner. Some terminology has been introduced to explain techniques employed in our work. But mostly the chapter pertains to the relevant algorithms designed to accomplish the aim of this thesis and how it should improve the scalability and accuracy of this tool.\\
+\textbf{Chapter 3} discusses our implementation in a detailed manner. Some terminology has been introduced to explain techniques employed in our work. But mostly the chapter pertains to the relevant algorithms designed to accomplish the aim of this thesis and how it should improve the scalability and accuracy of concolic IP analysis.\\
 
 \textbf{Chapter 4} contains the experimental results and their analysis after we run our modified tool on a set of standard benchmark programs. Analysis in done in terms of coverage improvement and runtime of the tool.\\
 
@@ -217,11 +209,16 @@ A brief summary of the contents of other chapters of this thesis are as follows.
 
 
 \newpage
-\chapter{Background Details}
+\chapter{Background}
 
 \section {Intraprocedural Data-flow Analysis}
-This is a technique which is broadly defined as gathering of information across multiple procedures (typically over the entire program). Procedure call poses barrier to program analysis. Its aim is to avoid making conservative assumpions about the effect of procedures and the state at call sites.\\
-\textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize across different files (whole-program analysis), and can result in significant performance improvements by removing spurious data dependencies. Integrating IPA with intraprocedural concolic execution will help anticipate the precise behavior of function calls on the symbolic state of the variables.\\
+This is a technique which is broadly defined as gathering of information across multiple procedures (typically over the entire program). Procedure call poses barrier to program analysis. Its aim is to avoid making conservative assumpions about the effect of procedures and the state at call sites.
+
+Interprocedural analysis is more demanding and challenging than intraprocedural analysis; here we need to take into account the call-return and parameter passing mechanisms, local variable of the function and function recursion (can be unbounded). In some cases the called procedure is known only in run-time like with function pointers or with virtual functions. 
+
+\textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize across different files (whole-program analysis), and can result in significant performance improvements by removing spurious data dependencies. Integrating IPA with intraprocedural concolic execution will help anticipate the precise behavior of function calls on the symbolic state of the variables.
+
+
 
 \subsection {Function Inlining}
 One of the approaches is \textit{function inlining} which is the simplest and most widely used approach for accurate interprocedural symbolic execution. We simply use the copy of procedure's Control Flow Graph (CFG) at each call site. This leads to function being re-analyzed at every call site. This is can be avoided using \textit{function summaries}. They are implemented by merging all states at the function exit after computing an intraprocedural path constraint in terms of function input.\\ 
@@ -238,19 +235,66 @@ But there are significant \textit{drawbacks} with this approach. Firstly, the pe
 
 Secondly it is also going to create problems in the recursive procedures. Same can be said more generally for any scenario where there are cycles in the call graph. So basically function inlining has scalability issues pertaining to code size. Lastly, procedure inlining is only possible if the target of the call is known. Hence it will not be possible if call is via a pointer or is "virtual".
 
-\subsection {Some other method}
+\subsection {Call String Approach}
+In another IP analysis we observe the CFG's of all the procedures. In this technique,
+\begin{itemize}
+\item When we encouter a function call we interpret it as a goto from the call intruction to the first instruction of the procedure.
+\item Interpreting every return statement like a goto to the instruction following each call site that invoked that procedure (\textit{Non-Deterministic}).
+\end{itemize}
+Using this method non-deterministically will allow non feasible paths in our analysis which will cause loss of accuracy. In a better approach called "Call String" we keep track of the where we came from, that is, the context of the call and where to return. To do this we maintain a "string" that simulates a call stack. A feasible path is a control flow path that is generated in accordance with the stack regime. A perfect solution is keep record of the whole stack. This concept is easy and intuitive according to which every return jumps to the instruction that's immediately after the call site which corresponds to that particular function call. By adding the context of the call to the information in the state we can overcome the problem of passing through invalid paths.\\
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.6]{callString.png}
+\caption{Example : Call String}
+\end{figure}  
+ 
+Every procedure records their state information when they are invoked. Let us consider the program in \textit{Figure 2.2}. Here the labels \textit{c1} and \textit{c2} are saved in the state information of \textit{foo}. This is so that \textit{p} gets differentiating values every time function \textit{foo} is called. Another reason to save the labels is because they help in figuring out the respective return values of call \textit{c1} (\$\$ $\rightarrow$ 4) and \textit{c2}(\$\$ $\rightarrow$ 6).
 
+Implementing this algorithm is efficient for small strings. Problem arises when call string generated is large since we can keep track of only limited number of strings. This poses a limitation on the depth of function calls.
 
 \section {Concolic Testing}
 
 One popular approach for automated software testing is \textit{random testing} which involves subjecting the program to be tested to a stream of random data. It is fast but it can find only basic bugs like program crashes, code assertions or memory leaks. But it is not always possible to employ this technique specially when working with binaries since it is very difficult to figure out the expected inputs. The code coverage generated by random data is very low.\\
 
-A more deliberate approach can be used by merging symbolic execution with concrete execution (\textit{concolic execution}) and then using a an SMT-solver (like Z3) to generate test inputs. This method is called \textit{Concolic testing}. It is much more efficient than symbolic execution. To understand why let us assume that our costraint solver cannot handle non-linear constraint. Then a path constraint with \textit{cubic or modulo} function involved cannot be solved and symbolic execution will be stuck. Similar problem arises when we encounter a closed third party library function say \textit{increment()}. It doesn't know how to modify the symbolic state according to the behavior of that function. For such cases the test cases cannot be generated by classical symbolic execution. Concolic Tesing addresses these limitations and resolves situations like above by replacing the symbolic values by their concrete values so that the resulting constraint can be solved by the constraint solvers. 
+A more deliberate approach can be used by merging symbolic execution with concrete execution (\textit{concolic execution}) and then using a an SMT-solver (like Z3) to generate test inputs. This method is called \textit{Concolic testing}. It is much more efficient than symbolic execution. To understand why let us assume that our costraint solver cannot handle non-linear constraint. Then a path constraint with \textit{cubic or modulo} function involved cannot be solved and symbolic execution will be stuck. Similar problem arises when we encounter a closed third party library function say \textit{increment()}. It doesn't know how to modify the symbolic state according to the behavior of that function. For such cases the test cases cannot be generated by classical symbolic execution. Concolic Tesing addresses these limitations and resolves situations like above by replacing the symbolic values by their concrete values so that the resulting constraint can be solved by the constraint solvers.\\
 
+The algorithm involves initialting the inputs with randomly generated values. The program is executed and during the execution, on every conditional branch statement program collects symbolic path constraints on inputs. Symbolic constriants are essentially a set of logical constriants on input data. New program path is directed and executed by \textit{negating/flipping} the last condition of the path constraint. This is done until all the feasible program paths are explored. To get the intuition, let us consider the program in \textit{Figure 2.2} for concolic testing.  
 
+\newpage
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.5]{conjoined4.png}
+\caption{Concolic Testing}
+\end{figure}
 
+The program input variables are assigned random concrete values, say \textit{x = 1} and \textit{y = 1}. The program runs and line 11 is executed. Path condition generated is :
+
+\begin{equation}
+\neg(y == 3x)
+\end{equation}
+
+Now we negate the last condition in path constraint (PC has only one condition in this case) to execute an alternate path. So the new path constraint generated is :
+
+\begin{equation}
+y == 3x
+\end{equation}
+
+which is examined by a SMT solver to generate the new input data. Out of many different possible values for equation \textit{2.2} solver picks say \textit{x = 1} and \textit{y = 3} which should explore a different path than before. The program runs on these new inputs and generates a new path condition :
+
+\begin{equation}
+(y == 3x) \wedge \neg(y == x + 10)
+\end{equation}
+
+Like previously we negate the last condition of the path constraint to generate condition for new path exploration.
+So we pass on the following constraint to solver to generate new inputs
+
+\begin{equation}
+(y == 3x) \wedge (y == x + 10)
+\end{equation}
+
+Let the new inputs generated be \textit{x = 5} and \textit{y = 15} we will lead to the execution of line 13 and consequently line 14 which will hit the error or any other unexpected behavior. Since there are no more paths left to explore, the algorithm will terminate generating a set of input data for complete path coverage of this program.
 
 \section {Related work}
 \subsection {Summary-based Analysis}
@@ -271,6 +315,12 @@ DART is an abbreviation for "\textit{Directed Automated Random Testing}" which i
  \item Dynamic generation of test cases to \textit{direct} alternate program execution path.
 \end{itemize}
 
+\newpage
+
+\subsection{CUTE}
+CUTE stands for "A Concolic Unit Testing Engine for C" which also addresses automatic test case generation with memory graphs as inputs. This tool is developed by \textit{Koushik Sen}, \textit{Darko Marinov} and \textit{Gul Agha}. It is similar to DART, thereby employs concolic testing technique. It resolves some of the limitations of DART and aims at testing real-world examples of C code.
+
+It provides a method for representing and solving approximate pointer contraints to generate test inputs. The symbolic model being used is more powerful and the theorm solver is both more powerful and is built to be efficient in this system. As opposed to what DART does, CUTE does not automatically extract program interface but lets user decide relation among functions and their preconditions. The work also shows exactly how it made approximations and trade off between speed vs. correctness and scenarios where CUTE will not work correctly.
 
 
 
@@ -281,10 +331,23 @@ DART is an abbreviation for "\textit{Directed Automated Random Testing}" which i
 
 
 \chapter{Methodology}
+\section{Definitions}
+\section{Instrumentation}
+\section{Parameter Mapping}
+\section{Stack Manipulation}
+\section{Return Handling}
 
 \chapter{Experiments}
+\section{Result}
+\section{Comparion of Test Case Generation}
+\section{Analysis}
 
 \chapter{Conclusion}
+\newpage
 
+\addcontentsline{toc}{chapter}{Bibliography}
+\begin{center}
+\textbf{\Large{Bibliography}}
+\end{center}
 
 \end{document}
