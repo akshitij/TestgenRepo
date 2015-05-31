@@ -2952,8 +2952,6 @@ int countOrgTotalConditions() {
       count++;
     }
   }
-
-
   return count;
 }
 

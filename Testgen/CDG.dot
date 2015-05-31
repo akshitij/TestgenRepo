@@ -4,14 +4,8 @@ ENTRY -> 1
 ENTRY -> 2
 2-> 3
 2-> 4
-5 [shape=diamond, color=red]
 ENTRY -> 5
-5 [shape=diamond, color=red]
 ENTRY -> 5
-5-> 6
-5-> 7
-ENTRY -> 8
-ENTRY -> 8
-ENTRY -> 9
+ENTRY -> 6
 }
 
