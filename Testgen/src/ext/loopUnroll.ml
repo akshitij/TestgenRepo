@@ -134,11 +134,11 @@ let rec constructStmts (v: stmt) =
                ) v.labels
      in
      s.labels <- x;
-     if not marked then
+     (*if not marked then
        begin 
          s.labels <- s.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
          v.labels <- v.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
-       end;
+       end;*)
      dummyLabelCnt := !dummyLabelCnt + 1;
      Hashtbl.add labelMapping v.labels s;
      s
@@ -404,6 +404,7 @@ let loopUnroll (f: file) (funName:string) : unit =
   Stats.time "loopUnroll" (iterGlobals f) doGlobal
   
 let iterLoopUnroll  (f: file) : unit =
+  List.iter (fun f -> E.log "Param_func : %s\n" f)  !Param.func_list;
   List.iter (
            fun funcName ->
            if funcName <> "main" then begin

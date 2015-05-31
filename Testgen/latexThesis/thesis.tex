@@ -8,7 +8,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{fancyhdr}
- 
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+
+
+\MakeOuterQuote{"}
 
 \rfoot{Page \thepage}
 \fancyhead{}
@@ -167,8 +171,12 @@ Symbolic Execution has been a recipient of significant attention during the past
 
 More practical programs involve procedure calls. The symbolic execution goes smoothly if there are no function calls involve (\textit{intraprocedural analysis}). A function call tranfers the control from the caller to the callee. That function may very well modify the symbolic state of the variables. If we transition the symbolic state correctly through the function call, the symbolic execution will run correctly with the modified symbolic state.   
 
+%%----------------------------------------------MOTIVATION
+
 \section{Motivation}
 \textit{Intraprocedural Analysis} is performed at one procedure at a time. It is simple and conservative. But almost all real world programs involve procedural calls. This poses problem for techniques such symbolic execution since they dont know how the procedure is going to modify the symbolic state. This brings us to the need of extending our analysis techniques to prgrams with functions and procedures.
+
+%%----------------------------------------------PROBLEM STATEMENT
 
 \section{Problem Statement}
 This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the accuracy the tool. 
@@ -187,6 +195,8 @@ Similarly we instrument \textit{funcExit} function just after \textit{foo} call.
 
 This approach ensures that symbolic execution is carried through correctly to and from the callee. The modified state of symbolic variables is in accordance with operations of concerned callee function (in our case \textit{foo}). This improves the accuracy and correctness of the test suite generation in our tool.  
 
+%%----------------------------------------------CONTRIBUTIONS
+
 \section {Contributions}
 In this thesis we have accomplished the following:
 \begin{itemize}
@@ -195,6 +205,7 @@ In this thesis we have accomplished the following:
   \item Dynamic support to handle recursive procedure calls. 
 \end{itemize}
 
+%%----------------------------------------------ORGANISATION OF THESIS
 
 \section {Organisation of thesis}
 A brief summary of the contents of other chapters of this thesis are as follows.\\
@@ -207,9 +218,12 @@ A brief summary of the contents of other chapters of this thesis are as follows.
 
 \textbf{Chapter 5} sheds light on future work and modifications that can be done to improve the accuracy and performance of the approach discussed in this thesis.
 
+%%----------------------------------------------CHAPTER 2 : BACKGROUND
 
 \newpage
 \chapter{Background}
+
+%%----------------------------------------------INTERPROCEDURAL DATAFLOW ANALYSIS
 
 \section {Intraprocedural Data-flow Analysis}
 This is a technique which is broadly defined as gathering of information across multiple procedures (typically over the entire program). Procedure call poses barrier to program analysis. Its aim is to avoid making conservative assumpions about the effect of procedures and the state at call sites.
@@ -218,7 +232,7 @@ Interprocedural analysis is more demanding and challenging than intraprocedural 
 
 \textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize across different files (whole-program analysis), and can result in significant performance improvements by removing spurious data dependencies. Integrating IPA with intraprocedural concolic execution will help anticipate the precise behavior of function calls on the symbolic state of the variables.
 
-
+%%----------------------------------------------FUNCTION INLINING 
 
 \subsection {Function Inlining}
 One of the approaches is \textit{function inlining} which is the simplest and most widely used approach for accurate interprocedural symbolic execution. We simply use the copy of procedure's Control Flow Graph (CFG) at each call site. This leads to function being re-analyzed at every call site. This is can be avoided using \textit{function summaries}. They are implemented by merging all states at the function exit after computing an intraprocedural path constraint in terms of function input.\\ 
@@ -234,6 +248,8 @@ This technique does not require function calling overhead. It also saves the ove
 But there are significant \textit{drawbacks} with this approach. Firstly, the performance overhead will increase if the the code size of the inlined function is increased. The caller function may not fit on the cache causing high cache miss rate. Similarly if there are too many function calls involved, inlining maybe expensive since it will cause an exponential increase in the size of the CFG.
 
 Secondly it is also going to create problems in the recursive procedures. Same can be said more generally for any scenario where there are cycles in the call graph. So basically function inlining has scalability issues pertaining to code size. Lastly, procedure inlining is only possible if the target of the call is known. Hence it will not be possible if call is via a pointer or is "virtual".
+
+%%----------------------------------------------CALL STRING APPROACH
 
 \subsection {Call String Approach}
 In another IP analysis we observe the CFG's of all the procedures. In this technique,
@@ -252,6 +268,9 @@ Using this method non-deterministically will allow non feasible paths in our ana
 Every procedure records their state information when they are invoked. Let us consider the program in \textit{Figure 2.2}. Here the labels \textit{c1} and \textit{c2} are saved in the state information of \textit{foo}. This is so that \textit{p} gets differentiating values every time function \textit{foo} is called. Another reason to save the labels is because they help in figuring out the respective return values of call \textit{c1} (\$\$ $\rightarrow$ 4) and \textit{c2}(\$\$ $\rightarrow$ 6).
 
 Implementing this algorithm is efficient for small strings. Problem arises when call string generated is large since we can keep track of only limited number of strings. This poses a limitation on the depth of function calls.
+
+%%----------------------------------------------CONCOLIC TESTING
+
 
 \section {Concolic Testing}
 
@@ -296,7 +315,12 @@ So we pass on the following constraint to solver to generate new inputs
 
 Let the new inputs generated be \textit{x = 5} and \textit{y = 15} we will lead to the execution of line 13 and consequently line 14 which will hit the error or any other unexpected behavior. Since there are no more paths left to explore, the algorithm will terminate generating a set of input data for complete path coverage of this program.
 
+%%----------------------------------------------RELATED WORK
+
 \section {Related work}
+
+%%----------------------------------------------SUMMARY BASED ANALYSIS
+
 \subsection {Summary-based Analysis}
 New techniques have been invented that compute procedure summaries for performing an interprocedural analysis of programs. In summary-based context-sensitive analysis we create "summary" which is succinct description of the observable behavior of each procedure. The purpose of this approach is to prevent renanalysing the behavior of same procedure when there are invoked at each call site.
 
@@ -306,6 +330,7 @@ The representation of every has a single eantry point. The analysis is divided i
   \item \textit{Top-Down} : To propogate the caller information to compute callee result.
 \end{itemize}
 
+%%----------------------------------------------DART
 
 \subsection {DART}
 DART is an abbreviation for "\textit{Directed Automated Random Testing}" which is a tool for automated test case generation developed by \textit{Patrice Godefroid, Nils Klarlund} and \textit{Koushik Sen}. It utilizes the concept of concolic execution and is comprised of the following techniques :
@@ -316,6 +341,8 @@ DART is an abbreviation for "\textit{Directed Automated Random Testing}" which i
 \end{itemize}
 
 \newpage
+
+%%----------------------------------------------CUTE
 
 \subsection{CUTE}
 CUTE stands for "A Concolic Unit Testing Engine for C" which also addresses automatic test case generation with memory graphs as inputs. This tool is developed by \textit{Koushik Sen}, \textit{Darko Marinov} and \textit{Gul Agha}. It is similar to DART, thereby employs concolic testing technique. It resolves some of the limitations of DART and aims at testing real-world examples of C code.

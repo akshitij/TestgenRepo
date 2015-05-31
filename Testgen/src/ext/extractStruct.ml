@@ -195,5 +195,3 @@ let feature : featureDescr = {
   fd_doit = iterExtractStruct;
   fd_post_check = true
 } 
-
-

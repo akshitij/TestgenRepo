@@ -14701,7 +14701,7 @@ int main1(int i___0 )
   __cil_tmp7 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
   sprintf(__cil_tmp7, "\t%d\n", i___0);
-  printTestCase("loopTest_main1_1432549806.tc", __cil_tmp7);
+  printTestCase("loopTest_main1_1432992405.tc", __cil_tmp7);
   add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
 
   {

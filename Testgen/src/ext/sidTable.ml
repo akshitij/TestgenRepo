@@ -107,7 +107,6 @@ class sidTableVisitorClass (fdec : fundec) = object
     end 
 end
 
-
 let sidTable (f: file) : unit =
   let funName =  !Param.func
   in

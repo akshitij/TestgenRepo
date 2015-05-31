@@ -134,11 +134,11 @@ let rec constructStmts (v: stmt) =
                ) v.labels
      in
      s.labels <- x;
-     if not marked then
+     (*if not marked then
        begin 
          s.labels <- s.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
          v.labels <- v.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
-       end;
+       end;*)
      dummyLabelCnt := !dummyLabelCnt + 1;
      Hashtbl.add labelMapping v.labels s;
      s
@@ -417,6 +417,6 @@ let feature : featureDescr = {
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = loopUnroll;
+  fd_doit = iterLoopUnroll;
   fd_post_check = true
 } 

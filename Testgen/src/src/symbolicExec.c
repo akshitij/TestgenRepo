@@ -215,7 +215,6 @@ void *findValBySymbolicName(char *sname) {
   }
 }
 
-
 void deleteEntryUsingVar(char* key){
   struct sym_table *s;
   HASH_FIND_STR( stable, key, s ); 
@@ -224,7 +223,6 @@ void deleteEntryUsingVar(char* key){
   HASH_DEL( stable, s );  
   free(s);
 }
-
 
 char *getAllSymbolicNamesinAPath(char *rhs) {
   char *token, *result, *temp;
