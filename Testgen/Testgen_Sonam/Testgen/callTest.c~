@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int foo(int n){
+	int res;
+	if(n < 0){
+		res = n * -1;
+	}
+	else{
+		res = n;
+	}		
+	return res;
+}
+
+int main(){
+	int a,b;
+	scanf("%d",&a);
+	a = foo(a);
+	if(a>=0){
+		b=4;
+	}
+	else{
+		b=-4;
+	}
+	return 0;
+}
