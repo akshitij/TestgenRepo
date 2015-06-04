@@ -93,10 +93,13 @@ let get_func () =
       E.log "\nEnter the function number to test : ";
       let n = read_int() in
       func := (List.nth !func_list n);
-      if !func = "main" then
+      E.log "You have entered %s\n" !func;
+      if !func = "main" then begin
         func_list := !func_list @ ["main1"];
-        func := "main1";
-    end
+        func := "main1"
+      end
+    end;
+    E.log "You have entered %s\n" !func
 
 
 

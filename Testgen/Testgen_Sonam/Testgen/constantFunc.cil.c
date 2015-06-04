@@ -14271,7 +14271,7 @@ void del_vnameHash(char *key )
   return;
 }
 }
-funcArg *getArgument(char *argString , char *foo___0 ) 
+funcArg *getArgument(char *argString , char *foo ) 
 { 
   int i___0 ;
   double d ;
@@ -14298,7 +14298,7 @@ funcArg *getArgument(char *argString , char *foo___0 )
   *(copy + (tmp___0 - 1UL)) = (char)0;
   tmp___1 = malloc(sizeof(funcArg ));
   argument = (funcArg *)tmp___1;
-  strcpy((char * __restrict  )(argument->funcName), (char const   * __restrict  )foo___0);
+  strcpy((char * __restrict  )(argument->funcName), (char const   * __restrict  )foo);
   token = strtok((char * __restrict  )copy, (char const   * __restrict  )(s));
   tmp___4 = strcmp((char const   *)token, "int");
   if (tmp___4 == 0) {
@@ -14521,19 +14521,40 @@ void mapConcolicValues(char *retVarName )
 }
 #pragma merger("0","./constantFunc.i","-g,-g")
 extern int scanf(char const   * __restrict  __format  , ...)  __asm__("__isoc99_scanf")  ;
-int foo(int foo_x , int foo_y , int foo_z ) 
+int foo2(int foo2_a , int foo2_b ) 
 { 
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  foo_x = foo_x * foo_y + foo_z;
-  handleAssignmentSymbolically("foo_x", "(+ (* foo_x foo_y) foo_z)", & foo_x, & foo_x,
+  foo2_a += foo2_b;
+  handleAssignmentSymbolically("foo2_a", "(+ foo2_a foo2_b)", & foo2_a, & foo2_a,
                                1);
   {
-  mapConcolicValues("foo_x");
-  return (foo_x);
+  mapConcolicValues("foo2_a");
+  return (foo2_a);
+  }
+}
+}
+int foo1(int foo1_x , int foo1_y , int foo1_z ) 
+{ 
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  foo1_x *= foo1_y;
+  handleAssignmentSymbolically("foo1_x", "(* foo1_x foo1_y)", & foo1_x, & foo1_x,
+                               1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,foo2_a,variable,foo1_x) (int,foo2_b,variable,foo1_z)",
+            "foo2");
+  foo1_x = foo2(foo1_x, foo1_z);
+  add_entryToSTable("foo1_x", ret_SymValue, ret_ConValue, & foo1_x, 1);
+  funcExit();
+  {
+  mapConcolicValues("foo1_x");
+  return (foo1_x);
   }
 }
 }
@@ -14587,11 +14608,11 @@ int main1(int a )
   {
   __cil_tmp6 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp6, "\t%d\n", a);
-  printTestCase("constantFunc_main1_1433409083.tc", __cil_tmp6);
+  printTestCase("constantFunc_main1_1433409481.tc", __cil_tmp6);
   add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,foo_x,variable,a) (int,foo_y,constant,6) (int,foo_z,constant,1)",
-            "foo");
-  a = foo(a, 6, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,foo1_x,variable,a) (int,foo1_y,constant,6) (int,foo1_z,constant,1)",
+            "foo1");
+  a = foo1(a, 6, 1);
   add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   funcExit();
   {

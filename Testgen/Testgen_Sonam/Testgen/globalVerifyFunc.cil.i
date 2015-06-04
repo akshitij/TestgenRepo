@@ -5054,7 +5054,7 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
       tmp___45 = strcmp((char const *)symName, "Constant");
       if (tmp___45 == 0) {
-        tmp___33 = findValBySymbolicName(symName);
+        tmp___33 = find_conVal(token);
         sprintf((char * __restrict )(buff), (char const * __restrict )"%d", *((int *)tmp___33));
         tmp___34 = strlen((char const *)result);
         tmp___35 = strlen((char const *)(buff));
@@ -14590,7 +14590,7 @@ int main1(int global_a )
   {
   __cil_tmp5 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp5, "\t%d\n", a);
-  printTestCase("globalVerifyFunc_main1_1433405744.tc", __cil_tmp5);
+  printTestCase("globalVerifyFunc_main1_1433434028.tc", __cil_tmp5);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(type,formals,actuals,CorV)", "", "foo");
   foo();

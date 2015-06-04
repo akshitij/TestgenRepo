@@ -455,7 +455,8 @@ let level_struct (f:file) : unit =
                let level_structVisitor = new level_structVisitor exp_outcome overall_outcome in
                ignore (visitCilFunction level_structVisitor fd)
                       
-             | _ -> ()) f.globals
+             | _ -> ()) f.globals;
+  E.log "levelStruct complete\n"
             
 let feature : featureDescr = {
   fd_name = "level_struct";

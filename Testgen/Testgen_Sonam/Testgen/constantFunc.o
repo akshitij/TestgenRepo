@@ -837,15 +837,29 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 2 "constantFunc.c" 2
 
-int foo(int x, int y,int z){
- x = x * y + z;
+
+
+
+
+
+
+int foo2(int a,int b){
+ a = a+b;
+ return a;
+}
+
+int foo1(int x, int y, int z){
+ x = x*y;
+ x = foo2(x,z);
  return x;
 }
-# 22 "constantFunc.c"
+
+
+
 int main(){
  int a,b;
  scanf("%d",&a);
- a = foo(a,6,1);
+ a = foo1(a,6,1);
  if(a == 31)
   b=1;
  else

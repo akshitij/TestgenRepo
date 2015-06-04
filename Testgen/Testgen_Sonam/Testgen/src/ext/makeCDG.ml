@@ -317,6 +317,7 @@ let insertIsCopyOfHolder c f funName=
   ()
 
 let makeCDG (f: file) : unit =
+  E.log "Function Input in makeCDG: %s" !Param.func;
   let oc = open_out out_file in
   let fname = !Param.func in
 

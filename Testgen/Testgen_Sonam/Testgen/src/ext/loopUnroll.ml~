@@ -134,11 +134,11 @@ let rec constructStmts (v: stmt) =
                ) v.labels
      in
      s.labels <- x;
-     (*if not marked then
+     if not marked then
        begin 
          s.labels <- s.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
          v.labels <- v.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
-       end;*)
+       end;
      dummyLabelCnt := !dummyLabelCnt + 1;
      Hashtbl.add labelMapping v.labels s;
      s
@@ -393,6 +393,7 @@ let loopUnroll (f: file) (funName:string) : unit =
            let loopUnrollVisitor = new loopUnrollVisitorClass fdec
            in
            ignore (visitCilFunction loopUnrollVisitor fdec);
+           E.log "ran visistor on :%s\n" funName;
            (* Cfg.cfgFun fdec; *)
            (* let copies = collateCopies fdec.sallstmts in  *)
            (* insertIsCopyOfHolder copies f funName; *)
@@ -411,7 +412,8 @@ let iterLoopUnroll  (f: file) : unit =
              loopUnroll f funcName ;
              resetGlobalValues ();
              end
-         ) !Param.func_list
+         ) !Param.func_list;
+  E.log "Loop Unroll Complete\n"
              
 let feature : featureDescr = {
   fd_name = "loopUnroll";
