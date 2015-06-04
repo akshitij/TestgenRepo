@@ -340,7 +340,9 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
-          sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          //This will return same value for all Constant variables ....see example constantFunc.c
+          //sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
           strcat(result, buff);
         } else if (strcmp(symName, "Function") == 0) {

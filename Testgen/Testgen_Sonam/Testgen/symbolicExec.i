@@ -3120,7 +3120,9 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       if (symName != ((void *)0)) {
         if (strcmp(symName, "Constant") == 0) {
-          sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+
+
+          sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
           strcat(result, buff);
         } else if (strcmp(symName, "Function") == 0) {

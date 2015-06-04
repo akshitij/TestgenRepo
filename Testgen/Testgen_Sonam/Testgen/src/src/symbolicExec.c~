@@ -166,7 +166,7 @@ void updateValBySymbolicName(char *sname, void *value) {
 //printf("sname = %s, value = %d\n", sname ,(*(int*)value));
 
   for (s = stable; s != NULL; s = (struct sym_table *)(s->hh.next)) {
-    printf("var = %s\n, sname = %s, value = %d\n",s->vname, find_symVal(s->vname) ,(*(int*)s->fval->cval));
+    printf("var = %s, sname = %s, value = %d\n",s->vname, find_symVal(s->vname) ,(*(int*)s->fval->cval));
     if (strcmp(find_symVal(s->vname), sname) == 0) {
       memcpy(s->fval->cval, value, size);
       if (s->fval->type == 1)
@@ -340,7 +340,8 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
-          sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          //sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
           strcat(result, buff);
         } else if (strcmp(symName, "Function") == 0) {
