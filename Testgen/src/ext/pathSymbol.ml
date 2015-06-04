@@ -787,7 +787,7 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                      | TFloat(_,_) -> 2
                      | _ -> -1) in
             let pre = mkstableEntryfxn vi.vname "Function" (AddrOf(Var vi, NoOffset)) t  in 
-            ChangeTo [i ; pre]
+            ChangeTo [i (*; pre*)]
           end
 
 	    

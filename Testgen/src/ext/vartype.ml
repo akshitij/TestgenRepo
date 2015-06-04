@@ -10,7 +10,7 @@ open Trace
 module E = Errormsg
 module H = Hashtbl
 
-let helperFiles = ["src/src/utils.c"; "src/src/sidTable.c"; "src/src/sidTable.h"; "src/src/directAndSolve.c"; "src/src/directAndSolve.h"; "src/src/symbolicExec.c"; "src/src/symbolicExec.h"; "src/src/queue.c"; "src/src/queue.h"; "src/src/levelTree.c"; "src/src/levelTree.h"; "src/src/stringTokenize.c"; "src/src/stringTokenize.h"; "src/src/arrayAndPointersSymbolicExec.c"; "src/src/arrayAndPointersSymbolicExec.h"; "src/src/updateIntegerValues.c"; "src/src/updateIntegerValues.h"; "src/src/flatds.c"; "src/src/flatds.h"; "src/src/cdg.c"; "src/src/cdg.h"; "src/src/cdgWrapper.c"; "src/src/helperNew.c" ; "src/src/stack.c"; "src/src/stack.h"]
+let helperFiles = ["src/src/utils.c"; "src/src/sidTable.c"; "src/src/sidTable.h"; "src/src/directAndSolve.c"; "src/src/directAndSolve.h"; "src/src/symbolicExec.c"; "src/src/symbolicExec.h"; "src/src/queue.c"; "src/src/queue.h"; "src/src/levelTree.c"; "src/src/levelTree.h"; "src/src/stringTokenize.c"; "src/src/stringTokenize.h"; "src/src/arrayAndPointersSymbolicExec.c"; "src/src/arrayAndPointersSymbolicExec.h"; "src/src/updateIntegerValues.c"; "src/src/updateIntegerValues.h"; "src/src/flatds.c"; "src/src/flatds.h"; "src/src/cdg.c"; "src/src/cdg.h"; "src/src/cdgWrapper.c"; "src/src/ipNonRec.c" ; "src/src/stack.c"; "src/src/stack.h"]
 
 let cnt_vars = ref 0
 
