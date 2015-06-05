@@ -30,8 +30,8 @@ else
     strcpy(s->sname, sname);
     HASH_ADD_STR(itable, sname, s);
   s->value = val;
-  
  }
+  //s->value = val;
 
  }
 
@@ -49,8 +49,9 @@ void addToFloatTable(char *sname, float *val) {
     s->sname = (char *)malloc(sizeof(char) * (strlen(sname) + 1));
     strcpy(s->sname, sname);
     HASH_ADD_STR(ftable, sname, s);
-    s->value = val;
+  s->value = val;
   }
+    //s->value = val;
 //printf("Added to float table: %s \n", sname);
 }
 

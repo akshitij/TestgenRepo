@@ -1,11 +1,52 @@
 digraph CDG {
 ENTRY -> 1
-2 [shape=diamond, color=red]
-ENTRY -> 2
-2-> 3
-2-> 4
-ENTRY -> 5
-ENTRY -> 5
-ENTRY -> 6
+ENTRY -> 27
+28 [shape=diamond, color=red]
+ENTRY -> 28
+28-> 29
+38 [shape=diamond, color=red]
+ENTRY -> 38
+28-> 30
+31 [shape=diamond, color=red]
+28-> 31
+32 [shape=diamond, color=red]
+31-> 32
+34 [shape=diamond, color=red]
+28-> 34
+32-> 33
+34 [shape=diamond, color=red]
+28-> 34
+34 [shape=diamond, color=red]
+28-> 34
+35 [shape=diamond, color=red]
+34-> 35
+28-> 37
+35-> 36
+28-> 37
+28-> 37
+38 [shape=diamond, color=red]
+ENTRY -> 38
+38-> 39
+ENTRY -> 48
+38-> 40
+41 [shape=diamond, color=red]
+38-> 41
+42 [shape=diamond, color=red]
+41-> 42
+44 [shape=diamond, color=red]
+38-> 44
+42-> 43
+44 [shape=diamond, color=red]
+38-> 44
+44 [shape=diamond, color=red]
+38-> 44
+45 [shape=diamond, color=red]
+44-> 45
+38-> 47
+45-> 46
+38-> 47
+38-> 47
+ENTRY -> 48
+ENTRY -> 49
 }
 

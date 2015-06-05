@@ -317,6 +317,7 @@ let insertIsCopyOfHolder c f funName=
   ()
 
 let makeCDG (f: file) : unit =
+  E.log "Function Input in makeCDG: %s" !Param.func;
   let oc = open_out out_file in
   let fname = !Param.func in
 
@@ -579,7 +580,20 @@ let makeCDG (f: file) : unit =
 
     | _ -> ()
   in
-  Stats.time "loopUnroll" (iterGlobals f) doGlobal2
+  Stats.time "loopUnroll" (iterGlobals f) doGlobal2;
+  List.iter (fun f ->
+    match f with
+    | GFun (fdec, loc) ->
+       if (fdec.svar.vname <> fname && (List.mem fdec.svar.vname !Param.func_list)) then
+         begin
+           let copies = collateCopies fdec.sallstmts in  
+           copies;                  
+           ()
+         end   
+
+    | _ -> ()
+  )
+  f.globals
 
 let feature : featureDescr = {
   fd_name = "makeCDG";

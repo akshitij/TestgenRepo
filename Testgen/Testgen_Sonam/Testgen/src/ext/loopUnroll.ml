@@ -383,8 +383,8 @@ let resetGlobalValues () : unit =
   
   
 (* Go through every loop of the said function in the file and unroll it *)
-let loopUnroll (f: file) (funName:string) : unit =
-  (*let funName = !Param.func in*)
+let loopUnrollFirst (f: file) : unit =
+  let funName = !Param.func in
   count := 2;  
   let doGlobal = function
     | GFun (fdec, loc) ->
@@ -402,12 +402,36 @@ let loopUnroll (f: file) (funName:string) : unit =
     | _ -> ()
   in
   Stats.time "loopUnroll" (iterGlobals f) doGlobal
+
+let loopUnroll (f: file) (funName:string) : unit =
+  (*let funName = !Param.func in*)
+  count := 2;  
+  let doGlobal = function
+    | GFun (fdec, loc) ->
+       if fdec.svar.vname = funName then
+         begin
+           let loopUnrollVisitor = new loopUnrollVisitorClass fdec
+           in
+           ignore (visitCilFunction loopUnrollVisitor fdec);
+            Cfg.cfgFun fdec; 
+            let copies = collateCopies fdec.sallstmts in 
+            copies;
+           ()
+         end   
+
+    | _ -> ()
+  in
+  Stats.time "loopUnroll" (iterGlobals f) doGlobal
+
+
   
 let iterLoopUnroll  (f: file) : unit =
   List.iter (fun f -> E.log "Param_func : %s\n" f)  !Param.func_list;
+  loopUnrollFirst f;
+  resetGlobalValues ();
   List.iter (
            fun funcName ->
-           if funcName <> "main" then begin
+           if (funcName <> "main" && funcName <> !Param.func) then begin
              loopUnroll f funcName ;
              resetGlobalValues ();
              end

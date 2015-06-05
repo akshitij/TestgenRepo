@@ -383,6 +383,26 @@ let resetGlobalValues () : unit =
   
   
 (* Go through every loop of the said function in the file and unroll it *)
+let loopUnrollFirst (f: file) : unit =
+  let funName = !Param.func in
+  count := 2;  
+  let doGlobal = function
+    | GFun (fdec, loc) ->
+       if fdec.svar.vname = funName then
+         begin
+           let loopUnrollVisitor = new loopUnrollVisitorClass fdec
+           in
+           ignore (visitCilFunction loopUnrollVisitor fdec);
+           (* Cfg.cfgFun fdec; *)
+           (* let copies = collateCopies fdec.sallstmts in  *)
+           (* insertIsCopyOfHolder copies f funName; *)
+           ()
+         end   
+
+    | _ -> ()
+  in
+  Stats.time "loopUnroll" (iterGlobals f) doGlobal
+
 let loopUnroll (f: file) (funName:string) : unit =
   (*let funName = !Param.func in*)
   count := 2;  
@@ -393,27 +413,29 @@ let loopUnroll (f: file) (funName:string) : unit =
            let loopUnrollVisitor = new loopUnrollVisitorClass fdec
            in
            ignore (visitCilFunction loopUnrollVisitor fdec);
-           E.log "ran visistor on :%s\n" funName;
-           (* Cfg.cfgFun fdec; *)
-           (* let copies = collateCopies fdec.sallstmts in  *)
-           (* insertIsCopyOfHolder copies f funName; *)
+            (*Cfg.cfgFun fdec; 
+            let copies = collateCopies fdec.sallstmts in 
+            copies;*)
            ()
          end   
 
     | _ -> ()
   in
   Stats.time "loopUnroll" (iterGlobals f) doGlobal
+
+
   
 let iterLoopUnroll  (f: file) : unit =
   List.iter (fun f -> E.log "Param_func : %s\n" f)  !Param.func_list;
+  loopUnrollFirst f;
+  resetGlobalValues ();
   List.iter (
            fun funcName ->
-           if funcName <> "main" then begin
+           if (funcName <> "main" && funcName <> !Param.func) then begin
              loopUnroll f funcName ;
              resetGlobalValues ();
              end
-         ) !Param.func_list;
-  E.log "Loop Unroll Complete\n"
+         ) !Param.func_list
              
 let feature : featureDescr = {
   fd_name = "loopUnroll";

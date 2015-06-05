@@ -14526,7 +14526,7 @@ void mapConcolicValues(char *retVarName )
 }
 }
 #pragma merger("0","./heapSort.i","-g,-g")
-void heapify(int *heapify_a , int heapify_n ) ;
+void heapify(int *a , int n ) ;
 void adjust(int *adjust_a , int adjust_n ) ;
 void heapSort(int *heapSort_a , int heapSort_n )
 {
@@ -14542,7 +14542,6 @@ void heapSort(int *heapSort_a , int heapSort_n )
   handleAssignmentSymbolically("heapSort_i___0", "(- heapSort_n 1)", & heapSort_i___0,
                                & heapSort_i___0, 1);
   {
-  dummyLabel_0:
   if (heapSort_i___0 > 0) {
     heapSort_t = *(heapSort_a + 0);
     addEntryToVariableTable("*(heapSort_a + 0)", 0);
@@ -14567,7 +14566,6 @@ void heapSort(int *heapSort_a , int heapSort_n )
     handleAssignmentSymbolically("heapSort_i___0", "(- heapSort_i___0 1)", & heapSort_i___0,
                                  & heapSort_i___0, 1);
   }
-  dummyLabel_0:
   if (heapSort_i___0 > 0) {
     heapSort_t = *(heapSort_a + 0);
     addEntryToVariableTable("*(heapSort_a + 0)", 0);
@@ -14603,54 +14601,54 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(< heapify_k heapify_n)");
-  addtoCDGnode(4, 3, 1);
-  addtoCDGnode(13, 0, 1);
-  setArray(13, "(< heapify_k heapify_n)");
-  addtoCDGnode(5, 3, 1);
-  addtoCDGnode(6, 3, 1);
-  setArray(6, "(> heapify_i___0 0)");
-  addtoCDGnode(7, 6, 1);
-  setArray(7, "(> heapify_item *(heapify_a + heapify_j))");
-  addtoCDGnode(9, 3, 1);
-  setArray(9, "(> heapify_i___0 0)");
-  addtoCDGnode(8, 7, 1);
-  addtoCDGnode(9, 3, 1);
-  setArray(9, "(> heapify_i___0 0)");
-  addtoCDGnode(9, 3, 1);
-  setArray(9, "(> heapify_i___0 0)");
-  addtoCDGnode(10, 9, 1);
-  setArray(10, "(> heapify_item *(heapify_a + heapify_j))");
-  addtoCDGnode(12, 3, 1);
-  addtoCDGnode(11, 10, 1);
-  addtoCDGnode(12, 3, 1);
-  addtoCDGnode(12, 3, 1);
-  addtoCDGnode(13, 0, 1);
-  setArray(13, "(< heapify_k heapify_n)");
-  addtoCDGnode(14, 13, 1);
-  addtoCDGnode(23, 0, 1);
-  addtoCDGnode(15, 13, 1);
-  addtoCDGnode(16, 13, 1);
-  setArray(16, "(> heapify_i___0 0)");
-  addtoCDGnode(17, 16, 1);
-  setArray(17, "(> heapify_item *(heapify_a + heapify_j))");
-  addtoCDGnode(19, 13, 1);
-  setArray(19, "(> heapify_i___0 0)");
-  addtoCDGnode(18, 17, 1);
-  addtoCDGnode(19, 13, 1);
-  setArray(19, "(> heapify_i___0 0)");
-  addtoCDGnode(19, 13, 1);
-  setArray(19, "(> heapify_i___0 0)");
-  addtoCDGnode(20, 19, 1);
-  setArray(20, "(> heapify_item *(heapify_a + heapify_j))");
-  addtoCDGnode(22, 13, 1);
-  addtoCDGnode(21, 20, 1);
-  addtoCDGnode(22, 13, 1);
-  addtoCDGnode(22, 13, 1);
-  addtoCDGnode(23, 0, 1);
-  addtoCDGnode(24, 0, 1);
+  addtoCDGnode(27, 0, 1);
+  addtoCDGnode(28, 0, 1);
+  setArray(28, "(< k n)");
+  addtoCDGnode(29, 28, 1);
+  addtoCDGnode(38, 0, 1);
+  setArray(38, "(< k n)");
+  addtoCDGnode(30, 28, 1);
+  addtoCDGnode(31, 28, 1);
+  setArray(31, "(> i___0 0)");
+  addtoCDGnode(32, 31, 1);
+  setArray(32, "(> item *(a + j))");
+  addtoCDGnode(34, 28, 1);
+  setArray(34, "(> i___0 0)");
+  addtoCDGnode(33, 32, 1);
+  addtoCDGnode(34, 28, 1);
+  setArray(34, "(> i___0 0)");
+  addtoCDGnode(34, 28, 1);
+  setArray(34, "(> i___0 0)");
+  addtoCDGnode(35, 34, 1);
+  setArray(35, "(> item *(a + j))");
+  addtoCDGnode(37, 28, 1);
+  addtoCDGnode(36, 35, 1);
+  addtoCDGnode(37, 28, 1);
+  addtoCDGnode(37, 28, 1);
+  addtoCDGnode(38, 0, 1);
+  setArray(38, "(< k n)");
+  addtoCDGnode(39, 38, 1);
+  addtoCDGnode(48, 0, 1);
+  addtoCDGnode(40, 38, 1);
+  addtoCDGnode(41, 38, 1);
+  setArray(41, "(> i___0 0)");
+  addtoCDGnode(42, 41, 1);
+  setArray(42, "(> item *(a + j))");
+  addtoCDGnode(44, 38, 1);
+  setArray(44, "(> i___0 0)");
+  addtoCDGnode(43, 42, 1);
+  addtoCDGnode(44, 38, 1);
+  setArray(44, "(> i___0 0)");
+  addtoCDGnode(44, 38, 1);
+  setArray(44, "(> i___0 0)");
+  addtoCDGnode(45, 44, 1);
+  setArray(45, "(> item *(a + j))");
+  addtoCDGnode(47, 38, 1);
+  addtoCDGnode(46, 45, 1);
+  addtoCDGnode(47, 38, 1);
+  addtoCDGnode(47, 38, 1);
+  addtoCDGnode(48, 0, 1);
+  addtoCDGnode(49, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -14658,16 +14656,16 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(3, 3);
-  isCopyOf(13, 3);
-  isCopyOf(6, 6);
-  isCopyOf(9, 6);
-  isCopyOf(16, 6);
-  isCopyOf(19, 6);
-  isCopyOf(7, 7);
-  isCopyOf(10, 7);
-  isCopyOf(17, 7);
-  isCopyOf(20, 7);
+  isCopyOf(31, 31);
+  isCopyOf(34, 31);
+  isCopyOf(41, 31);
+  isCopyOf(44, 31);
+  isCopyOf(32, 32);
+  isCopyOf(35, 32);
+  isCopyOf(42, 32);
+  isCopyOf(45, 32);
+  isCopyOf(28, 28);
+  isCopyOf(38, 28);
 }
 }
 void createSidTable(void)
@@ -14675,35 +14673,29 @@ void createSidTable(void)
 
 
   {
-  add_condition(7, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                0, 0);
-  add_condition(6, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 0, 0);
-  add_condition(10, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                0, 0);
-  add_condition(9, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 0, 0);
-  add_condition(3, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-                0);
-  add_condition(17, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                0, 0);
-  add_condition(16, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 0, 0);
-  add_condition(20, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                0, 0);
-  add_condition(19, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 0, 0);
-  add_condition(13, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-                0);
+  add_condition(32, "(> item *(a + j))", "(not (> item *(a + j)))", 0, 0);
+  add_condition(31, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(35, "(> item *(a + j))", "(not (> item *(a + j)))", 0, 0);
+  add_condition(34, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(28, "(< k n)", "(not (< k n))", 0, 0);
+  add_condition(42, "(> item *(a + j))", "(not (> item *(a + j)))", 0, 0);
+  add_condition(41, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(45, "(> item *(a + j))", "(not (> item *(a + j)))", 0, 0);
+  add_condition(44, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(38, "(< k n)", "(not (< k n))", 0, 0);
 }
 }
 struct arguments {
-   int *heapify_a ;
-   int heapify_n ;
+   int *a ;
+   int n ;
 };
 struct arguments argvar ;
-void heapify(int *heapify_a , int heapify_n )
+void heapify(int *a , int n )
 {
-  int heapify_k ;
-  int heapify_i___0 ;
-  int heapify_j ;
-  int heapify_item ;
+  int k ;
+  int i___0 ;
+  int j ;
+  int item ;
   int exp_outcome ;
   int overall_outcome ;
   int __cil_tmp9 ;
@@ -14714,341 +14706,285 @@ void heapify(int *heapify_a , int heapify_n )
 
   {
   __cil_tmp10 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp10, "\t%d\t%d\t%d\t%d\t%d\t%d\n", heapify_a[0], heapify_a[1], heapify_a[2],
-          heapify_a[3], heapify_a[4], heapify_n);
-  printTestCase("heapSort_heapify_1433434008.tc", __cil_tmp10);
-  add_entryToSTable("heapify_n", "s1", & heapify_n, & heapify_n, 1);
-  add_entryToArraySTable("heapify_a", 0, "heapify_a_0", heapify_a, heapify_a, 1);
-  heapify_k = 1;
-  add_entryToSTable("heapify_k", "Constant", & heapify_k, & heapify_k, 1);
+  sprintf(__cil_tmp10, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
+          n);
+  printTestCase("heapSort_heapify_1433491191.tc", __cil_tmp10);
+  add_entryToSTable("n", "s1", & n, & n, 1);
+  add_entryToArraySTable("a", 0, "a_0", a, a, 1);
+  k = 1;
+  add_entryToSTable("k", "Constant", & k, & k, 1);
   {
   {
-  exp_outcome = heapify_k < heapify_n;
-  handleAssignmentSymbolically("exp_outcome", "(< heapify_k heapify_n)", & exp_outcome,
-                               & exp_outcome, 1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  exp_outcome = k < n;
+  handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(28, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(< heapify_k heapify_n)");
-    setFalseExpr(3, "(not (< heapify_k heapify_n))");
-    addToTree(3, 1, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-              1);
+    setBranchInfo(28, 1, 0);
+    setTrueExpr(28, "(< k n)");
+    setFalseExpr(28, "(not (< k n))");
+    addToTree(28, 1, "(< k n)", "(not (< k n))", 0, 1);
     delete_allVariableTableEntry();
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a14", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
+    item = *(a + k);
+    addEntryToVariableTable("*(a + k)", k);
+    add_entryToArraySTable("a", k, "a14", a + k, a + k, 1);
+    handleAssignmentSymbolically("item", "*(a + k)", & *(a + k), & *(a + k), 1);
+    i___0 = k;
+    handleAssignmentSymbolically("i___0", "k", & k, & k, 1);
+    j = (i___0 - 1) / 2;
+    handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
+    {
+    {
+    exp_outcome = i___0 > 0;
+    handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
                                  1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    {
-    exp_outcome = heapify_i___0 > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> heapify_i___0 0)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+    overall_outcome = (int )getConditionalOutcome(31, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(6, 1, 0);
-      setTrueExpr(6, "(> heapify_i___0 0)");
-      setFalseExpr(6, "(not (> heapify_i___0 0))");
-      addToTree(6, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 3, 1);
+      setBranchInfo(31, 1, 0);
+      setTrueExpr(31, "(> i___0 0)");
+      setFalseExpr(31, "(not (> i___0 0))");
+      addToTree(31, 2, "(> i___0 0)", "(not (> i___0 0))", 28, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = heapify_item > *(heapify_a + heapify_j);
-      addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-      add_entryToArraySTable("heapify_a", heapify_j, "heapify_a15", heapify_a + heapify_j,
-                             heapify_a + heapify_j, 1);
-      handleAssignmentSymbolically("exp_outcome", "(> heapify_item *(heapify_a + heapify_j))",
-                                   & exp_outcome, & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
+      exp_outcome = item > *(a + j);
+      addEntryToVariableTable("*(a + j)", j);
+      add_entryToArraySTable("a", j, "a15", a + j, a + j, 1);
+      handleAssignmentSymbolically("exp_outcome", "(> item *(a + j))", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(32, exp_outcome);
       if (overall_outcome) {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a10", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(7, 1, 0);
-        setTrueExpr(7, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(7, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(7, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  6, 1);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a10", a + j, a + j, 1);
+        setBranchInfo(32, 1, 0);
+        setTrueExpr(32, "(> item *(a + j))");
+        setFalseExpr(32, "(not (> item *(a + j)))");
+        addToTree(32, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 31, 1);
         delete_allVariableTableEntry();
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a16", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
+        *(a + i___0) = *(a + j);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a16", a + j, a + j, 1);
+        handleArraySymbolically("a", i___0, "*(a + j)", a + i___0, a + i___0, 1);
+        i___0 = j;
+        handleAssignmentSymbolically("i___0", "j", & j, & j, 1);
+        j = (i___0 - 1) / 2;
+        handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
       } else {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a10", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(7, 0, 1);
-        setTrueExpr(7, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(7, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(7, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  6, 0);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a10", a + j, a + j, 1);
+        setBranchInfo(32, 0, 1);
+        setTrueExpr(32, "(> item *(a + j))");
+        setFalseExpr(32, "(not (> item *(a + j)))");
+        addToTree(32, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 31, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(6, 0, 1);
-      setTrueExpr(6, "(> heapify_i___0 0)");
-      setFalseExpr(6, "(not (> heapify_i___0 0))");
-      addToTree(6, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 3, 0);
+      setBranchInfo(31, 0, 1);
+      setTrueExpr(31, "(> i___0 0)");
+      setFalseExpr(31, "(not (> i___0 0))");
+      addToTree(31, 2, "(> i___0 0)", "(not (> i___0 0))", 28, 0);
       delete_allVariableTableEntry();
     }
     }
     {
-    exp_outcome = heapify_i___0 > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> heapify_i___0 0)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+    exp_outcome = i___0 > 0;
+    handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(34, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(9, 1, 0);
-      setTrueExpr(9, "(> heapify_i___0 0)");
-      setFalseExpr(9, "(not (> heapify_i___0 0))");
-      addToTree(9, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 3, 1);
+      setBranchInfo(34, 1, 0);
+      setTrueExpr(34, "(> i___0 0)");
+      setFalseExpr(34, "(not (> i___0 0))");
+      addToTree(34, 2, "(> i___0 0)", "(not (> i___0 0))", 28, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = heapify_item > *(heapify_a + heapify_j);
-      addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-      add_entryToArraySTable("heapify_a", heapify_j, "heapify_a17", heapify_a + heapify_j,
-                             heapify_a + heapify_j, 1);
-      handleAssignmentSymbolically("exp_outcome", "(> heapify_item *(heapify_a + heapify_j))",
-                                   & exp_outcome, & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
+      exp_outcome = item > *(a + j);
+      addEntryToVariableTable("*(a + j)", j);
+      add_entryToArraySTable("a", j, "a17", a + j, a + j, 1);
+      handleAssignmentSymbolically("exp_outcome", "(> item *(a + j))", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(35, exp_outcome);
       if (overall_outcome) {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a11", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(10, 1, 0);
-        setTrueExpr(10, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(10, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(10, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  9, 1);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a11", a + j, a + j, 1);
+        setBranchInfo(35, 1, 0);
+        setTrueExpr(35, "(> item *(a + j))");
+        setFalseExpr(35, "(not (> item *(a + j)))");
+        addToTree(35, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 34, 1);
         delete_allVariableTableEntry();
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a18", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
+        *(a + i___0) = *(a + j);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a18", a + j, a + j, 1);
+        handleArraySymbolically("a", i___0, "*(a + j)", a + i___0, a + i___0, 1);
+        i___0 = j;
+        handleAssignmentSymbolically("i___0", "j", & j, & j, 1);
+        j = (i___0 - 1) / 2;
+        handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
       } else {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a11", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(10, 0, 1);
-        setTrueExpr(10, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(10, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(10, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  9, 0);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a11", a + j, a + j, 1);
+        setBranchInfo(35, 0, 1);
+        setTrueExpr(35, "(> item *(a + j))");
+        setFalseExpr(35, "(not (> item *(a + j)))");
+        addToTree(35, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 34, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(9, 0, 1);
-      setTrueExpr(9, "(> heapify_i___0 0)");
-      setFalseExpr(9, "(not (> heapify_i___0 0))");
-      addToTree(9, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 3, 0);
+      setBranchInfo(34, 0, 1);
+      setTrueExpr(34, "(> i___0 0)");
+      setFalseExpr(34, "(not (> i___0 0))");
+      addToTree(34, 2, "(> i___0 0)", "(not (> i___0 0))", 28, 0);
       delete_allVariableTableEntry();
     }
     }
     }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
+    *(a + i___0) = item;
+    handleArraySymbolically("a", i___0, "item", a + i___0, a + i___0, 1);
+    k ++;
+    handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(< heapify_k heapify_n)");
-    setFalseExpr(3, "(not (< heapify_k heapify_n))");
-    addToTree(3, 1, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-              0);
+    setBranchInfo(28, 0, 1);
+    setTrueExpr(28, "(< k n)");
+    setFalseExpr(28, "(not (< k n))");
+    addToTree(28, 1, "(< k n)", "(not (< k n))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
   {
-  exp_outcome = heapify_k < heapify_n;
-  handleAssignmentSymbolically("exp_outcome", "(< heapify_k heapify_n)", & exp_outcome,
-                               & exp_outcome, 1);
-  overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
+  exp_outcome = k < n;
+  handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(38, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(13, 1, 0);
-    setTrueExpr(13, "(< heapify_k heapify_n)");
-    setFalseExpr(13, "(not (< heapify_k heapify_n))");
-    addToTree(13, 1, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-              1);
+    setBranchInfo(38, 1, 0);
+    setTrueExpr(38, "(< k n)");
+    setFalseExpr(38, "(not (< k n))");
+    addToTree(38, 1, "(< k n)", "(not (< k n))", 0, 1);
     delete_allVariableTableEntry();
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a19", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
+    item = *(a + k);
+    addEntryToVariableTable("*(a + k)", k);
+    add_entryToArraySTable("a", k, "a19", a + k, a + k, 1);
+    handleAssignmentSymbolically("item", "*(a + k)", & *(a + k), & *(a + k), 1);
+    i___0 = k;
+    handleAssignmentSymbolically("i___0", "k", & k, & k, 1);
+    j = (i___0 - 1) / 2;
+    handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
+    {
+    {
+    exp_outcome = i___0 > 0;
+    handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
                                  1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    {
-    exp_outcome = heapify_i___0 > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> heapify_i___0 0)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(16, exp_outcome);
+    overall_outcome = (int )getConditionalOutcome(41, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(16, 1, 0);
-      setTrueExpr(16, "(> heapify_i___0 0)");
-      setFalseExpr(16, "(not (> heapify_i___0 0))");
-      addToTree(16, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 13, 1);
+      setBranchInfo(41, 1, 0);
+      setTrueExpr(41, "(> i___0 0)");
+      setFalseExpr(41, "(not (> i___0 0))");
+      addToTree(41, 2, "(> i___0 0)", "(not (> i___0 0))", 38, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = heapify_item > *(heapify_a + heapify_j);
-      addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-      add_entryToArraySTable("heapify_a", heapify_j, "heapify_a110", heapify_a + heapify_j,
-                             heapify_a + heapify_j, 1);
-      handleAssignmentSymbolically("exp_outcome", "(> heapify_item *(heapify_a + heapify_j))",
-                                   & exp_outcome, & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
+      exp_outcome = item > *(a + j);
+      addEntryToVariableTable("*(a + j)", j);
+      add_entryToArraySTable("a", j, "a110", a + j, a + j, 1);
+      handleAssignmentSymbolically("exp_outcome", "(> item *(a + j))", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(42, exp_outcome);
       if (overall_outcome) {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a12", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(17, 1, 0);
-        setTrueExpr(17, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(17, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(17, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  16, 1);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a12", a + j, a + j, 1);
+        setBranchInfo(42, 1, 0);
+        setTrueExpr(42, "(> item *(a + j))");
+        setFalseExpr(42, "(not (> item *(a + j)))");
+        addToTree(42, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 41, 1);
         delete_allVariableTableEntry();
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a111", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
+        *(a + i___0) = *(a + j);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a111", a + j, a + j, 1);
+        handleArraySymbolically("a", i___0, "*(a + j)", a + i___0, a + i___0, 1);
+        i___0 = j;
+        handleAssignmentSymbolically("i___0", "j", & j, & j, 1);
+        j = (i___0 - 1) / 2;
+        handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
       } else {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a12", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(17, 0, 1);
-        setTrueExpr(17, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(17, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(17, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  16, 0);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a12", a + j, a + j, 1);
+        setBranchInfo(42, 0, 1);
+        setTrueExpr(42, "(> item *(a + j))");
+        setFalseExpr(42, "(not (> item *(a + j)))");
+        addToTree(42, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 41, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(16, 0, 1);
-      setTrueExpr(16, "(> heapify_i___0 0)");
-      setFalseExpr(16, "(not (> heapify_i___0 0))");
-      addToTree(16, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 13, 0);
+      setBranchInfo(41, 0, 1);
+      setTrueExpr(41, "(> i___0 0)");
+      setFalseExpr(41, "(not (> i___0 0))");
+      addToTree(41, 2, "(> i___0 0)", "(not (> i___0 0))", 38, 0);
       delete_allVariableTableEntry();
     }
     }
     {
-    exp_outcome = heapify_i___0 > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> heapify_i___0 0)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
+    exp_outcome = i___0 > 0;
+    handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(44, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(19, 1, 0);
-      setTrueExpr(19, "(> heapify_i___0 0)");
-      setFalseExpr(19, "(not (> heapify_i___0 0))");
-      addToTree(19, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 13, 1);
+      setBranchInfo(44, 1, 0);
+      setTrueExpr(44, "(> i___0 0)");
+      setFalseExpr(44, "(not (> i___0 0))");
+      addToTree(44, 2, "(> i___0 0)", "(not (> i___0 0))", 38, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = heapify_item > *(heapify_a + heapify_j);
-      addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-      add_entryToArraySTable("heapify_a", heapify_j, "heapify_a112", heapify_a + heapify_j,
-                             heapify_a + heapify_j, 1);
-      handleAssignmentSymbolically("exp_outcome", "(> heapify_item *(heapify_a + heapify_j))",
-                                   & exp_outcome, & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(20, exp_outcome);
+      exp_outcome = item > *(a + j);
+      addEntryToVariableTable("*(a + j)", j);
+      add_entryToArraySTable("a", j, "a112", a + j, a + j, 1);
+      handleAssignmentSymbolically("exp_outcome", "(> item *(a + j))", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(45, exp_outcome);
       if (overall_outcome) {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a13", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(20, 1, 0);
-        setTrueExpr(20, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(20, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(20, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  19, 1);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a13", a + j, a + j, 1);
+        setBranchInfo(45, 1, 0);
+        setTrueExpr(45, "(> item *(a + j))");
+        setFalseExpr(45, "(not (> item *(a + j)))");
+        addToTree(45, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 44, 1);
         delete_allVariableTableEntry();
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a113", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
+        *(a + i___0) = *(a + j);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a113", a + j, a + j, 1);
+        handleArraySymbolically("a", i___0, "*(a + j)", a + i___0, a + i___0, 1);
+        i___0 = j;
+        handleAssignmentSymbolically("i___0", "j", & j, & j, 1);
+        j = (i___0 - 1) / 2;
+        handleAssignmentSymbolically("j", "(/ (- i___0 1) 2)", & j, & j, 1);
       } else {
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a13", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        setBranchInfo(20, 0, 1);
-        setTrueExpr(20, "(> heapify_item *(heapify_a + heapify_j))");
-        setFalseExpr(20, "(not (> heapify_item *(heapify_a + heapify_j)))");
-        addToTree(20, 3, "(> heapify_item *(heapify_a + heapify_j))", "(not (> heapify_item *(heapify_a + heapify_j)))",
-                  19, 0);
+        addEntryToVariableTable("*(a + j)", j);
+        add_entryToArraySTable("a", j, "a13", a + j, a + j, 1);
+        setBranchInfo(45, 0, 1);
+        setTrueExpr(45, "(> item *(a + j))");
+        setFalseExpr(45, "(not (> item *(a + j)))");
+        addToTree(45, 3, "(> item *(a + j))", "(not (> item *(a + j)))", 44, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(19, 0, 1);
-      setTrueExpr(19, "(> heapify_i___0 0)");
-      setFalseExpr(19, "(not (> heapify_i___0 0))");
-      addToTree(19, 2, "(> heapify_i___0 0)", "(not (> heapify_i___0 0))", 13, 0);
+      setBranchInfo(44, 0, 1);
+      setTrueExpr(44, "(> i___0 0)");
+      setFalseExpr(44, "(not (> i___0 0))");
+      addToTree(44, 2, "(> i___0 0)", "(not (> i___0 0))", 38, 0);
       delete_allVariableTableEntry();
     }
     }
     }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
+    *(a + i___0) = item;
+    handleArraySymbolically("a", i___0, "item", a + i___0, a + i___0, 1);
+    k ++;
+    handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
   } else {
-    setBranchInfo(13, 0, 1);
-    setTrueExpr(13, "(< heapify_k heapify_n)");
-    setFalseExpr(13, "(not (< heapify_k heapify_n))");
-    addToTree(13, 1, "(< heapify_k heapify_n)", "(not (< heapify_k heapify_n))", 0,
-              0);
+    setBranchInfo(38, 0, 1);
+    setTrueExpr(38, "(< k n)");
+    setFalseExpr(38, "(not (< k n))");
+    addToTree(38, 1, "(< k n)", "(not (< k n))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
@@ -15059,12 +14995,12 @@ void heapify(int *heapify_a , int heapify_n )
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    heapify(heapify_a, heapify_n);
+    heapify(a, n);
   } else {
     __cil_tmp9 = startCDG();
     if (__cil_tmp9) {
       __cil_tmp9 = getTestCases();
-      heapify(heapify_a, heapify_n);
+      heapify(a, n);
     }
   }
   return;
@@ -15092,18 +15028,14 @@ void adjust(int *adjust_a , int adjust_n )
   handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
                                & adjust_i___0, 1);
   {
-  dummyLabel_26:
   if (adjust_i___0 <= adjust_n - 1) {
-    dummyLabel_22:
     if (adjust_i___0 + 1 <= adjust_n - 1) {
-      dummyLabel_21:
       if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
         adjust_i___0 ++;
         handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
                                      & adjust_i___0, 1);
       }
     }
-    dummyLabel_20:
     if (adjust_item < *(adjust_a + adjust_i___0)) {
       *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
       addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
@@ -15123,18 +15055,14 @@ void adjust(int *adjust_a , int adjust_n )
                                    1);
     }
   }
-  dummyLabel_26:
   if (adjust_i___0 <= adjust_n - 1) {
-    dummyLabel_22:
     if (adjust_i___0 + 1 <= adjust_n - 1) {
-      dummyLabel_21:
       if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
         adjust_i___0 ++;
         handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
                                      & adjust_i___0, 1);
       }
     }
-    dummyLabel_20:
     if (adjust_item < *(adjust_a + adjust_i___0)) {
       *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
       addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
@@ -15175,31 +15103,31 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  heapify(argvar.heapify_a, argvar.heapify_n);
+  heapify(argvar.a, argvar.n);
 }
 }
 void main(void)
 {
-  int *heapify_a ;
-  int heapify_n ;
+  int *a ;
+  int n ;
   int temp ;
   int __cil_tmp2 ;
   int __cil_tmp3 ;
 
   {
-  argvar.heapify_a = (int *)malloc(30 * sizeof(int ));
+  argvar.a = (int *)malloc(30 * sizeof(int ));
   __cil_tmp3 = 0;
   while (1) {
     if (__cil_tmp3 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.heapify_a + __cil_tmp3) = temp % 20;
+      *(argvar.a + __cil_tmp3) = temp % 20;
       __cil_tmp3 ++;
     }
   }
   __cil_tmp2 = rand();
-  argvar.heapify_n = __cil_tmp2 % 20;
+  argvar.n = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

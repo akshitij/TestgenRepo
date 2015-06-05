@@ -50,7 +50,7 @@ void addToFloatTable(char *sname, float *val) {
     strcpy(s->sname, sname);
     HASH_ADD_STR(ftable, sname, s);
   }
-  s->value = val;
+    s->value = val;
 //printf("Added to float table: %s \n", sname);
 }
 
