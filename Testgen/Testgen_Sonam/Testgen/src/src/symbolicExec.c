@@ -8,6 +8,7 @@
 #include "directAndSolve.h"
 #include "flatds.h"
 #include "queue.h"
+#include "ipaRecursive.c"
 
 #define MAX_INT 2147483647
 
@@ -262,7 +263,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp;
+  char *token, *result, *symName, *temp, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -336,7 +337,13 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
+      vname_occ = get_vnameHash(token);
+      if(vname_occ == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vname_occ);
+      }
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {

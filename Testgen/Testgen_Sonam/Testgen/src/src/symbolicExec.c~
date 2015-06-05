@@ -8,6 +8,7 @@
 #include "directAndSolve.h"
 #include "flatds.h"
 #include "queue.h"
+#include "ipaRecursive.c"
 
 #define MAX_INT 2147483647
 
@@ -336,10 +337,17 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
+      char* vn = get_vnameHash(token);
+      if(vn == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vn);
+      }
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
+          //This will return same value for all Constant variables ....see example constantFunc.c
           //sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
           sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));

@@ -543,7 +543,7 @@ let rec getStmts v stmts =
 
 let vartype (f: file) : unit =
   (* Creates blank structure named "arguments" *)
-  E.log "Function Input: %s" !Param.func;
+  E.log "Function Input: %s\n" !Param.func;
   let res = mkCompInfo true "arguments" (fun _ -> []) []
   in
   let funName = !Param.func

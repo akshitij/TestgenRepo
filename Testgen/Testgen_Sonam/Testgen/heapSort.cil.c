@@ -12908,7 +12908,7 @@ void stackPeek(Stack *s , void *element )
   return;
 }
 }
-#pragma merger("0","./ipNonRec.i","-g,-g")
+#pragma merger("0","./ipaRecursive.i","-g,-g")
 extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2), __leaf__)) strncpy)(char * __restrict  __dest ,
                                                                                                   char const   * __restrict  __src ,
                                                                                                   size_t __n ) ;
@@ -14702,7 +14702,7 @@ void heapify(int *a , int n )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp10, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
           n);
-  printTestCase("heapSort_heapify_1433491191.tc", __cil_tmp10);
+  printTestCase("heapSort_heapify_1433503209.tc", __cil_tmp10);
   add_entryToSTable("n", "s1", & n, & n, 1);
   add_entryToArraySTable("a", 0, "a_0", a, a, 1);
   k = 1;

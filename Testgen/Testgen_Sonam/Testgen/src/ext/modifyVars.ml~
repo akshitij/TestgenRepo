@@ -6,7 +6,7 @@ module L = List
 module E = Errormsg
 
 let changeFormals (fd : fundec) : unit =
-  if (fd.svar.vname <> "main" && fd.svar.vname <> !Param.func) then begin
+  if ((*fd.svar.vname <> "main" &&*) fd.svar.vname <> !Param.func) then begin
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
      fd.sformals;

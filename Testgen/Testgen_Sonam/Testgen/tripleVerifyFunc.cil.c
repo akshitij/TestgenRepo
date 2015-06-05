@@ -221,6 +221,7 @@ struct __anonstruct_funcVars_26 {
    char **vars ;
    int noOfVars ;
    char funcName[100] ;
+   int occurence ;
 };
 typedef struct __anonstruct_funcVars_26 funcVars;
 struct __anonstruct_vnameHash_27 {
@@ -12908,7 +12909,7 @@ void stackPeek(Stack *s , void *element )
   return;
 }
 }
-#pragma merger("0","./ipNonRec.i","-g,-g")
+#pragma merger("0","./ipaRecursive.i","-g,-g")
 extern  __attribute__((__nothrow__)) char *( __attribute__((__nonnull__(1,2), __leaf__)) strncpy)(char * __restrict  __dest ,
                                                                                                   char const   * __restrict  __src ,
                                                                                                   size_t __n ) ;
@@ -14345,27 +14346,105 @@ funcArg *getArgument(char *argString , char *foo___0 )
   return (argument);
 }
 }
-void populateSTable(funcArg *a ) 
+int getOccurence(char *funcName ) 
 { 
-  char key[50] ;
-  char *sym ;
-  void *val ;
+  void *backup ;
   int tmp ;
-  int tmp___0 ;
+  int occ ;
+  funcVars *pk ;
+  void *tmp___0 ;
+  int tmp___1 ;
+  int tmp___2 ;
+  funcVars *b ;
+  void *tmp___3 ;
+  int tmp___4 ;
 
   {
+  if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+    return (0);
+  }
+  tmp = (int )stackNew(sizeof(funcVars *));
+  backup = (void *)tmp;
+  occ = 0;
+  while (1) {
+    tmp___2 = stackIsEmpty(symStack);
+    if (tmp___2) {
+      break;
+    }
+    tmp___0 = malloc(sizeof(funcVars ));
+    pk = (funcVars *)tmp___0;
+    stackPeek(symStack, & pk);
+    tmp___1 = strcmp((char const   *)(pk->funcName), (char const   *)funcName);
+    if (tmp___1 == 0) {
+      occ = pk->occurence;
+      break;
+    } else {
+      stackPop(symStack, & pk);
+      stackPush(backup, & pk);
+    }
+  }
+  while (1) {
+    tmp___4 = stackIsEmpty(backup);
+    if (tmp___4) {
+      break;
+    }
+    tmp___3 = malloc(sizeof(funcVars ));
+    b = (funcVars *)tmp___3;
+    stackPop(backup, & b);
+    stackPush(symStack, & b);
+  }
+  return (occ);
+}
+}
+void populateSTable(funcArg *a ) 
+{ 
+  char tmp[5] ;
+  int tmp___0 ;
+  char key[55] ;
+  char *sym ;
+  void *val ;
+  int tmp___1 ;
+  int tmp___2 ;
+  char *tmp___3 ;
+  int tmp___4 ;
+  char *tmp___5 ;
+  int tmp___6 ;
+  int tmp___7 ;
+
+  {
+  tmp___0 = getOccurence(a->funcName);
+  sprintf((char * __restrict  )(tmp), (char const   * __restrict  )"_%d", tmp___0);
   strcpy((char * __restrict  )(key), (char const   * __restrict  )(a->vname));
+  strcat((char * __restrict  )(key), (char const   * __restrict  )(tmp));
   if (a->isConstant == 1) {
     add_entryToSTable(key, "Constant", a->val, a->val, a->type);
     printf((char const   * __restrict  )"%s Constant\n", key);
   } else {
-    tmp = (int )find_symVal(a->apname);
-    sym = (char *)tmp;
-    tmp___0 = (int )find_conVal(a->apname);
-    val = (void *)tmp___0;
+    if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+      tmp___1 = (int )find_symVal(a->apname);
+      sym = (char *)tmp___1;
+      tmp___2 = (int )find_conVal(a->apname);
+      val = (void *)tmp___2;
+    } else {
+      tmp___7 = stackSize(symStack);
+      if (tmp___7 == 0) {
+        tmp___1 = (int )find_symVal(a->apname);
+        sym = (char *)tmp___1;
+        tmp___2 = (int )find_conVal(a->apname);
+        val = (void *)tmp___2;
+      } else {
+        tmp___3 = get_vnameHash(a->apname);
+        tmp___4 = (int )find_symVal(tmp___3);
+        sym = (char *)tmp___4;
+        tmp___5 = get_vnameHash(a->apname);
+        tmp___6 = (int )find_conVal(tmp___5);
+        val = (void *)tmp___6;
+      }
+    }
     add_entryToSTable(key, sym, val, val, a->type);
     printf((char const   * __restrict  )"%s %s\n", key, sym);
   }
+  add_vnameHash(a->vname, key);
   return;
 }
 }
@@ -14391,6 +14470,7 @@ void funcEntry(char *format , char *args , char *funcName )
   void *tmp___7 ;
   int tmp___8 ;
   int tmp___9 ;
+  int tmp___10 ;
 
   {
   printf((char const   * __restrict  )"funcEntry: %s \"%s\" \n", funcName, args);
@@ -14438,18 +14518,20 @@ void funcEntry(char *format , char *args , char *funcName )
   fv->vars = varNames;
   fv->noOfVars = size;
   strcpy((char * __restrict  )(fv->funcName), (char const   * __restrict  )funcName);
+  tmp___8 = getOccurence(funcName);
+  fv->occurence = tmp___8 + 1;
   if (stackInitFlag) {
     stackPush(symStack, & fv);
   } else {
-    tmp___8 = (int )stackNew(sizeof(funcVars *));
-    symStack = (void *)tmp___8;
+    tmp___9 = (int )stackNew(sizeof(funcVars *));
+    symStack = (void *)tmp___9;
     stackPush(symStack, & fv);
     stackInitFlag = 1;
   }
   size = 0;
   i = 0;
-  tmp___9 = stackSize(symStack);
-  printf((char const   * __restrict  )"Stack depth %d\n", tmp___9);
+  tmp___10 = stackSize(symStack);
+  printf((char const   * __restrict  )"Stack depth %d\n", tmp___10);
   return;
 }
 }
@@ -14477,6 +14559,7 @@ void funcExit(void)
   j = 0;
   while (j < fv->noOfVars) {
     deleteEntryUsingVar(*(fv->vars + j));
+    del_vnameHash(*(fv->vars + j));
     j ++;
   }
   tmp___0 = stackSize(symStack);
@@ -14543,13 +14626,13 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  setArray(2, "(= a 45)");
-  addtoCDGnode(3, 2, 1);
-  addtoCDGnode(4, 2, 0);
-  addtoCDGnode(5, 0, 1);
-  addtoCDGnode(5, 0, 1);
-  addtoCDGnode(6, 0, 1);
+  addtoCDGnode(4, 0, 1);
+  setArray(4, "(= main_a 45)");
+  addtoCDGnode(5, 4, 1);
+  addtoCDGnode(6, 4, 0);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(8, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -14565,16 +14648,16 @@ void createSidTable(void)
 
 
   {
-  add_condition(2, "(= a 45)", "(not (= a 45))", 0, 0);
+  add_condition(4, "(= main_a 45)", "(not (= main_a 45))", 0, 0);
 }
 }
 struct arguments {
-   int a ;
+   int main_a ;
 };
 struct arguments argvar ;
-int main1(int a ) 
+int main1(int main_a ) 
 { 
-  int b ;
+  int main_b ;
   int exp_outcome ;
   int overall_outcome ;
   int __cil_tmp5 ;
@@ -14585,34 +14668,34 @@ int main1(int a )
 
   {
   __cil_tmp6 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp6, "\t%d\n", a);
-  printTestCase("tripleVerifyFunc_main1_1433434056.tc", __cil_tmp6);
-  add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,foo_n,variable,a)", "foo");
-  a = foo(a);
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
+  sprintf(__cil_tmp6, "\t%d\n", main_a);
+  printTestCase("tripleVerifyFunc_main1_1433504122.tc", __cil_tmp6);
+  add_entryToSTable("main_a", "s0", & main_a, & main_a, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,foo_n,variable,main_a)", "foo");
+  main_a = foo(main_a);
+  add_entryToSTable("main_a", ret_SymValue, ret_ConValue, & main_a, 1);
   funcExit();
   {
-  exp_outcome = a == 45;
-  handleAssignmentSymbolically("exp_outcome", "(= a 45)", & exp_outcome, & exp_outcome,
+  exp_outcome = main_a == 45;
+  handleAssignmentSymbolically("exp_outcome", "(= main_a 45)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(2, 1, 0);
-    setTrueExpr(2, "(= a 45)");
-    setFalseExpr(2, "(not (= a 45))");
-    addToTree(2, 1, "(= a 45)", "(not (= a 45))", 0, 1);
+    setBranchInfo(4, 1, 0);
+    setTrueExpr(4, "(= main_a 45)");
+    setFalseExpr(4, "(not (= main_a 45))");
+    addToTree(4, 1, "(= main_a 45)", "(not (= main_a 45))", 0, 1);
     delete_allVariableTableEntry();
-    b = 1;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    main_b = 1;
+    add_entryToSTable("main_b", "Constant", & main_b, & main_b, 1);
   } else {
-    setBranchInfo(2, 0, 1);
-    setTrueExpr(2, "(= a 45)");
-    setFalseExpr(2, "(not (= a 45))");
-    addToTree(2, 1, "(= a 45)", "(not (= a 45))", 0, 0);
+    setBranchInfo(4, 0, 1);
+    setTrueExpr(4, "(= main_a 45)");
+    setFalseExpr(4, "(not (= main_a 45))");
+    addToTree(4, 1, "(= main_a 45)", "(not (= main_a 45))", 0, 0);
     delete_allVariableTableEntry();
-    b = -1;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    main_b = -1;
+    add_entryToSTable("main_b", "Constant", & main_b, & main_b, 1);
   }
   }
   __cil_tmp5 = isNotQueueEmpty();
@@ -14621,12 +14704,12 @@ int main1(int a )
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(a);
+    main1(main_a);
   } else {
     __cil_tmp5 = startCDG();
     if (__cil_tmp5) {
       __cil_tmp5 = getTestCases();
-      main1(a);
+      main1(main_a);
     }
   }
   return (0);
@@ -14646,18 +14729,18 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.a);
+  main1(argvar.main_a);
 }
 }
 void main(void) 
 { 
-  int a ;
+  int main_a ;
   int temp ;
   int __cil_tmp2 ;
 
   {
   __cil_tmp2 = rand();
-  argvar.a = __cil_tmp2 % 20;
+  argvar.main_a = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

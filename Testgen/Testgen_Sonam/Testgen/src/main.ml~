@@ -122,6 +122,7 @@ let features : C.featureDescr list =
     InstMapConcolic.feature;
     InsertReturnHolders.feature;
     EntryExit.feature;
+    FixMainForGlobals.feature;
     (* Test features *)
     Test.feature;
   ] 

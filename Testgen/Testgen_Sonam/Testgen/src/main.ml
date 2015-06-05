@@ -106,8 +106,8 @@ let features : C.featureDescr list =
     Liveness.feature;
     (* Our features *)
     Param.feature;
-    ModifyVars.feature;
     InsertTestDriver.feature;
+    ModifyVars.feature;
     LoopUnroll.feature;
     ExtractStruct.feature;
     MakeCDG.feature;
