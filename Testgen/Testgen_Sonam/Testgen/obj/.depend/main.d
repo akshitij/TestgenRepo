@@ -9,7 +9,7 @@
       $(OBJDIR)/level_struct.cmo   $(OBJDIR)/instMapConcolic.cmo \
       $(OBJDIR)/insertTestDriver.cmo   $(OBJDIR)/insertReturnHolders.cmo \
       $(OBJDIR)/helperpathsym.cmo   $(OBJDIR)/heapify.cmo \
-      $(OBJDIR)/handleUnseenNodes.cmo   $(OBJDIR)/frontc.cmi \
+      $(OBJDIR)/handleUnseenNodes.cmo   $(OBJDIR)/handleExp.cmo   $(OBJDIR)/frontc.cmi \
       $(OBJDIR)/fixMainForGlobals.cmo   $(OBJDIR)/feature_config.cmo \
       $(OBJDIR)/extractStruct.cmo  $(OBJDIR)/errormsg.cmi   $(OBJDIR)/epicenter.cmo \
       $(OBJDIR)/entryExit.cmo   $(OBJDIR)/dataslicing.cmi  $(OBJDIR)/cilutil.cmo \
@@ -26,7 +26,7 @@
       $(OBJDIR)/level_struct.cmx   $(OBJDIR)/instMapConcolic.cmx \
       $(OBJDIR)/insertTestDriver.cmx   $(OBJDIR)/insertReturnHolders.cmx \
       $(OBJDIR)/helperpathsym.cmx   $(OBJDIR)/heapify.cmx \
-      $(OBJDIR)/handleUnseenNodes.cmx   $(OBJDIR)/frontc.cmx \
+      $(OBJDIR)/handleUnseenNodes.cmx   $(OBJDIR)/handleExp.cmx   $(OBJDIR)/frontc.cmx \
       $(OBJDIR)/fixMainForGlobals.cmx   $(OBJDIR)/feature_config.cmx \
       $(OBJDIR)/extractStruct.cmx  $(OBJDIR)/errormsg.cmx   $(OBJDIR)/epicenter.cmx \
       $(OBJDIR)/entryExit.cmx   $(OBJDIR)/dataslicing.cmx  $(OBJDIR)/cilutil.cmx \

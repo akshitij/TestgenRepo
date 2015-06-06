@@ -6,14 +6,17 @@ module L = List
 module E = Errormsg
 
 let changeFormals (fd : fundec) : unit =
-  if ((*fd.svar.vname <> "main" &&*) fd.svar.vname <> !Param.func) then begin
+  if (fd.svar.vname <> "main" && fd.svar.vname <> !Param.func) then begin
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
      fd.sformals;
      setFormals fd fd.sformals;
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
-     fd.slocals
+     fd.slocals;
+  E.log "local variables in %s : " fd.svar.vname;   
+  List.iter (fun f -> E.log "%s " f.vname) fd.slocals;
+  E.log "\n";   
   end
      
 

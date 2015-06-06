@@ -282,11 +282,19 @@ void testgen_exit(){
     return;
 }
 
-void mapConcolicValues (char* retVarName){
+void mapConcolicValues (char* retVarName, char* CorV){
 	ret_ConValue = NULL;
 	ret_SymValue = (char *)malloc(100*sizeof(char));
-	ret_SymValue = find_symVal(retVarName);
-	ret_ConValue = find_conVal(retVarName);
+	char* vn;
+	vn = get_vnameHash(retVarName);
+	if(vn == NULL){
+		ret_SymValue = find_symVal(retVarName);
+		ret_ConValue = find_conVal(retVarName);
+	}
+	else{
+		ret_SymValue = find_symVal(vn);
+		ret_ConValue = find_conVal(vn);
+	}
 	if(ret_SymValue == NULL){
 		printf("symValue for variable \"%s\" not found\n", retVarName);
 	}

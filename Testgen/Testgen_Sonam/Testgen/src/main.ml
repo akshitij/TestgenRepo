@@ -107,6 +107,7 @@ let features : C.featureDescr list =
     (* Our features *)
     Param.feature;
     InsertTestDriver.feature;
+    HandleExp.feature;
     ModifyVars.feature;
     LoopUnroll.feature;
     ExtractStruct.feature;
