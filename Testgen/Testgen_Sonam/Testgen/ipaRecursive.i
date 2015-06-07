@@ -2498,7 +2498,7 @@ void populateSTable(funcArg* a){
    val = find_conVal(get_vnameHash(a->apname));
   }
   add_entryToSTable(key,sym,val,val,a->type);
-  printf("%s %s\n", key, sym);
+  printf("%s %s %d\n", key, sym, *(int*)val);
  }
  add_vnameHash(a->vname, key);
 }

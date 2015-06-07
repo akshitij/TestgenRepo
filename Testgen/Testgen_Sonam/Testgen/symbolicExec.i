@@ -2998,7 +2998,7 @@ void populateSTable(funcArg* a){
    val = find_conVal(get_vnameHash(a->apname));
   }
   add_entryToSTable(key,sym,val,val,a->type);
-  printf("%s %s\n", key, sym);
+  printf("%s %s %d\n", key, sym, *(int*)val);
  }
  add_vnameHash(a->vname, key);
 }
@@ -3282,7 +3282,15 @@ char *find_symVal(char *key) {
 void *find_conVal(char *key) {
   struct field_values *fv;
 
-  fv = find_fieldValue(key);
+  char* hash_vn = get_vnameHash(key);
+  if(hash_vn != ((void *)0)){
+    fv = find_fieldValue(hash_vn);
+  }
+  else{
+    fv = find_fieldValue(key);
+  }
+
+
   return fv->cval;
 }
 

@@ -67,8 +67,16 @@ void createEmptyEntryInSTable(char *vname) {
 
 void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
   struct sym_table *s;
-
-  HASH_FIND_STR(stable, vname, s);
+  
+  char* hash_vn = get_vnameHash(vname);
+  if(hash_vn != NULL){
+    HASH_FIND_STR(stable, hash_vn, s);
+  }
+  else{
+    HASH_FIND_STR(stable, vname, s);
+  }
+  
+  //HASH_FIND_STR(stable, vname, s);
   if (s == NULL) {
     s = (struct sym_table *)malloc(sizeof(struct sym_table));
     s->vname = (char *)calloc((strlen(vname) + 1), sizeof(char));

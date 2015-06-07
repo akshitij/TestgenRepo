@@ -4670,7 +4670,7 @@ void populateSTable(funcArg *a )
       }
     }
     add_entryToSTable(key, sym, val, val, a->type);
-    printf((char const * __restrict )"%s %s\n", key, sym);
+    printf((char const * __restrict )"%s %s %d\n", key, sym, *((int *)val));
   }
   add_vnameHash(a->vname, key);
   return;
@@ -6643,9 +6643,17 @@ char *find_symVal(char *key )
 void *find_conVal(char *key )
 {
   struct field_values *fv ;
+  char *hash_vn ;
+  char *tmp ;
 
   {
-  fv = find_fieldValue(key);
+  tmp = get_vnameHash(key);
+  hash_vn = tmp;
+  if ((unsigned long )hash_vn != (unsigned long )((void *)0)) {
+    fv = find_fieldValue(hash_vn);
+  } else {
+    fv = find_fieldValue(key);
+  }
   return (fv->cval);
 }
 }
@@ -15273,8 +15281,8 @@ int mult(int mult_y )
   handleAssignmentSymbolically("mult_y", "(* 6 mult_y)", & mult_y, & mult_y, 1);
   funcEntry("(type,formals,actuals,CorV)", "(int,inc_x,variable,mult_y)", "", "inc");
   mult_y = inc(mult_y);
-  add_entryToSTable("mult_y", ret_SymValue, ret_ConValue, & mult_y, 1);
   funcExit();
+  add_entryToSTable("mult_y", ret_SymValue, ret_ConValue, & mult_y, 1);
   {
   mapConcolicValues("mult_y", "variable");
   return (mult_y);
@@ -15334,12 +15342,12 @@ int main1(int a )
   {
   __cil_tmp7 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1433680015.tc", __cil_tmp7);
+  printTestCase("sixTimesFunc_main1_1433697519.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(type,formals,actuals,CorV)", "(int,mult_y,variable,a)", "", "mult");
   a = mult(a);
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   funcExit();
+  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   {
   exp_outcome = a == 31;
   handleAssignmentSymbolically("exp_outcome", "(= a 31)", & exp_outcome, & exp_outcome,

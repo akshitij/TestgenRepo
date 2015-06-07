@@ -4664,7 +4664,7 @@ void populateSTable(funcArg *a )
       }
     }
     add_entryToSTable(key, sym, val, val, a->type);
-    printf((char const   * __restrict  )"%s %s\n", key, sym);
+    printf((char const   * __restrict  )"%s %s %d\n", key, sym, *((int *)val));
   }
   add_vnameHash(a->vname, key);
   return;
@@ -6637,9 +6637,17 @@ char *find_symVal(char *key )
 void *find_conVal(char *key ) 
 { 
   struct field_values *fv ;
+  char *hash_vn ;
+  char *tmp ;
 
   {
-  fv = find_fieldValue(key);
+  tmp = get_vnameHash(key);
+  hash_vn = tmp;
+  if ((unsigned long )hash_vn != (unsigned long )((void *)0)) {
+    fv = find_fieldValue(hash_vn);
+  } else {
+    fv = find_fieldValue(key);
+  }
   return (fv->cval);
 }
 }
@@ -15309,12 +15317,12 @@ int main1(int a )
   {
   __cil_tmp7 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("tripleVerifyFunc_main1_1433686197.tc", __cil_tmp7);
+  printTestCase("tripleVerifyFunc_main1_1433697507.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(type,formals,actuals,CorV)", "(int,foo_n,variable,a)", "", "foo");
   a = foo(a);
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   funcExit();
+  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   {
   exp_outcome = a == 45;
   handleAssignmentSymbolically("exp_outcome", "(= a 45)", & exp_outcome, & exp_outcome,

@@ -207,7 +207,7 @@ void populateSTable(funcArg* a){
 			val = find_conVal(get_vnameHash(a->apname));
 		}
 		add_entryToSTable(key,sym,val,val,a->type);
-		printf("%s %s\n", key, sym);
+		printf("%s %s %s\n", key, sym, *(int*)val);
 	}
 	add_vnameHash(a->vname, key);
 }
@@ -317,6 +317,7 @@ void funcEntry(char* format, char* args, char* locals, char* funcName) {
 void funcExit(){
     //printf("AssignLval: \"%s\" \n",AssignLval);
     //symAssignFunctionReturn(AssignLval);
+    printf("retSymVal : %s\n",ret_SymValue);
     funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
     stackPop(symStack, (&fv));
     int j;

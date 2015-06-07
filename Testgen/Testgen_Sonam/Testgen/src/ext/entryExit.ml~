@@ -86,7 +86,7 @@ let getLocalVarString (f : file) (funcName : string) : string =
   		|GFun(fd,loc) ->
   		  if fd.svar.vname = funcName then
   		    List.iter (fun var ->
-  			        if ((var.vname <> "symName") && (var.vname <> "in") && (var.vname <> "addr"))
+  			        if ((var.vname <> "symName") && (var.vname <> "in") && (var.vname <> "addr")) then
   			          str := !str ^ var.vname ^ " "
   			      ) fd.slocals
   		| _ -> ()

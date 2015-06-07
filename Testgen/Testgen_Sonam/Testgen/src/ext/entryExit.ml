@@ -208,7 +208,7 @@ class entryExitVisitorClass (fdec : fundec) = object (self)
                                      | TPtr (_,_) -> 1
                                      | _ -> -1) in
                       let pre = mkstableEntryfxn2 (vi.vname) (v2e (List.nth !varinfoList 0)) (v2e (List.nth !varinfoList 2)) (AddrOf(Var vi, NoOffset)) t  in 
-                             ChangeTo [i;pre;instrumentExitFunc]
+                             ChangeTo [i;instrumentExitFunc;pre]
                              (*ChangeTo[i;instrumentExitFunc]*)
            end
            else 
