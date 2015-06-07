@@ -327,8 +327,8 @@ void funcExit(){
     }
     int k;
     for(k=0; k < fv->noOfLocals; k++){
-    	deleteEntryUsingVar(get_vnameHash(fv->vars[k]));
-    	del_vnameHash(fv->vars[k]);
+    	deleteEntryUsingVar(get_vnameHash(fv->locals[k]));
+    	del_vnameHash(fv->locals[k]);
     }
     //free(fv);
     printf("Stack depth %d\n", stackSize(symStack));

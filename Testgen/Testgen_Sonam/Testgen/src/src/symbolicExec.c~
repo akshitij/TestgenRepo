@@ -359,7 +359,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       else{
         symName = find_symVal(vname_occ);
       }
-      printf("%s ",symName);
+      //printf("%s ",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
           //This will return same value for all Constant variables ....see example constantFunc.c
@@ -387,7 +387,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
   //printf("result=%s\n",result);
   char* lhs_vn = get_vnameHash(lhs);
-  if (lhs != NULL){
+  if (lhs_vn != NULL){
   	add_entryToSTable(lhs_vn, result, val, address, type);
   }
   else{

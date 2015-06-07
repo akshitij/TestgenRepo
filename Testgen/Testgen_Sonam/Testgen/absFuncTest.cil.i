@@ -1,9 +1,9 @@
-# 1 "./insertionSort.cil.c"
+# 1 "./absFuncTest.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./insertionSort.cil.c"
+# 1 "./absFuncTest.cil.c"
 
 
 
@@ -4506,7 +4506,7 @@ void del_vnameHash(char *key )
   return;
 }
 }
-funcArg *getArgument(char *argString , char *foo )
+funcArg *getArgument(char *argString , char *foo___0 )
 {
   int i___0 ;
   double d ;
@@ -4533,7 +4533,7 @@ funcArg *getArgument(char *argString , char *foo )
   *(copy + (tmp___0 - 1UL)) = (char)0;
   tmp___1 = malloc(sizeof(funcArg ));
   argument = (funcArg *)tmp___1;
-  strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo);
+  strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo___0);
   token = strtok((char * __restrict )copy, (char const * __restrict )(s));
   tmp___4 = strcmp((char const *)token, "int");
   if (tmp___4 == 0) {
@@ -15245,8 +15245,28 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./insertionSort.i","-g,-g")
+#pragma merger("0","./absFuncTest.i","-g,-g")
 extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
+int foo(int foo_n )
+{
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (foo_n < 0) {
+    foo_n *= -1;
+    handleAssignmentSymbolically("foo_n", "(* foo_n -1)", & foo_n, & foo_n, 1);
+  } else {
+    foo_n = foo_n;
+    handleAssignmentSymbolically("foo_n", "foo_n", & foo_n, & foo_n, 1);
+  }
+  {
+  mapConcolicValues("foo_n", "variable");
+  return (foo_n);
+  }
+}
+}
 void createCDG(void)
 {
 
@@ -15254,69 +15274,15 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  addtoCDGnode(4, 0, 1);
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(<= c (- n 1))");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(15, 0, 1);
-  setArray(15, "(<= c (- n 1))");
-  addtoCDGnode(7, 5, 1);
-  addtoCDGnode(8, 5, 1);
-  setArray(8, "(> d 0)");
-  addtoCDGnode(9, 8, 1);
-  setArray(9, "(< array_d array_d - 1)");
-  addtoCDGnode(11, 5, 1);
-  setArray(11, "(> d 0)");
-  addtoCDGnode(10, 9, 1);
-  addtoCDGnode(11, 5, 1);
-  setArray(11, "(> d 0)");
-  addtoCDGnode(11, 5, 1);
-  setArray(11, "(> d 0)");
-  addtoCDGnode(12, 11, 1);
-  setArray(12, "(< array_d array_d - 1)");
-  addtoCDGnode(14, 5, 1);
-  addtoCDGnode(13, 12, 1);
-  addtoCDGnode(14, 5, 1);
-  addtoCDGnode(14, 5, 1);
-  addtoCDGnode(15, 0, 1);
-  setArray(15, "(<= c (- n 1))");
-  addtoCDGnode(16, 15, 1);
-  addtoCDGnode(25, 0, 1);
-  addtoCDGnode(17, 15, 1);
-  addtoCDGnode(18, 15, 1);
-  setArray(18, "(> d 0)");
-  addtoCDGnode(19, 18, 1);
-  setArray(19, "(< array_d array_d - 1)");
-  addtoCDGnode(21, 15, 1);
-  setArray(21, "(> d 0)");
-  addtoCDGnode(20, 19, 1);
-  addtoCDGnode(21, 15, 1);
-  setArray(21, "(> d 0)");
-  addtoCDGnode(21, 15, 1);
-  setArray(21, "(> d 0)");
-  addtoCDGnode(22, 21, 1);
-  setArray(22, "(< array_d array_d - 1)");
-  addtoCDGnode(24, 15, 1);
-  addtoCDGnode(23, 22, 1);
-  addtoCDGnode(24, 15, 1);
-  addtoCDGnode(24, 15, 1);
-  addtoCDGnode(25, 0, 1);
-  addtoCDGnode(26, 0, 1);
-  addtoCDGnode(27, 0, 1);
-  setArray(27, "(<= c (- n 1))");
-  addtoCDGnode(28, 27, 1);
-  addtoCDGnode(29, 0, 1);
-  setArray(29, "(<= c (- n 1))");
-  addtoCDGnode(29, 0, 1);
-  setArray(29, "(<= c (- n 1))");
-  addtoCDGnode(30, 29, 1);
-  addtoCDGnode(31, 0, 1);
-  addtoCDGnode(31, 0, 1);
-  addtoCDGnode(32, 0, 1);
-  addtoCDGnode(33, 0, 1);
-  addtoCDGnode(34, 0, 1);
+  addtoCDGnode(6, 0, 1);
+  setArray(6, "(>= a 0)");
+  addtoCDGnode(7, 6, 1);
+  addtoCDGnode(8, 6, 0);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(10, 0, 1);
+  addtoCDGnode(11, 0, 1);
+  addtoCDGnode(12, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15324,18 +15290,7 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(8, 8);
-  isCopyOf(11, 8);
-  isCopyOf(18, 8);
-  isCopyOf(21, 8);
-  isCopyOf(9, 9);
-  isCopyOf(12, 9);
-  isCopyOf(19, 9);
-  isCopyOf(22, 9);
-  isCopyOf(5, 5);
-  isCopyOf(15, 5);
-  isCopyOf(27, 27);
-  isCopyOf(29, 27);
+
 }
 }
 void createSidTable(void)
@@ -15343,455 +15298,75 @@ void createSidTable(void)
 
 
   {
-  add_condition(9, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                0, 0);
-  add_condition(8, "(> d 0)", "(not (> d 0))", 0, 0);
-  add_condition(12, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                0, 0);
-  add_condition(11, "(> d 0)", "(not (> d 0))", 0, 0);
-  add_condition(5, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-  add_condition(19, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                0, 0);
-  add_condition(18, "(> d 0)", "(not (> d 0))", 0, 0);
-  add_condition(22, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                0, 0);
-  add_condition(21, "(> d 0)", "(not (> d 0))", 0, 0);
-  add_condition(15, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-  add_condition(27, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-  add_condition(29, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
+  add_condition(6, "(>= a 0)", "(not (>= a 0))", 0, 0);
 }
 }
 struct arguments {
-   int n ;
-   int array[1000] ;
+   int a ;
 };
 struct arguments argvar ;
-int main1(int n , int array[1000] )
+int main1(int a )
 {
-  int c ;
-  int d ;
-  int t ;
-  int __cil_tmp6 ;
+  int b ;
+  int __cil_tmp3 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp9 ;
-  char *__cil_tmp10 ;
+  int __cil_tmp6 ;
+  char *__cil_tmp7 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp10 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp10, "\t%d\t%d\t%d\t%d\t%d\t%d\n", n, array[0], array[1], array[2],
-          array[3], array[4]);
-  printTestCase("insertionSort_main1_1433685922.tc", __cil_tmp10);
-  add_entryToSTable("n", "s0", & n, & n, 1);
-  printf((char const * __restrict )"Enter number of elements\n");
-  printf((char const * __restrict )"Enter %d integers\n", n);
-  c = 0;
-  add_entryToSTable("c", "Constant", & c, & c, 1);
-
-  c = 1;
-  add_entryToSTable("c", "Constant", & c, & c, 1);
+  __cil_tmp7 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp7, "\t%d\n", a);
+  printTestCase("absFuncTest_main1_1433686019.tc", __cil_tmp7);
+  add_entryToSTable("a", "s0", & a, & a, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,foo_n,variable,a)", "", "foo");
+  a = foo(a);
+  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
+  funcExit();
   {
-  {
-  exp_outcome = c <= n - 1;
-  handleAssignmentSymbolically("exp_outcome", "(<= c (- n 1))", & exp_outcome, & exp_outcome,
+  exp_outcome = a >= 0;
+  handleAssignmentSymbolically("exp_outcome", "(>= a 0)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(<= c (- n 1))");
-    setFalseExpr(5, "(not (<= c (- n 1)))");
-    addToTree(5, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 1);
+    setBranchInfo(6, 1, 0);
+    setTrueExpr(6, "(>= a 0)");
+    setFalseExpr(6, "(not (>= a 0))");
+    addToTree(6, 1, "(>= a 0)", "(not (>= a 0))", 0, 1);
     delete_allVariableTableEntry();
-    d = c;
-    handleAssignmentSymbolically("d", "c", & c, & c, 1);
-    {
-    {
-    exp_outcome = d > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> d 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(8, 1, 0);
-      setTrueExpr(8, "(> d 0)");
-      setFalseExpr(8, "(not (> d 0))");
-      addToTree(8, 2, "(> d 0)", "(not (> d 0))", 5, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = array[d] < array[d - 1];
-      addEntryToVariableTable("array[d]", d);
-      add_entryToArraySTable("array", d, "array20", & array[d], & array[d], 1);
-      addEntryToVariableTable("array[d - 1]", d - 1);
-      add_entryToArraySTable("array", d - 1, "array21", & array[d - 1], & array[d - 1],
-                             1);
-      handleAssignmentSymbolically("exp_outcome", "(< array[d] array[d - 1])", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
-      if (overall_outcome) {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array10", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array11", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(9, 1, 0);
-        setTrueExpr(9, "(< array[d] array[d - 1])");
-        setFalseExpr(9, "(not (< array[d] array[d - 1]))");
-        addToTree(9, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  8, 1);
-        delete_allVariableTableEntry();
-        t = array[d];
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array22", & array[d], & array[d], 1);
-        handleAssignmentSymbolically("t", "array[d]", & array[d], & array[d], 1);
-        array[d] = array[d - 1];
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array23", & array[d - 1], & array[d - 1],
-                               1);
-        handleArraySymbolically("array", d, "array[d - 1]", & array[d], & array[d],
-                                1);
-        array[d - 1] = t;
-        handleArraySymbolically("array", d - 1, "t", & array[d - 1], & array[d - 1],
-                                1);
-        d --;
-        handleAssignmentSymbolically("d", "(- d 1)", & d, & d, 1);
-      } else {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array10", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array11", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(9, 0, 1);
-        setTrueExpr(9, "(< array[d] array[d - 1])");
-        setFalseExpr(9, "(not (< array[d] array[d - 1]))");
-        addToTree(9, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  8, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-    } else {
-      setBranchInfo(8, 0, 1);
-      setTrueExpr(8, "(> d 0)");
-      setFalseExpr(8, "(not (> d 0))");
-      addToTree(8, 2, "(> d 0)", "(not (> d 0))", 5, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    {
-    exp_outcome = d > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> d 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(11, 1, 0);
-      setTrueExpr(11, "(> d 0)");
-      setFalseExpr(11, "(not (> d 0))");
-      addToTree(11, 2, "(> d 0)", "(not (> d 0))", 5, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = array[d] < array[d - 1];
-      addEntryToVariableTable("array[d]", d);
-      add_entryToArraySTable("array", d, "array24", & array[d], & array[d], 1);
-      addEntryToVariableTable("array[d - 1]", d - 1);
-      add_entryToArraySTable("array", d - 1, "array25", & array[d - 1], & array[d - 1],
-                             1);
-      handleAssignmentSymbolically("exp_outcome", "(< array[d] array[d - 1])", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
-      if (overall_outcome) {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array12", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array13", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(12, 1, 0);
-        setTrueExpr(12, "(< array[d] array[d - 1])");
-        setFalseExpr(12, "(not (< array[d] array[d - 1]))");
-        addToTree(12, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  11, 1);
-        delete_allVariableTableEntry();
-        t = array[d];
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array26", & array[d], & array[d], 1);
-        handleAssignmentSymbolically("t", "array[d]", & array[d], & array[d], 1);
-        array[d] = array[d - 1];
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array27", & array[d - 1], & array[d - 1],
-                               1);
-        handleArraySymbolically("array", d, "array[d - 1]", & array[d], & array[d],
-                                1);
-        array[d - 1] = t;
-        handleArraySymbolically("array", d - 1, "t", & array[d - 1], & array[d - 1],
-                                1);
-        d --;
-        handleAssignmentSymbolically("d", "(- d 1)", & d, & d, 1);
-      } else {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array12", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array13", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(12, 0, 1);
-        setTrueExpr(12, "(< array[d] array[d - 1])");
-        setFalseExpr(12, "(not (< array[d] array[d - 1]))");
-        addToTree(12, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  11, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-    } else {
-      setBranchInfo(11, 0, 1);
-      setTrueExpr(11, "(> d 0)");
-      setFalseExpr(11, "(not (> d 0))");
-      addToTree(11, 2, "(> d 0)", "(not (> d 0))", 5, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    }
-    c ++;
-    handleAssignmentSymbolically("c", "(+ c 1)", & c, & c, 1);
+    b = 1;
+    add_entryToSTable("b", "Constant", & b, & b, 1);
   } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(<= c (- n 1))");
-    setFalseExpr(5, "(not (<= c (- n 1)))");
-    addToTree(5, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
+    setBranchInfo(6, 0, 1);
+    setTrueExpr(6, "(>= a 0)");
+    setFalseExpr(6, "(not (>= a 0))");
+    addToTree(6, 1, "(>= a 0)", "(not (>= a 0))", 0, 0);
     delete_allVariableTableEntry();
+    b = -1;
+    add_entryToSTable("b", "Constant", & b, & b, 1);
   }
   }
   {
-  exp_outcome = c <= n - 1;
-  handleAssignmentSymbolically("exp_outcome", "(<= c (- n 1))", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(15, 1, 0);
-    setTrueExpr(15, "(<= c (- n 1))");
-    setFalseExpr(15, "(not (<= c (- n 1)))");
-    addToTree(15, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 1);
-    delete_allVariableTableEntry();
-    d = c;
-    handleAssignmentSymbolically("d", "c", & c, & c, 1);
-    {
-    {
-    exp_outcome = d > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> d 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(18, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(18, 1, 0);
-      setTrueExpr(18, "(> d 0)");
-      setFalseExpr(18, "(not (> d 0))");
-      addToTree(18, 2, "(> d 0)", "(not (> d 0))", 15, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = array[d] < array[d - 1];
-      addEntryToVariableTable("array[d]", d);
-      add_entryToArraySTable("array", d, "array28", & array[d], & array[d], 1);
-      addEntryToVariableTable("array[d - 1]", d - 1);
-      add_entryToArraySTable("array", d - 1, "array29", & array[d - 1], & array[d - 1],
-                             1);
-      handleAssignmentSymbolically("exp_outcome", "(< array[d] array[d - 1])", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
-      if (overall_outcome) {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array14", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array15", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(19, 1, 0);
-        setTrueExpr(19, "(< array[d] array[d - 1])");
-        setFalseExpr(19, "(not (< array[d] array[d - 1]))");
-        addToTree(19, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  18, 1);
-        delete_allVariableTableEntry();
-        t = array[d];
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array210", & array[d], & array[d], 1);
-        handleAssignmentSymbolically("t", "array[d]", & array[d], & array[d], 1);
-        array[d] = array[d - 1];
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array211", & array[d - 1], & array[d - 1],
-                               1);
-        handleArraySymbolically("array", d, "array[d - 1]", & array[d], & array[d],
-                                1);
-        array[d - 1] = t;
-        handleArraySymbolically("array", d - 1, "t", & array[d - 1], & array[d - 1],
-                                1);
-        d --;
-        handleAssignmentSymbolically("d", "(- d 1)", & d, & d, 1);
-      } else {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array14", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array15", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(19, 0, 1);
-        setTrueExpr(19, "(< array[d] array[d - 1])");
-        setFalseExpr(19, "(not (< array[d] array[d - 1]))");
-        addToTree(19, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  18, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-    } else {
-      setBranchInfo(18, 0, 1);
-      setTrueExpr(18, "(> d 0)");
-      setFalseExpr(18, "(not (> d 0))");
-      addToTree(18, 2, "(> d 0)", "(not (> d 0))", 15, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    {
-    exp_outcome = d > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> d 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(21, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(21, 1, 0);
-      setTrueExpr(21, "(> d 0)");
-      setFalseExpr(21, "(not (> d 0))");
-      addToTree(21, 2, "(> d 0)", "(not (> d 0))", 15, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = array[d] < array[d - 1];
-      addEntryToVariableTable("array[d]", d);
-      add_entryToArraySTable("array", d, "array212", & array[d], & array[d], 1);
-      addEntryToVariableTable("array[d - 1]", d - 1);
-      add_entryToArraySTable("array", d - 1, "array213", & array[d - 1], & array[d - 1],
-                             1);
-      handleAssignmentSymbolically("exp_outcome", "(< array[d] array[d - 1])", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
-      if (overall_outcome) {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array16", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array17", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(22, 1, 0);
-        setTrueExpr(22, "(< array[d] array[d - 1])");
-        setFalseExpr(22, "(not (< array[d] array[d - 1]))");
-        addToTree(22, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  21, 1);
-        delete_allVariableTableEntry();
-        t = array[d];
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array214", & array[d], & array[d], 1);
-        handleAssignmentSymbolically("t", "array[d]", & array[d], & array[d], 1);
-        array[d] = array[d - 1];
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array215", & array[d - 1], & array[d - 1],
-                               1);
-        handleArraySymbolically("array", d, "array[d - 1]", & array[d], & array[d],
-                                1);
-        array[d - 1] = t;
-        handleArraySymbolically("array", d - 1, "t", & array[d - 1], & array[d - 1],
-                                1);
-        d --;
-        handleAssignmentSymbolically("d", "(- d 1)", & d, & d, 1);
-      } else {
-        addEntryToVariableTable("array[d]", d);
-        add_entryToArraySTable("array", d, "array16", & array[d], & array[d], 1);
-        addEntryToVariableTable("array[d - 1]", d - 1);
-        add_entryToArraySTable("array", d - 1, "array17", & array[d - 1], & array[d - 1],
-                               1);
-        setBranchInfo(22, 0, 1);
-        setTrueExpr(22, "(< array[d] array[d - 1])");
-        setFalseExpr(22, "(not (< array[d] array[d - 1]))");
-        addToTree(22, 3, "(< array[d] array[d - 1])", "(not (< array[d] array[d - 1]))",
-                  21, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-    } else {
-      setBranchInfo(21, 0, 1);
-      setTrueExpr(21, "(> d 0)");
-      setFalseExpr(21, "(not (> d 0))");
-      addToTree(21, 2, "(> d 0)", "(not (> d 0))", 15, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    }
-    c ++;
-    handleAssignmentSymbolically("c", "(+ c 1)", & c, & c, 1);
-  } else {
-    setBranchInfo(15, 0, 1);
-    setTrueExpr(15, "(<= c (- n 1))");
-    setFalseExpr(15, "(not (<= c (- n 1)))");
-    addToTree(15, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  printf((char const * __restrict )"Sorted list in ascending order:\n");
-  c = 0;
-  add_entryToSTable("c", "Constant", & c, & c, 1);
-  {
-  {
-  exp_outcome = c <= n - 1;
-  handleAssignmentSymbolically("exp_outcome", "(<= c (- n 1))", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(27, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(27, 1, 0);
-    setTrueExpr(27, "(<= c (- n 1))");
-    setFalseExpr(27, "(not (<= c (- n 1)))");
-    addToTree(27, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 1);
-    delete_allVariableTableEntry();
-    printf((char const * __restrict )"%d\n", array[c]);
-    c ++;
-    handleAssignmentSymbolically("c", "(+ c 1)", & c, & c, 1);
-  } else {
-    setBranchInfo(27, 0, 1);
-    setTrueExpr(27, "(<= c (- n 1))");
-    setFalseExpr(27, "(not (<= c (- n 1)))");
-    addToTree(27, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = c <= n - 1;
-  handleAssignmentSymbolically("exp_outcome", "(<= c (- n 1))", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(29, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(29, 1, 0);
-    setTrueExpr(29, "(<= c (- n 1))");
-    setFalseExpr(29, "(not (<= c (- n 1)))");
-    addToTree(29, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 1);
-    delete_allVariableTableEntry();
-    printf((char const * __restrict )"%d\n", array[c]);
-    c ++;
-    handleAssignmentSymbolically("c", "(+ c 1)", & c, & c, 1);
-  } else {
-    setBranchInfo(29, 0, 1);
-    setTrueExpr(29, "(<= c (- n 1))");
-    setFalseExpr(29, "(not (<= c (- n 1)))");
-    addToTree(29, 1, "(<= c (- n 1))", "(not (<= c (- n 1)))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  {
-  __cil_tmp6 = 0;
-  add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6, 1);
-  __cil_tmp9 = isNotQueueEmpty();
-  if (__cil_tmp9) {
+  __cil_tmp3 = 0;
+  add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
+  __cil_tmp6 = isNotQueueEmpty();
+  if (__cil_tmp6) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(n, array);
+    main1(a);
   } else {
-    __cil_tmp9 = startCDG();
-    if (__cil_tmp9) {
-      __cil_tmp9 = getTestCases();
-      main1(n, array);
+    __cil_tmp6 = startCDG();
+    if (__cil_tmp6) {
+      __cil_tmp6 = getTestCases();
+      main1(a);
     }
   }
-  return (__cil_tmp6);
+  return (__cil_tmp3);
   }
 }
 }
@@ -15809,31 +15384,18 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.n, argvar.array);
+  main1(argvar.a);
 }
 }
 void main(void)
 {
-  int n ;
-  int array[1000] ;
+  int a ;
   int temp ;
   int __cil_tmp2 ;
-  int __cil_tmp3 ;
-  int __cil_tmp4 ;
 
   {
-  __cil_tmp4 = rand();
-  argvar.n = __cil_tmp4 % 20;
-  __cil_tmp3 = 0;
-  while (1) {
-    if (__cil_tmp3 >= 1000) {
-      break;
-    } else {
-      __cil_tmp2 = rand();
-      argvar.array[__cil_tmp3] = __cil_tmp2 % 20;
-      __cil_tmp3 ++;
-    }
-  }
+  __cil_tmp2 = rand();
+  argvar.a = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

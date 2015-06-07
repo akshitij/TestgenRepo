@@ -2608,6 +2608,7 @@ void funcEntry(char* format, char* args, char* locals, char* funcName) {
 void funcExit(){
 
 
+    printf("retSymVal : %s\n",ret_SymValue);
     funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
     stackPop(symStack, (&fv));
     int j;

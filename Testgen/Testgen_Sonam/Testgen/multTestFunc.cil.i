@@ -7223,7 +7223,6 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
     } else {
       symName = find_symVal(vname_occ);
     }
-    printf((char const * __restrict )"%s ", symName);
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
       tmp___45 = strcmp((char const *)symName, "Constant");
       if (tmp___45 == 0) {
@@ -15162,7 +15161,7 @@ int main1(int a , int b )
   {
   __cil_tmp9 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp9, "\t%d\t%d\n", a, b);
-  printTestCase("multTestFunc_main1_1433675712.tc", __cil_tmp9);
+  printTestCase("multTestFunc_main1_1433676287.tc", __cil_tmp9);
   add_entryToSTable("b", "s1", & b, & b, 1);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(type,formals,actuals,CorV)", "(int,mult_x,variable,a) (int,mult_y,variable,b)",
