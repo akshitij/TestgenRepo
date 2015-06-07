@@ -2798,6 +2798,7 @@ extern int programFlag = 0;
 extern void* ret_ConValue = ((void *)0);
 extern char* ret_SymValue = ((void *)0);
 
+
 typedef struct functionArgument{
      char funcName[100];
      int type;
@@ -2809,7 +2810,9 @@ typedef struct functionArgument{
 
 typedef struct {
     char** vars;
+    char** locals;
     int noOfVars;
+    int noOfLocals;
     char funcName[100];
     int occurence;
 }funcVars;
@@ -2825,6 +2828,8 @@ int stackInitFlag = 0;
 void *symStack = ((void *)0);
 int i=0;
 char** varNames = ((void *)0);
+char** localNames = ((void *)0);
+int currentOccurence = -1;
 
 void add_vnameHash(char* key, char* value) {
     vnameHash* v;
@@ -2973,7 +2978,7 @@ int getOccurence(char* funcName){
 void populateSTable(funcArg* a){
 
  char tmp[5];
- sprintf(tmp, "_%d", getOccurence(a->funcName));
+ sprintf(tmp, "_%d", currentOccurence);
  char key[55];
  strcpy(key,a->vname);
  strcat(key,tmp);
@@ -2998,14 +3003,27 @@ void populateSTable(funcArg* a){
  add_vnameHash(a->vname, key);
 }
 
+void populateSTableWithLocals(char *localVarName){
+ char tmp[5];
+ sprintf(tmp, "_%d", currentOccurence);
+ char key[55];
+ strcpy(key,localVarName);
+ strcat(key,tmp);
+ createEmptyEntryInSTable(key);
+ add_vnameHash(localVarName,key);
+}
 
-void funcEntry(char* format, char* args, char* funcName) {
+void funcEntry(char* format, char* args, char* locals, char* funcName) {
  printf("funcEntry: %s \"%s\" \n", funcName, args);
- int size=0;
- varNames = (char**) malloc(10 * sizeof(char*));
+ int size=0,localSize = 0;
+ currentOccurence = getOccurence(funcName);
+
+
+
+
  if(strcmp(args,"") != 0){
   char s[] = " ";
-  char *token;
+  char *token2;
   char *copy = strdup(args);
   char* tmp = copy;
   int count = 1;
@@ -3013,12 +3031,13 @@ void funcEntry(char* format, char* args, char* funcName) {
    if (*tmp++ == ' ')
     count++;
   }
+  varNames = (char**) malloc(count * sizeof(char*));
   char** tokens = (char**) malloc(sizeof(char*) * count);
-  token = strtok(copy, s);
+  token2 = strtok(copy, s);
   int i = 0;
-  while (token != ((void *)0)) {
-   *(tokens + i) = token;
-   token = strtok(((void *)0), s);
+  while (token2 != ((void *)0)) {
+   *(tokens + i) = token2;
+   token2 = strtok(((void *)0), s);
    i++;
   }
   for (i = 0; i < count; i++) {
@@ -3028,11 +3047,48 @@ void funcEntry(char* format, char* args, char* funcName) {
   }
   free(copy);
  }
+
+
+
+
+ if(strcmp(locals,"") != 0){
+  char s[] = " ";
+  char *token;
+  char *copy = strdup(locals);
+  char* tmp = copy;
+  int count = 1;
+  while (*tmp != '\0') {
+   if (*tmp++ == ' ')
+    count++;
+  }
+  localNames = (char**) malloc(count * sizeof(char*));
+  char** tokens = (char**) malloc(sizeof(char*) * count);
+  token = strtok(copy, s);
+  int i = 0;
+  while (token != ((void *)0)) {
+   *(tokens + i) = token;
+   token = strtok(((void *)0), s);
+   i++;
+  }
+  for (i = 0; i < count; i++) {
+   char* tmp = (char*)malloc(50*sizeof(char));
+   strcpy(tmp, *(tokens + i));
+   localNames[localSize++] = tmp;
+   populateSTableWithLocals(tmp);
+
+  }
+  free(copy);
+ }
+
+
+
  funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
  fv->vars = varNames;
  fv->noOfVars = size;
  strcpy(fv->funcName,funcName);
- fv->occurence = getOccurence(funcName)+1;
+ fv->noOfLocals = localSize;
+ fv->locals = localNames;
+ fv->occurence = currentOccurence+1;
 
  if(stackInitFlag){
   stackPush(symStack, (&fv));
@@ -3042,16 +3098,12 @@ void funcEntry(char* format, char* args, char* funcName) {
   stackPush(symStack, (&fv));
   stackInitFlag=1;
  }
+ localSize = 0;
  size=0;
      i=0;
  printf("Stack depth %d\n", stackSize(symStack));
 }
 
-
-void symAssignFunctionReturn(char* varname){
- deleteEntryUsingVar(varname);
- add_entryToSTable(varname,ret_SymValue,ret_ConValue,ret_ConValue,1);
-}
 
 void funcExit(){
 
@@ -3061,7 +3113,13 @@ void funcExit(){
     int j;
     for(j=0; j < fv->noOfVars; j++){
      deleteEntryUsingVar(fv->vars[j]);
+     deleteEntryUsingVar(get_vnameHash(fv->vars[j]));
      del_vnameHash(fv->vars[j]);
+    }
+    int k;
+    for(k=0; k < fv->noOfLocals; k++){
+     deleteEntryUsingVar(get_vnameHash(fv->locals[k]));
+     del_vnameHash(fv->locals[k]);
     }
 
     printf("Stack depth %d\n", stackSize(symStack));
@@ -3135,6 +3193,21 @@ struct field_values *addNewFields(char *sname, void *val, void *address, int typ
   t->type = type;
 
   return t;
+}
+
+void createEmptyEntryInSTable(char *vname) {
+  struct sym_table *s;
+
+  do { unsigned _hf_bkt,_hf_hashv; s=((void *)0); if (stable) { do { unsigned _hj_i,_hj_j,_hj_k; unsigned char *_hj_key=(unsigned char*)(vname); _hf_hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = (unsigned)(strlen(vname)); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); _hf_hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } _hf_hashv += strlen(vname); switch ( _hj_k ) { case 11: _hf_hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: _hf_hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: _hf_hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hf_bkt = _hf_hashv & ((stable)->hh.tbl->num_buckets-1); } while(0); if ((1)) { do { if ((stable)->hh.tbl->buckets[ _hf_bkt ].hh_head) do { (s) = (__typeof(s))(((void*)(((char*)((stable)->hh.tbl->buckets[ _hf_bkt ].hh_head)) - (((stable)->hh.tbl)->hho)))); } while(0); else s=((void *)0); while (s) { if ((s)->hh.keylen == strlen(vname)) { if ((memcmp((s)->hh.key,vname,strlen(vname))) == 0) break; } if ((s)->hh.hh_next) do { (s) = (__typeof(s))(((void*)(((char*)((s)->hh.hh_next)) - (((stable)->hh.tbl)->hho)))); } while(0); else s = ((void *)0); } } while(0); } } } while (0);
+  if (s == ((void *)0)) {
+    s = (struct sym_table *)malloc(sizeof(struct sym_table));
+    s->vname = (char *)calloc((strlen(vname) + 1), sizeof(char));
+    strcpy(s->vname, vname);
+    do { unsigned _ha_bkt; (s)->hh.next = ((void *)0); (s)->hh.key = (char*)(&((s)->vname[0])); (s)->hh.keylen = (unsigned)(strlen(s->vname)); if (!(stable)) { stable = (s); (stable)->hh.prev = ((void *)0); do { (stable)->hh.tbl = (UT_hash_table*)malloc(sizeof(UT_hash_table)); if (!((stable)->hh.tbl)) { exit(-1); } memset((stable)->hh.tbl, 0, sizeof(UT_hash_table)); (stable)->hh.tbl->tail = &((stable)->hh); (stable)->hh.tbl->num_buckets = 32; (stable)->hh.tbl->log2_num_buckets = 5; (stable)->hh.tbl->hho = (char*)(&(stable)->hh) - (char*)(stable); (stable)->hh.tbl->buckets = (UT_hash_bucket*)malloc(32*sizeof(struct UT_hash_bucket)); if (! (stable)->hh.tbl->buckets) { exit(-1); } memset((stable)->hh.tbl->buckets, 0, 32*sizeof(struct UT_hash_bucket)); ; (stable)->hh.tbl->signature = 0xa0111fe1; } while(0); } else { (stable)->hh.tbl->tail->next = (s); (s)->hh.prev = ((void*)(((char*)((stable)->hh.tbl->tail)) - (((stable)->hh.tbl)->hho))); (stable)->hh.tbl->tail = &((s)->hh); } (stable)->hh.tbl->num_items++; (s)->hh.tbl = (stable)->hh.tbl; do { unsigned _hj_i,_hj_j,_hj_k; unsigned char *_hj_key=(unsigned char*)(&((s)->vname[0])); (s)->hh.hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = (unsigned)(strlen(s->vname)); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); (s)->hh.hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 13 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 12 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 3 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } (s)->hh.hashv += strlen(s->vname); switch ( _hj_k ) { case 11: (s)->hh.hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: (s)->hh.hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: (s)->hh.hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 13 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 12 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 3 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _ha_bkt = (s)->hh.hashv & ((stable)->hh.tbl->num_buckets-1); } while(0); do { (stable)->hh.tbl->buckets[_ha_bkt].count++; (&(s)->hh)->hh_next = (stable)->hh.tbl->buckets[_ha_bkt].hh_head; (&(s)->hh)->hh_prev = ((void *)0); if ((stable)->hh.tbl->buckets[_ha_bkt].hh_head) { ((stable)->hh.tbl->buckets[_ha_bkt]).hh_head->hh_prev = (&(s)->hh); } ((stable)->hh.tbl->buckets[_ha_bkt]).hh_head=&(s)->hh; if ((stable)->hh.tbl->buckets[_ha_bkt].count >= (((stable)->hh.tbl->buckets[_ha_bkt].expand_mult+1) * 10) && (&(s)->hh)->tbl->noexpand != 1) { do { unsigned _he_bkt; unsigned _he_bkt_i; struct UT_hash_handle *_he_thh, *_he_hh_nxt; UT_hash_bucket *_he_new_buckets, *_he_newbkt; _he_new_buckets = (UT_hash_bucket*)malloc(2 * (&(s)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); if (!_he_new_buckets) { exit(-1); } memset(_he_new_buckets, 0, 2 * (&(s)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); (&(s)->hh)->tbl->ideal_chain_maxlen = ((&(s)->hh)->tbl->num_items >> ((&(s)->hh)->tbl->log2_num_buckets+1)) + (((&(s)->hh)->tbl->num_items & (((&(s)->hh)->tbl->num_buckets*2)-1)) ? 1 : 0); (&(s)->hh)->tbl->nonideal_items = 0; for(_he_bkt_i = 0; _he_bkt_i < (&(s)->hh)->tbl->num_buckets; _he_bkt_i++) { _he_thh = (&(s)->hh)->tbl->buckets[ _he_bkt_i ].hh_head; while (_he_thh) { _he_hh_nxt = _he_thh->hh_next; do { _he_bkt = ((_he_thh->hashv) & (((&(s)->hh)->tbl->num_buckets*2) - 1)); } while(0); _he_newbkt = &(_he_new_buckets[ _he_bkt ]); if (++(_he_newbkt->count) > (&(s)->hh)->tbl->ideal_chain_maxlen) { (&(s)->hh)->tbl->nonideal_items++; _he_newbkt->expand_mult = _he_newbkt->count / (&(s)->hh)->tbl->ideal_chain_maxlen; } _he_thh->hh_prev = ((void *)0); _he_thh->hh_next = _he_newbkt->hh_head; if (_he_newbkt->hh_head) _he_newbkt->hh_head->hh_prev = _he_thh; _he_newbkt->hh_head = _he_thh; _he_thh = _he_hh_nxt; } } free((&(s)->hh)->tbl->buckets); (&(s)->hh)->tbl->num_buckets *= 2; (&(s)->hh)->tbl->log2_num_buckets++; (&(s)->hh)->tbl->buckets = _he_new_buckets; (&(s)->hh)->tbl->ineff_expands = ((&(s)->hh)->tbl->nonideal_items > ((&(s)->hh)->tbl->num_items >> 1)) ? ((&(s)->hh)->tbl->ineff_expands+1) : 0; if ((&(s)->hh)->tbl->ineff_expands > 1) { (&(s)->hh)->tbl->noexpand=1; ; } ; } while(0); } } while(0); ; ; ; } while(0);
+
+
+}
+
 }
 
 void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
@@ -3431,7 +3504,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       else{
         symName = find_symVal(vname_occ);
       }
-
+      printf("%s ",symName);
       if (symName != ((void *)0)) {
         if (strcmp(symName, "Constant") == 0) {
 
@@ -3458,8 +3531,13 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   strcat(result, "\0");
 
 
-
-  add_entryToSTable(lhs, result, val, address, type);
+  char* lhs_vn = get_vnameHash(lhs);
+  if (lhs_vn != ((void *)0)){
+   add_entryToSTable(lhs_vn, result, val, address, type);
+  }
+  else{
+   add_entryToSTable(lhs, result, val, address, type);
+  }
   delete_allVariableTableEntry();
 }
 

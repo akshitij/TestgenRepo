@@ -4668,7 +4668,7 @@ void populateSTable(funcArg *a )
   return;
 }
 }
-void funcEntry(char *format , char *args , char *funcName ) 
+void funcEntry(char *format , char *args , char *locals , char *funcName ) 
 { 
   int size ;
   void *tmp ;
@@ -14631,6 +14631,7 @@ int fact(int fact_n )
     handleAssignmentSymbolically("fact___cil_tmp5", "(- fact_n 1)", & fact___cil_tmp5,
                                  & fact___cil_tmp5, 1);
     funcEntry("(type,formals,actuals,CorV)", "(int,fact_n,variable,fact___cil_tmp5)",
+              "fact_tmp fact___cil_tmp3 fact___cil_tmp4 fact___cil_tmp5 symName addr in",
               "fact");
     fact_tmp = fact(fact___cil_tmp5);
     add_entryToSTable("fact_tmp", ret_SymValue, ret_ConValue, & fact_tmp, 1);
@@ -14700,9 +14701,10 @@ int main1(int a )
   {
   __cil_tmp7 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("factRec_main1_1433608208.tc", __cil_tmp7);
+  printTestCase("factRec_main1_1433611751.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,fact_n,variable,a)", "fact");
+  funcEntry("(type,formals,actuals,CorV)", "(int,fact_n,variable,a)", "fact_tmp fact___cil_tmp3 fact___cil_tmp4 fact___cil_tmp5 symName addr in",
+            "fact");
   a = fact(a);
   add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   funcExit();

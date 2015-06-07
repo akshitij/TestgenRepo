@@ -32,7 +32,7 @@ let mkFunTyp (rt : typ) (args : (string * typ) list) : typ =
   
 let initInstFunctions (f : file) : unit =
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
-  let instf_type = mkFunTyp voidType ["format",charPtrType; "args",charPtrType; "funcName", charPtrType] in
+  let instf_type = mkFunTyp voidType ["format",charPtrType; "args",charPtrType; "locals", charPtrType; "funcName", charPtrType] in
   instfuns.funcEntry_instfun <- focf funcEntry_instfun_str instf_type;
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
   let instf_type = mkFunTyp voidType [] in
@@ -77,6 +77,22 @@ let makeSTableEntryFunction () : varinfo =
 let mkstableEntryfxn2 (s1 : string) (e1 : exp) (e2 : exp) (e3 : exp) (t : int) : instr = 
   let i: varinfo = makeSTableEntryFunction () in 
   Call(None, v2e i, [mkString s1; e1; e2; e3; integer t] , locUnknown)
+
+
+let getLocalVarString (f : file) (funcName : string) : string = 
+  let str = ref "" in
+  List.iter ( fun g ->
+  		match g with
+  		|GFun(fd,loc) ->
+  		  if fd.svar.vname = funcName then
+  		    List.iter (fun var ->
+  			        if ((var.vname <> "symName") && (var.vname <> "in") && (var.vname <> "addr"))
+  			          str := !str ^ var.vname ^ " "
+  			      ) fd.slocals
+  		| _ -> ()
+  ) f.globals;
+  let localVarString = String.trim !str in
+  localVarString
 
 let rec analysisHelper (a : (string * typ * attributes) list) : (string * string) list  =
   match a with
@@ -138,14 +154,14 @@ let genArgString (explist : exp list) : (string * string) list =
 	    explist;
   !argActual
 
-class entryEntryVisitorClass (fdec : fundec) = object (self)
+class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
   inherit nopCilVisitor                        
   method vinst (i : instr) = begin
       match i with
       
       | Call (lv,f,expList,loc) -> 
          let fnam = Pretty.sprint max_int (d_exp () f) in
-	   if (List.mem fnam !Param.func_list && fnam <> !Param.func && (List.length expList) > 0) then begin 
+	   if (List.mem fnam !Param.func_list && fnam <> !Param.func(* && (List.length expList) > 0*)) then begin 
 	     let (formals,funcName),actuals = (analyse f), (genArgString expList) in
 	                        let str = ref "" in begin
 	                            if (List.length formals) == (List.length actuals) then begin
@@ -155,10 +171,12 @@ class entryEntryVisitorClass (fdec : fundec) = object (self)
 	                        		    str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ") ")
 	                        		   formals actuals
 	                              end;
-	                            let f = "(type,formals,actuals,CorV)" in
+	                            let f = "(type,formals,actuals,CorV)" in 
 	                            let p = String.trim !str in
-	                            let func = funcName in begin
-	                        	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ([constS2e f] @ [constS2e p] @ [constS2e func]) loc in
+	                            let func = funcName in
+	                            let localVars = (getLocalVarString fl func) in
+	                            begin
+	                        	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ([constS2e f] @ [constS2e p] @ [constS2e localVars] @ [constS2e func]) loc in
 	                        		ChangeTo [instrumentEntryFunc;i]	
 	                              end
 	                          end;
@@ -225,7 +243,7 @@ let entryExit (f : file) : unit =
 	          let entryExitVisitor = new entryExitVisitorClass fd in
        		  ignore (visitCilFunction entryExitVisitor fd);
        		  
-       		  let entryEntryVisitor = new entryEntryVisitorClass fd in
+       		  let entryEntryVisitor = (new entryEntryVisitorClass f fd) in
        		  ignore (visitCilFunction entryEntryVisitor fd)
 	       
 	       end

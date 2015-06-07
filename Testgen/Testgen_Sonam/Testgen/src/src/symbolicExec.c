@@ -50,6 +50,21 @@ struct field_values *addNewFields(char *sname, void *val, void *address, int typ
   return t;
 }
 
+void createEmptyEntryInSTable(char *vname) {
+  struct sym_table *s;
+
+  HASH_FIND_STR(stable, vname, s);
+  if (s == NULL) {
+    s = (struct sym_table *)malloc(sizeof(struct sym_table));
+    s->vname = (char *)calloc((strlen(vname) + 1), sizeof(char));
+    strcpy(s->vname, vname);
+    HASH_ADD_STR(stable, vname, s);
+
+
+}
+  //s->fval = addNewFields(sname, val, address, type);
+}
+
 void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
   struct sym_table *s;
 
@@ -344,7 +359,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       else{
         symName = find_symVal(vname_occ);
       }
-
+      printf("%s ",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
           //This will return same value for all Constant variables ....see example constantFunc.c
@@ -371,8 +386,13 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   strcat(result, "\0");
 
   //printf("result=%s\n",result);
-
-  add_entryToSTable(lhs, result, val, address, type);
+  char* lhs_vn = get_vnameHash(lhs);
+  if (lhs_vn != NULL){
+  	add_entryToSTable(lhs_vn, result, val, address, type);
+  }
+  else{
+  	add_entryToSTable(lhs, result, val, address, type);
+  }
   delete_allVariableTableEntry();
 }
 

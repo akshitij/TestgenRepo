@@ -2298,6 +2298,7 @@ extern int programFlag = 0;
 extern void* ret_ConValue = ((void *)0);
 extern char* ret_SymValue = ((void *)0);
 
+
 typedef struct functionArgument{
      char funcName[100];
      int type;
@@ -2309,7 +2310,9 @@ typedef struct functionArgument{
 
 typedef struct {
     char** vars;
+    char** locals;
     int noOfVars;
+    int noOfLocals;
     char funcName[100];
     int occurence;
 }funcVars;
@@ -2325,6 +2328,8 @@ int stackInitFlag = 0;
 void *symStack = ((void *)0);
 int i=0;
 char** varNames = ((void *)0);
+char** localNames = ((void *)0);
+int currentOccurence = -1;
 
 void add_vnameHash(char* key, char* value) {
     vnameHash* v;
@@ -2473,7 +2478,7 @@ int getOccurence(char* funcName){
 void populateSTable(funcArg* a){
 
  char tmp[5];
- sprintf(tmp, "_%d", getOccurence(a->funcName));
+ sprintf(tmp, "_%d", currentOccurence);
  char key[55];
  strcpy(key,a->vname);
  strcat(key,tmp);
@@ -2498,14 +2503,27 @@ void populateSTable(funcArg* a){
  add_vnameHash(a->vname, key);
 }
 
+void populateSTableWithLocals(char *localVarName){
+ char tmp[5];
+ sprintf(tmp, "_%d", currentOccurence);
+ char key[55];
+ strcpy(key,localVarName);
+ strcat(key,tmp);
+ createEmptyEntryInSTable(key);
+ add_vnameHash(localVarName,key);
+}
 
-void funcEntry(char* format, char* args, char* funcName) {
+void funcEntry(char* format, char* args, char* locals, char* funcName) {
  printf("funcEntry: %s \"%s\" \n", funcName, args);
- int size=0;
- varNames = (char**) malloc(10 * sizeof(char*));
+ int size=0,localSize = 0;
+ currentOccurence = getOccurence(funcName);
+
+
+
+
  if(strcmp(args,"") != 0){
   char s[] = " ";
-  char *token;
+  char *token2;
   char *copy = strdup(args);
   char* tmp = copy;
   int count = 1;
@@ -2513,12 +2531,13 @@ void funcEntry(char* format, char* args, char* funcName) {
    if (*tmp++ == ' ')
     count++;
   }
+  varNames = (char**) malloc(count * sizeof(char*));
   char** tokens = (char**) malloc(sizeof(char*) * count);
-  token = strtok(copy, s);
+  token2 = strtok(copy, s);
   int i = 0;
-  while (token != ((void *)0)) {
-   *(tokens + i) = token;
-   token = strtok(((void *)0), s);
+  while (token2 != ((void *)0)) {
+   *(tokens + i) = token2;
+   token2 = strtok(((void *)0), s);
    i++;
   }
   for (i = 0; i < count; i++) {
@@ -2528,11 +2547,48 @@ void funcEntry(char* format, char* args, char* funcName) {
   }
   free(copy);
  }
+
+
+
+
+ if(strcmp(locals,"") != 0){
+  char s[] = " ";
+  char *token;
+  char *copy = strdup(locals);
+  char* tmp = copy;
+  int count = 1;
+  while (*tmp != '\0') {
+   if (*tmp++ == ' ')
+    count++;
+  }
+  localNames = (char**) malloc(count * sizeof(char*));
+  char** tokens = (char**) malloc(sizeof(char*) * count);
+  token = strtok(copy, s);
+  int i = 0;
+  while (token != ((void *)0)) {
+   *(tokens + i) = token;
+   token = strtok(((void *)0), s);
+   i++;
+  }
+  for (i = 0; i < count; i++) {
+   char* tmp = (char*)malloc(50*sizeof(char));
+   strcpy(tmp, *(tokens + i));
+   localNames[localSize++] = tmp;
+   populateSTableWithLocals(tmp);
+
+  }
+  free(copy);
+ }
+
+
+
  funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
  fv->vars = varNames;
  fv->noOfVars = size;
  strcpy(fv->funcName,funcName);
- fv->occurence = getOccurence(funcName)+1;
+ fv->noOfLocals = localSize;
+ fv->locals = localNames;
+ fv->occurence = currentOccurence+1;
 
  if(stackInitFlag){
   stackPush(symStack, (&fv));
@@ -2542,16 +2598,12 @@ void funcEntry(char* format, char* args, char* funcName) {
   stackPush(symStack, (&fv));
   stackInitFlag=1;
  }
+ localSize = 0;
  size=0;
      i=0;
  printf("Stack depth %d\n", stackSize(symStack));
 }
 
-
-void symAssignFunctionReturn(char* varname){
- deleteEntryUsingVar(varname);
- add_entryToSTable(varname,ret_SymValue,ret_ConValue,ret_ConValue,1);
-}
 
 void funcExit(){
 
@@ -2561,7 +2613,13 @@ void funcExit(){
     int j;
     for(j=0; j < fv->noOfVars; j++){
      deleteEntryUsingVar(fv->vars[j]);
+     deleteEntryUsingVar(get_vnameHash(fv->vars[j]));
      del_vnameHash(fv->vars[j]);
+    }
+    int k;
+    for(k=0; k < fv->noOfLocals; k++){
+     deleteEntryUsingVar(get_vnameHash(fv->locals[k]));
+     del_vnameHash(fv->locals[k]);
     }
 
     printf("Stack depth %d\n", stackSize(symStack));
