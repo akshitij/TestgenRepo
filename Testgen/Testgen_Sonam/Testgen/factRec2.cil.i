@@ -1,9 +1,9 @@
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./factRec2.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./factRec2.cil.c"
 
 
 
@@ -15253,39 +15253,47 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./sixTimesFunc.i","-g,-g")
+#pragma merger("0","./factRec2.i","-g,-g")
 extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-int inc(int inc_x )
+int fact(int fact_x )
 {
+  int fact_tmp ;
+  int fact___cil_tmp3 ;
+  int fact___cil_tmp4 ;
+  int fact___cil_tmp5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  inc_x ++;
-  handleAssignmentSymbolically("inc_x", "(+ inc_x 1)", & inc_x, & inc_x, 1);
-  {
-  mapConcolicValues("inc_x", "variable");
-  return (inc_x);
-  }
-}
-}
-int mult(int mult_y )
-{
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  mult_y = 6 * mult_y;
-  handleAssignmentSymbolically("mult_y", "(* 6 mult_y)", & mult_y, & mult_y, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,inc_x,variable,mult_y)", "", "inc");
-  mult_y = inc(mult_y);
-  funcExit();
-  add_entryToSTable("mult_y", ret_SymValue, ret_ConValue, & mult_y, 1);
-  {
-  mapConcolicValues("mult_y", "variable");
-  return (mult_y);
+  if (fact_x <= 1) {
+    {
+    fact___cil_tmp3 = 1;
+    add_entryToSTable("fact___cil_tmp3", "Constant", & fact___cil_tmp3, & fact___cil_tmp3,
+                      1);
+    {
+    mapConcolicValues("fact___cil_tmp3", "variable");
+    return (fact___cil_tmp3);
+    }
+    }
+  } else {
+    fact___cil_tmp5 = fact_x - 1;
+    handleAssignmentSymbolically("fact___cil_tmp5", "(- fact_x 1)", & fact___cil_tmp5,
+                                 & fact___cil_tmp5, 1);
+    funcEntry("(type,formals,actuals,CorV)", "(int,fact_x,variable,fact___cil_tmp5)",
+              "fact_tmp fact___cil_tmp3 fact___cil_tmp4 fact___cil_tmp5", "fact");
+    fact_tmp = fact(fact___cil_tmp5);
+    funcExit();
+    add_entryToSTable("fact_tmp", ret_SymValue, ret_ConValue, & fact_tmp, 1);
+    {
+    fact___cil_tmp4 = fact_x * fact_tmp;
+    handleAssignmentSymbolically("fact___cil_tmp4", "(* fact_x fact_tmp)", & fact___cil_tmp4,
+                                 & fact___cil_tmp4, 1);
+    {
+    mapConcolicValues("fact___cil_tmp4", "variable");
+    return (fact___cil_tmp4);
+    }
+    }
   }
 }
 }
@@ -15296,15 +15304,21 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(6, 0, 1);
-  setArray(6, "(= a 31)");
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(8, 6, 0);
-  addtoCDGnode(9, 0, 1);
-  addtoCDGnode(9, 0, 1);
   addtoCDGnode(10, 0, 1);
-  addtoCDGnode(11, 0, 1);
+  setArray(10, "(<= a 3)");
+  addtoCDGnode(11, 10, 1);
   addtoCDGnode(12, 0, 1);
+  setArray(12, "(> a 5)");
+  addtoCDGnode(12, 0, 1);
+  setArray(12, "(> a 5)");
+  addtoCDGnode(13, 12, 1);
+  addtoCDGnode(14, 12, 0);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(16, 0, 1);
+  addtoCDGnode(17, 0, 1);
+  addtoCDGnode(18, 0, 1);
+  addtoCDGnode(19, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15320,7 +15334,8 @@ void createSidTable(void)
 
 
   {
-  add_condition(6, "(= a 31)", "(not (= a 31))", 0, 0);
+  add_condition(10, "(<= a 3)", "(not (<= a 3))", 0, 0);
+  add_condition(12, "(> a 5)", "(not (> a 5))", 0, 0);
 }
 }
 struct arguments {
@@ -15330,65 +15345,89 @@ struct arguments argvar ;
 int main1(int a )
 {
   int b ;
-  int __cil_tmp3 ;
+  int c ;
+  int __cil_tmp4 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp6 ;
-  char *__cil_tmp7 ;
+  int __cil_tmp7 ;
+  char *__cil_tmp8 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp7 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1433699151.tc", __cil_tmp7);
+  __cil_tmp8 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp8, "\t%d\n", a);
+  printTestCase("factRec2_main1_1433767694.tc", __cil_tmp8);
   add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,mult_y,variable,a)", "", "mult");
-  a = mult(a);
-  funcExit();
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
+  b = 3;
+  add_entryToSTable("b", "Constant", & b, & b, 1);
   {
-  exp_outcome = a == 31;
-  handleAssignmentSymbolically("exp_outcome", "(= a 31)", & exp_outcome, & exp_outcome,
+  exp_outcome = a <= 3;
+  handleAssignmentSymbolically("exp_outcome", "(<= a 3)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(6, 1, 0);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 1);
+    setBranchInfo(10, 1, 0);
+    setTrueExpr(10, "(<= a 3)");
+    setFalseExpr(10, "(not (<= a 3))");
+    addToTree(10, 1, "(<= a 3)", "(not (<= a 3))", 0, 1);
     delete_allVariableTableEntry();
-    b = 1;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    funcEntry("(type,formals,actuals,CorV)", "(int,fact_x,variable,a)", "fact_tmp fact___cil_tmp3 fact___cil_tmp4 fact___cil_tmp5",
+              "fact");
+    a = fact(a);
+    funcExit();
+    add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   } else {
-    setBranchInfo(6, 0, 1);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 0);
+    setBranchInfo(10, 0, 1);
+    setTrueExpr(10, "(<= a 3)");
+    setFalseExpr(10, "(not (<= a 3))");
+    addToTree(10, 1, "(<= a 3)", "(not (<= a 3))", 0, 0);
     delete_allVariableTableEntry();
-    b = 2;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
   }
   }
   {
-  __cil_tmp3 = 0;
-  add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
-  __cil_tmp6 = isNotQueueEmpty();
-  if (__cil_tmp6) {
+  exp_outcome = a > 5;
+  handleAssignmentSymbolically("exp_outcome", "(> a 5)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(12, 1, 0);
+    setTrueExpr(12, "(> a 5)");
+    setFalseExpr(12, "(not (> a 5))");
+    addToTree(12, 1, "(> a 5)", "(not (> a 5))", 0, 1);
+    delete_allVariableTableEntry();
+    c = 1;
+    add_entryToSTable("c", "Constant", & c, & c, 1);
+  } else {
+    setBranchInfo(12, 0, 1);
+    setTrueExpr(12, "(> a 5)");
+    setFalseExpr(12, "(not (> a 5))");
+    addToTree(12, 1, "(> a 5)", "(not (> a 5))", 0, 0);
+    delete_allVariableTableEntry();
+    c = -1;
+    add_entryToSTable("c", "Constant", & c, & c, 1);
+  }
+  }
+  printf((char const * __restrict )"%d\n", c);
+  {
+  __cil_tmp4 = 0;
+  add_entryToSTable("__cil_tmp4", "Constant", & __cil_tmp4, & __cil_tmp4, 1);
+  __cil_tmp7 = isNotQueueEmpty();
+  if (__cil_tmp7) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
     main1(a);
   } else {
-    __cil_tmp6 = startCDG();
-    if (__cil_tmp6) {
-      __cil_tmp6 = getTestCases();
+    __cil_tmp7 = startCDG();
+    if (__cil_tmp7) {
+      __cil_tmp7 = getTestCases();
       main1(a);
     }
   }
-  return (__cil_tmp3);
+  return (__cil_tmp4);
   }
 }
 }

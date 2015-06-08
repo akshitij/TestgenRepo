@@ -4664,7 +4664,7 @@ void populateSTable(funcArg *a )
       }
     }
     add_entryToSTable(key, sym, val, val, a->type);
-    printf((char const   * __restrict  )"%s %s\n", key, sym);
+    printf((char const   * __restrict  )"%s %s %d\n", key, sym, *((int *)val));
   }
   add_vnameHash(a->vname, key);
   return;
@@ -6637,9 +6637,17 @@ char *find_symVal(char *key )
 void *find_conVal(char *key ) 
 { 
   struct field_values *fv ;
+  char *hash_vn ;
+  char *tmp ;
 
   {
-  fv = find_fieldValue(key);
+  tmp = get_vnameHash(key);
+  hash_vn = tmp;
+  if ((unsigned long )hash_vn != (unsigned long )((void *)0)) {
+    fv = find_fieldValue(hash_vn);
+  } else {
+    fv = find_fieldValue(key);
+  }
   return (fv->cval);
 }
 }
@@ -15422,7 +15430,7 @@ void heapify(int *a , int n )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp10, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
           n);
-  printTestCase("heapSort_heapify_1433685954.tc", __cil_tmp10);
+  printTestCase("heapSort_heapify_1433711311.tc", __cil_tmp10);
   add_entryToSTable("n", "s1", & n, & n, 1);
   add_entryToArraySTable("a", 0, "a_0", a, a, 1);
   k = 1;

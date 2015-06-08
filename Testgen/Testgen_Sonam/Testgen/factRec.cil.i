@@ -15357,7 +15357,7 @@ int main1(int a )
   {
   __cil_tmp8 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp8, "\t%d\n", a);
-  printTestCase("factRec_main1_1433698570.tc", __cil_tmp8);
+  printTestCase("factRec_main1_1433767508.tc", __cil_tmp8);
   add_entryToSTable("a", "s0", & a, & a, 1);
   b = 3;
   add_entryToSTable("b", "Constant", & b, & b, 1);

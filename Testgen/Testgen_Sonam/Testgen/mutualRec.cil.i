@@ -1,9 +1,9 @@
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./mutualRec.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./mutualRec.cil.c"
 
 
 
@@ -15253,39 +15253,155 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./sixTimesFunc.i","-g,-g")
+#pragma merger("0","./mutualRec.i","-g,-g")
 extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-int inc(int inc_x )
+int fib(int fib_i___0 )
 {
+  int fib_tmp ;
+  int fib_tmp___0 ;
+  int fib___cil_tmp4 ;
+  int fib___cil_tmp5 ;
+  int fib___cil_tmp6 ;
+  int fib___cil_tmp7 ;
+  int fib___cil_tmp8 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  inc_x ++;
-  handleAssignmentSymbolically("inc_x", "(+ inc_x 1)", & inc_x, & inc_x, 1);
+  if (fib_i___0 == 0) {
+    {
+    fib___cil_tmp4 = 1;
+    add_entryToSTable("fib___cil_tmp4", "Constant", & fib___cil_tmp4, & fib___cil_tmp4,
+                      1);
+    {
+    mapConcolicValues("fib___cil_tmp4", "variable");
+    return (fib___cil_tmp4);
+    }
+    }
+  }
+  if (fib_i___0 == 1) {
+    {
+    fib___cil_tmp5 = 1;
+    add_entryToSTable("fib___cil_tmp5", "Constant", & fib___cil_tmp5, & fib___cil_tmp5,
+                      1);
+    {
+    mapConcolicValues("fib___cil_tmp5", "variable");
+    return (fib___cil_tmp5);
+    }
+    }
+  }
+  fib___cil_tmp7 = fib_i___0 - 1;
+  handleAssignmentSymbolically("fib___cil_tmp7", "(- fib_i___0 1)", & fib___cil_tmp7,
+                               & fib___cil_tmp7, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,fib_i___0,variable,fib___cil_tmp7)",
+            "fib_tmp fib_tmp___0 fib___cil_tmp4 fib___cil_tmp5 fib___cil_tmp6 fib___cil_tmp7 fib___cil_tmp8",
+            "fib");
+  fib_tmp = fib(fib___cil_tmp7);
+  funcExit();
+  add_entryToSTable("fib_tmp", ret_SymValue, ret_ConValue, & fib_tmp, 1);
+  fib___cil_tmp8 = fib_i___0 - 2;
+  handleAssignmentSymbolically("fib___cil_tmp8", "(- fib_i___0 2)", & fib___cil_tmp8,
+                               & fib___cil_tmp8, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,fib_i___0,variable,fib___cil_tmp8)",
+            "fib_tmp fib_tmp___0 fib___cil_tmp4 fib___cil_tmp5 fib___cil_tmp6 fib___cil_tmp7 fib___cil_tmp8",
+            "fib");
+  fib_tmp___0 = fib(fib___cil_tmp8);
+  funcExit();
+  add_entryToSTable("fib_tmp___0", ret_SymValue, ret_ConValue, & fib_tmp___0, 1);
   {
-  mapConcolicValues("inc_x", "variable");
-  return (inc_x);
+  fib___cil_tmp6 = fib_tmp + fib_tmp___0;
+  handleAssignmentSymbolically("fib___cil_tmp6", "(+ fib_tmp fib_tmp___0)", & fib___cil_tmp6,
+                               & fib___cil_tmp6, 1);
+  {
+  mapConcolicValues("fib___cil_tmp6", "variable");
+  return (fib___cil_tmp6);
+  }
   }
 }
 }
-int mult(int mult_y )
+int anka(int anka_j ) ;
+int kalle(int kalle_i___0 )
 {
+  int kalle_tmp ;
+  int kalle___cil_tmp3 ;
+  int kalle___cil_tmp4 ;
+  int kalle___cil_tmp5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  mult_y = 6 * mult_y;
-  handleAssignmentSymbolically("mult_y", "(* 6 mult_y)", & mult_y, & mult_y, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,inc_x,variable,mult_y)", "", "inc");
-  mult_y = inc(mult_y);
-  funcExit();
-  add_entryToSTable("mult_y", ret_SymValue, ret_ConValue, & mult_y, 1);
+  if (kalle_i___0 <= 0) {
+    {
+    kalle___cil_tmp3 = 0;
+    add_entryToSTable("kalle___cil_tmp3", "Constant", & kalle___cil_tmp3, & kalle___cil_tmp3,
+                      1);
+    {
+    mapConcolicValues("kalle___cil_tmp3", "variable");
+    return (kalle___cil_tmp3);
+    }
+    }
+  } else {
+    kalle___cil_tmp5 = kalle_i___0 - 1;
+    handleAssignmentSymbolically("kalle___cil_tmp5", "(- kalle_i___0 1)", & kalle___cil_tmp5,
+                                 & kalle___cil_tmp5, 1);
+    funcEntry("(type,formals,actuals,CorV)", "(int,anka_j,variable,kalle___cil_tmp5)",
+              "anka_tmp anka___cil_tmp3 anka___cil_tmp4 anka___cil_tmp5", "anka");
+    kalle_tmp = anka(kalle___cil_tmp5);
+    funcExit();
+    add_entryToSTable("kalle_tmp", ret_SymValue, ret_ConValue, & kalle_tmp, 1);
+    {
+    kalle___cil_tmp4 = kalle_i___0 + kalle_tmp;
+    handleAssignmentSymbolically("kalle___cil_tmp4", "(+ kalle_i___0 kalle_tmp)",
+                                 & kalle___cil_tmp4, & kalle___cil_tmp4, 1);
+    {
+    mapConcolicValues("kalle___cil_tmp4", "variable");
+    return (kalle___cil_tmp4);
+    }
+    }
+  }
+}
+}
+int anka(int anka_j )
+{
+  int anka_tmp ;
+  int anka___cil_tmp3 ;
+  int anka___cil_tmp4 ;
+  int anka___cil_tmp5 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
   {
-  mapConcolicValues("mult_y", "variable");
-  return (mult_y);
+  if (anka_j <= 0) {
+    {
+    anka___cil_tmp3 = 1;
+    add_entryToSTable("anka___cil_tmp3", "Constant", & anka___cil_tmp3, & anka___cil_tmp3,
+                      1);
+    {
+    mapConcolicValues("anka___cil_tmp3", "variable");
+    return (anka___cil_tmp3);
+    }
+    }
+  } else {
+    anka___cil_tmp5 = anka_j - 1;
+    handleAssignmentSymbolically("anka___cil_tmp5", "(- anka_j 1)", & anka___cil_tmp5,
+                                 & anka___cil_tmp5, 1);
+    funcEntry("(type,formals,actuals,CorV)", "(int,kalle_i___0,variable,anka___cil_tmp5)",
+              "kalle_tmp kalle___cil_tmp3 kalle___cil_tmp4 kalle___cil_tmp5", "kalle");
+    anka_tmp = kalle(anka___cil_tmp5);
+    funcExit();
+    add_entryToSTable("anka_tmp", ret_SymValue, ret_ConValue, & anka_tmp, 1);
+    {
+    anka___cil_tmp4 = anka_j + anka_tmp;
+    handleAssignmentSymbolically("anka___cil_tmp4", "(+ anka_j anka_tmp)", & anka___cil_tmp4,
+                                 & anka___cil_tmp4, 1);
+    {
+    mapConcolicValues("anka___cil_tmp4", "variable");
+    return (anka___cil_tmp4);
+    }
+    }
   }
 }
 }
@@ -15296,15 +15412,15 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(6, 0, 1);
-  setArray(6, "(= a 31)");
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(8, 6, 0);
-  addtoCDGnode(9, 0, 1);
-  addtoCDGnode(9, 0, 1);
-  addtoCDGnode(10, 0, 1);
-  addtoCDGnode(11, 0, 1);
-  addtoCDGnode(12, 0, 1);
+  addtoCDGnode(30, 0, 1);
+  setArray(30, "(> in2 15)");
+  addtoCDGnode(31, 30, 1);
+  addtoCDGnode(32, 30, 0);
+  addtoCDGnode(33, 0, 1);
+  addtoCDGnode(33, 0, 1);
+  addtoCDGnode(34, 0, 1);
+  addtoCDGnode(35, 0, 1);
+  addtoCDGnode(36, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15320,75 +15436,73 @@ void createSidTable(void)
 
 
   {
-  add_condition(6, "(= a 31)", "(not (= a 31))", 0, 0);
+  add_condition(30, "(> in2 15)", "(not (> in2 15))", 0, 0);
 }
 }
 struct arguments {
-   int a ;
+   int in2 ;
 };
 struct arguments argvar ;
-int main1(int a )
+int main1(int in2 )
 {
-  int b ;
-  int __cil_tmp3 ;
+  int __cil_tmp2 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp6 ;
-  char *__cil_tmp7 ;
+  int __cil_tmp5 ;
+  char *__cil_tmp6 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp7 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1433699151.tc", __cil_tmp7);
-  add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,mult_y,variable,a)", "", "mult");
-  a = mult(a);
+  __cil_tmp6 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp6, "\t%d\n", in2);
+  printTestCase("mutualRec_main1_1433798431.tc", __cil_tmp6);
+  add_entryToSTable("in2", "s0", & in2, & in2, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,anka_j,variable,in2)", "anka_tmp anka___cil_tmp3 anka___cil_tmp4 anka___cil_tmp5",
+            "anka");
+  in2 = anka(in2);
   funcExit();
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
+  add_entryToSTable("in2", ret_SymValue, ret_ConValue, & in2, 1);
   {
-  exp_outcome = a == 31;
-  handleAssignmentSymbolically("exp_outcome", "(= a 31)", & exp_outcome, & exp_outcome,
+  exp_outcome = in2 > 15;
+  handleAssignmentSymbolically("exp_outcome", "(> in2 15)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(30, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(6, 1, 0);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 1);
+    setBranchInfo(30, 1, 0);
+    setTrueExpr(30, "(> in2 15)");
+    setFalseExpr(30, "(not (> in2 15))");
+    addToTree(30, 1, "(> in2 15)", "(not (> in2 15))", 0, 1);
     delete_allVariableTableEntry();
-    b = 1;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    printf((char const * __restrict )"%d\n", in2);
   } else {
-    setBranchInfo(6, 0, 1);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 0);
+    setBranchInfo(30, 0, 1);
+    setTrueExpr(30, "(> in2 15)");
+    setFalseExpr(30, "(not (> in2 15))");
+    addToTree(30, 1, "(> in2 15)", "(not (> in2 15))", 0, 0);
     delete_allVariableTableEntry();
-    b = 2;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    printf((char const * __restrict )"%d\n", -1);
   }
   }
   {
-  __cil_tmp3 = 0;
-  add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
-  __cil_tmp6 = isNotQueueEmpty();
-  if (__cil_tmp6) {
+  __cil_tmp2 = 0;
+  add_entryToSTable("__cil_tmp2", "Constant", & __cil_tmp2, & __cil_tmp2, 1);
+  __cil_tmp5 = isNotQueueEmpty();
+  if (__cil_tmp5) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(a);
+    main1(in2);
   } else {
-    __cil_tmp6 = startCDG();
-    if (__cil_tmp6) {
-      __cil_tmp6 = getTestCases();
-      main1(a);
+    __cil_tmp5 = startCDG();
+    if (__cil_tmp5) {
+      __cil_tmp5 = getTestCases();
+      main1(in2);
     }
   }
-  return (__cil_tmp3);
+  return (__cil_tmp2);
   }
 }
 }
@@ -15406,18 +15520,18 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.a);
+  main1(argvar.in2);
 }
 }
 void main(void)
 {
-  int a ;
+  int in2 ;
   int temp ;
   int __cil_tmp2 ;
 
   {
   __cil_tmp2 = rand();
-  argvar.a = __cil_tmp2 % 20;
+  argvar.in2 = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();
