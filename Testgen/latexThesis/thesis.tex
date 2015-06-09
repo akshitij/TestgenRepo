@@ -143,7 +143,7 @@ I appreciate the support of my friends and wingmates who always provided me with
 
 \vspace{1.0 cm}
 
-I also want to express my sincere gratitude to \textit {\textbf {BRNS}} for encouraging our research work. Their unshaken faith in our efforts motivated me to follow through this project.
+I also want to express my sincere gratitude to \textit {\textbf {BRNS}} for encouraging our research work. Their encouragement motivated me to follow through this project.
 
 \begin{flushright}
 \textbf{-Ashwini Kshitij}
@@ -167,19 +167,19 @@ I also want to express my sincere gratitude to \textit {\textbf {BRNS}} for enco
 
 
 \hspace {0.4 cm}
-Symbolic Execution has been a recipient of significant attention during the past few years. It is now considered an effective technique in generation of high coverage test suites. The idea has been discovered around three decades ago but it was after significant improvements the potential of idea is harnessed. One such important improvement was symbolic execution alongside keeping track of concrete values (concolic executic). The main advantage of this technique is that whenever constraint solving complications (like timeouts) occur during classical symbolic execution, it is alleviated using the concrete values.
+Symbolic execution has been a recipient of significant attention during the past few years. It is now considered an effective technique in generation of high coverage test suites. The idea has been discovered around three decades ago but it was after significant improvements the potential of the idea was harnessed. One such important improvement was symbolic execution alongside keeping track of concrete values (concolic execution). The main advantage of this technique is that whenever constraint solving complications (like timeouts) occur during classical symbolic execution, it is alleviated using the concrete values.
 
-More practical programs involve procedure calls. The symbolic execution goes smoothly if there are no function calls involve (\textit{intraprocedural analysis}). A function call tranfers the control from the caller to the callee. That function may very well modify the symbolic state of the variables. If we transition the symbolic state correctly through the function call, the symbolic execution will run correctly with the modified symbolic state.   
+All practical programs involve procedure calls. The symbolic execution is relatively simple if there are no function calls involved (\textit{intraprocedural analysis}). A function call tranfers the control from the caller to the callee. That function may very well modify the symbolic state of the variables. If we transition the symbolic state correctly through the function call, the symbolic execution will run correctly with the modified symbolic state and collect the precise alteration made to symbolic state within the procedure.    
 
 %%----------------------------------------------MOTIVATION
 
 \section{Motivation}
-\textit{Intraprocedural Analysis} is performed at one procedure at a time. It is simple and conservative. But almost all real world programs involve procedural calls. This poses problem for techniques such symbolic execution since they dont know how the procedure is going to modify the symbolic state. This brings us to the need of extending our analysis techniques to prgrams with functions and procedures.
+\textit{Intraprocedural Analysis} is performed on one procedure at a time. It is simple and conservative. But almost all real world programs involve procedural calls. This poses a problem for techniques such symbolic execution since they dont know how the procedure is going to modify the symbolic state. This brings us to the need of extending our analysis techniques to prgrams with functions and procedures.
 
 %%----------------------------------------------PROBLEM STATEMENT
 
 \section{Problem Statement}
-This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the accuracy the tool. 
+This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the precision of test case generation. 
 
 \begin{figure}[htbp]
 \centering
@@ -187,7 +187,7 @@ This thesis aims to provide a method that can capture the transformation of the 
 \caption{Basic Module}
 \end{figure}
 
-\textit{Figure 1.1} shown above gives a vague idea of what our implementation does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the program does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
+\textit{Figure 1.1} shown above gives a high-level idea of what our implementation does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the program does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
 
 We aim at solving this problem by instrumenting the call site. For such purposes in our approach we have used a tool called CIL. We first set up an environment before commencing the callee procedure execution (in this case \textit{foo}). The operations for such tasks is carried out by \textit{funcEntry} function which is instrumented just before \textit{foo} is called. \textit{funcEntry} handles the mapping of symbolic and concolic values of actual parameters to formal parameters, the creation of symbolic stack (later explained in \textit{Chapter 3}).
 
@@ -201,7 +201,7 @@ This approach ensures that symbolic execution is carried through correctly to an
 In this thesis we have accomplished the following:
 \begin{itemize}
   \item Designed an approach to apply inter-procedural analysis to concolic execution. 
-  \item Application of IP analysis to improve the automatic test case generation using concolic testing.
+  \item Application of this technique to improve the automatic test case generation using concolic testing.
   \item Dynamic support to handle recursive procedure calls. 
 \end{itemize}
 
@@ -225,12 +225,12 @@ A brief summary of the contents of other chapters of this thesis are as follows.
 
 %%----------------------------------------------INTERPROCEDURAL DATAFLOW ANALYSIS
 
-\section {Intraprocedural Data-flow Analysis}
+\section {Interprocedural Data-flow Analysis}
 This is a technique which is broadly defined as gathering of information across multiple procedures (typically over the entire program). Procedure call poses barrier to program analysis. Its aim is to avoid making conservative assumpions about the effect of procedures and the state at call sites.
 
-Interprocedural analysis is more demanding and challenging than intraprocedural analysis; here we need to take into account the call-return and parameter passing mechanisms, local variable of the function and function recursion (can be unbounded). In some cases the called procedure is known only in run-time like with function pointers or with virtual functions. 
+Interprocedural analysis is more demanding and challenging than intraprocedural analysis. Here we need to take into account the call-return and parameter passing mechanisms, local variable of the function and function recursion (can be unbounded). In some cases the called procedure is known only in run-time like with function pointers or with virtual functions. 
 
-\textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize across different files (whole-program analysis), and can result in significant performance improvements by removing spurious data dependencies. Integrating IPA with intraprocedural concolic execution will help anticipate the precise behavior of function calls on the symbolic state of the variables.
+\textbf{Application :} Interprocedural analysis (IPA) enables the compiler to optimize the code across different files (whole-program analysis), and can result in significant performance improvements of the program by removing spurious data dependencies. Integrating IPA with intraprocedural concolic execution will help compute the precise behavior of function calls on the symbolic state of the variables.
 
 %%----------------------------------------------FUNCTION INLINING 
 
@@ -245,7 +245,7 @@ One of the approaches is \textit{function inlining} which is the simplest and mo
 
 This technique does not require function calling overhead. It also saves the overhead for manipulating function stack. In increases locality of reference by utilizing instruction cache.
 
-But there are significant \textit{drawbacks} with this approach. Firstly, the performance overhead will increase if the the code size of the inlined function is increased. The caller function may not fit on the cache causing high cache miss rate. Similarly if there are too many function calls involved, inlining maybe expensive since it will cause an exponential increase in the size of the CFG.
+But there are significant \textit{drawbacks} with this approach. Firstly, the performance overhead will increase if we increase the size of the code that is to be inlined. The caller function may not fit on the cache causing high cache miss rate. Similarly if there are too many function calls involved, inlining maybe expensive since it will cause an exponential increase in the size of the CFG.
 
 Secondly it is also going to create problems in the recursive procedures. Same can be said more generally for any scenario where there are cycles in the call graph. So basically function inlining has scalability issues pertaining to code size. Lastly, procedure inlining is only possible if the target of the call is known. Hence it will not be possible if call is via a pointer or is "virtual".
 
@@ -265,7 +265,7 @@ Using this method non-deterministically will allow non feasible paths in our ana
 \caption{Example : Call String}
 \end{figure}  
  
-Every procedure records their state information when they are invoked. Let us consider the program in \textit{Figure 2.2}. Here the labels \textit{c1} and \textit{c2} are saved in the state information of \textit{foo}. This is so that \textit{p} gets differentiating values every time function \textit{foo} is called. Another reason to save the labels is because they help in figuring out the respective return values of call \textit{c1} (\$\$ $\rightarrow$ 4) and \textit{c2}(\$\$ $\rightarrow$ 6).
+Every procedure records their state information when they are invoked. Let us consider the program in \textit{Figure 2.2}. Here the labels \textit{c1} and \textit{c2} are saved in the state information of \textit{foo}. This is so that \textit{p} gets different values every time function \textit{foo} is called. Another reason to save the labels is because they help in figuring out the respective return values of call \textit{c1} (\$\$ $\rightarrow$ 4) and \textit{c2}(\$\$ $\rightarrow$ 6).
 
 Implementing this algorithm is efficient for small strings. Problem arises when call string generated is large since we can keep track of only limited number of strings. This poses a limitation on the depth of function calls.
 
@@ -276,7 +276,7 @@ Implementing this algorithm is efficient for small strings. Problem arises when 
 
 One popular approach for automated software testing is \textit{random testing} which involves subjecting the program to be tested to a stream of random data. It is fast but it can find only basic bugs like program crashes, code assertions or memory leaks. But it is not always possible to employ this technique specially when working with binaries since it is very difficult to figure out the expected inputs. The code coverage generated by random data is very low.\\
 
-A more deliberate approach can be used by merging symbolic execution with concrete execution (\textit{concolic execution}) and then using a an SMT-solver (like Z3) to generate test inputs. This method is called \textit{Concolic testing}. It is much more efficient than symbolic execution. To understand why let us assume that our costraint solver cannot handle non-linear constraint. Then a path constraint with \textit{cubic or modulo} function involved cannot be solved and symbolic execution will be stuck. Similar problem arises when we encounter a closed third party library function say \textit{increment()}. It doesn't know how to modify the symbolic state according to the behavior of that function. For such cases the test cases cannot be generated by classical symbolic execution. Concolic Tesing addresses these limitations and resolves situations like above by replacing the symbolic values by their concrete values so that the resulting constraint can be solved by the constraint solvers.\\
+A more deliberate approach can be used by merging symbolic execution with concrete execution (\textit{concolic execution}) and then using a an SMT-solver (like Z3) to generate test inputs. This method is called \textit{Concolic testing}. It is much more efficient than symbolic execution. To understand why let us assume that our costraint solver cannot handle non-linear constraint. Then a path constraint with some \textit{non-linear} function involved cannot be solved and symbolic execution will be stuck. Similar problem arises when we encounter a closed third party library function say \textit{increment()}. Symbolic execution alogorithm doesn't know how to modify the symbolic state according to the behavior of that function. For such cases the test cases cannot be generated by classical symbolic execution. Concolic Tesing addresses these limitations and resolves situations like above by replacing the symbolic values by their concrete values so that the resulting constraint can be solved by the constraint solvers.\\
 
 The algorithm involves initialting the inputs with randomly generated values. The program is executed and during the execution, on every conditional branch statement program collects symbolic path constraints on inputs. Symbolic constriants are essentially a set of logical constriants on input data. New program path is directed and executed by \textit{negating/flipping} the last condition of the path constraint. This is done until all the feasible program paths are explored. To get the intuition, let us consider the program in \textit{Figure 2.2} for concolic testing.  
 
@@ -324,10 +324,10 @@ Let the new inputs generated be \textit{x = 5} and \textit{y = 15} we will lead 
 \subsection {Summary-based Analysis}
 New techniques have been invented that compute procedure summaries for performing an interprocedural analysis of programs. In summary-based context-sensitive analysis we create "summary" which is succinct description of the observable behavior of each procedure. The purpose of this approach is to prevent renanalysing the behavior of same procedure when there are invoked at each call site.
 
-The representation of every has a single eantry point. The analysis is divided into following two phases:
+The representation of every procedure has a single entry point. The analysis is divided into following two phases:
 \begin{itemize}
-  \item \textit{Buttom-Up} : To summarize the effects of a procedure, transfer function is computed.
-  \item \textit{Top-Down} : To propogate the caller information to compute callee result.
+  \item In fist phase we summarize the effects of a procedure and a transfer function is computed in a bottom-up manner.
+  \item  In second phase we propogate the caller information to compute callee result in a top-down manner.
 \end{itemize}
 
 %%----------------------------------------------DART
