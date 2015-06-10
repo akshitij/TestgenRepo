@@ -15245,15 +15245,28 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./multTestFunc.i","-g,-g")
-extern int scanf(char const   * __restrict  __format  , ...)  __asm__("__isoc99_scanf")  ;
-int mult(int mult_x , int mult_y ) 
+#pragma merger("0","./example1.i","-g,-g")
+int func(int x , int y ) 
 { 
-  int mult_z ;
+  int tmp ;
+  int __cil_tmp4 ;
+  int __cil_tmp5 ;
+  int __cil_tmp6 ;
 
   {
-  mult_z = mult_x * mult_y;
-  return (mult_z);
+  if (y <= 1) {
+    {
+    __cil_tmp4 = 1;
+    return (__cil_tmp4);
+    }
+  } else {
+    __cil_tmp6 = x - 1;
+    tmp = func(__cil_tmp6, y);
+    {
+    __cil_tmp5 = x * tmp;
+    return (__cil_tmp5);
+    }
+  }
 }
 }
 int main1(void) 
@@ -15261,18 +15274,19 @@ int main1(void)
   int a ;
   int b ;
   int c ;
-  int d ;
+  int tmp ;
   int __cil_tmp5 ;
+  int __cil_tmp6 ;
+  int __cil_tmp7 ;
 
   {
-  scanf((char const   * __restrict  )"%d", & a);
-  scanf((char const   * __restrict  )"%d", & b);
-  c = mult(a, b);
-  if (c >= 0) {
-    d = 1;
-  } else {
-    d = 2;
-  }
+  a = 5;
+  b = 3;
+  __cil_tmp6 = a + b;
+  __cil_tmp7 = a - b;
+  tmp = func(__cil_tmp6, __cil_tmp7);
+  c = tmp;
+  printf((char const   * __restrict  )"%d\n", c);
   {
   __cil_tmp5 = 0;
   return (__cil_tmp5);
