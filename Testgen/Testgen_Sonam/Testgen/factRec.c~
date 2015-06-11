@@ -13,8 +13,8 @@ int fact(int x,int y){
 int main(){
 	int a,b=3,c;
 	scanf("%d",&a);
-	a = fact(a,b);
-	if(a == 12){
+	a = fact(a,4);
+	if(a == 20){
 		c = 1;
 	}
 	else{

@@ -7,6 +7,8 @@
 
 
 
+char *ret_SymValue ;
+void *ret_ConValue ;
 typedef unsigned long size_t;
 typedef long __off_t;
 typedef long __off64_t;
@@ -15256,31 +15258,123 @@ extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf
 int mult(int mult_x , int mult_y )
 {
   int mult_z ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
 
   {
   mult_z = mult_x * mult_y;
+  handleAssignmentSymbolically("mult_z", "(* mult_x mult_y)", & mult_z, & mult_z,
+                               1);
+  {
+  mapConcolicValues("mult_z", "variable");
   return (mult_z);
+  }
 }
 }
-int main1(void)
+void createCDG(void)
 {
-  int a ;
-  int b ;
+
+
+  {
+  addtoCDGnode(0, 0, 0);
+  addtoCDGnode(1, 0, 1);
+  addtoCDGnode(4, 0, 1);
+  setArray(4, "(>= c 0)");
+  addtoCDGnode(5, 4, 1);
+  addtoCDGnode(6, 4, 0);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(10, 0, 1);
+}
+}
+void isCopyOfHolder(void)
+{
+
+
+  {
+
+}
+}
+void createSidTable(void)
+{
+
+
+  {
+  add_condition(4, "(>= c 0)", "(not (>= c 0))", 0, 0);
+}
+}
+struct arguments {
+   int a ;
+   int b ;
+};
+struct arguments argvar ;
+int main1(int a , int b )
+{
   int c ;
   int d ;
   int __cil_tmp5 ;
+  int exp_outcome ;
+  int overall_outcome ;
+  int __cil_tmp8 ;
+  char *__cil_tmp9 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
 
   {
-  scanf((char const * __restrict )"%d", & a);
-  scanf((char const * __restrict )"%d", & b);
+  __cil_tmp9 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp9, "\t%d\t%d\n", a, b);
+  printTestCase("multTestFunc_main1_1433922976.tc", __cil_tmp9);
+  add_entryToSTable("b", "s1", & b, & b, 1);
+  add_entryToSTable("a", "s0", & a, & a, 1);
+  funcEntry("(type,formals,actuals,CorV)", "(int,mult_x,variable,a) (int,mult_y,variable,b)",
+            "mult_z", "mult");
   c = mult(a, b);
-  if (c >= 0) {
+  funcExit();
+  add_entryToSTable("c", ret_SymValue, ret_ConValue, & c, 1);
+  {
+  exp_outcome = c >= 0;
+  handleAssignmentSymbolically("exp_outcome", "(>= c 0)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(4, 1, 0);
+    setTrueExpr(4, "(>= c 0)");
+    setFalseExpr(4, "(not (>= c 0))");
+    addToTree(4, 1, "(>= c 0)", "(not (>= c 0))", 0, 1);
+    delete_allVariableTableEntry();
     d = 1;
+    add_entryToSTable("d", "Constant", & d, & d, 1);
   } else {
+    setBranchInfo(4, 0, 1);
+    setTrueExpr(4, "(>= c 0)");
+    setFalseExpr(4, "(not (>= c 0))");
+    addToTree(4, 1, "(>= c 0)", "(not (>= c 0))", 0, 0);
+    delete_allVariableTableEntry();
     d = 2;
+    add_entryToSTable("d", "Constant", & d, & d, 1);
+  }
   }
   {
   __cil_tmp5 = 0;
+  add_entryToSTable("__cil_tmp5", "Constant", & __cil_tmp5, & __cil_tmp5, 1);
+  __cil_tmp8 = isNotQueueEmpty();
+  if (__cil_tmp8) {
+    enQueue();
+    directPathConditions();
+    delete_allSTableEntry();
+    delete_allStructTableEntry();
+    main1(a, b);
+  } else {
+    __cil_tmp8 = startCDG();
+    if (__cil_tmp8) {
+      __cil_tmp8 = getTestCases();
+      main1(a, b);
+    }
+  }
   return (__cil_tmp5);
   }
 }
@@ -15290,7 +15384,7 @@ void getPrint(void)
 
 
   {
-
+  printFile("(benchmark res\n  :logic AUFLIA\n");
 }
 }
 void callInstrumentedFun(void)
@@ -15298,14 +15392,27 @@ void callInstrumentedFun(void)
 
 
   {
-
+  enQueue();
+  main1(argvar.a, argvar.b);
 }
 }
 void main(void)
 {
-
+  int a ;
+  int b ;
+  int temp ;
+  int __cil_tmp2 ;
+  int __cil_tmp3 ;
 
   {
-
+  __cil_tmp3 = rand();
+  argvar.a = __cil_tmp3 % 20;
+  __cil_tmp2 = rand();
+  argvar.b = __cil_tmp2 % 20;
+  initSID();
+  isCopyOfHolder();
+  createCDG();
+  createSidTable();
+  callInstrumentedFun();
 }
 }

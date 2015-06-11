@@ -1,9 +1,9 @@
-# 1 "./factRec.cil.c"
+# 1 "./iterFuncTest.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./factRec.cil.c"
+# 1 "./iterFuncTest.cil.c"
 
 
 
@@ -4506,7 +4506,7 @@ void del_vnameHash(char *key )
   return;
 }
 }
-funcArg *getArgument(char *argString , char *foo )
+funcArg *getArgument(char *argString , char *foo___0 )
 {
   int i___0 ;
   double d ;
@@ -4533,7 +4533,7 @@ funcArg *getArgument(char *argString , char *foo )
   *(copy + (tmp___0 - 1UL)) = (char)0;
   tmp___1 = malloc(sizeof(funcArg ));
   argument = (funcArg *)tmp___1;
-  strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo);
+  strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo___0);
   token = strtok((char * __restrict )copy, (char const * __restrict )(s));
   tmp___4 = strcmp((char const *)token, "int");
   if (tmp___4 == 0) {
@@ -15253,52 +15253,37 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./factRec.i","-g,-g")
+#pragma merger("0","./iterFuncTest.i","-g,-g")
 extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-int fact(int fact_x , int fact_y )
+int foo(int foo_n )
 {
-  int fact_tmp ;
-  int fact___cil_tmp4 ;
-  int fact___cil_tmp5 ;
-  int fact___cil_tmp6 ;
-  int fact___cil_tmp7 ;
+  int foo_i___0 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (fact_y <= 1) {
-    {
-    fact___cil_tmp4 = 1;
-    add_entryToSTable("fact___cil_tmp4", "Constant", & fact___cil_tmp4, & fact___cil_tmp4,
-                      1);
-    {
-    mapConcolicValues("fact___cil_tmp4", "variable");
-    return (fact___cil_tmp4);
-    }
-    }
-  } else {
-    fact___cil_tmp6 = fact_x - 1;
-    handleAssignmentSymbolically("fact___cil_tmp6", "(- fact_x 1)", & fact___cil_tmp6,
-                                 & fact___cil_tmp6, 1);
-    fact___cil_tmp7 = fact_y - 1;
-    handleAssignmentSymbolically("fact___cil_tmp7", "(- fact_y 1)", & fact___cil_tmp7,
-                                 & fact___cil_tmp7, 1);
-    funcEntry("(type,formals,actuals,CorV)", "(int,fact_x,variable,fact___cil_tmp6) (int,fact_y,variable,fact___cil_tmp7)",
-              "fact_tmp fact___cil_tmp4 fact___cil_tmp5 fact___cil_tmp6 fact___cil_tmp7",
-              "fact");
-    fact_tmp = fact(fact___cil_tmp6, fact___cil_tmp7);
-    funcExit();
-    add_entryToSTable("fact_tmp", ret_SymValue, ret_ConValue, & fact_tmp, 1);
-    {
-    fact___cil_tmp5 = fact_x * fact_tmp;
-    handleAssignmentSymbolically("fact___cil_tmp5", "(* fact_x fact_tmp)", & fact___cil_tmp5,
-                                 & fact___cil_tmp5, 1);
-    {
-    mapConcolicValues("fact___cil_tmp5", "variable");
-    return (fact___cil_tmp5);
-    }
-    }
+  foo_i___0 = 0;
+  add_entryToSTable("foo_i___0", "Constant", & foo_i___0, & foo_i___0, 1);
+  {
+  if (foo_i___0 < foo_n) {
+    foo_n --;
+    handleAssignmentSymbolically("foo_n", "(- foo_n 1)", & foo_n, & foo_n, 1);
+    foo_i___0 ++;
+    handleAssignmentSymbolically("foo_i___0", "(+ foo_i___0 1)", & foo_i___0, & foo_i___0,
+                                 1);
+  }
+  if (foo_i___0 < foo_n) {
+    foo_n --;
+    handleAssignmentSymbolically("foo_n", "(- foo_n 1)", & foo_n, & foo_n, 1);
+    foo_i___0 ++;
+    handleAssignmentSymbolically("foo_i___0", "(+ foo_i___0 1)", & foo_i___0, & foo_i___0,
+                                 1);
+  }
+  }
+  {
+  mapConcolicValues("foo_n", "variable");
+  return (foo_n);
   }
 }
 }
@@ -15309,16 +15294,15 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(10, 0, 1);
-  setArray(10, "(= a 20)");
-  addtoCDGnode(11, 10, 1);
-  addtoCDGnode(12, 10, 0);
-  addtoCDGnode(13, 0, 1);
+  addtoCDGnode(9, 0, 1);
+  setArray(9, "(> a 5)");
+  addtoCDGnode(10, 9, 1);
+  addtoCDGnode(11, 9, 0);
+  addtoCDGnode(12, 0, 1);
+  addtoCDGnode(12, 0, 1);
   addtoCDGnode(13, 0, 1);
   addtoCDGnode(14, 0, 1);
   addtoCDGnode(15, 0, 1);
-  addtoCDGnode(16, 0, 1);
-  addtoCDGnode(17, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15334,7 +15318,7 @@ void createSidTable(void)
 
 
   {
-  add_condition(10, "(= a 20)", "(not (= a 20))", 0, 0);
+  add_condition(9, "(> a 5)", "(not (> a 5))", 0, 0);
 }
 }
 struct arguments {
@@ -15344,7 +15328,6 @@ struct arguments argvar ;
 int main1(int a )
 {
   int b ;
-  int c ;
   int __cil_tmp4 ;
   int exp_outcome ;
   int overall_outcome ;
@@ -15357,40 +15340,36 @@ int main1(int a )
   {
   __cil_tmp8 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp8, "\t%d\n", a);
-  printTestCase("factRec_main1_1434015390.tc", __cil_tmp8);
+  printTestCase("iterFuncTest_main1_1433974902.tc", __cil_tmp8);
   add_entryToSTable("a", "s0", & a, & a, 1);
-  b = 3;
-  add_entryToSTable("b", "Constant", & b, & b, 1);
-  funcEntry("(type,formals,actuals,CorV)", "(int,fact_x,variable,a) (int,fact_y,variable,b)",
-            "fact_tmp fact___cil_tmp4 fact___cil_tmp5 fact___cil_tmp6 fact___cil_tmp7",
-            "fact");
-  a = fact(a, b);
+  funcEntry("(type,formals,actuals,CorV)", "(int,foo_n,variable,a)", "foo_i___0",
+            "foo");
+  a = foo(a);
   funcExit();
   add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
   {
-  exp_outcome = a == 20;
-  handleAssignmentSymbolically("exp_outcome", "(= a 20)", & exp_outcome, & exp_outcome,
+  exp_outcome = a > 5;
+  handleAssignmentSymbolically("exp_outcome", "(> a 5)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(10, 1, 0);
-    setTrueExpr(10, "(= a 20)");
-    setFalseExpr(10, "(not (= a 20))");
-    addToTree(10, 1, "(= a 20)", "(not (= a 20))", 0, 1);
+    setBranchInfo(9, 1, 0);
+    setTrueExpr(9, "(> a 5)");
+    setFalseExpr(9, "(not (> a 5))");
+    addToTree(9, 1, "(> a 5)", "(not (> a 5))", 0, 1);
     delete_allVariableTableEntry();
-    c = 1;
-    add_entryToSTable("c", "Constant", & c, & c, 1);
+    b = 1;
+    add_entryToSTable("b", "Constant", & b, & b, 1);
   } else {
-    setBranchInfo(10, 0, 1);
-    setTrueExpr(10, "(= a 20)");
-    setFalseExpr(10, "(not (= a 20))");
-    addToTree(10, 1, "(= a 20)", "(not (= a 20))", 0, 0);
+    setBranchInfo(9, 0, 1);
+    setTrueExpr(9, "(> a 5)");
+    setFalseExpr(9, "(not (> a 5))");
+    addToTree(9, 1, "(> a 5)", "(not (> a 5))", 0, 0);
     delete_allVariableTableEntry();
-    c = -1;
-    add_entryToSTable("c", "Constant", & c, & c, 1);
+    b = -1;
+    add_entryToSTable("b", "Constant", & b, & b, 1);
   }
   }
-  printf((char const * __restrict )"%d\n", c);
   {
   __cil_tmp4 = 0;
   add_entryToSTable("__cil_tmp4", "Constant", & __cil_tmp4, & __cil_tmp4, 1);

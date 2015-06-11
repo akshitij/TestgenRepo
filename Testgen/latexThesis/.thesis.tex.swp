@@ -1,3 +1,5 @@
+ \RequirePackage{lineno} 
+
 \documentclass[12pt,oneside]{book}
 \usepackage{fullpage}
 \usepackage{amsmath}
@@ -406,7 +408,7 @@ and after transformation we have
 K = f(V,P)
 \end{equation}
 
-where \textit{P} is the name of the procedure. \textit{figure 3.2} demonstrates the renaming of the variables to resolve the conflict of symbol table keys. This method will work for non-recursive procedure calls. To handle recursion we have developed an extended version of approach which will be discussed in a later section.\\
+where \textit{P} is the name of the procedure to which V belongs. \textit{figure 3.2} demonstrates the renaming of the variables to resolve the conflict of symbol table keys. This method will work for non-recursive procedure calls. To handle recursion we have developed an extended version of approach which will be discussed in a later section.\\
 
 \begin{figure}[htbp]
 \centering
@@ -416,9 +418,65 @@ where \textit{P} is the name of the procedure. \textit{figure 3.2} demonstrates 
 
 \newpage
 
+\subsection{Extend Concolic Execution Engine}
+The current engine uses approaches such as handling set (or assignment) instructions symbolically and unrolling of loops to carry out the symbolic execution. But these aproaches are only applied on the procedure that the user demands to be tested. The remaining procedures are unchanged.\\
+Now, on function call we want the symbolic execution to be able to continue in the callee. Hence, we need to instrument all the procedures of program P such that it enables them to be executed symbolically. So instead of applying the loop unrolling and symbolic assignment only on user input procedure, we will apply them on every procedure.
 
-\section{Instrumentation}
+%%This can be understood using \textit{figure 3.4} which shows a function \textit{foo} which is not the function to be tested. Originally, \textit{foo} is unchanged since it plays no role in symbolic execution of program. Since we have want to extend the concolic engine to be executed interprocedurally, it is modified as shown. 
 
+\subsection{Set up Environment For Procedure Call}
+Without interprocedural call handling, whenever the concolic testing encountered a function call, it used the concrete value of the function result. There interprocedural symbolic analysis could not be done. We will remove this hindrance by setting up a function call environment and function return environment, that will facilitate the transfer of symbolic state from caller to callee and back. The pseudo-code of the algorithm of this phase is mentioned on the next page.\\
+\\
+\textbf{Algorithm 1 Description} : The input to this algorithm is program P. We inspect all the procedures of P and detect the call sites. It is at these call sites where we need to do transformations such that when control flows from caller to callee, the callee has the symbolic information needed to execute symbolically.\\
+Let one such call site be \textit{c} which invokes a function \textit{f}. Parameters that are passed to the function \textit{f} have certain symbolic and concrete values associated with them. Before \textit{f} starts executing, the mapping of concolic values needs to be done from actual parameters to formal parameters. For that, firstly we have to analyse the formal and actual parameters, and figure out a way to send their combined information to \textit{funcEntry}, which does the actual task of concolic mapping.\\ 
+The function \textit{getArgumentsAsString} in \textit{line 8} has two parts. Firstly, it extracts the information about actual parameters of \textit{f} like if its a literal or variable (its name). Secondly, it analyses the formal parameters of \textit{f}'s prototype and gathers information about their name and type. Then it merges this information into a string, one parameter at a time.\\
+
+\noindent\rule{15cm}{0.6pt} \\
+ \textbf{\centerline{\textit{Algorithm 1: Transform Call Site}}}\\
+\noindent\rule{15cm}{0.6pt} 
+
+\noindent
+\textbf{\textit{Input :}} Program P\\
+\textbf{\textit{Output :}} P with modified call sites\\
+\textbf{begin}\\
+\linenumbers
+\textbf{for} each procedure f $\in$ P \textbf{do}\\
+\hspace*{2mm} InstList = instructionList(f)\\
+\hspace*{3mm}\textbf{for} each instruction I' $\in$ InstList \textbf{do}\\
+\hspace*{7mm}\textbf{if} I' is a Call Instruction C \textbf{then}\\
+\hspace*{11mm}ArgsList = getArgumentsAsString(C $\rightarrow$ fname)\\
+\hspace*{11mm}LocalsList = getLocalsAsString(C $\rightarrow$ fname)\\
+\hspace*{11mm}FuncEntryInst = makeCallInstruction(ArgsList, LocalsList)\\
+\hspace*{11mm}FuncExitInst = makeCallInstruction()\\
+\hspace*{11mm}InstList = InstList :: [FuncEntryInst :: I' :: FuncExitInst]\\
+\hspace*{7mm}\textbf{end if}\\
+\hspace*{3mm}\textbf{end for}\\
+\textbf{end for}\\
+\textbf{end}
+
+\nolinenumbers
+
+\vspace{0.4cm}
+This string is passed as a paramter to \textit{funcEntry} along with another string containing the names of local variables (created by \textit{getLocalsAsString()} in \textit{line 9}). The function instrumented after call site \textit{c} is \textit{funcExit} that does the task of cleaning up the intermediate data-structures created by \textit{funcEntry} and were necessary to execute \textit{f} symbolically.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.53]{env1_orig.png}
+\caption{Original Code}
+\end{figure}  
+
+Let us observe an example shown in \textit{figure 3.4}. There is a call instruction at \textit{line 4} invoking function \textit{fact} with two paramters. The information about both actual and formal paramters in analysed and sent to \textit{funcEntry} as string argument at \textit{line 12} in \textit{figure 3.4}. The second argument to \textit{funcEntry} is names of local variables of function \textit{fact}. Using these arguments, environment for \textit{fact} to execute symbolically is set up by \textit{funcEntry}. Similarly, \textit{funcExit} at \textit{line 15 in figure 3.4} handles the task of cleanup of this environment after \textit{fact} has finished executing.
+
+\vspace{0.4cm}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.56]{env2_modified.png}
+\caption{Transformed Call Site}
+\end{figure}  
+
+At \textit{line 16} in \textit{figure 3.4} we also have function \textit{add\_entryToSTable} which is used to map the returned concolic values of function \textit{fact} to appropriate variable, which is in our \textit{a}. We will discuss about this in later sections. 
+
+\newpage
 
 \section{Parameter Mapping}
 \section{Variable Hash-Map}
