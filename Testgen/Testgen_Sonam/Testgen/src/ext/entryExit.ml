@@ -32,7 +32,7 @@ let mkFunTyp (rt : typ) (args : (string * typ) list) : typ =
   
 let initInstFunctions (f : file) : unit =
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
-  let instf_type = mkFunTyp voidType ["format",charPtrType; "args",charPtrType; "locals", charPtrType; "funcName", charPtrType] in
+  let instf_type = mkFunTyp voidType ["args",charPtrType; "locals", charPtrType; "funcName", charPtrType] in
   instfuns.funcEntry_instfun <- focf funcEntry_instfun_str instf_type;
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
   let instf_type = mkFunTyp voidType [] in
@@ -171,12 +171,12 @@ class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
 	                        		    str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ") ")
 	                        		   formals actuals
 	                              end;
-	                            let f = "(type,formals,actuals,CorV)" in 
+	                            (*let f = "(type,formals,actuals,CorV)" in*) 
 	                            let p = String.trim !str in
 	                            let func = funcName in
 	                            let localVars = (getLocalVarString fl func) in
 	                            begin
-	                        	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ([constS2e f] @ [constS2e p] @ [constS2e localVars] @ [constS2e func]) loc in
+	                        	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ((*[constS2e f] @ *)[constS2e p] @ [constS2e localVars] @ [constS2e func]) loc in
 	                        		ChangeTo [instrumentEntryFunc;i]	
 	                              end
 	                          end;

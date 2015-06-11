@@ -66,6 +66,7 @@ void createEmptyEntryInSTable(char *vname) {
 }
 
 void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
+  if(getExecutionFlag() == 1){
   struct sym_table *s;
   
   char* hash_vn = get_vnameHash(vname);
@@ -84,9 +85,10 @@ void add_entryToSTable(char *vname, char *sname, void *val, void *address, int t
     HASH_ADD_STR(stable, vname, s);
 
 
-}
+  }
   s->fval = addNewFields(sname, val, address, type);
   // printf("Added: %s for %s in symbol table\n", s->vname, sname);
+  }
 }
 
 void addEntryToVariableTable(char *vname, int parameter) {
@@ -293,6 +295,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 }
 
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
+  if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
   char *token, *result, *symName, *temp, *vname_occ;
   char buff[15];
@@ -410,6 +413,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   	add_entryToSTable(lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
+  }
 }
 
 char *getPrepositionalFormula(char *expr) {
