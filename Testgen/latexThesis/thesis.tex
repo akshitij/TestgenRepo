@@ -456,10 +456,25 @@ The function \textit{getArgumentsAsString} in \textit{line 8} has two parts. Fir
 
 \nolinenumbers
 
-\vspace{0.5cm}
-This string is passed as a paramter to \textit{funcEntry} along with another string containing the names of local variables (created by \textit{getLocalsAsString()} in \textit{line 9}).\\
-The function instrumented after call site \textit{c} is \textit{funcExit} that does the task of cleaning up the intermediate data-structures created by \textit{funcEntry} and were necessary to execute \textit{f} symbolically.
+\vspace{0.4cm}
+This string is passed as a paramter to \textit{funcEntry} along with another string containing the names of local variables (created by \textit{getLocalsAsString()} in \textit{line 9}). The function instrumented after call site \textit{c} is \textit{funcExit} that does the task of cleaning up the intermediate data-structures created by \textit{funcEntry} and were necessary to execute \textit{f} symbolically.
 
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.53]{env1_orig.png}
+\caption{Original Code}
+\end{figure}  
+
+Let us observe an example shown in \textit{figure 3.4}. There is a call instruction at \textit{line 4} invoking function \textit{fact} with two paramters. The information about both actual and formal paramters in analysed and sent to \textit{funcEntry} as string argument at \textit{line 12} in \textit{figure 3.4}. The second argument to \textit{funcEntry} is names of local variables of function \textit{fact}. Using these arguments, environment for \textit{fact} to execute symbolically is set up by \textit{funcEntry}. Similarly, \textit{funcExit} at \textit{line 15 in figure 3.4} handles the task of cleanup of this environment after \textit{fact} has finished executing.
+
+\vspace{0.4cm}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.56]{env2_modified.png}
+\caption{Transformed Call Site}
+\end{figure}  
+
+At \textit{line 16} in \textit{figure 3.4} we also have function \textit{add\_entryToSTable} which is used to map the returned concolic values of function \textit{fact} to appropriate variable, which is in our \textit{a}. We will discuss about this in later sections. 
 
 \newpage
 
