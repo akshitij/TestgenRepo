@@ -1,0 +1,17 @@
+#include <stdio.h>
+int whatever_a;
+
+void foo(){
+	whatever_a = 3*whatever_a;
+}
+
+int main(){
+	int b;
+	scanf("%d",&whatever_a);
+	foo();
+	if(whatever_a == 51)
+		b=1;
+	else
+		b=2;
+	return 0;
+}

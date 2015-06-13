@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int fact(int x){
+	if(x <= 1){
+		return 1;
+	}
+	else{
+		return x * fact(x-1);
+	}
+
+}
+
+int main(){
+	int a,c;
+	scanf("%d",&a);
+	a = fact(a);
+	if(a == 120){
+		c = 1;
+	}
+	else{
+		c = -1;
+	}
+	printf("%d\n",c);
+	return 0;
+}
