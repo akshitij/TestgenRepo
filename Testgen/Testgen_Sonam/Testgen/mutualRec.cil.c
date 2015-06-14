@@ -15537,7 +15537,7 @@ int main1(int in2 )
   {
   __cil_tmp6 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp6, "\t%d\n", in2);
-  printTestCase("mutualRec_main1_1434204400.tc", __cil_tmp6);
+  printTestCase("mutualRec_main1_1434214668.tc", __cil_tmp6);
   add_entryToSTable("in2", "s0", & in2, & in2, 1);
   funcEntry("(int,anka_j,variable,in2)", "anka_tmp anka___cil_tmp3 anka___cil_tmp4 anka___cil_tmp5",
             "anka");

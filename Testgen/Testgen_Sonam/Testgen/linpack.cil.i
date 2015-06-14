@@ -1,9 +1,9 @@
-# 1 "./mutualRec.cil.c"
+# 1 "./linpack.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./mutualRec.cil.c"
+# 1 "./linpack.cil.c"
 
 
 
@@ -15341,154 +15341,2909 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./mutualRec.i","-g,-g")
-extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-int fib(int fib_i___0 )
+#pragma merger("0","./linpack.i","-g,-g")
+extern __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) fabs)(double __x ) __attribute__((__const__)) ;
+void matgen(int *matgen_a , int matgen_lda , int matgen_n , int *matgen_b , int *matgen_norma ) ;
+void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *dgefa_info ,
+           int dgefa_roll ) ;
+void dgesl(int *dgesl_a , int dgesl_lda , int dgesl_n , int *dgesl_ipvt , int *dgesl_b ,
+           int dgesl_job , int dgesl_roll ) ;
+void daxpy_r(int daxpy_r_n , int daxpy_r_da , int *daxpy_r_dx , int daxpy_r_icx ,
+             int *daxpy_r_dy , int daxpy_r_icy ) ;
+int ddot_r(int ddot_r_n , int *ddot_r_dx , int ddot_r_icx , int *ddot_r_dy , int ddot_r_icy ) ;
+void dscal_r(int dscal_r_n , int dscal_r_da , int *dscal_r_dx , int dscal_r_ic ) ;
+void daxpy_ur(int daxpy_ur_n , int daxpy_ur_da , int *daxpy_ur_dx , int daxpy_ur_icx ,
+              int *daxpy_ur_dy , int daxpy_ur_icy ) ;
+int ddot_ur(int ddot_ur_n , int *ddot_ur_dx , int ddot_ur_icx , int *ddot_ur_dy ,
+            int ddot_ur_icy ) ;
+void dscal_ur(int dscal_ur_n , int dscal_ur_da , int *dscal_ur_dx , int dscal_ur_icx ) ;
+int idamax(int *global_mempool , int n , int *dx , int icx ) ;
+int *mempool ;
+void matgen(int *matgen_a , int matgen_lda , int matgen_n , int *matgen_b , int *matgen_norma )
 {
-  int fib_tmp ;
-  int fib_tmp___0 ;
-  int fib___cil_tmp4 ;
-  int fib___cil_tmp5 ;
-  int fib___cil_tmp6 ;
-  int fib___cil_tmp7 ;
-  int fib___cil_tmp8 ;
+  int matgen_init ;
+  int matgen_i___0 ;
+  int matgen_j ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (fib_i___0 == 0) {
-    {
-    fib___cil_tmp4 = 1;
-    add_entryToSTable("fib___cil_tmp4", "Constant", & fib___cil_tmp4, & fib___cil_tmp4,
+  matgen_init = 1325;
+  add_entryToSTable("matgen_init", "Constant", & matgen_init, & matgen_init, 1);
+  *matgen_norma = (int )0.0;
+  add_entryToArraySTable("matgen_norma", 0, "Constant", matgen_norma, matgen_norma,
+                         1);
+  matgen_j = 0;
+  add_entryToSTable("matgen_j", "Constant", & matgen_j, & matgen_j, 1);
+  {
+  if (matgen_j < matgen_n) {
+    matgen_i___0 = 0;
+    add_entryToSTable("matgen_i___0", "Constant", & matgen_i___0, & matgen_i___0,
                       1);
     {
-    mapConcolicValues("fib___cil_tmp4", & fib___cil_tmp4);
-    return (fib___cil_tmp4);
+    if (matgen_i___0 < matgen_n) {
+      matgen_init = (int )((3125L * (long )matgen_init) % 65536L);
+      handleAssignmentSymbolically("matgen_init", "(% (* 3125L matgen_init) 65536L)",
+                                   & matgen_init, & matgen_init, 1);
+      *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) = (int )(((double )matgen_init - 32768.0) / 16384.0);
+      handleArraySymbolically("matgen_a", matgen_lda * matgen_j + matgen_i___0, "(/ (- matgen_init 32768.0) 16384.0)",
+                              matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                              1);
+      if (*(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) > *matgen_norma) {
+        *matgen_norma = *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+        addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_lda * matgen_j + matgen_i___0);
+        add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a10",
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               1);
+        handleArraySymbolically("matgen_norma", 0, "*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_norma, matgen_norma, 1);
+      }
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    if (matgen_i___0 < matgen_n) {
+      matgen_init = (int )((3125L * (long )matgen_init) % 65536L);
+      handleAssignmentSymbolically("matgen_init", "(% (* 3125L matgen_init) 65536L)",
+                                   & matgen_init, & matgen_init, 1);
+      *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) = (int )(((double )matgen_init - 32768.0) / 16384.0);
+      handleArraySymbolically("matgen_a", matgen_lda * matgen_j + matgen_i___0, "(/ (- matgen_init 32768.0) 16384.0)",
+                              matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                              1);
+      if (*(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) > *matgen_norma) {
+        *matgen_norma = *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+        addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_lda * matgen_j + matgen_i___0);
+        add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a11",
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               1);
+        handleArraySymbolically("matgen_norma", 0, "*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_norma, matgen_norma, 1);
+      }
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
     }
     }
+    matgen_j ++;
+    handleAssignmentSymbolically("matgen_j", "(+ matgen_j 1)", & matgen_j, & matgen_j,
+                                 1);
   }
-  if (fib_i___0 == 1) {
-    {
-    fib___cil_tmp5 = 1;
-    add_entryToSTable("fib___cil_tmp5", "Constant", & fib___cil_tmp5, & fib___cil_tmp5,
+  if (matgen_j < matgen_n) {
+    matgen_i___0 = 0;
+    add_entryToSTable("matgen_i___0", "Constant", & matgen_i___0, & matgen_i___0,
                       1);
     {
-    mapConcolicValues("fib___cil_tmp5", & fib___cil_tmp5);
-    return (fib___cil_tmp5);
+    if (matgen_i___0 < matgen_n) {
+      matgen_init = (int )((3125L * (long )matgen_init) % 65536L);
+      handleAssignmentSymbolically("matgen_init", "(% (* 3125L matgen_init) 65536L)",
+                                   & matgen_init, & matgen_init, 1);
+      *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) = (int )(((double )matgen_init - 32768.0) / 16384.0);
+      handleArraySymbolically("matgen_a", matgen_lda * matgen_j + matgen_i___0, "(/ (- matgen_init 32768.0) 16384.0)",
+                              matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                              1);
+      if (*(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) > *matgen_norma) {
+        *matgen_norma = *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+        addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_lda * matgen_j + matgen_i___0);
+        add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a12",
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               1);
+        handleArraySymbolically("matgen_norma", 0, "*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_norma, matgen_norma, 1);
+      }
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    if (matgen_i___0 < matgen_n) {
+      matgen_init = (int )((3125L * (long )matgen_init) % 65536L);
+      handleAssignmentSymbolically("matgen_init", "(% (* 3125L matgen_init) 65536L)",
+                                   & matgen_init, & matgen_init, 1);
+      *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) = (int )(((double )matgen_init - 32768.0) / 16384.0);
+      handleArraySymbolically("matgen_a", matgen_lda * matgen_j + matgen_i___0, "(/ (- matgen_init 32768.0) 16384.0)",
+                              matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                              1);
+      if (*(matgen_a + (matgen_lda * matgen_j + matgen_i___0)) > *matgen_norma) {
+        *matgen_norma = *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+        addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_lda * matgen_j + matgen_i___0);
+        add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a13",
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                               1);
+        handleArraySymbolically("matgen_norma", 0, "*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                                matgen_norma, matgen_norma, 1);
+      }
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
     }
     }
+    matgen_j ++;
+    handleAssignmentSymbolically("matgen_j", "(+ matgen_j 1)", & matgen_j, & matgen_j,
+                                 1);
   }
-  fib___cil_tmp7 = fib_i___0 - 1;
-  handleAssignmentSymbolically("fib___cil_tmp7", "(- fib_i___0 1)", & fib___cil_tmp7,
-                               & fib___cil_tmp7, 1);
-  funcEntry("(int,fib_i___0,variable,fib___cil_tmp7)", "fib_tmp fib_tmp___0 fib___cil_tmp4 fib___cil_tmp5 fib___cil_tmp6 fib___cil_tmp7 fib___cil_tmp8",
-            "fib");
-  fib_tmp = fib(fib___cil_tmp7);
-  funcExit();
-  add_entryToSTable("fib_tmp", ret_SymValue, ret_ConValue, & fib_tmp, 1);
-  fib___cil_tmp8 = fib_i___0 - 2;
-  handleAssignmentSymbolically("fib___cil_tmp8", "(- fib_i___0 2)", & fib___cil_tmp8,
-                               & fib___cil_tmp8, 1);
-  funcEntry("(int,fib_i___0,variable,fib___cil_tmp8)", "fib_tmp fib_tmp___0 fib___cil_tmp4 fib___cil_tmp5 fib___cil_tmp6 fib___cil_tmp7 fib___cil_tmp8",
-            "fib");
-  fib_tmp___0 = fib(fib___cil_tmp8);
-  funcExit();
-  add_entryToSTable("fib_tmp___0", ret_SymValue, ret_ConValue, & fib_tmp___0, 1);
+  }
+  matgen_i___0 = 0;
+  add_entryToSTable("matgen_i___0", "Constant", & matgen_i___0, & matgen_i___0, 1);
   {
-  fib___cil_tmp6 = fib_tmp + fib_tmp___0;
-  handleAssignmentSymbolically("fib___cil_tmp6", "(+ fib_tmp fib_tmp___0)", & fib___cil_tmp6,
-                               & fib___cil_tmp6, 1);
+  if (matgen_i___0 < matgen_n) {
+    *(matgen_b + matgen_i___0) = (int )0.0;
+    add_entryToArraySTable("matgen_b", matgen_i___0, "Constant", matgen_b + matgen_i___0,
+                           matgen_b + matgen_i___0, 1);
+    matgen_i___0 ++;
+    handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                 & matgen_i___0, 1);
+  }
+  if (matgen_i___0 < matgen_n) {
+    *(matgen_b + matgen_i___0) = (int )0.0;
+    add_entryToArraySTable("matgen_b", matgen_i___0, "Constant", matgen_b + matgen_i___0,
+                           matgen_b + matgen_i___0, 1);
+    matgen_i___0 ++;
+    handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                 & matgen_i___0, 1);
+  }
+  }
+  matgen_j = 0;
+  add_entryToSTable("matgen_j", "Constant", & matgen_j, & matgen_j, 1);
   {
-  mapConcolicValues("fib___cil_tmp6", & fib___cil_tmp6);
-  return (fib___cil_tmp6);
+  if (matgen_j < matgen_n) {
+    matgen_i___0 = 0;
+    add_entryToSTable("matgen_i___0", "Constant", & matgen_i___0, & matgen_i___0,
+                      1);
+    {
+    if (matgen_i___0 < matgen_n) {
+      *(matgen_b + matgen_i___0) += *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+      addEntryToVariableTable("*(matgen_b + matgen_i___0)", matgen_i___0);
+      add_entryToArraySTable("matgen_b", matgen_i___0, "matgen_b14", matgen_b + matgen_i___0,
+                             matgen_b + matgen_i___0, 1);
+      addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                              matgen_lda * matgen_j + matgen_i___0);
+      add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a15",
+                             matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                             1);
+      handleArraySymbolically("matgen_b", matgen_i___0, "(+ *(matgen_b + matgen_i___0) *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)))",
+                              matgen_b + matgen_i___0, matgen_b + matgen_i___0, 1);
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    if (matgen_i___0 < matgen_n) {
+      *(matgen_b + matgen_i___0) += *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+      addEntryToVariableTable("*(matgen_b + matgen_i___0)", matgen_i___0);
+      add_entryToArraySTable("matgen_b", matgen_i___0, "matgen_b16", matgen_b + matgen_i___0,
+                             matgen_b + matgen_i___0, 1);
+      addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                              matgen_lda * matgen_j + matgen_i___0);
+      add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a17",
+                             matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                             1);
+      handleArraySymbolically("matgen_b", matgen_i___0, "(+ *(matgen_b + matgen_i___0) *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)))",
+                              matgen_b + matgen_i___0, matgen_b + matgen_i___0, 1);
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    }
+    matgen_j ++;
+    handleAssignmentSymbolically("matgen_j", "(+ matgen_j 1)", & matgen_j, & matgen_j,
+                                 1);
+  }
+  if (matgen_j < matgen_n) {
+    matgen_i___0 = 0;
+    add_entryToSTable("matgen_i___0", "Constant", & matgen_i___0, & matgen_i___0,
+                      1);
+    {
+    if (matgen_i___0 < matgen_n) {
+      *(matgen_b + matgen_i___0) += *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+      addEntryToVariableTable("*(matgen_b + matgen_i___0)", matgen_i___0);
+      add_entryToArraySTable("matgen_b", matgen_i___0, "matgen_b18", matgen_b + matgen_i___0,
+                             matgen_b + matgen_i___0, 1);
+      addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                              matgen_lda * matgen_j + matgen_i___0);
+      add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a19",
+                             matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                             1);
+      handleArraySymbolically("matgen_b", matgen_i___0, "(+ *(matgen_b + matgen_i___0) *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)))",
+                              matgen_b + matgen_i___0, matgen_b + matgen_i___0, 1);
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    if (matgen_i___0 < matgen_n) {
+      *(matgen_b + matgen_i___0) += *(matgen_a + (matgen_lda * matgen_j + matgen_i___0));
+      addEntryToVariableTable("*(matgen_b + matgen_i___0)", matgen_i___0);
+      add_entryToArraySTable("matgen_b", matgen_i___0, "matgen_b110", matgen_b + matgen_i___0,
+                             matgen_b + matgen_i___0, 1);
+      addEntryToVariableTable("*(matgen_a + (matgen_lda * matgen_j + matgen_i___0))",
+                              matgen_lda * matgen_j + matgen_i___0);
+      add_entryToArraySTable("matgen_a", matgen_lda * matgen_j + matgen_i___0, "matgen_a111",
+                             matgen_a + (matgen_lda * matgen_j + matgen_i___0), matgen_a + (matgen_lda * matgen_j + matgen_i___0),
+                             1);
+      handleArraySymbolically("matgen_b", matgen_i___0, "(+ *(matgen_b + matgen_i___0) *(matgen_a + (matgen_lda * matgen_j + matgen_i___0)))",
+                              matgen_b + matgen_i___0, matgen_b + matgen_i___0, 1);
+      matgen_i___0 ++;
+      handleAssignmentSymbolically("matgen_i___0", "(+ matgen_i___0 1)", & matgen_i___0,
+                                   & matgen_i___0, 1);
+    }
+    }
+    matgen_j ++;
+    handleAssignmentSymbolically("matgen_j", "(+ matgen_j 1)", & matgen_j, & matgen_j,
+                                 1);
   }
   }
+  return;
 }
 }
-int anka(int anka_j ) ;
-int kalle(int kalle_i___0 )
+void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *dgefa_info ,
+           int dgefa_roll )
 {
-  int kalle_tmp ;
-  int kalle___cil_tmp3 ;
-  int kalle___cil_tmp4 ;
-  int kalle___cil_tmp5 ;
+  int dgefa_t ;
+  int dgefa_j ;
+  int dgefa_k ;
+  int dgefa_kp1 ;
+  int dgefa_l ;
+  int dgefa_nm1 ;
+  int dgefa_tmp ;
+  int dgefa_tmp___0 ;
+  int dgefa___cil_tmp15 ;
+  int *dgefa___cil_tmp16 ;
+  int dgefa___cil_tmp17 ;
+  int dgefa___cil_tmp18 ;
+  int *dgefa___cil_tmp19 ;
+  int dgefa___cil_tmp20 ;
+  int dgefa___cil_tmp21 ;
+  int *dgefa___cil_tmp22 ;
+  int dgefa___cil_tmp23 ;
+  int *dgefa___cil_tmp24 ;
+  int dgefa___cil_tmp25 ;
+  int dgefa___cil_tmp26 ;
+  int *dgefa___cil_tmp27 ;
+  int dgefa___cil_tmp28 ;
+  int dgefa___cil_tmp29 ;
+  int *dgefa___cil_tmp30 ;
+  int dgefa___cil_tmp31 ;
+  int dgefa___cil_tmp32 ;
+  int *dgefa___cil_tmp33 ;
+  int dgefa___cil_tmp34 ;
+  int *dgefa___cil_tmp35 ;
+  int dgefa___cil_tmp36 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (kalle_i___0 <= 0) {
-    {
-    kalle___cil_tmp3 = 0;
-    add_entryToSTable("kalle___cil_tmp3", "Constant", & kalle___cil_tmp3, & kalle___cil_tmp3,
-                      1);
-    {
-    mapConcolicValues("kalle___cil_tmp3", & kalle___cil_tmp3);
-    return (kalle___cil_tmp3);
+  if (dgefa_roll >= 1) {
+    *dgefa_info = 0;
+    handleArraySymbolically("dgefa_info", 0, "0", dgefa_info, dgefa_info, 1);
+    dgefa_nm1 = dgefa_n - 1;
+    handleAssignmentSymbolically("dgefa_nm1", "(- dgefa_n 1)", & dgefa_nm1, & dgefa_nm1,
+                                 1);
+    if (dgefa_nm1 >= 0) {
+      dgefa_k = 0;
+      add_entryToSTable("dgefa_k", "Constant", & dgefa_k, & dgefa_k, 1);
+      {
+      if (dgefa_k < dgefa_nm1) {
+        dgefa_kp1 = dgefa_k + 1;
+        handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
+                                     1);
+        dgefa___cil_tmp15 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp15", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp15,
+                                     & dgefa___cil_tmp15, 1);
+        dgefa___cil_tmp16 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp16", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp16, & dgefa___cil_tmp16, 1);
+        dgefa___cil_tmp17 = 1;
+        add_entryToSTable("dgefa___cil_tmp17", "Constant", & dgefa___cil_tmp17, & dgefa___cil_tmp17,
+                          1);
+        dgefa_tmp = idamax(dgefa___cil_tmp15, dgefa___cil_tmp16, dgefa___cil_tmp17);
+        funcExit();
+        add_entryToSTable("dgefa_tmp", ret_SymValue, ret_ConValue, & dgefa_tmp, 1);
+        dgefa_l = dgefa_tmp + dgefa_k;
+        handleAssignmentSymbolically("dgefa_l", "(+ dgefa_tmp dgefa_k)", & dgefa_l,
+                                     & dgefa_l, 1);
+        *(dgefa_ipvt + dgefa_k) = dgefa_l;
+        handleArraySymbolically("dgefa_ipvt", dgefa_k, "dgefa_l", dgefa_ipvt + dgefa_k,
+                                dgefa_ipvt + dgefa_k, 1);
+        if (! (*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) == 0)) {
+          if (! (dgefa_l == dgefa_k)) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                    dgefa_lda * dgefa_k + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "dgefa_a112",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_lda * dgefa_k + dgefa_k);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a113",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                   1);
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                    1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)) = dgefa_t;
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_t",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                    1);
+          }
+          dgefa_t = -1 / *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+          addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                  dgefa_lda * dgefa_k + dgefa_k);
+          add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a114",
+                                 dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                 1);
+          handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
+                                       & dgefa_t, & dgefa_t, 1);
+          dgefa___cil_tmp18 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp18", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp18, & dgefa___cil_tmp18, 1);
+          dgefa___cil_tmp19 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp19", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp19, & dgefa___cil_tmp19, 1);
+          dgefa___cil_tmp20 = 1;
+          add_entryToSTable("dgefa___cil_tmp20", "Constant", & dgefa___cil_tmp20,
+                            & dgefa___cil_tmp20, 1);
+          funcEntry("(int,dscal_r_n,variable,dgefa___cil_tmp18) (int,dscal_r_da,variable,dgefa_t) (int *,dscal_r_dx,variable,dgefa___cil_tmp19) (int,dscal_r_ic,variable,dgefa___cil_tmp20)",
+                    "dscal_r_i___0 dscal_r_nincx", "dscal_r");
+          dscal_r(dgefa___cil_tmp18, dgefa_t, dgefa___cil_tmp19, dgefa___cil_tmp20);
+          funcExit();
+          dgefa_j = dgefa_kp1;
+          handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
+                                       1);
+          {
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a115",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a116",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21) (int,daxpy_r_da,variable,dgefa_t) (int *,daxpy_r_dx,variable,dgefa___cil_tmp22) (int,daxpy_r_icx,variable,dgefa___cil_tmp23) (int *,daxpy_r_dy,variable,dgefa___cil_tmp24) (int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a117",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a118",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21) (int,daxpy_r_da,variable,dgefa_t) (int *,daxpy_r_dx,variable,dgefa___cil_tmp22) (int,daxpy_r_icx,variable,dgefa___cil_tmp23) (int *,daxpy_r_dy,variable,dgefa___cil_tmp24) (int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          }
+        } else {
+          *dgefa_info = dgefa_k;
+          handleArraySymbolically("dgefa_info", 0, "dgefa_k", dgefa_info, dgefa_info,
+                                  1);
+        }
+        dgefa_k ++;
+        handleAssignmentSymbolically("dgefa_k", "(+ dgefa_k 1)", & dgefa_k, & dgefa_k,
+                                     1);
+      }
+      if (dgefa_k < dgefa_nm1) {
+        dgefa_kp1 = dgefa_k + 1;
+        handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
+                                     1);
+        dgefa___cil_tmp15 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp15", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp15,
+                                     & dgefa___cil_tmp15, 1);
+        dgefa___cil_tmp16 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp16", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp16, & dgefa___cil_tmp16, 1);
+        dgefa___cil_tmp17 = 1;
+        add_entryToSTable("dgefa___cil_tmp17", "Constant", & dgefa___cil_tmp17, & dgefa___cil_tmp17,
+                          1);
+        dgefa_tmp = idamax(dgefa___cil_tmp15, dgefa___cil_tmp16, dgefa___cil_tmp17);
+        funcExit();
+        add_entryToSTable("dgefa_tmp", ret_SymValue, ret_ConValue, & dgefa_tmp, 1);
+        dgefa_l = dgefa_tmp + dgefa_k;
+        handleAssignmentSymbolically("dgefa_l", "(+ dgefa_tmp dgefa_k)", & dgefa_l,
+                                     & dgefa_l, 1);
+        *(dgefa_ipvt + dgefa_k) = dgefa_l;
+        handleArraySymbolically("dgefa_ipvt", dgefa_k, "dgefa_l", dgefa_ipvt + dgefa_k,
+                                dgefa_ipvt + dgefa_k, 1);
+        if (! (*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) == 0)) {
+          if (! (dgefa_l == dgefa_k)) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                    dgefa_lda * dgefa_k + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "dgefa_a119",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_lda * dgefa_k + dgefa_k);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a120",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                   1);
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                    1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)) = dgefa_t;
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_t",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                    1);
+          }
+          dgefa_t = -1 / *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+          addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                  dgefa_lda * dgefa_k + dgefa_k);
+          add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a121",
+                                 dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                 1);
+          handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
+                                       & dgefa_t, & dgefa_t, 1);
+          dgefa___cil_tmp18 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp18", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp18, & dgefa___cil_tmp18, 1);
+          dgefa___cil_tmp19 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp19", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp19, & dgefa___cil_tmp19, 1);
+          dgefa___cil_tmp20 = 1;
+          add_entryToSTable("dgefa___cil_tmp20", "Constant", & dgefa___cil_tmp20,
+                            & dgefa___cil_tmp20, 1);
+          funcEntry("(int,dscal_r_n,variable,dgefa___cil_tmp18) (int,dscal_r_da,variable,dgefa_t) (int *,dscal_r_dx,variable,dgefa___cil_tmp19) (int,dscal_r_ic,variable,dgefa___cil_tmp20)",
+                    "dscal_r_i___0 dscal_r_nincx", "dscal_r");
+          dscal_r(dgefa___cil_tmp18, dgefa_t, dgefa___cil_tmp19, dgefa___cil_tmp20);
+          funcExit();
+          dgefa_j = dgefa_kp1;
+          handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
+                                       1);
+          {
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a122",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a123",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21) (int,daxpy_r_da,variable,dgefa_t) (int *,daxpy_r_dx,variable,dgefa___cil_tmp22) (int,daxpy_r_icx,variable,dgefa___cil_tmp23) (int *,daxpy_r_dy,variable,dgefa___cil_tmp24) (int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a124",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a125",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21) (int,daxpy_r_da,variable,dgefa_t) (int *,daxpy_r_dx,variable,dgefa___cil_tmp22) (int,daxpy_r_icx,variable,dgefa___cil_tmp23) (int *,daxpy_r_dy,variable,dgefa___cil_tmp24) (int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          }
+        } else {
+          *dgefa_info = dgefa_k;
+          handleArraySymbolically("dgefa_info", 0, "dgefa_k", dgefa_info, dgefa_info,
+                                  1);
+        }
+        dgefa_k ++;
+        handleAssignmentSymbolically("dgefa_k", "(+ dgefa_k 1)", & dgefa_k, & dgefa_k,
+                                     1);
+      }
+      }
     }
+    *(dgefa_ipvt + (dgefa_n - 1)) = dgefa_n - 1;
+    handleArraySymbolically("dgefa_ipvt", dgefa_n - 1, "(- dgefa_n 1)", dgefa_ipvt + (dgefa_n - 1),
+                            dgefa_ipvt + (dgefa_n - 1), 1);
+    if (*(dgefa_a + (dgefa_lda * (dgefa_n - 1) + (dgefa_n - 1))) == 0) {
+      *dgefa_info = dgefa_n - 1;
+      handleArraySymbolically("dgefa_info", 0, "(- dgefa_n 1)", dgefa_info, dgefa_info,
+                              1);
     }
   } else {
-    kalle___cil_tmp5 = kalle_i___0 - 1;
-    handleAssignmentSymbolically("kalle___cil_tmp5", "(- kalle_i___0 1)", & kalle___cil_tmp5,
-                                 & kalle___cil_tmp5, 1);
-    funcEntry("(int,anka_j,variable,kalle___cil_tmp5)", "anka_tmp anka___cil_tmp3 anka___cil_tmp4 anka___cil_tmp5",
-              "anka");
-    kalle_tmp = anka(kalle___cil_tmp5);
-    funcExit();
-    add_entryToSTable("kalle_tmp", ret_SymValue, ret_ConValue, & kalle_tmp, 1);
-    {
-    kalle___cil_tmp4 = kalle_i___0 + kalle_tmp;
-    handleAssignmentSymbolically("kalle___cil_tmp4", "(+ kalle_i___0 kalle_tmp)",
-                                 & kalle___cil_tmp4, & kalle___cil_tmp4, 1);
-    {
-    mapConcolicValues("kalle___cil_tmp4", & kalle___cil_tmp4);
-    return (kalle___cil_tmp4);
+    *dgefa_info = 0;
+    handleArraySymbolically("dgefa_info", 0, "0", dgefa_info, dgefa_info, 1);
+    dgefa_nm1 = dgefa_n - 1;
+    handleAssignmentSymbolically("dgefa_nm1", "(- dgefa_n 1)", & dgefa_nm1, & dgefa_nm1,
+                                 1);
+    if (dgefa_nm1 >= 0) {
+      dgefa_k = 0;
+      add_entryToSTable("dgefa_k", "Constant", & dgefa_k, & dgefa_k, 1);
+      {
+      if (dgefa_k < dgefa_nm1) {
+        dgefa_kp1 = dgefa_k + 1;
+        handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
+                                     1);
+        dgefa___cil_tmp26 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp26", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp26,
+                                     & dgefa___cil_tmp26, 1);
+        dgefa___cil_tmp27 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp27", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp27, & dgefa___cil_tmp27, 1);
+        dgefa___cil_tmp28 = 1;
+        add_entryToSTable("dgefa___cil_tmp28", "Constant", & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+                          1);
+        dgefa_tmp___0 = idamax(dgefa___cil_tmp26, dgefa___cil_tmp27, dgefa___cil_tmp28);
+        funcExit();
+        add_entryToSTable("dgefa_tmp___0", ret_SymValue, ret_ConValue, & dgefa_tmp___0,
+                          1);
+        dgefa_l = dgefa_tmp___0 + dgefa_k;
+        handleAssignmentSymbolically("dgefa_l", "(+ dgefa_tmp___0 dgefa_k)", & dgefa_l,
+                                     & dgefa_l, 1);
+        *(dgefa_ipvt + dgefa_k) = dgefa_l;
+        handleArraySymbolically("dgefa_ipvt", dgefa_k, "dgefa_l", dgefa_ipvt + dgefa_k,
+                                dgefa_ipvt + dgefa_k, 1);
+        if (! (*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) == 0)) {
+          if (! (dgefa_l == dgefa_k)) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                    dgefa_lda * dgefa_k + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "dgefa_a126",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_lda * dgefa_k + dgefa_k);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a127",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                   1);
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                    1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)) = dgefa_t;
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_t",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                    1);
+          }
+          dgefa_t = -1 / *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+          addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                  dgefa_lda * dgefa_k + dgefa_k);
+          add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a128",
+                                 dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                 1);
+          handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
+                                       & dgefa_t, & dgefa_t, 1);
+          dgefa___cil_tmp29 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp29", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp29, & dgefa___cil_tmp29, 1);
+          dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp30, & dgefa___cil_tmp30, 1);
+          dgefa___cil_tmp31 = 1;
+          add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
+                            & dgefa___cil_tmp31, 1);
+          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp29) (int,dscal_ur_da,variable,dgefa_t) (int *,dscal_ur_dx,variable,dgefa___cil_tmp30) (int,dscal_ur_icx,variable,dgefa___cil_tmp31)",
+                    "dscal_ur_i___0 dscal_ur_m dscal_ur_nincx", "dscal_ur");
+          dscal_ur(dgefa___cil_tmp29, dgefa_t, dgefa___cil_tmp30, dgefa___cil_tmp31);
+          funcExit();
+          dgefa_j = dgefa_kp1;
+          handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
+                                       1);
+          {
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a129",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a130",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
+                                         1);
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
+                                         1);
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
+                                         1);
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32) (int,daxpy_ur_da,variable,dgefa_t) (int *,daxpy_ur_dx,variable,dgefa___cil_tmp33) (int,daxpy_ur_icx,variable,dgefa___cil_tmp34) (int *,daxpy_ur_dy,variable,dgefa___cil_tmp35) (int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
+                      "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a131",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a132",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
+                                         1);
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
+                                         1);
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
+                                         1);
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32) (int,daxpy_ur_da,variable,dgefa_t) (int *,daxpy_ur_dx,variable,dgefa___cil_tmp33) (int,daxpy_ur_icx,variable,dgefa___cil_tmp34) (int *,daxpy_ur_dy,variable,dgefa___cil_tmp35) (int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
+                      "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          }
+        } else {
+          *dgefa_info = dgefa_k;
+          handleArraySymbolically("dgefa_info", 0, "dgefa_k", dgefa_info, dgefa_info,
+                                  1);
+        }
+        dgefa_k ++;
+        handleAssignmentSymbolically("dgefa_k", "(+ dgefa_k 1)", & dgefa_k, & dgefa_k,
+                                     1);
+      }
+      if (dgefa_k < dgefa_nm1) {
+        dgefa_kp1 = dgefa_k + 1;
+        handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
+                                     1);
+        dgefa___cil_tmp26 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp26", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp26,
+                                     & dgefa___cil_tmp26, 1);
+        dgefa___cil_tmp27 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp27", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp27, & dgefa___cil_tmp27, 1);
+        dgefa___cil_tmp28 = 1;
+        add_entryToSTable("dgefa___cil_tmp28", "Constant", & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+                          1);
+        dgefa_tmp___0 = idamax(dgefa___cil_tmp26, dgefa___cil_tmp27, dgefa___cil_tmp28);
+        funcExit();
+        add_entryToSTable("dgefa_tmp___0", ret_SymValue, ret_ConValue, & dgefa_tmp___0,
+                          1);
+        dgefa_l = dgefa_tmp___0 + dgefa_k;
+        handleAssignmentSymbolically("dgefa_l", "(+ dgefa_tmp___0 dgefa_k)", & dgefa_l,
+                                     & dgefa_l, 1);
+        *(dgefa_ipvt + dgefa_k) = dgefa_l;
+        handleArraySymbolically("dgefa_ipvt", dgefa_k, "dgefa_l", dgefa_ipvt + dgefa_k,
+                                dgefa_ipvt + dgefa_k, 1);
+        if (! (*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) == 0)) {
+          if (! (dgefa_l == dgefa_k)) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                    dgefa_lda * dgefa_k + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "dgefa_a133",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)),
+                                         1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_lda * dgefa_k + dgefa_k);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a134",
+                                   dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                   1);
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_l), dgefa_a + (dgefa_lda * dgefa_k + dgefa_l),
+                                    1);
+            *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)) = dgefa_t;
+            handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_t",
+                                    dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                    1);
+          }
+          dgefa_t = -1 / *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k));
+          addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k))",
+                                  dgefa_lda * dgefa_k + dgefa_k);
+          add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_k + dgefa_k, "dgefa_a135",
+                                 dgefa_a + (dgefa_lda * dgefa_k + dgefa_k), dgefa_a + (dgefa_lda * dgefa_k + dgefa_k),
+                                 1);
+          handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
+                                       & dgefa_t, & dgefa_t, 1);
+          dgefa___cil_tmp29 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp29", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp29, & dgefa___cil_tmp29, 1);
+          dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp30, & dgefa___cil_tmp30, 1);
+          dgefa___cil_tmp31 = 1;
+          add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
+                            & dgefa___cil_tmp31, 1);
+          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp29) (int,dscal_ur_da,variable,dgefa_t) (int *,dscal_ur_dx,variable,dgefa___cil_tmp30) (int,dscal_ur_icx,variable,dgefa___cil_tmp31)",
+                    "dscal_ur_i___0 dscal_ur_m dscal_ur_nincx", "dscal_ur");
+          dscal_ur(dgefa___cil_tmp29, dgefa_t, dgefa___cil_tmp30, dgefa___cil_tmp31);
+          funcExit();
+          dgefa_j = dgefa_kp1;
+          handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
+                                       1);
+          {
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a136",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a137",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
+                                         1);
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
+                                         1);
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
+                                         1);
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32) (int,daxpy_ur_da,variable,dgefa_t) (int *,daxpy_ur_dx,variable,dgefa___cil_tmp33) (int,daxpy_ur_icx,variable,dgefa___cil_tmp34) (int *,daxpy_ur_dy,variable,dgefa___cil_tmp35) (int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
+                      "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          if (dgefa_j < dgefa_n) {
+            dgefa_t = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l));
+            addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                    dgefa_lda * dgefa_j + dgefa_l);
+            add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "dgefa_a138",
+                                   dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                   1);
+            handleAssignmentSymbolically("dgefa_t", "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l))",
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         & *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)),
+                                         1);
+            if (! (dgefa_l == dgefa_k)) {
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_l)) = *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k));
+              addEntryToVariableTable("*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_lda * dgefa_j + dgefa_k);
+              add_entryToArraySTable("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_a139",
+                                     dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                     1);
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_l, "*(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k))",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_l), dgefa_a + (dgefa_lda * dgefa_j + dgefa_l),
+                                      1);
+              *(dgefa_a + (dgefa_lda * dgefa_j + dgefa_k)) = dgefa_t;
+              handleArraySymbolically("dgefa_a", dgefa_lda * dgefa_j + dgefa_k, "dgefa_t",
+                                      dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
+                                      1);
+            }
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
+                                         1);
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
+                                         1);
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
+                                         1);
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32) (int,daxpy_ur_da,variable,dgefa_t) (int *,daxpy_ur_dx,variable,dgefa___cil_tmp33) (int,daxpy_ur_icx,variable,dgefa___cil_tmp34) (int *,daxpy_ur_dy,variable,dgefa___cil_tmp35) (int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
+                      "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
+            funcExit();
+            dgefa_j ++;
+            handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
+                                         1);
+          }
+          }
+        } else {
+          *dgefa_info = dgefa_k;
+          handleArraySymbolically("dgefa_info", 0, "dgefa_k", dgefa_info, dgefa_info,
+                                  1);
+        }
+        dgefa_k ++;
+        handleAssignmentSymbolically("dgefa_k", "(+ dgefa_k 1)", & dgefa_k, & dgefa_k,
+                                     1);
+      }
+      }
     }
+    *(dgefa_ipvt + (dgefa_n - 1)) = dgefa_n - 1;
+    handleArraySymbolically("dgefa_ipvt", dgefa_n - 1, "(- dgefa_n 1)", dgefa_ipvt + (dgefa_n - 1),
+                            dgefa_ipvt + (dgefa_n - 1), 1);
+    if (*(dgefa_a + (dgefa_lda * (dgefa_n - 1) + (dgefa_n - 1))) == 0) {
+      *dgefa_info = dgefa_n - 1;
+      handleArraySymbolically("dgefa_info", 0, "(- dgefa_n 1)", dgefa_info, dgefa_info,
+                              1);
     }
   }
+  return;
 }
 }
-int anka(int anka_j )
+void dgesl(int *dgesl_a , int dgesl_lda , int dgesl_n , int *dgesl_ipvt , int *dgesl_b ,
+           int dgesl_job , int dgesl_roll )
 {
-  int anka_tmp ;
-  int anka___cil_tmp3 ;
-  int anka___cil_tmp4 ;
-  int anka___cil_tmp5 ;
+  int dgesl_t ;
+  int dgesl_k ;
+  int dgesl_kb ;
+  int dgesl_l ;
+  int dgesl_nm1 ;
+  int dgesl_tmp ;
+  int dgesl_tmp___0 ;
+  int dgesl___cil_tmp15 ;
+  int *dgesl___cil_tmp16 ;
+  int dgesl___cil_tmp17 ;
+  int *dgesl___cil_tmp18 ;
+  int dgesl___cil_tmp19 ;
+  int *dgesl___cil_tmp20 ;
+  int dgesl___cil_tmp21 ;
+  int *dgesl___cil_tmp22 ;
+  int dgesl___cil_tmp23 ;
+  int *dgesl___cil_tmp24 ;
+  int dgesl___cil_tmp25 ;
+  int *dgesl___cil_tmp26 ;
+  int dgesl___cil_tmp27 ;
+  int dgesl___cil_tmp28 ;
+  int *dgesl___cil_tmp29 ;
+  int dgesl___cil_tmp30 ;
+  int *dgesl___cil_tmp31 ;
+  int dgesl___cil_tmp32 ;
+  int dgesl___cil_tmp33 ;
+  int *dgesl___cil_tmp34 ;
+  int dgesl___cil_tmp35 ;
+  int *dgesl___cil_tmp36 ;
+  int dgesl___cil_tmp37 ;
+  int *dgesl___cil_tmp38 ;
+  int dgesl___cil_tmp39 ;
+  int *dgesl___cil_tmp40 ;
+  int dgesl___cil_tmp41 ;
+  int *dgesl___cil_tmp42 ;
+  int dgesl___cil_tmp43 ;
+  int *dgesl___cil_tmp44 ;
+  int dgesl___cil_tmp45 ;
+  int dgesl___cil_tmp46 ;
+  int *dgesl___cil_tmp47 ;
+  int dgesl___cil_tmp48 ;
+  int *dgesl___cil_tmp49 ;
+  int dgesl___cil_tmp50 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (anka_j <= 0) {
-    {
-    anka___cil_tmp3 = 1;
-    add_entryToSTable("anka___cil_tmp3", "Constant", & anka___cil_tmp3, & anka___cil_tmp3,
-                      1);
-    {
-    mapConcolicValues("anka___cil_tmp3", & anka___cil_tmp3);
-    return (anka___cil_tmp3);
-    }
+  if (dgesl_roll >= 1) {
+    dgesl_nm1 = dgesl_n - 1;
+    handleAssignmentSymbolically("dgesl_nm1", "(- dgesl_n 1)", & dgesl_nm1, & dgesl_nm1,
+                                 1);
+    if (dgesl_job == 0) {
+      if (dgesl_nm1 >= 1) {
+        dgesl_k = 0;
+        add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
+        {
+        if (dgesl_k < dgesl_nm1) {
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt140", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          dgesl_t = *(dgesl_b + dgesl_l);
+          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b141", dgesl_b + dgesl_l,
+                                 dgesl_b + dgesl_l, 1);
+          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                       & *(dgesl_b + dgesl_l), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b142", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl___cil_tmp15 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp15", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp15, & dgesl___cil_tmp15, 1);
+          dgesl___cil_tmp16 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp16", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp16, & dgesl___cil_tmp16, 1);
+          dgesl___cil_tmp17 = 1;
+          add_entryToSTable("dgesl___cil_tmp17", "Constant", & dgesl___cil_tmp17,
+                            & dgesl___cil_tmp17, 1);
+          dgesl___cil_tmp18 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp18", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp18, & dgesl___cil_tmp18, 1);
+          dgesl___cil_tmp19 = 1;
+          add_entryToSTable("dgesl___cil_tmp19", "Constant", & dgesl___cil_tmp19,
+                            & dgesl___cil_tmp19, 1);
+          funcEntry("(int,daxpy_r_n,variable,dgesl___cil_tmp15) (int,daxpy_r_da,variable,dgesl_t) (int *,daxpy_r_dx,variable,dgesl___cil_tmp16) (int,daxpy_r_icx,variable,dgesl___cil_tmp17) (int *,daxpy_r_dy,variable,dgesl___cil_tmp18) (int,daxpy_r_icy,variable,dgesl___cil_tmp19)",
+                    "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+          daxpy_r(dgesl___cil_tmp15, dgesl_t, dgesl___cil_tmp16, dgesl___cil_tmp17,
+                  dgesl___cil_tmp18, dgesl___cil_tmp19);
+          funcExit();
+          dgesl_k ++;
+          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                       1);
+        }
+        if (dgesl_k < dgesl_nm1) {
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt143", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          dgesl_t = *(dgesl_b + dgesl_l);
+          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b144", dgesl_b + dgesl_l,
+                                 dgesl_b + dgesl_l, 1);
+          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                       & *(dgesl_b + dgesl_l), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b145", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl___cil_tmp15 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp15", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp15, & dgesl___cil_tmp15, 1);
+          dgesl___cil_tmp16 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp16", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp16, & dgesl___cil_tmp16, 1);
+          dgesl___cil_tmp17 = 1;
+          add_entryToSTable("dgesl___cil_tmp17", "Constant", & dgesl___cil_tmp17,
+                            & dgesl___cil_tmp17, 1);
+          dgesl___cil_tmp18 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp18", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp18, & dgesl___cil_tmp18, 1);
+          dgesl___cil_tmp19 = 1;
+          add_entryToSTable("dgesl___cil_tmp19", "Constant", & dgesl___cil_tmp19,
+                            & dgesl___cil_tmp19, 1);
+          funcEntry("(int,daxpy_r_n,variable,dgesl___cil_tmp15) (int,daxpy_r_da,variable,dgesl_t) (int *,daxpy_r_dx,variable,dgesl___cil_tmp16) (int,daxpy_r_icx,variable,dgesl___cil_tmp17) (int *,daxpy_r_dy,variable,dgesl___cil_tmp18) (int,daxpy_r_icy,variable,dgesl___cil_tmp19)",
+                    "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+          daxpy_r(dgesl___cil_tmp15, dgesl_t, dgesl___cil_tmp16, dgesl___cil_tmp17,
+                  dgesl___cil_tmp18, dgesl___cil_tmp19);
+          funcExit();
+          dgesl_k ++;
+          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                       1);
+        }
+        }
+      }
+      dgesl_kb = 0;
+      add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
+      {
+      if (dgesl_kb < dgesl_n) {
+        dgesl_k = dgesl_n - (dgesl_kb + 1);
+        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                     & dgesl_k, 1);
+        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b146", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a147",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_t = - *(dgesl_b + dgesl_k);
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b148", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
+                                     & dgesl_t, 1);
+        dgesl___cil_tmp20 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp20", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp20, & dgesl___cil_tmp20, 1);
+        dgesl___cil_tmp21 = 1;
+        add_entryToSTable("dgesl___cil_tmp21", "Constant", & dgesl___cil_tmp21, & dgesl___cil_tmp21,
+                          1);
+        dgesl___cil_tmp22 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp22", "(+ dgesl_b 0)", & dgesl___cil_tmp22,
+                                     & dgesl___cil_tmp22, 1);
+        dgesl___cil_tmp23 = 1;
+        add_entryToSTable("dgesl___cil_tmp23", "Constant", & dgesl___cil_tmp23, & dgesl___cil_tmp23,
+                          1);
+        funcEntry("(int,daxpy_r_n,variable,dgesl_k) (int,daxpy_r_da,variable,dgesl_t) (int *,daxpy_r_dx,variable,dgesl___cil_tmp20) (int,daxpy_r_icx,variable,dgesl___cil_tmp21) (int *,daxpy_r_dy,variable,dgesl___cil_tmp22) (int,daxpy_r_icy,variable,dgesl___cil_tmp23)",
+                  "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+        daxpy_r(dgesl_k, dgesl_t, dgesl___cil_tmp20, dgesl___cil_tmp21, dgesl___cil_tmp22,
+                dgesl___cil_tmp23);
+        funcExit();
+        dgesl_kb ++;
+        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                     1);
+      }
+      if (dgesl_kb < dgesl_n) {
+        dgesl_k = dgesl_n - (dgesl_kb + 1);
+        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                     & dgesl_k, 1);
+        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b149", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a150",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_t = - *(dgesl_b + dgesl_k);
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b151", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
+                                     & dgesl_t, 1);
+        dgesl___cil_tmp20 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp20", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp20, & dgesl___cil_tmp20, 1);
+        dgesl___cil_tmp21 = 1;
+        add_entryToSTable("dgesl___cil_tmp21", "Constant", & dgesl___cil_tmp21, & dgesl___cil_tmp21,
+                          1);
+        dgesl___cil_tmp22 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp22", "(+ dgesl_b 0)", & dgesl___cil_tmp22,
+                                     & dgesl___cil_tmp22, 1);
+        dgesl___cil_tmp23 = 1;
+        add_entryToSTable("dgesl___cil_tmp23", "Constant", & dgesl___cil_tmp23, & dgesl___cil_tmp23,
+                          1);
+        funcEntry("(int,daxpy_r_n,variable,dgesl_k) (int,daxpy_r_da,variable,dgesl_t) (int *,daxpy_r_dx,variable,dgesl___cil_tmp20) (int,daxpy_r_icx,variable,dgesl___cil_tmp21) (int *,daxpy_r_dy,variable,dgesl___cil_tmp22) (int,daxpy_r_icy,variable,dgesl___cil_tmp23)",
+                  "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+        daxpy_r(dgesl_k, dgesl_t, dgesl___cil_tmp20, dgesl___cil_tmp21, dgesl___cil_tmp22,
+                dgesl___cil_tmp23);
+        funcExit();
+        dgesl_kb ++;
+        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                     1);
+      }
+      }
+    } else {
+      dgesl_k = 0;
+      add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
+      {
+      if (dgesl_k < dgesl_n) {
+        dgesl___cil_tmp24 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp24", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp24, & dgesl___cil_tmp24, 1);
+        dgesl___cil_tmp25 = 1;
+        add_entryToSTable("dgesl___cil_tmp25", "Constant", & dgesl___cil_tmp25, & dgesl___cil_tmp25,
+                          1);
+        dgesl___cil_tmp26 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp26", "(+ dgesl_b 0)", & dgesl___cil_tmp26,
+                                     & dgesl___cil_tmp26, 1);
+        dgesl___cil_tmp27 = 1;
+        add_entryToSTable("dgesl___cil_tmp27", "Constant", & dgesl___cil_tmp27, & dgesl___cil_tmp27,
+                          1);
+        funcEntry("(int,ddot_r_n,variable,dgesl_k) (int *,ddot_r_dx,variable,dgesl___cil_tmp24) (int,ddot_r_icx,variable,dgesl___cil_tmp25) (int *,ddot_r_dy,variable,dgesl___cil_tmp26) (int,ddot_r_icy,variable,dgesl___cil_tmp27)",
+                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                  "ddot_r");
+        dgesl_t = ddot_r(dgesl_k, dgesl___cil_tmp24, dgesl___cil_tmp25, dgesl___cil_tmp26,
+                         dgesl___cil_tmp27);
+        funcExit();
+        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
+        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b152", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a153",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_k ++;
+        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                     1);
+      }
+      if (dgesl_k < dgesl_n) {
+        dgesl___cil_tmp24 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp24", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp24, & dgesl___cil_tmp24, 1);
+        dgesl___cil_tmp25 = 1;
+        add_entryToSTable("dgesl___cil_tmp25", "Constant", & dgesl___cil_tmp25, & dgesl___cil_tmp25,
+                          1);
+        dgesl___cil_tmp26 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp26", "(+ dgesl_b 0)", & dgesl___cil_tmp26,
+                                     & dgesl___cil_tmp26, 1);
+        dgesl___cil_tmp27 = 1;
+        add_entryToSTable("dgesl___cil_tmp27", "Constant", & dgesl___cil_tmp27, & dgesl___cil_tmp27,
+                          1);
+        funcEntry("(int,ddot_r_n,variable,dgesl_k) (int *,ddot_r_dx,variable,dgesl___cil_tmp24) (int,ddot_r_icx,variable,dgesl___cil_tmp25) (int *,ddot_r_dy,variable,dgesl___cil_tmp26) (int,ddot_r_icy,variable,dgesl___cil_tmp27)",
+                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                  "ddot_r");
+        dgesl_t = ddot_r(dgesl_k, dgesl___cil_tmp24, dgesl___cil_tmp25, dgesl___cil_tmp26,
+                         dgesl___cil_tmp27);
+        funcExit();
+        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
+        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b154", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a155",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_k ++;
+        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                     1);
+      }
+      }
+      if (dgesl_nm1 >= 1) {
+        dgesl_kb = 1;
+        add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
+        {
+        if (dgesl_kb < dgesl_nm1) {
+          dgesl_k = dgesl_n - (dgesl_kb + 1);
+          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                       & dgesl_k, 1);
+          dgesl___cil_tmp28 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp28", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp28, & dgesl___cil_tmp28, 1);
+          dgesl___cil_tmp29 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp29", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp29, & dgesl___cil_tmp29, 1);
+          dgesl___cil_tmp30 = 1;
+          add_entryToSTable("dgesl___cil_tmp30", "Constant", & dgesl___cil_tmp30,
+                            & dgesl___cil_tmp30, 1);
+          dgesl___cil_tmp31 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp31", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp31, & dgesl___cil_tmp31, 1);
+          dgesl___cil_tmp32 = 1;
+          add_entryToSTable("dgesl___cil_tmp32", "Constant", & dgesl___cil_tmp32,
+                            & dgesl___cil_tmp32, 1);
+          funcEntry("(int,ddot_r_n,variable,dgesl___cil_tmp28) (int *,ddot_r_dx,variable,dgesl___cil_tmp29) (int,ddot_r_icx,variable,dgesl___cil_tmp30) (int *,ddot_r_dy,variable,dgesl___cil_tmp31) (int,ddot_r_icy,variable,dgesl___cil_tmp32)",
+                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                    "ddot_r");
+          dgesl_tmp = ddot_r(dgesl___cil_tmp28, dgesl___cil_tmp29, dgesl___cil_tmp30,
+                             dgesl___cil_tmp31, dgesl___cil_tmp32);
+          funcExit();
+          add_entryToSTable("dgesl_tmp", ret_SymValue, ret_ConValue, & dgesl_tmp,
+                            1);
+          *(dgesl_b + dgesl_k) += dgesl_tmp;
+          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b156", dgesl_b + dgesl_k,
+                                 dgesl_b + dgesl_k, 1);
+          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp)",
+                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt157", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            dgesl_t = *(dgesl_b + dgesl_l);
+            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b158", dgesl_b + dgesl_l,
+                                   dgesl_b + dgesl_l, 1);
+            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                         & *(dgesl_b + dgesl_l), 1);
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b159", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl_kb ++;
+          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                       1);
+        }
+        if (dgesl_kb < dgesl_nm1) {
+          dgesl_k = dgesl_n - (dgesl_kb + 1);
+          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                       & dgesl_k, 1);
+          dgesl___cil_tmp28 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp28", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp28, & dgesl___cil_tmp28, 1);
+          dgesl___cil_tmp29 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp29", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp29, & dgesl___cil_tmp29, 1);
+          dgesl___cil_tmp30 = 1;
+          add_entryToSTable("dgesl___cil_tmp30", "Constant", & dgesl___cil_tmp30,
+                            & dgesl___cil_tmp30, 1);
+          dgesl___cil_tmp31 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp31", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp31, & dgesl___cil_tmp31, 1);
+          dgesl___cil_tmp32 = 1;
+          add_entryToSTable("dgesl___cil_tmp32", "Constant", & dgesl___cil_tmp32,
+                            & dgesl___cil_tmp32, 1);
+          funcEntry("(int,ddot_r_n,variable,dgesl___cil_tmp28) (int *,ddot_r_dx,variable,dgesl___cil_tmp29) (int,ddot_r_icx,variable,dgesl___cil_tmp30) (int *,ddot_r_dy,variable,dgesl___cil_tmp31) (int,ddot_r_icy,variable,dgesl___cil_tmp32)",
+                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                    "ddot_r");
+          dgesl_tmp = ddot_r(dgesl___cil_tmp28, dgesl___cil_tmp29, dgesl___cil_tmp30,
+                             dgesl___cil_tmp31, dgesl___cil_tmp32);
+          funcExit();
+          add_entryToSTable("dgesl_tmp", ret_SymValue, ret_ConValue, & dgesl_tmp,
+                            1);
+          *(dgesl_b + dgesl_k) += dgesl_tmp;
+          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b160", dgesl_b + dgesl_k,
+                                 dgesl_b + dgesl_k, 1);
+          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp)",
+                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt161", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            dgesl_t = *(dgesl_b + dgesl_l);
+            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b162", dgesl_b + dgesl_l,
+                                   dgesl_b + dgesl_l, 1);
+            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                         & *(dgesl_b + dgesl_l), 1);
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b163", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl_kb ++;
+          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                       1);
+        }
+        }
+      }
     }
   } else {
-    anka___cil_tmp5 = anka_j - 1;
-    handleAssignmentSymbolically("anka___cil_tmp5", "(- anka_j 1)", & anka___cil_tmp5,
-                                 & anka___cil_tmp5, 1);
-    funcEntry("(int,kalle_i___0,variable,anka___cil_tmp5)", "kalle_tmp kalle___cil_tmp3 kalle___cil_tmp4 kalle___cil_tmp5",
-              "kalle");
-    anka_tmp = kalle(anka___cil_tmp5);
-    funcExit();
-    add_entryToSTable("anka_tmp", ret_SymValue, ret_ConValue, & anka_tmp, 1);
+    dgesl_nm1 = dgesl_n - 1;
+    handleAssignmentSymbolically("dgesl_nm1", "(- dgesl_n 1)", & dgesl_nm1, & dgesl_nm1,
+                                 1);
+    if (dgesl_job == 0) {
+      if (dgesl_nm1 >= 1) {
+        dgesl_k = 0;
+        add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
+        {
+        if (dgesl_k < dgesl_nm1) {
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt164", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          dgesl_t = *(dgesl_b + dgesl_l);
+          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b165", dgesl_b + dgesl_l,
+                                 dgesl_b + dgesl_l, 1);
+          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                       & *(dgesl_b + dgesl_l), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b166", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl___cil_tmp33 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp33", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp33, & dgesl___cil_tmp33, 1);
+          dgesl___cil_tmp34 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp34", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp34, & dgesl___cil_tmp34, 1);
+          dgesl___cil_tmp35 = 1;
+          add_entryToSTable("dgesl___cil_tmp35", "Constant", & dgesl___cil_tmp35,
+                            & dgesl___cil_tmp35, 1);
+          dgesl___cil_tmp36 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp36", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp36, & dgesl___cil_tmp36, 1);
+          dgesl___cil_tmp37 = 1;
+          add_entryToSTable("dgesl___cil_tmp37", "Constant", & dgesl___cil_tmp37,
+                            & dgesl___cil_tmp37, 1);
+          funcEntry("(int,daxpy_ur_n,variable,dgesl___cil_tmp33) (int,daxpy_ur_da,variable,dgesl_t) (int *,daxpy_ur_dx,variable,dgesl___cil_tmp34) (int,daxpy_ur_icx,variable,dgesl___cil_tmp35) (int *,daxpy_ur_dy,variable,dgesl___cil_tmp36) (int,daxpy_ur_icy,variable,dgesl___cil_tmp37)",
+                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+          daxpy_ur(dgesl___cil_tmp33, dgesl_t, dgesl___cil_tmp34, dgesl___cil_tmp35,
+                   dgesl___cil_tmp36, dgesl___cil_tmp37);
+          funcExit();
+          dgesl_k ++;
+          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                       1);
+        }
+        if (dgesl_k < dgesl_nm1) {
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt167", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          dgesl_t = *(dgesl_b + dgesl_l);
+          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b168", dgesl_b + dgesl_l,
+                                 dgesl_b + dgesl_l, 1);
+          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                       & *(dgesl_b + dgesl_l), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b169", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl___cil_tmp33 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp33", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp33, & dgesl___cil_tmp33, 1);
+          dgesl___cil_tmp34 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp34", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp34, & dgesl___cil_tmp34, 1);
+          dgesl___cil_tmp35 = 1;
+          add_entryToSTable("dgesl___cil_tmp35", "Constant", & dgesl___cil_tmp35,
+                            & dgesl___cil_tmp35, 1);
+          dgesl___cil_tmp36 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp36", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp36, & dgesl___cil_tmp36, 1);
+          dgesl___cil_tmp37 = 1;
+          add_entryToSTable("dgesl___cil_tmp37", "Constant", & dgesl___cil_tmp37,
+                            & dgesl___cil_tmp37, 1);
+          funcEntry("(int,daxpy_ur_n,variable,dgesl___cil_tmp33) (int,daxpy_ur_da,variable,dgesl_t) (int *,daxpy_ur_dx,variable,dgesl___cil_tmp34) (int,daxpy_ur_icx,variable,dgesl___cil_tmp35) (int *,daxpy_ur_dy,variable,dgesl___cil_tmp36) (int,daxpy_ur_icy,variable,dgesl___cil_tmp37)",
+                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+          daxpy_ur(dgesl___cil_tmp33, dgesl_t, dgesl___cil_tmp34, dgesl___cil_tmp35,
+                   dgesl___cil_tmp36, dgesl___cil_tmp37);
+          funcExit();
+          dgesl_k ++;
+          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                       1);
+        }
+        }
+      }
+      dgesl_kb = 0;
+      add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
+      {
+      if (dgesl_kb < dgesl_n) {
+        dgesl_k = dgesl_n - (dgesl_kb + 1);
+        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                     & dgesl_k, 1);
+        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b170", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a171",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_t = - *(dgesl_b + dgesl_k);
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b172", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
+                                     & dgesl_t, 1);
+        dgesl___cil_tmp38 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp38", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp38, & dgesl___cil_tmp38, 1);
+        dgesl___cil_tmp39 = 1;
+        add_entryToSTable("dgesl___cil_tmp39", "Constant", & dgesl___cil_tmp39, & dgesl___cil_tmp39,
+                          1);
+        dgesl___cil_tmp40 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp40", "(+ dgesl_b 0)", & dgesl___cil_tmp40,
+                                     & dgesl___cil_tmp40, 1);
+        dgesl___cil_tmp41 = 1;
+        add_entryToSTable("dgesl___cil_tmp41", "Constant", & dgesl___cil_tmp41, & dgesl___cil_tmp41,
+                          1);
+        funcEntry("(int,daxpy_ur_n,variable,dgesl_k) (int,daxpy_ur_da,variable,dgesl_t) (int *,daxpy_ur_dx,variable,dgesl___cil_tmp38) (int,daxpy_ur_icx,variable,dgesl___cil_tmp39) (int *,daxpy_ur_dy,variable,dgesl___cil_tmp40) (int,daxpy_ur_icy,variable,dgesl___cil_tmp41)",
+                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+        daxpy_ur(dgesl_k, dgesl_t, dgesl___cil_tmp38, dgesl___cil_tmp39, dgesl___cil_tmp40,
+                 dgesl___cil_tmp41);
+        funcExit();
+        dgesl_kb ++;
+        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                     1);
+      }
+      if (dgesl_kb < dgesl_n) {
+        dgesl_k = dgesl_n - (dgesl_kb + 1);
+        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                     & dgesl_k, 1);
+        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b173", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a174",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_t = - *(dgesl_b + dgesl_k);
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b175", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
+                                     & dgesl_t, 1);
+        dgesl___cil_tmp38 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp38", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp38, & dgesl___cil_tmp38, 1);
+        dgesl___cil_tmp39 = 1;
+        add_entryToSTable("dgesl___cil_tmp39", "Constant", & dgesl___cil_tmp39, & dgesl___cil_tmp39,
+                          1);
+        dgesl___cil_tmp40 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp40", "(+ dgesl_b 0)", & dgesl___cil_tmp40,
+                                     & dgesl___cil_tmp40, 1);
+        dgesl___cil_tmp41 = 1;
+        add_entryToSTable("dgesl___cil_tmp41", "Constant", & dgesl___cil_tmp41, & dgesl___cil_tmp41,
+                          1);
+        funcEntry("(int,daxpy_ur_n,variable,dgesl_k) (int,daxpy_ur_da,variable,dgesl_t) (int *,daxpy_ur_dx,variable,dgesl___cil_tmp38) (int,daxpy_ur_icx,variable,dgesl___cil_tmp39) (int *,daxpy_ur_dy,variable,dgesl___cil_tmp40) (int,daxpy_ur_icy,variable,dgesl___cil_tmp41)",
+                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+        daxpy_ur(dgesl_k, dgesl_t, dgesl___cil_tmp38, dgesl___cil_tmp39, dgesl___cil_tmp40,
+                 dgesl___cil_tmp41);
+        funcExit();
+        dgesl_kb ++;
+        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                     1);
+      }
+      }
+    } else {
+      dgesl_k = 0;
+      add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
+      {
+      if (dgesl_k < dgesl_n) {
+        dgesl___cil_tmp42 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp42", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp42, & dgesl___cil_tmp42, 1);
+        dgesl___cil_tmp43 = 1;
+        add_entryToSTable("dgesl___cil_tmp43", "Constant", & dgesl___cil_tmp43, & dgesl___cil_tmp43,
+                          1);
+        dgesl___cil_tmp44 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp44", "(+ dgesl_b 0)", & dgesl___cil_tmp44,
+                                     & dgesl___cil_tmp44, 1);
+        dgesl___cil_tmp45 = 1;
+        add_entryToSTable("dgesl___cil_tmp45", "Constant", & dgesl___cil_tmp45, & dgesl___cil_tmp45,
+                          1);
+        funcEntry("(int,ddot_ur_n,variable,dgesl_k) (int *,ddot_ur_dx,variable,dgesl___cil_tmp42) (int,ddot_ur_icx,variable,dgesl___cil_tmp43) (int *,ddot_ur_dy,variable,dgesl___cil_tmp44) (int,ddot_ur_icy,variable,dgesl___cil_tmp45)",
+                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                  "ddot_ur");
+        dgesl_t = ddot_ur(dgesl_k, dgesl___cil_tmp42, dgesl___cil_tmp43, dgesl___cil_tmp44,
+                          dgesl___cil_tmp45);
+        funcExit();
+        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
+        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b176", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a177",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_k ++;
+        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                     1);
+      }
+      if (dgesl_k < dgesl_n) {
+        dgesl___cil_tmp42 = dgesl_a + dgesl_lda * dgesl_k;
+        handleAssignmentSymbolically("dgesl___cil_tmp42", "(+ dgesl_a (* dgesl_lda dgesl_k))",
+                                     & dgesl___cil_tmp42, & dgesl___cil_tmp42, 1);
+        dgesl___cil_tmp43 = 1;
+        add_entryToSTable("dgesl___cil_tmp43", "Constant", & dgesl___cil_tmp43, & dgesl___cil_tmp43,
+                          1);
+        dgesl___cil_tmp44 = dgesl_b + 0;
+        handleAssignmentSymbolically("dgesl___cil_tmp44", "(+ dgesl_b 0)", & dgesl___cil_tmp44,
+                                     & dgesl___cil_tmp44, 1);
+        dgesl___cil_tmp45 = 1;
+        add_entryToSTable("dgesl___cil_tmp45", "Constant", & dgesl___cil_tmp45, & dgesl___cil_tmp45,
+                          1);
+        funcEntry("(int,ddot_ur_n,variable,dgesl_k) (int *,ddot_ur_dx,variable,dgesl___cil_tmp42) (int,ddot_ur_icx,variable,dgesl___cil_tmp43) (int *,ddot_ur_dy,variable,dgesl___cil_tmp44) (int,ddot_ur_icy,variable,dgesl___cil_tmp45)",
+                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                  "ddot_ur");
+        dgesl_t = ddot_ur(dgesl_k, dgesl___cil_tmp42, dgesl___cil_tmp43, dgesl___cil_tmp44,
+                          dgesl___cil_tmp45);
+        funcExit();
+        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
+        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
+        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b178", dgesl_b + dgesl_k,
+                               dgesl_b + dgesl_k, 1);
+        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
+        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a179",
+                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
+                               1);
+        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
+                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+        dgesl_k ++;
+        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
+                                     1);
+      }
+      }
+      if (dgesl_nm1 >= 1) {
+        dgesl_kb = 1;
+        add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
+        {
+        if (dgesl_kb < dgesl_nm1) {
+          dgesl_k = dgesl_n - (dgesl_kb + 1);
+          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                       & dgesl_k, 1);
+          dgesl___cil_tmp46 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp46", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp46, & dgesl___cil_tmp46, 1);
+          dgesl___cil_tmp47 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp47", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp47, & dgesl___cil_tmp47, 1);
+          dgesl___cil_tmp48 = 1;
+          add_entryToSTable("dgesl___cil_tmp48", "Constant", & dgesl___cil_tmp48,
+                            & dgesl___cil_tmp48, 1);
+          dgesl___cil_tmp49 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp49", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp49, & dgesl___cil_tmp49, 1);
+          dgesl___cil_tmp50 = 1;
+          add_entryToSTable("dgesl___cil_tmp50", "Constant", & dgesl___cil_tmp50,
+                            & dgesl___cil_tmp50, 1);
+          funcEntry("(int,ddot_ur_n,variable,dgesl___cil_tmp46) (int *,ddot_ur_dx,variable,dgesl___cil_tmp47) (int,ddot_ur_icx,variable,dgesl___cil_tmp48) (int *,ddot_ur_dy,variable,dgesl___cil_tmp49) (int,ddot_ur_icy,variable,dgesl___cil_tmp50)",
+                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                    "ddot_ur");
+          dgesl_tmp___0 = ddot_ur(dgesl___cil_tmp46, dgesl___cil_tmp47, dgesl___cil_tmp48,
+                                  dgesl___cil_tmp49, dgesl___cil_tmp50);
+          funcExit();
+          add_entryToSTable("dgesl_tmp___0", ret_SymValue, ret_ConValue, & dgesl_tmp___0,
+                            1);
+          *(dgesl_b + dgesl_k) += dgesl_tmp___0;
+          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b180", dgesl_b + dgesl_k,
+                                 dgesl_b + dgesl_k, 1);
+          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp___0)",
+                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt181", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            dgesl_t = *(dgesl_b + dgesl_l);
+            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b182", dgesl_b + dgesl_l,
+                                   dgesl_b + dgesl_l, 1);
+            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                         & *(dgesl_b + dgesl_l), 1);
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b183", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl_kb ++;
+          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                       1);
+        }
+        if (dgesl_kb < dgesl_nm1) {
+          dgesl_k = dgesl_n - (dgesl_kb + 1);
+          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
+                                       & dgesl_k, 1);
+          dgesl___cil_tmp46 = dgesl_n - (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp46", "(- dgesl_n (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp46, & dgesl___cil_tmp46, 1);
+          dgesl___cil_tmp47 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp47", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
+                                       & dgesl___cil_tmp47, & dgesl___cil_tmp47, 1);
+          dgesl___cil_tmp48 = 1;
+          add_entryToSTable("dgesl___cil_tmp48", "Constant", & dgesl___cil_tmp48,
+                            & dgesl___cil_tmp48, 1);
+          dgesl___cil_tmp49 = dgesl_b + (dgesl_k + 1);
+          handleAssignmentSymbolically("dgesl___cil_tmp49", "(+ dgesl_b (+ dgesl_k 1))",
+                                       & dgesl___cil_tmp49, & dgesl___cil_tmp49, 1);
+          dgesl___cil_tmp50 = 1;
+          add_entryToSTable("dgesl___cil_tmp50", "Constant", & dgesl___cil_tmp50,
+                            & dgesl___cil_tmp50, 1);
+          funcEntry("(int,ddot_ur_n,variable,dgesl___cil_tmp46) (int *,ddot_ur_dx,variable,dgesl___cil_tmp47) (int,ddot_ur_icx,variable,dgesl___cil_tmp48) (int *,ddot_ur_dy,variable,dgesl___cil_tmp49) (int,ddot_ur_icy,variable,dgesl___cil_tmp50)",
+                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                    "ddot_ur");
+          dgesl_tmp___0 = ddot_ur(dgesl___cil_tmp46, dgesl___cil_tmp47, dgesl___cil_tmp48,
+                                  dgesl___cil_tmp49, dgesl___cil_tmp50);
+          funcExit();
+          add_entryToSTable("dgesl_tmp___0", ret_SymValue, ret_ConValue, & dgesl_tmp___0,
+                            1);
+          *(dgesl_b + dgesl_k) += dgesl_tmp___0;
+          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b184", dgesl_b + dgesl_k,
+                                 dgesl_b + dgesl_k, 1);
+          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp___0)",
+                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
+          dgesl_l = *(dgesl_ipvt + dgesl_k);
+          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
+          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt185", dgesl_ipvt + dgesl_k,
+                                 dgesl_ipvt + dgesl_k, 1);
+          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
+                                       & *(dgesl_ipvt + dgesl_k), 1);
+          if (! (dgesl_l == dgesl_k)) {
+            dgesl_t = *(dgesl_b + dgesl_l);
+            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
+            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b186", dgesl_b + dgesl_l,
+                                   dgesl_b + dgesl_l, 1);
+            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
+                                         & *(dgesl_b + dgesl_l), 1);
+            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
+            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
+            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b187", dgesl_b + dgesl_k,
+                                   dgesl_b + dgesl_k, 1);
+            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
+                                    dgesl_b + dgesl_l, 1);
+            *(dgesl_b + dgesl_k) = dgesl_t;
+            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
+                                    dgesl_b + dgesl_k, 1);
+          }
+          dgesl_kb ++;
+          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
+                                       1);
+        }
+        }
+      }
+    }
+  }
+  return;
+}
+}
+void daxpy_r(int daxpy_r_n , int daxpy_r_da , int *daxpy_r_dx , int daxpy_r_icx ,
+             int *daxpy_r_dy , int daxpy_r_icy )
+{
+  int daxpy_r_i___0 ;
+  int daxpy_r_ix ;
+  int daxpy_r_iy ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (daxpy_r_n <= 0) {
+    return;
+  }
+  if (daxpy_r_da == 0) {
+    return;
+  }
+  if (daxpy_r_icx != 1) {
+    goto _L;
+  } else
+  if (daxpy_r_icy != 1) {
+    _L:
+    daxpy_r_ix = 1;
+    add_entryToSTable("daxpy_r_ix", "Constant", & daxpy_r_ix, & daxpy_r_ix, 1);
+    daxpy_r_iy = 1;
+    add_entryToSTable("daxpy_r_iy", "Constant", & daxpy_r_iy, & daxpy_r_iy, 1);
+    if (daxpy_r_icx < 0) {
+      daxpy_r_ix = (- daxpy_r_n + 1) * daxpy_r_icx + 1;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ (* (+ (- daxpy_r_n) 1) daxpy_r_icx) 1)",
+                                   & daxpy_r_ix, & daxpy_r_ix, 1);
+    }
+    if (daxpy_r_icy < 0) {
+      daxpy_r_iy = (- daxpy_r_n + 1) * daxpy_r_icy + 1;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ (* (+ (- daxpy_r_n) 1) daxpy_r_icy) 1)",
+                                   & daxpy_r_iy, & daxpy_r_iy, 1);
+    }
+    daxpy_r_i___0 = 0;
+    add_entryToSTable("daxpy_r_i___0", "Constant", & daxpy_r_i___0, & daxpy_r_i___0,
+                      1);
     {
-    anka___cil_tmp4 = anka_j + anka_tmp;
-    handleAssignmentSymbolically("anka___cil_tmp4", "(+ anka_j anka_tmp)", & anka___cil_tmp4,
-                                 & anka___cil_tmp4, 1);
+    if (daxpy_r_i___0 < daxpy_r_n) {
+      *(daxpy_r_dy + daxpy_r_iy) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_ix);
+      addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_iy)", daxpy_r_iy);
+      add_entryToArraySTable("daxpy_r_dy", daxpy_r_iy, "daxpy_r_dy188", daxpy_r_dy + daxpy_r_iy,
+                             daxpy_r_dy + daxpy_r_iy, 1);
+      addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_ix)", daxpy_r_ix);
+      add_entryToArraySTable("daxpy_r_dx", daxpy_r_ix, "daxpy_r_dx189", daxpy_r_dx + daxpy_r_ix,
+                             daxpy_r_dx + daxpy_r_ix, 1);
+      handleArraySymbolically("daxpy_r_dy", daxpy_r_iy, "(+ *(daxpy_r_dy + daxpy_r_iy) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_ix)))",
+                              daxpy_r_dy + daxpy_r_iy, daxpy_r_dy + daxpy_r_iy, 1);
+      daxpy_r_ix += daxpy_r_icx;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ daxpy_r_ix daxpy_r_icx)", & daxpy_r_ix,
+                                   & daxpy_r_ix, 1);
+      daxpy_r_iy += daxpy_r_icy;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ daxpy_r_iy daxpy_r_icy)", & daxpy_r_iy,
+                                   & daxpy_r_iy, 1);
+      daxpy_r_i___0 ++;
+      handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                   & daxpy_r_i___0, 1);
+    }
+    if (daxpy_r_i___0 < daxpy_r_n) {
+      *(daxpy_r_dy + daxpy_r_iy) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_ix);
+      addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_iy)", daxpy_r_iy);
+      add_entryToArraySTable("daxpy_r_dy", daxpy_r_iy, "daxpy_r_dy190", daxpy_r_dy + daxpy_r_iy,
+                             daxpy_r_dy + daxpy_r_iy, 1);
+      addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_ix)", daxpy_r_ix);
+      add_entryToArraySTable("daxpy_r_dx", daxpy_r_ix, "daxpy_r_dx191", daxpy_r_dx + daxpy_r_ix,
+                             daxpy_r_dx + daxpy_r_ix, 1);
+      handleArraySymbolically("daxpy_r_dy", daxpy_r_iy, "(+ *(daxpy_r_dy + daxpy_r_iy) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_ix)))",
+                              daxpy_r_dy + daxpy_r_iy, daxpy_r_dy + daxpy_r_iy, 1);
+      daxpy_r_ix += daxpy_r_icx;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ daxpy_r_ix daxpy_r_icx)", & daxpy_r_ix,
+                                   & daxpy_r_ix, 1);
+      daxpy_r_iy += daxpy_r_icy;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ daxpy_r_iy daxpy_r_icy)", & daxpy_r_iy,
+                                   & daxpy_r_iy, 1);
+      daxpy_r_i___0 ++;
+      handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                   & daxpy_r_i___0, 1);
+    }
+    }
+    return;
+  }
+  daxpy_r_i___0 = 0;
+  add_entryToSTable("daxpy_r_i___0", "Constant", & daxpy_r_i___0, & daxpy_r_i___0,
+                    1);
+  {
+  if (daxpy_r_i___0 < daxpy_r_n) {
+    *(daxpy_r_dy + daxpy_r_i___0) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_i___0);
+    addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dy", daxpy_r_i___0, "daxpy_r_dy192", daxpy_r_dy + daxpy_r_i___0,
+                           daxpy_r_dy + daxpy_r_i___0, 1);
+    addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dx", daxpy_r_i___0, "daxpy_r_dx193", daxpy_r_dx + daxpy_r_i___0,
+                           daxpy_r_dx + daxpy_r_i___0, 1);
+    handleArraySymbolically("daxpy_r_dy", daxpy_r_i___0, "(+ *(daxpy_r_dy + daxpy_r_i___0) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_i___0)))",
+                            daxpy_r_dy + daxpy_r_i___0, daxpy_r_dy + daxpy_r_i___0,
+                            1);
+    daxpy_r_i___0 ++;
+    handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                 & daxpy_r_i___0, 1);
+  }
+  if (daxpy_r_i___0 < daxpy_r_n) {
+    *(daxpy_r_dy + daxpy_r_i___0) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_i___0);
+    addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dy", daxpy_r_i___0, "daxpy_r_dy194", daxpy_r_dy + daxpy_r_i___0,
+                           daxpy_r_dy + daxpy_r_i___0, 1);
+    addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dx", daxpy_r_i___0, "daxpy_r_dx195", daxpy_r_dx + daxpy_r_i___0,
+                           daxpy_r_dx + daxpy_r_i___0, 1);
+    handleArraySymbolically("daxpy_r_dy", daxpy_r_i___0, "(+ *(daxpy_r_dy + daxpy_r_i___0) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_i___0)))",
+                            daxpy_r_dy + daxpy_r_i___0, daxpy_r_dy + daxpy_r_i___0,
+                            1);
+    daxpy_r_i___0 ++;
+    handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                 & daxpy_r_i___0, 1);
+  }
+  }
+  return;
+}
+}
+int ddot_r(int ddot_r_n , int *ddot_r_dx , int ddot_r_icx , int *ddot_r_dy , int ddot_r_icy )
+{
+  int ddot_r_dtemp ;
+  int ddot_r_i___0 ;
+  int ddot_r_ix ;
+  int ddot_r_iy ;
+  int ddot_r___cil_tmp10 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  ddot_r_dtemp = 0;
+  add_entryToSTable("ddot_r_dtemp", "Constant", & ddot_r_dtemp, & ddot_r_dtemp, 1);
+  if (ddot_r_n <= 0) {
     {
-    mapConcolicValues("anka___cil_tmp4", & anka___cil_tmp4);
-    return (anka___cil_tmp4);
+    ddot_r___cil_tmp10 = 0;
+    add_entryToSTable("ddot_r___cil_tmp10", "Constant", & ddot_r___cil_tmp10, & ddot_r___cil_tmp10,
+                      1);
+    {
+    mapConcolicValues("ddot_r___cil_tmp10", & ddot_r___cil_tmp10);
+    return (ddot_r___cil_tmp10);
     }
     }
   }
+  if (ddot_r_icx != 1) {
+    goto _L;
+  } else
+  if (ddot_r_icy != 1) {
+    _L:
+    ddot_r_ix = 0;
+    add_entryToSTable("ddot_r_ix", "Constant", & ddot_r_ix, & ddot_r_ix, 1);
+    ddot_r_iy = 0;
+    add_entryToSTable("ddot_r_iy", "Constant", & ddot_r_iy, & ddot_r_iy, 1);
+    if (ddot_r_icx < 0) {
+      ddot_r_ix = (- ddot_r_n + 1) * ddot_r_icx;
+      handleAssignmentSymbolically("ddot_r_ix", "(* (+ (- ddot_r_n) 1) ddot_r_icx)",
+                                   & ddot_r_ix, & ddot_r_ix, 1);
+    }
+    if (ddot_r_icy < 0) {
+      ddot_r_iy = (- ddot_r_n + 1) * ddot_r_icy;
+      handleAssignmentSymbolically("ddot_r_iy", "(* (+ (- ddot_r_n) 1) ddot_r_icy)",
+                                   & ddot_r_iy, & ddot_r_iy, 1);
+    }
+    ddot_r_i___0 = 0;
+    add_entryToSTable("ddot_r_i___0", "Constant", & ddot_r_i___0, & ddot_r_i___0,
+                      1);
+    {
+    if (ddot_r_i___0 < ddot_r_n) {
+      ddot_r_dtemp += *(ddot_r_dx + ddot_r_ix) * *(ddot_r_dy + ddot_r_iy);
+      addEntryToVariableTable("*(ddot_r_dx + ddot_r_ix)", ddot_r_ix);
+      add_entryToArraySTable("ddot_r_dx", ddot_r_ix, "ddot_r_dx196", ddot_r_dx + ddot_r_ix,
+                             ddot_r_dx + ddot_r_ix, 1);
+      addEntryToVariableTable("*(ddot_r_dy + ddot_r_iy)", ddot_r_iy);
+      add_entryToArraySTable("ddot_r_dy", ddot_r_iy, "ddot_r_dy197", ddot_r_dy + ddot_r_iy,
+                             ddot_r_dy + ddot_r_iy, 1);
+      handleAssignmentSymbolically("ddot_r_dtemp", "(+ ddot_r_dtemp (* *(ddot_r_dx + ddot_r_ix) *(ddot_r_dy + ddot_r_iy)))",
+                                   & ddot_r_dtemp, & ddot_r_dtemp, 1);
+      ddot_r_ix += ddot_r_icx;
+      handleAssignmentSymbolically("ddot_r_ix", "(+ ddot_r_ix ddot_r_icx)", & ddot_r_ix,
+                                   & ddot_r_ix, 1);
+      ddot_r_iy += ddot_r_icy;
+      handleAssignmentSymbolically("ddot_r_iy", "(+ ddot_r_iy ddot_r_icy)", & ddot_r_iy,
+                                   & ddot_r_iy, 1);
+      ddot_r_i___0 ++;
+      handleAssignmentSymbolically("ddot_r_i___0", "(+ ddot_r_i___0 1)", & ddot_r_i___0,
+                                   & ddot_r_i___0, 1);
+    }
+    if (ddot_r_i___0 < ddot_r_n) {
+      ddot_r_dtemp += *(ddot_r_dx + ddot_r_ix) * *(ddot_r_dy + ddot_r_iy);
+      addEntryToVariableTable("*(ddot_r_dx + ddot_r_ix)", ddot_r_ix);
+      add_entryToArraySTable("ddot_r_dx", ddot_r_ix, "ddot_r_dx198", ddot_r_dx + ddot_r_ix,
+                             ddot_r_dx + ddot_r_ix, 1);
+      addEntryToVariableTable("*(ddot_r_dy + ddot_r_iy)", ddot_r_iy);
+      add_entryToArraySTable("ddot_r_dy", ddot_r_iy, "ddot_r_dy199", ddot_r_dy + ddot_r_iy,
+                             ddot_r_dy + ddot_r_iy, 1);
+      handleAssignmentSymbolically("ddot_r_dtemp", "(+ ddot_r_dtemp (* *(ddot_r_dx + ddot_r_ix) *(ddot_r_dy + ddot_r_iy)))",
+                                   & ddot_r_dtemp, & ddot_r_dtemp, 1);
+      ddot_r_ix += ddot_r_icx;
+      handleAssignmentSymbolically("ddot_r_ix", "(+ ddot_r_ix ddot_r_icx)", & ddot_r_ix,
+                                   & ddot_r_ix, 1);
+      ddot_r_iy += ddot_r_icy;
+      handleAssignmentSymbolically("ddot_r_iy", "(+ ddot_r_iy ddot_r_icy)", & ddot_r_iy,
+                                   & ddot_r_iy, 1);
+      ddot_r_i___0 ++;
+      handleAssignmentSymbolically("ddot_r_i___0", "(+ ddot_r_i___0 1)", & ddot_r_i___0,
+                                   & ddot_r_i___0, 1);
+    }
+    }
+    {
+    mapConcolicValues("ddot_r_dtemp", & ddot_r_dtemp);
+    return (ddot_r_dtemp);
+    }
+  }
+  ddot_r_i___0 = 0;
+  add_entryToSTable("ddot_r_i___0", "Constant", & ddot_r_i___0, & ddot_r_i___0, 1);
+  {
+  if (ddot_r_i___0 < ddot_r_n) {
+    ddot_r_dtemp += *(ddot_r_dx + ddot_r_i___0) * *(ddot_r_dy + ddot_r_i___0);
+    addEntryToVariableTable("*(ddot_r_dx + ddot_r_i___0)", ddot_r_i___0);
+    add_entryToArraySTable("ddot_r_dx", ddot_r_i___0, "ddot_r_dx1100", ddot_r_dx + ddot_r_i___0,
+                           ddot_r_dx + ddot_r_i___0, 1);
+    addEntryToVariableTable("*(ddot_r_dy + ddot_r_i___0)", ddot_r_i___0);
+    add_entryToArraySTable("ddot_r_dy", ddot_r_i___0, "ddot_r_dy1101", ddot_r_dy + ddot_r_i___0,
+                           ddot_r_dy + ddot_r_i___0, 1);
+    handleAssignmentSymbolically("ddot_r_dtemp", "(+ ddot_r_dtemp (* *(ddot_r_dx + ddot_r_i___0) *(ddot_r_dy + ddot_r_i___0)))",
+                                 & ddot_r_dtemp, & ddot_r_dtemp, 1);
+    ddot_r_i___0 ++;
+    handleAssignmentSymbolically("ddot_r_i___0", "(+ ddot_r_i___0 1)", & ddot_r_i___0,
+                                 & ddot_r_i___0, 1);
+  }
+  if (ddot_r_i___0 < ddot_r_n) {
+    ddot_r_dtemp += *(ddot_r_dx + ddot_r_i___0) * *(ddot_r_dy + ddot_r_i___0);
+    addEntryToVariableTable("*(ddot_r_dx + ddot_r_i___0)", ddot_r_i___0);
+    add_entryToArraySTable("ddot_r_dx", ddot_r_i___0, "ddot_r_dx1102", ddot_r_dx + ddot_r_i___0,
+                           ddot_r_dx + ddot_r_i___0, 1);
+    addEntryToVariableTable("*(ddot_r_dy + ddot_r_i___0)", ddot_r_i___0);
+    add_entryToArraySTable("ddot_r_dy", ddot_r_i___0, "ddot_r_dy1103", ddot_r_dy + ddot_r_i___0,
+                           ddot_r_dy + ddot_r_i___0, 1);
+    handleAssignmentSymbolically("ddot_r_dtemp", "(+ ddot_r_dtemp (* *(ddot_r_dx + ddot_r_i___0) *(ddot_r_dy + ddot_r_i___0)))",
+                                 & ddot_r_dtemp, & ddot_r_dtemp, 1);
+    ddot_r_i___0 ++;
+    handleAssignmentSymbolically("ddot_r_i___0", "(+ ddot_r_i___0 1)", & ddot_r_i___0,
+                                 & ddot_r_i___0, 1);
+  }
+  }
+  {
+  mapConcolicValues("ddot_r_dtemp", & ddot_r_dtemp);
+  return (ddot_r_dtemp);
+  }
+}
+}
+void dscal_r(int dscal_r_n , int dscal_r_da , int *dscal_r_dx , int dscal_r_ic )
+{
+  int dscal_r_i___0 ;
+  int dscal_r_nincx ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (dscal_r_n <= 0) {
+    return;
+  }
+  if (dscal_r_ic == 1) {
+    printf((char const * __restrict )"increment is 1\n");
+  } else {
+    dscal_r_nincx = dscal_r_n * dscal_r_ic;
+    handleAssignmentSymbolically("dscal_r_nincx", "(* dscal_r_n dscal_r_ic)", & dscal_r_nincx,
+                                 & dscal_r_nincx, 1);
+    dscal_r_i___0 = 0;
+    add_entryToSTable("dscal_r_i___0", "Constant", & dscal_r_i___0, & dscal_r_i___0,
+                      1);
+    {
+    if (dscal_r_i___0 < dscal_r_nincx) {
+      *(dscal_r_dx + dscal_r_i___0) = dscal_r_da * *(dscal_r_dx + dscal_r_i___0);
+      addEntryToVariableTable("*(dscal_r_dx + dscal_r_i___0)", dscal_r_i___0);
+      add_entryToArraySTable("dscal_r_dx", dscal_r_i___0, "dscal_r_dx1104", dscal_r_dx + dscal_r_i___0,
+                             dscal_r_dx + dscal_r_i___0, 1);
+      handleArraySymbolically("dscal_r_dx", dscal_r_i___0, "(* dscal_r_da *(dscal_r_dx + dscal_r_i___0))",
+                              dscal_r_dx + dscal_r_i___0, dscal_r_dx + dscal_r_i___0,
+                              1);
+      dscal_r_i___0 += dscal_r_ic;
+      handleAssignmentSymbolically("dscal_r_i___0", "(+ dscal_r_i___0 dscal_r_ic)",
+                                   & dscal_r_i___0, & dscal_r_i___0, 1);
+    }
+    if (dscal_r_i___0 < dscal_r_nincx) {
+      *(dscal_r_dx + dscal_r_i___0) = dscal_r_da * *(dscal_r_dx + dscal_r_i___0);
+      addEntryToVariableTable("*(dscal_r_dx + dscal_r_i___0)", dscal_r_i___0);
+      add_entryToArraySTable("dscal_r_dx", dscal_r_i___0, "dscal_r_dx1105", dscal_r_dx + dscal_r_i___0,
+                             dscal_r_dx + dscal_r_i___0, 1);
+      handleArraySymbolically("dscal_r_dx", dscal_r_i___0, "(* dscal_r_da *(dscal_r_dx + dscal_r_i___0))",
+                              dscal_r_dx + dscal_r_i___0, dscal_r_dx + dscal_r_i___0,
+                              1);
+      dscal_r_i___0 += dscal_r_ic;
+      handleAssignmentSymbolically("dscal_r_i___0", "(+ dscal_r_i___0 dscal_r_ic)",
+                                   & dscal_r_i___0, & dscal_r_i___0, 1);
+    }
+    }
+    return;
+  }
+  dscal_r_i___0 = 0;
+  add_entryToSTable("dscal_r_i___0", "Constant", & dscal_r_i___0, & dscal_r_i___0,
+                    1);
+  {
+  if (dscal_r_i___0 < dscal_r_n) {
+    *(dscal_r_dx + dscal_r_i___0) = dscal_r_da * *(dscal_r_dx + dscal_r_i___0);
+    addEntryToVariableTable("*(dscal_r_dx + dscal_r_i___0)", dscal_r_i___0);
+    add_entryToArraySTable("dscal_r_dx", dscal_r_i___0, "dscal_r_dx1106", dscal_r_dx + dscal_r_i___0,
+                           dscal_r_dx + dscal_r_i___0, 1);
+    handleArraySymbolically("dscal_r_dx", dscal_r_i___0, "(* dscal_r_da *(dscal_r_dx + dscal_r_i___0))",
+                            dscal_r_dx + dscal_r_i___0, dscal_r_dx + dscal_r_i___0,
+                            1);
+    dscal_r_i___0 ++;
+    handleAssignmentSymbolically("dscal_r_i___0", "(+ dscal_r_i___0 1)", & dscal_r_i___0,
+                                 & dscal_r_i___0, 1);
+  }
+  if (dscal_r_i___0 < dscal_r_n) {
+    *(dscal_r_dx + dscal_r_i___0) = dscal_r_da * *(dscal_r_dx + dscal_r_i___0);
+    addEntryToVariableTable("*(dscal_r_dx + dscal_r_i___0)", dscal_r_i___0);
+    add_entryToArraySTable("dscal_r_dx", dscal_r_i___0, "dscal_r_dx1107", dscal_r_dx + dscal_r_i___0,
+                           dscal_r_dx + dscal_r_i___0, 1);
+    handleArraySymbolically("dscal_r_dx", dscal_r_i___0, "(* dscal_r_da *(dscal_r_dx + dscal_r_i___0))",
+                            dscal_r_dx + dscal_r_i___0, dscal_r_dx + dscal_r_i___0,
+                            1);
+    dscal_r_i___0 ++;
+    handleAssignmentSymbolically("dscal_r_i___0", "(+ dscal_r_i___0 1)", & dscal_r_i___0,
+                                 & dscal_r_i___0, 1);
+  }
+  }
+  return;
+}
+}
+void daxpy_ur(int daxpy_ur_n , int daxpy_ur_da , int *daxpy_ur_dx , int daxpy_ur_icx ,
+              int *daxpy_ur_dy , int daxpy_ur_icy )
+{
+  int daxpy_ur_i___0 ;
+  int daxpy_ur_ix ;
+  int daxpy_ur_iy ;
+  int daxpy_ur_m ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (daxpy_ur_n <= 0) {
+    return;
+  }
+  if (daxpy_ur_da == 0) {
+    return;
+  }
+  if (daxpy_ur_icx != 1) {
+    goto _L;
+  } else
+  if (daxpy_ur_icy != 1) {
+    _L:
+    daxpy_ur_ix = 1;
+    add_entryToSTable("daxpy_ur_ix", "Constant", & daxpy_ur_ix, & daxpy_ur_ix, 1);
+    daxpy_ur_iy = 1;
+    add_entryToSTable("daxpy_ur_iy", "Constant", & daxpy_ur_iy, & daxpy_ur_iy, 1);
+    if (daxpy_ur_icx < 0) {
+      daxpy_ur_ix = (- daxpy_ur_n + 1) * daxpy_ur_icx + 1;
+      handleAssignmentSymbolically("daxpy_ur_ix", "(+ (* (+ (- daxpy_ur_n) 1) daxpy_ur_icx) 1)",
+                                   & daxpy_ur_ix, & daxpy_ur_ix, 1);
+    }
+    if (daxpy_ur_icy < 0) {
+      daxpy_ur_iy = (- daxpy_ur_n + 1) * daxpy_ur_icy + 1;
+      handleAssignmentSymbolically("daxpy_ur_iy", "(+ (* (+ (- daxpy_ur_n) 1) daxpy_ur_icy) 1)",
+                                   & daxpy_ur_iy, & daxpy_ur_iy, 1);
+    }
+    daxpy_ur_i___0 = 0;
+    add_entryToSTable("daxpy_ur_i___0", "Constant", & daxpy_ur_i___0, & daxpy_ur_i___0,
+                      1);
+    {
+    if (daxpy_ur_i___0 < daxpy_ur_n) {
+      *(daxpy_ur_dy + daxpy_ur_iy) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_ix);
+      addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_iy)", daxpy_ur_iy);
+      add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_iy, "daxpy_ur_dy1108", daxpy_ur_dy + daxpy_ur_iy,
+                             daxpy_ur_dy + daxpy_ur_iy, 1);
+      addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_ix)", daxpy_ur_ix);
+      add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_ix, "daxpy_ur_dx1109", daxpy_ur_dx + daxpy_ur_ix,
+                             daxpy_ur_dx + daxpy_ur_ix, 1);
+      handleArraySymbolically("daxpy_ur_dy", daxpy_ur_iy, "(+ *(daxpy_ur_dy + daxpy_ur_iy) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_ix)))",
+                              daxpy_ur_dy + daxpy_ur_iy, daxpy_ur_dy + daxpy_ur_iy,
+                              1);
+      daxpy_ur_ix += daxpy_ur_icx;
+      handleAssignmentSymbolically("daxpy_ur_ix", "(+ daxpy_ur_ix daxpy_ur_icx)",
+                                   & daxpy_ur_ix, & daxpy_ur_ix, 1);
+      daxpy_ur_iy += daxpy_ur_icy;
+      handleAssignmentSymbolically("daxpy_ur_iy", "(+ daxpy_ur_iy daxpy_ur_icy)",
+                                   & daxpy_ur_iy, & daxpy_ur_iy, 1);
+      daxpy_ur_i___0 ++;
+      handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 1)", & daxpy_ur_i___0,
+                                   & daxpy_ur_i___0, 1);
+    }
+    if (daxpy_ur_i___0 < daxpy_ur_n) {
+      *(daxpy_ur_dy + daxpy_ur_iy) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_ix);
+      addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_iy)", daxpy_ur_iy);
+      add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_iy, "daxpy_ur_dy1110", daxpy_ur_dy + daxpy_ur_iy,
+                             daxpy_ur_dy + daxpy_ur_iy, 1);
+      addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_ix)", daxpy_ur_ix);
+      add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_ix, "daxpy_ur_dx1111", daxpy_ur_dx + daxpy_ur_ix,
+                             daxpy_ur_dx + daxpy_ur_ix, 1);
+      handleArraySymbolically("daxpy_ur_dy", daxpy_ur_iy, "(+ *(daxpy_ur_dy + daxpy_ur_iy) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_ix)))",
+                              daxpy_ur_dy + daxpy_ur_iy, daxpy_ur_dy + daxpy_ur_iy,
+                              1);
+      daxpy_ur_ix += daxpy_ur_icx;
+      handleAssignmentSymbolically("daxpy_ur_ix", "(+ daxpy_ur_ix daxpy_ur_icx)",
+                                   & daxpy_ur_ix, & daxpy_ur_ix, 1);
+      daxpy_ur_iy += daxpy_ur_icy;
+      handleAssignmentSymbolically("daxpy_ur_iy", "(+ daxpy_ur_iy daxpy_ur_icy)",
+                                   & daxpy_ur_iy, & daxpy_ur_iy, 1);
+      daxpy_ur_i___0 ++;
+      handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 1)", & daxpy_ur_i___0,
+                                   & daxpy_ur_i___0, 1);
+    }
+    }
+    return;
+  }
+  daxpy_ur_m = daxpy_ur_n % 4;
+  handleAssignmentSymbolically("daxpy_ur_m", "(% daxpy_ur_n 4)", & daxpy_ur_m, & daxpy_ur_m,
+                               1);
+  if (daxpy_ur_m != 0) {
+    daxpy_ur_i___0 = 0;
+    add_entryToSTable("daxpy_ur_i___0", "Constant", & daxpy_ur_i___0, & daxpy_ur_i___0,
+                      1);
+    {
+    if (daxpy_ur_i___0 < daxpy_ur_m) {
+      *(daxpy_ur_dy + daxpy_ur_i___0) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_i___0);
+      addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_i___0)", daxpy_ur_i___0);
+      add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0, "daxpy_ur_dy1112", daxpy_ur_dy + daxpy_ur_i___0,
+                             daxpy_ur_dy + daxpy_ur_i___0, 1);
+      addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_i___0)", daxpy_ur_i___0);
+      add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0, "daxpy_ur_dx1113", daxpy_ur_dx + daxpy_ur_i___0,
+                             daxpy_ur_dx + daxpy_ur_i___0, 1);
+      handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0, "(+ *(daxpy_ur_dy + daxpy_ur_i___0) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_i___0)))",
+                              daxpy_ur_dy + daxpy_ur_i___0, daxpy_ur_dy + daxpy_ur_i___0,
+                              1);
+      daxpy_ur_i___0 ++;
+      handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 1)", & daxpy_ur_i___0,
+                                   & daxpy_ur_i___0, 1);
+    }
+    if (daxpy_ur_i___0 < daxpy_ur_m) {
+      *(daxpy_ur_dy + daxpy_ur_i___0) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_i___0);
+      addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_i___0)", daxpy_ur_i___0);
+      add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0, "daxpy_ur_dy1114", daxpy_ur_dy + daxpy_ur_i___0,
+                             daxpy_ur_dy + daxpy_ur_i___0, 1);
+      addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_i___0)", daxpy_ur_i___0);
+      add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0, "daxpy_ur_dx1115", daxpy_ur_dx + daxpy_ur_i___0,
+                             daxpy_ur_dx + daxpy_ur_i___0, 1);
+      handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0, "(+ *(daxpy_ur_dy + daxpy_ur_i___0) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_i___0)))",
+                              daxpy_ur_dy + daxpy_ur_i___0, daxpy_ur_dy + daxpy_ur_i___0,
+                              1);
+      daxpy_ur_i___0 ++;
+      handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 1)", & daxpy_ur_i___0,
+                                   & daxpy_ur_i___0, 1);
+    }
+    }
+    if (daxpy_ur_n < 4) {
+      return;
+    }
+  }
+  daxpy_ur_i___0 = daxpy_ur_m;
+  handleAssignmentSymbolically("daxpy_ur_i___0", "daxpy_ur_m", & daxpy_ur_m, & daxpy_ur_m,
+                               1);
+  {
+  if (daxpy_ur_i___0 < daxpy_ur_n) {
+    *(daxpy_ur_dy + daxpy_ur_i___0) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_i___0);
+    addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_i___0)", daxpy_ur_i___0);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0, "daxpy_ur_dy1116", daxpy_ur_dy + daxpy_ur_i___0,
+                           daxpy_ur_dy + daxpy_ur_i___0, 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_i___0)", daxpy_ur_i___0);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0, "daxpy_ur_dx1117", daxpy_ur_dx + daxpy_ur_i___0,
+                           daxpy_ur_dx + daxpy_ur_i___0, 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0, "(+ *(daxpy_ur_dy + daxpy_ur_i___0) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_i___0)))",
+                            daxpy_ur_dy + daxpy_ur_i___0, daxpy_ur_dy + daxpy_ur_i___0,
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 1)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 1));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 1))", daxpy_ur_i___0 + 1);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 1, "daxpy_ur_dy1118", daxpy_ur_dy + (daxpy_ur_i___0 + 1),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 1))", daxpy_ur_i___0 + 1);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 1, "daxpy_ur_dx1119", daxpy_ur_dx + (daxpy_ur_i___0 + 1),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 1), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 1, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 1)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 1))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 1), daxpy_ur_dy + (daxpy_ur_i___0 + 1),
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 2)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 2));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 2))", daxpy_ur_i___0 + 2);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 2, "daxpy_ur_dy1120", daxpy_ur_dy + (daxpy_ur_i___0 + 2),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 2))", daxpy_ur_i___0 + 2);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 2, "daxpy_ur_dx1121", daxpy_ur_dx + (daxpy_ur_i___0 + 2),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 2), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 2, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 2)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 2))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 2), daxpy_ur_dy + (daxpy_ur_i___0 + 2),
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 3)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 3));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 3))", daxpy_ur_i___0 + 3);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 3, "daxpy_ur_dy1122", daxpy_ur_dy + (daxpy_ur_i___0 + 3),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 3))", daxpy_ur_i___0 + 3);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 3, "daxpy_ur_dx1123", daxpy_ur_dx + (daxpy_ur_i___0 + 3),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 3), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 3, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 3)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 3))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 3), daxpy_ur_dy + (daxpy_ur_i___0 + 3),
+                            1);
+    daxpy_ur_i___0 += 4;
+    handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 4)", & daxpy_ur_i___0,
+                                 & daxpy_ur_i___0, 1);
+  }
+  if (daxpy_ur_i___0 < daxpy_ur_n) {
+    *(daxpy_ur_dy + daxpy_ur_i___0) += daxpy_ur_da * *(daxpy_ur_dx + daxpy_ur_i___0);
+    addEntryToVariableTable("*(daxpy_ur_dy + daxpy_ur_i___0)", daxpy_ur_i___0);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0, "daxpy_ur_dy1124", daxpy_ur_dy + daxpy_ur_i___0,
+                           daxpy_ur_dy + daxpy_ur_i___0, 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + daxpy_ur_i___0)", daxpy_ur_i___0);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0, "daxpy_ur_dx1125", daxpy_ur_dx + daxpy_ur_i___0,
+                           daxpy_ur_dx + daxpy_ur_i___0, 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0, "(+ *(daxpy_ur_dy + daxpy_ur_i___0) (* daxpy_ur_da *(daxpy_ur_dx + daxpy_ur_i___0)))",
+                            daxpy_ur_dy + daxpy_ur_i___0, daxpy_ur_dy + daxpy_ur_i___0,
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 1)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 1));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 1))", daxpy_ur_i___0 + 1);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 1, "daxpy_ur_dy1126", daxpy_ur_dy + (daxpy_ur_i___0 + 1),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 1))", daxpy_ur_i___0 + 1);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 1, "daxpy_ur_dx1127", daxpy_ur_dx + (daxpy_ur_i___0 + 1),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 1), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 1, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 1)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 1))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 1), daxpy_ur_dy + (daxpy_ur_i___0 + 1),
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 2)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 2));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 2))", daxpy_ur_i___0 + 2);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 2, "daxpy_ur_dy1128", daxpy_ur_dy + (daxpy_ur_i___0 + 2),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 2))", daxpy_ur_i___0 + 2);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 2, "daxpy_ur_dx1129", daxpy_ur_dx + (daxpy_ur_i___0 + 2),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 2), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 2, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 2)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 2))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 2), daxpy_ur_dy + (daxpy_ur_i___0 + 2),
+                            1);
+    *(daxpy_ur_dy + (daxpy_ur_i___0 + 3)) += daxpy_ur_da * *(daxpy_ur_dx + (daxpy_ur_i___0 + 3));
+    addEntryToVariableTable("*(daxpy_ur_dy + (daxpy_ur_i___0 + 3))", daxpy_ur_i___0 + 3);
+    add_entryToArraySTable("daxpy_ur_dy", daxpy_ur_i___0 + 3, "daxpy_ur_dy1130", daxpy_ur_dy + (daxpy_ur_i___0 + 3),
+                           daxpy_ur_dy + (daxpy_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(daxpy_ur_dx + (daxpy_ur_i___0 + 3))", daxpy_ur_i___0 + 3);
+    add_entryToArraySTable("daxpy_ur_dx", daxpy_ur_i___0 + 3, "daxpy_ur_dx1131", daxpy_ur_dx + (daxpy_ur_i___0 + 3),
+                           daxpy_ur_dx + (daxpy_ur_i___0 + 3), 1);
+    handleArraySymbolically("daxpy_ur_dy", daxpy_ur_i___0 + 3, "(+ *(daxpy_ur_dy + (daxpy_ur_i___0 + 3)) (* daxpy_ur_da *(daxpy_ur_dx + (daxpy_ur_i___0 + 3))))",
+                            daxpy_ur_dy + (daxpy_ur_i___0 + 3), daxpy_ur_dy + (daxpy_ur_i___0 + 3),
+                            1);
+    daxpy_ur_i___0 += 4;
+    handleAssignmentSymbolically("daxpy_ur_i___0", "(+ daxpy_ur_i___0 4)", & daxpy_ur_i___0,
+                                 & daxpy_ur_i___0, 1);
+  }
+  }
+  return;
+}
+}
+int ddot_ur(int ddot_ur_n , int *ddot_ur_dx , int ddot_ur_icx , int *ddot_ur_dy ,
+            int ddot_ur_icy )
+{
+  int ddot_ur_dtemp ;
+  int ddot_ur_i___0 ;
+  int ddot_ur_ix ;
+  int ddot_ur_iy ;
+  int ddot_ur_m ;
+  int ddot_ur___cil_tmp11 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  ddot_ur_dtemp = 0;
+  add_entryToSTable("ddot_ur_dtemp", "Constant", & ddot_ur_dtemp, & ddot_ur_dtemp,
+                    1);
+  if (ddot_ur_n <= 0) {
+    {
+    ddot_ur___cil_tmp11 = 0;
+    add_entryToSTable("ddot_ur___cil_tmp11", "Constant", & ddot_ur___cil_tmp11, & ddot_ur___cil_tmp11,
+                      1);
+    {
+    mapConcolicValues("ddot_ur___cil_tmp11", & ddot_ur___cil_tmp11);
+    return (ddot_ur___cil_tmp11);
+    }
+    }
+  }
+  if (! (ddot_ur_icx == 1)) {
+    goto _L;
+  } else
+  if (! (ddot_ur_icy == 1)) {
+    _L:
+    ddot_ur_ix = 0;
+    add_entryToSTable("ddot_ur_ix", "Constant", & ddot_ur_ix, & ddot_ur_ix, 1);
+    ddot_ur_iy = 0;
+    add_entryToSTable("ddot_ur_iy", "Constant", & ddot_ur_iy, & ddot_ur_iy, 1);
+    if (ddot_ur_icx < 0) {
+      ddot_ur_ix = (- ddot_ur_n + 1) * ddot_ur_icx;
+      handleAssignmentSymbolically("ddot_ur_ix", "(* (+ (- ddot_ur_n) 1) ddot_ur_icx)",
+                                   & ddot_ur_ix, & ddot_ur_ix, 1);
+    }
+    if (ddot_ur_icy < 0) {
+      ddot_ur_iy = (- ddot_ur_n + 1) * ddot_ur_icy;
+      handleAssignmentSymbolically("ddot_ur_iy", "(* (+ (- ddot_ur_n) 1) ddot_ur_icy)",
+                                   & ddot_ur_iy, & ddot_ur_iy, 1);
+    }
+    ddot_ur_i___0 = 0;
+    add_entryToSTable("ddot_ur_i___0", "Constant", & ddot_ur_i___0, & ddot_ur_i___0,
+                      1);
+    {
+    if (ddot_ur_i___0 < ddot_ur_n) {
+      ddot_ur_dtemp += *(ddot_ur_dx + ddot_ur_ix) * *(ddot_ur_dy + ddot_ur_iy);
+      addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_ix)", ddot_ur_ix);
+      add_entryToArraySTable("ddot_ur_dx", ddot_ur_ix, "ddot_ur_dx1132", ddot_ur_dx + ddot_ur_ix,
+                             ddot_ur_dx + ddot_ur_ix, 1);
+      addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_iy)", ddot_ur_iy);
+      add_entryToArraySTable("ddot_ur_dy", ddot_ur_iy, "ddot_ur_dy1133", ddot_ur_dy + ddot_ur_iy,
+                             ddot_ur_dy + ddot_ur_iy, 1);
+      handleAssignmentSymbolically("ddot_ur_dtemp", "(+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_ix) *(ddot_ur_dy + ddot_ur_iy)))",
+                                   & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+      ddot_ur_ix += ddot_ur_icx;
+      handleAssignmentSymbolically("ddot_ur_ix", "(+ ddot_ur_ix ddot_ur_icx)", & ddot_ur_ix,
+                                   & ddot_ur_ix, 1);
+      ddot_ur_iy += ddot_ur_icy;
+      handleAssignmentSymbolically("ddot_ur_iy", "(+ ddot_ur_iy ddot_ur_icy)", & ddot_ur_iy,
+                                   & ddot_ur_iy, 1);
+      ddot_ur_i___0 ++;
+      handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 1)", & ddot_ur_i___0,
+                                   & ddot_ur_i___0, 1);
+    }
+    if (ddot_ur_i___0 < ddot_ur_n) {
+      ddot_ur_dtemp += *(ddot_ur_dx + ddot_ur_ix) * *(ddot_ur_dy + ddot_ur_iy);
+      addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_ix)", ddot_ur_ix);
+      add_entryToArraySTable("ddot_ur_dx", ddot_ur_ix, "ddot_ur_dx1134", ddot_ur_dx + ddot_ur_ix,
+                             ddot_ur_dx + ddot_ur_ix, 1);
+      addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_iy)", ddot_ur_iy);
+      add_entryToArraySTable("ddot_ur_dy", ddot_ur_iy, "ddot_ur_dy1135", ddot_ur_dy + ddot_ur_iy,
+                             ddot_ur_dy + ddot_ur_iy, 1);
+      handleAssignmentSymbolically("ddot_ur_dtemp", "(+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_ix) *(ddot_ur_dy + ddot_ur_iy)))",
+                                   & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+      ddot_ur_ix += ddot_ur_icx;
+      handleAssignmentSymbolically("ddot_ur_ix", "(+ ddot_ur_ix ddot_ur_icx)", & ddot_ur_ix,
+                                   & ddot_ur_ix, 1);
+      ddot_ur_iy += ddot_ur_icy;
+      handleAssignmentSymbolically("ddot_ur_iy", "(+ ddot_ur_iy ddot_ur_icy)", & ddot_ur_iy,
+                                   & ddot_ur_iy, 1);
+      ddot_ur_i___0 ++;
+      handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 1)", & ddot_ur_i___0,
+                                   & ddot_ur_i___0, 1);
+    }
+    }
+    {
+    mapConcolicValues("ddot_ur_dtemp", & ddot_ur_dtemp);
+    return (ddot_ur_dtemp);
+    }
+  }
+  ddot_ur_m = ddot_ur_n % 5;
+  handleAssignmentSymbolically("ddot_ur_m", "(% ddot_ur_n 5)", & ddot_ur_m, & ddot_ur_m,
+                               1);
+  if (ddot_ur_m != 0) {
+    ddot_ur_i___0 = 0;
+    add_entryToSTable("ddot_ur_i___0", "Constant", & ddot_ur_i___0, & ddot_ur_i___0,
+                      1);
+    {
+    if (ddot_ur_i___0 < ddot_ur_m) {
+      ddot_ur_dtemp += *(ddot_ur_dx + ddot_ur_i___0) * *(ddot_ur_dy + ddot_ur_i___0);
+      addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_i___0)", ddot_ur_i___0);
+      add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0, "ddot_ur_dx1136", ddot_ur_dx + ddot_ur_i___0,
+                             ddot_ur_dx + ddot_ur_i___0, 1);
+      addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_i___0)", ddot_ur_i___0);
+      add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0, "ddot_ur_dy1137", ddot_ur_dy + ddot_ur_i___0,
+                             ddot_ur_dy + ddot_ur_i___0, 1);
+      handleAssignmentSymbolically("ddot_ur_dtemp", "(+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_i___0) *(ddot_ur_dy + ddot_ur_i___0)))",
+                                   & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+      ddot_ur_i___0 ++;
+      handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 1)", & ddot_ur_i___0,
+                                   & ddot_ur_i___0, 1);
+    }
+    if (ddot_ur_i___0 < ddot_ur_m) {
+      ddot_ur_dtemp += *(ddot_ur_dx + ddot_ur_i___0) * *(ddot_ur_dy + ddot_ur_i___0);
+      addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_i___0)", ddot_ur_i___0);
+      add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0, "ddot_ur_dx1138", ddot_ur_dx + ddot_ur_i___0,
+                             ddot_ur_dx + ddot_ur_i___0, 1);
+      addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_i___0)", ddot_ur_i___0);
+      add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0, "ddot_ur_dy1139", ddot_ur_dy + ddot_ur_i___0,
+                             ddot_ur_dy + ddot_ur_i___0, 1);
+      handleAssignmentSymbolically("ddot_ur_dtemp", "(+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_i___0) *(ddot_ur_dy + ddot_ur_i___0)))",
+                                   & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+      ddot_ur_i___0 ++;
+      handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 1)", & ddot_ur_i___0,
+                                   & ddot_ur_i___0, 1);
+    }
+    }
+    if (ddot_ur_n < 5) {
+      {
+      mapConcolicValues("ddot_ur_dtemp", & ddot_ur_dtemp);
+      return (ddot_ur_dtemp);
+      }
+    }
+  }
+  ddot_ur_i___0 = ddot_ur_m;
+  handleAssignmentSymbolically("ddot_ur_i___0", "ddot_ur_m", & ddot_ur_m, & ddot_ur_m,
+                               1);
+  {
+  if (ddot_ur_i___0 < ddot_ur_n) {
+    ddot_ur_dtemp = ((((ddot_ur_dtemp + *(ddot_ur_dx + ddot_ur_i___0) * *(ddot_ur_dy + ddot_ur_i___0)) + *(ddot_ur_dx + (ddot_ur_i___0 + 1)) * *(ddot_ur_dy + (ddot_ur_i___0 + 1))) + *(ddot_ur_dx + (ddot_ur_i___0 + 2)) * *(ddot_ur_dy + (ddot_ur_i___0 + 2))) + *(ddot_ur_dx + (ddot_ur_i___0 + 3)) * *(ddot_ur_dy + (ddot_ur_i___0 + 3))) + *(ddot_ur_dx + (ddot_ur_i___0 + 4)) * *(ddot_ur_dy + (ddot_ur_i___0 + 4));
+    addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_i___0)", ddot_ur_i___0);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0, "ddot_ur_dx1140", ddot_ur_dx + ddot_ur_i___0,
+                           ddot_ur_dx + ddot_ur_i___0, 1);
+    addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_i___0)", ddot_ur_i___0);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0, "ddot_ur_dy1141", ddot_ur_dy + ddot_ur_i___0,
+                           ddot_ur_dy + ddot_ur_i___0, 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 1))", ddot_ur_i___0 + 1);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 1, "ddot_ur_dx1142", ddot_ur_dx + (ddot_ur_i___0 + 1),
+                           ddot_ur_dx + (ddot_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 1))", ddot_ur_i___0 + 1);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 1, "ddot_ur_dy1143", ddot_ur_dy + (ddot_ur_i___0 + 1),
+                           ddot_ur_dy + (ddot_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 2))", ddot_ur_i___0 + 2);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 2, "ddot_ur_dx1144", ddot_ur_dx + (ddot_ur_i___0 + 2),
+                           ddot_ur_dx + (ddot_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 2))", ddot_ur_i___0 + 2);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 2, "ddot_ur_dy1145", ddot_ur_dy + (ddot_ur_i___0 + 2),
+                           ddot_ur_dy + (ddot_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 3))", ddot_ur_i___0 + 3);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 3, "ddot_ur_dx1146", ddot_ur_dx + (ddot_ur_i___0 + 3),
+                           ddot_ur_dx + (ddot_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 3))", ddot_ur_i___0 + 3);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 3, "ddot_ur_dy1147", ddot_ur_dy + (ddot_ur_i___0 + 3),
+                           ddot_ur_dy + (ddot_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 4))", ddot_ur_i___0 + 4);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 4, "ddot_ur_dx1148", ddot_ur_dx + (ddot_ur_i___0 + 4),
+                           ddot_ur_dx + (ddot_ur_i___0 + 4), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 4))", ddot_ur_i___0 + 4);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 4, "ddot_ur_dy1149", ddot_ur_dy + (ddot_ur_i___0 + 4),
+                           ddot_ur_dy + (ddot_ur_i___0 + 4), 1);
+    handleAssignmentSymbolically("ddot_ur_dtemp", "(+ (+ (+ (+ (+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_i___0) *(ddot_ur_dy + ddot_ur_i___0))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 1)) *(ddot_ur_dy + (ddot_ur_i___0 + 1)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 2)) *(ddot_ur_dy + (ddot_ur_i___0 + 2)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 3)) *(ddot_ur_dy + (ddot_ur_i___0 + 3)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 4)) *(ddot_ur_dy + (ddot_ur_i___0 + 4))))",
+                                 & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+    ddot_ur_i___0 += 5;
+    handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 5)", & ddot_ur_i___0,
+                                 & ddot_ur_i___0, 1);
+  }
+  if (ddot_ur_i___0 < ddot_ur_n) {
+    ddot_ur_dtemp = ((((ddot_ur_dtemp + *(ddot_ur_dx + ddot_ur_i___0) * *(ddot_ur_dy + ddot_ur_i___0)) + *(ddot_ur_dx + (ddot_ur_i___0 + 1)) * *(ddot_ur_dy + (ddot_ur_i___0 + 1))) + *(ddot_ur_dx + (ddot_ur_i___0 + 2)) * *(ddot_ur_dy + (ddot_ur_i___0 + 2))) + *(ddot_ur_dx + (ddot_ur_i___0 + 3)) * *(ddot_ur_dy + (ddot_ur_i___0 + 3))) + *(ddot_ur_dx + (ddot_ur_i___0 + 4)) * *(ddot_ur_dy + (ddot_ur_i___0 + 4));
+    addEntryToVariableTable("*(ddot_ur_dx + ddot_ur_i___0)", ddot_ur_i___0);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0, "ddot_ur_dx1150", ddot_ur_dx + ddot_ur_i___0,
+                           ddot_ur_dx + ddot_ur_i___0, 1);
+    addEntryToVariableTable("*(ddot_ur_dy + ddot_ur_i___0)", ddot_ur_i___0);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0, "ddot_ur_dy1151", ddot_ur_dy + ddot_ur_i___0,
+                           ddot_ur_dy + ddot_ur_i___0, 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 1))", ddot_ur_i___0 + 1);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 1, "ddot_ur_dx1152", ddot_ur_dx + (ddot_ur_i___0 + 1),
+                           ddot_ur_dx + (ddot_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 1))", ddot_ur_i___0 + 1);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 1, "ddot_ur_dy1153", ddot_ur_dy + (ddot_ur_i___0 + 1),
+                           ddot_ur_dy + (ddot_ur_i___0 + 1), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 2))", ddot_ur_i___0 + 2);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 2, "ddot_ur_dx1154", ddot_ur_dx + (ddot_ur_i___0 + 2),
+                           ddot_ur_dx + (ddot_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 2))", ddot_ur_i___0 + 2);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 2, "ddot_ur_dy1155", ddot_ur_dy + (ddot_ur_i___0 + 2),
+                           ddot_ur_dy + (ddot_ur_i___0 + 2), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 3))", ddot_ur_i___0 + 3);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 3, "ddot_ur_dx1156", ddot_ur_dx + (ddot_ur_i___0 + 3),
+                           ddot_ur_dx + (ddot_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 3))", ddot_ur_i___0 + 3);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 3, "ddot_ur_dy1157", ddot_ur_dy + (ddot_ur_i___0 + 3),
+                           ddot_ur_dy + (ddot_ur_i___0 + 3), 1);
+    addEntryToVariableTable("*(ddot_ur_dx + (ddot_ur_i___0 + 4))", ddot_ur_i___0 + 4);
+    add_entryToArraySTable("ddot_ur_dx", ddot_ur_i___0 + 4, "ddot_ur_dx1158", ddot_ur_dx + (ddot_ur_i___0 + 4),
+                           ddot_ur_dx + (ddot_ur_i___0 + 4), 1);
+    addEntryToVariableTable("*(ddot_ur_dy + (ddot_ur_i___0 + 4))", ddot_ur_i___0 + 4);
+    add_entryToArraySTable("ddot_ur_dy", ddot_ur_i___0 + 4, "ddot_ur_dy1159", ddot_ur_dy + (ddot_ur_i___0 + 4),
+                           ddot_ur_dy + (ddot_ur_i___0 + 4), 1);
+    handleAssignmentSymbolically("ddot_ur_dtemp", "(+ (+ (+ (+ (+ ddot_ur_dtemp (* *(ddot_ur_dx + ddot_ur_i___0) *(ddot_ur_dy + ddot_ur_i___0))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 1)) *(ddot_ur_dy + (ddot_ur_i___0 + 1)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 2)) *(ddot_ur_dy + (ddot_ur_i___0 + 2)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 3)) *(ddot_ur_dy + (ddot_ur_i___0 + 3)))) (* *(ddot_ur_dx + (ddot_ur_i___0 + 4)) *(ddot_ur_dy + (ddot_ur_i___0 + 4))))",
+                                 & ddot_ur_dtemp, & ddot_ur_dtemp, 1);
+    ddot_ur_i___0 += 5;
+    handleAssignmentSymbolically("ddot_ur_i___0", "(+ ddot_ur_i___0 5)", & ddot_ur_i___0,
+                                 & ddot_ur_i___0, 1);
+  }
+  }
+  {
+  mapConcolicValues("ddot_ur_dtemp", & ddot_ur_dtemp);
+  return (ddot_ur_dtemp);
+  }
+}
+}
+void dscal_ur(int dscal_ur_n , int dscal_ur_da , int *dscal_ur_dx , int dscal_ur_icx )
+{
+  int dscal_ur_i___0 ;
+  int dscal_ur_m ;
+  int dscal_ur_nincx ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (dscal_ur_n <= 0) {
+    return;
+  }
+  if (dscal_ur_icx == 1) {
+    printf((char const * __restrict )"Equals 1\n");
+  } else {
+    dscal_ur_nincx = dscal_ur_n * dscal_ur_icx;
+    handleAssignmentSymbolically("dscal_ur_nincx", "(* dscal_ur_n dscal_ur_icx)",
+                                 & dscal_ur_nincx, & dscal_ur_nincx, 1);
+    dscal_ur_i___0 = 0;
+    add_entryToSTable("dscal_ur_i___0", "Constant", & dscal_ur_i___0, & dscal_ur_i___0,
+                      1);
+    {
+    if (dscal_ur_i___0 < dscal_ur_nincx) {
+      *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+      addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+      add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1160", dscal_ur_dx + dscal_ur_i___0,
+                             dscal_ur_dx + dscal_ur_i___0, 1);
+      handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                              dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                              1);
+      dscal_ur_i___0 += dscal_ur_icx;
+      handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 dscal_ur_icx)",
+                                   & dscal_ur_i___0, & dscal_ur_i___0, 1);
+    }
+    if (dscal_ur_i___0 < dscal_ur_nincx) {
+      *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+      addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+      add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1161", dscal_ur_dx + dscal_ur_i___0,
+                             dscal_ur_dx + dscal_ur_i___0, 1);
+      handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                              dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                              1);
+      dscal_ur_i___0 += dscal_ur_icx;
+      handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 dscal_ur_icx)",
+                                   & dscal_ur_i___0, & dscal_ur_i___0, 1);
+    }
+    }
+    return;
+  }
+  dscal_ur_m = dscal_ur_n % 5;
+  handleAssignmentSymbolically("dscal_ur_m", "(% dscal_ur_n 5)", & dscal_ur_m, & dscal_ur_m,
+                               1);
+  if (dscal_ur_m != 0) {
+    dscal_ur_i___0 = 0;
+    add_entryToSTable("dscal_ur_i___0", "Constant", & dscal_ur_i___0, & dscal_ur_i___0,
+                      1);
+    {
+    if (dscal_ur_i___0 < dscal_ur_m) {
+      *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+      addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+      add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1162", dscal_ur_dx + dscal_ur_i___0,
+                             dscal_ur_dx + dscal_ur_i___0, 1);
+      handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                              dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                              1);
+      dscal_ur_i___0 ++;
+      handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 1)", & dscal_ur_i___0,
+                                   & dscal_ur_i___0, 1);
+    }
+    if (dscal_ur_i___0 < dscal_ur_m) {
+      *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+      addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+      add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1163", dscal_ur_dx + dscal_ur_i___0,
+                             dscal_ur_dx + dscal_ur_i___0, 1);
+      handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                              dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                              1);
+      dscal_ur_i___0 ++;
+      handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 1)", & dscal_ur_i___0,
+                                   & dscal_ur_i___0, 1);
+    }
+    }
+    if (dscal_ur_n < 5) {
+      return;
+    }
+  }
+  dscal_ur_i___0 = dscal_ur_m;
+  handleAssignmentSymbolically("dscal_ur_i___0", "dscal_ur_m", & dscal_ur_m, & dscal_ur_m,
+                               1);
+  {
+  if (dscal_ur_i___0 < dscal_ur_n) {
+    *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+    addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1164", dscal_ur_dx + dscal_ur_i___0,
+                           dscal_ur_dx + dscal_ur_i___0, 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                            dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 1)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 1));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 1))", dscal_ur_i___0 + 1);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 1, "dscal_ur_dx1165", dscal_ur_dx + (dscal_ur_i___0 + 1),
+                           dscal_ur_dx + (dscal_ur_i___0 + 1), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 1, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 1)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 1), dscal_ur_dx + (dscal_ur_i___0 + 1),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 2)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 2));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 2))", dscal_ur_i___0 + 2);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 2, "dscal_ur_dx1166", dscal_ur_dx + (dscal_ur_i___0 + 2),
+                           dscal_ur_dx + (dscal_ur_i___0 + 2), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 2, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 2)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 2), dscal_ur_dx + (dscal_ur_i___0 + 2),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 3)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 3));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 3))", dscal_ur_i___0 + 3);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 3, "dscal_ur_dx1167", dscal_ur_dx + (dscal_ur_i___0 + 3),
+                           dscal_ur_dx + (dscal_ur_i___0 + 3), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 3, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 3)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 3), dscal_ur_dx + (dscal_ur_i___0 + 3),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 4)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 4));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 4))", dscal_ur_i___0 + 4);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 4, "dscal_ur_dx1168", dscal_ur_dx + (dscal_ur_i___0 + 4),
+                           dscal_ur_dx + (dscal_ur_i___0 + 4), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 4, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 4)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 4), dscal_ur_dx + (dscal_ur_i___0 + 4),
+                            1);
+    dscal_ur_i___0 += 5;
+    handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 5)", & dscal_ur_i___0,
+                                 & dscal_ur_i___0, 1);
+  }
+  if (dscal_ur_i___0 < dscal_ur_n) {
+    *(dscal_ur_dx + dscal_ur_i___0) = dscal_ur_da * *(dscal_ur_dx + dscal_ur_i___0);
+    addEntryToVariableTable("*(dscal_ur_dx + dscal_ur_i___0)", dscal_ur_i___0);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0, "dscal_ur_dx1169", dscal_ur_dx + dscal_ur_i___0,
+                           dscal_ur_dx + dscal_ur_i___0, 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0, "(* dscal_ur_da *(dscal_ur_dx + dscal_ur_i___0))",
+                            dscal_ur_dx + dscal_ur_i___0, dscal_ur_dx + dscal_ur_i___0,
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 1)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 1));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 1))", dscal_ur_i___0 + 1);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 1, "dscal_ur_dx1170", dscal_ur_dx + (dscal_ur_i___0 + 1),
+                           dscal_ur_dx + (dscal_ur_i___0 + 1), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 1, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 1)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 1), dscal_ur_dx + (dscal_ur_i___0 + 1),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 2)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 2));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 2))", dscal_ur_i___0 + 2);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 2, "dscal_ur_dx1171", dscal_ur_dx + (dscal_ur_i___0 + 2),
+                           dscal_ur_dx + (dscal_ur_i___0 + 2), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 2, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 2)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 2), dscal_ur_dx + (dscal_ur_i___0 + 2),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 3)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 3));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 3))", dscal_ur_i___0 + 3);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 3, "dscal_ur_dx1172", dscal_ur_dx + (dscal_ur_i___0 + 3),
+                           dscal_ur_dx + (dscal_ur_i___0 + 3), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 3, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 3)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 3), dscal_ur_dx + (dscal_ur_i___0 + 3),
+                            1);
+    *(dscal_ur_dx + (dscal_ur_i___0 + 4)) = dscal_ur_da * *(dscal_ur_dx + (dscal_ur_i___0 + 4));
+    addEntryToVariableTable("*(dscal_ur_dx + (dscal_ur_i___0 + 4))", dscal_ur_i___0 + 4);
+    add_entryToArraySTable("dscal_ur_dx", dscal_ur_i___0 + 4, "dscal_ur_dx1173", dscal_ur_dx + (dscal_ur_i___0 + 4),
+                           dscal_ur_dx + (dscal_ur_i___0 + 4), 1);
+    handleArraySymbolically("dscal_ur_dx", dscal_ur_i___0 + 4, "(* dscal_ur_da *(dscal_ur_dx + (dscal_ur_i___0 + 4)))",
+                            dscal_ur_dx + (dscal_ur_i___0 + 4), dscal_ur_dx + (dscal_ur_i___0 + 4),
+                            1);
+    dscal_ur_i___0 += 5;
+    handleAssignmentSymbolically("dscal_ur_i___0", "(+ dscal_ur_i___0 5)", & dscal_ur_i___0,
+                                 & dscal_ur_i___0, 1);
+  }
+  }
+  return;
 }
 }
 void createCDG(void)
@@ -15498,15 +18253,65 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(30, 0, 1);
-  setArray(30, "(> in2 15)");
-  addtoCDGnode(31, 30, 1);
-  addtoCDGnode(32, 30, 0);
-  addtoCDGnode(33, 0, 1);
-  addtoCDGnode(33, 0, 1);
-  addtoCDGnode(34, 0, 1);
-  addtoCDGnode(35, 0, 1);
-  addtoCDGnode(36, 0, 1);
+  addtoCDGnode(403, 0, 1);
+  setArray(403, "(< n 1)");
+  addtoCDGnode(404, 403, 1);
+  addtoCDGnode(407, 403, 0);
+  setArray(407, "(= n 1)");
+  addtoCDGnode(405, 403, 1);
+  addtoCDGnode(406, 403, 1);
+  addtoCDGnode(437, 0, 1);
+  addtoCDGnode(408, 407, 1);
+  addtoCDGnode(411, 407, 0);
+  setArray(411, "(! (= icx 1))");
+  addtoCDGnode(409, 407, 1);
+  addtoCDGnode(410, 407, 1);
+  addtoCDGnode(437, 0, 1);
+  addtoCDGnode(412, 411, 1);
+  addtoCDGnode(424, 411, 0);
+  addtoCDGnode(413, 411, 1);
+  addtoCDGnode(414, 411, 1);
+  setArray(414, "(< i___0 n)");
+  addtoCDGnode(415, 414, 1);
+  addtoCDGnode(419, 411, 1);
+  setArray(419, "(< i___0 n)");
+  addtoCDGnode(416, 414, 1);
+  setArray(416, "(> temp1 dmax)");
+  addtoCDGnode(417, 416, 1);
+  addtoCDGnode(418, 414, 1);
+  addtoCDGnode(418, 414, 1);
+  addtoCDGnode(419, 411, 1);
+  setArray(419, "(< i___0 n)");
+  addtoCDGnode(420, 419, 1);
+  addtoCDGnode(436, 407, 0);
+  addtoCDGnode(421, 419, 1);
+  setArray(421, "(> temp1 dmax)");
+  addtoCDGnode(422, 421, 1);
+  addtoCDGnode(423, 419, 1);
+  addtoCDGnode(423, 419, 1);
+  addtoCDGnode(436, 407, 0);
+  addtoCDGnode(425, 411, 0);
+  addtoCDGnode(426, 411, 0);
+  setArray(426, "(< i___0 n)");
+  addtoCDGnode(427, 426, 1);
+  addtoCDGnode(431, 411, 0);
+  setArray(431, "(< i___0 n)");
+  addtoCDGnode(428, 426, 1);
+  setArray(428, "(> temp1 dmax)");
+  addtoCDGnode(429, 428, 1);
+  addtoCDGnode(430, 426, 1);
+  addtoCDGnode(430, 426, 1);
+  addtoCDGnode(431, 411, 0);
+  setArray(431, "(< i___0 n)");
+  addtoCDGnode(432, 431, 1);
+  addtoCDGnode(436, 407, 0);
+  addtoCDGnode(433, 431, 1);
+  setArray(433, "(> temp1 dmax)");
+  addtoCDGnode(434, 433, 1);
+  addtoCDGnode(435, 431, 1);
+  addtoCDGnode(435, 431, 1);
+  addtoCDGnode(436, 407, 0);
+  addtoCDGnode(437, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15514,7 +18319,14 @@ void isCopyOfHolder(void)
 
 
   {
-
+  isCopyOf(416, 416);
+  isCopyOf(421, 416);
+  isCopyOf(426, 426);
+  isCopyOf(431, 426);
+  isCopyOf(428, 428);
+  isCopyOf(433, 428);
+  isCopyOf(414, 414);
+  isCopyOf(419, 414);
 }
 }
 void createSidTable(void)
@@ -15522,74 +18334,386 @@ void createSidTable(void)
 
 
   {
-  add_condition(30, "(> in2 15)", "(not (> in2 15))", 0, 0);
+  add_condition(403, "(< n 1)", "(not (< n 1))", 0, 0);
+  add_condition(407, "(= n 1)", "(not (= n 1))", 0, 0);
+  add_condition(416, "(> temp1 dmax)", "(not (> temp1 dmax))", 0, 0);
+  add_condition(414, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
+  add_condition(421, "(> temp1 dmax)", "(not (> temp1 dmax))", 0, 0);
+  add_condition(419, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
+  add_condition(428, "(> temp1 dmax)", "(not (> temp1 dmax))", 0, 0);
+  add_condition(426, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
+  add_condition(433, "(> temp1 dmax)", "(not (> temp1 dmax))", 0, 0);
+  add_condition(431, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
+  add_condition(411, "(! (= icx 1))", "(not (! (= icx 1)))", 0, 0);
 }
 }
 struct arguments {
-   int in2 ;
+   int *mempool ;
+   int n ;
+   int *dx ;
+   int icx ;
 };
 struct arguments argvar ;
-int main1(int in2 )
+int idamax(int *global_mempool , int n , int *dx , int icx )
 {
-  int __cil_tmp2 ;
+  int dmax ;
+  int temp1 ;
+  int i___0 ;
+  int ix ;
+  int itemp ;
+  double tmp ;
+  double tmp___0 ;
+  double tmp___1 ;
+  double tmp___2 ;
+  double tmp___3 ;
+  double tmp___4 ;
+  int __cil_tmp15 ;
+  int __cil_tmp16 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp5 ;
-  char *__cil_tmp6 ;
+  int __cil_tmp19 ;
+  char *__cil_tmp20 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp6 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp6, "\t%d\n", in2);
-  printTestCase("mutualRec_main1_1434214668.tc", __cil_tmp6);
-  add_entryToSTable("in2", "s0", & in2, & in2, 1);
-  funcEntry("(int,anka_j,variable,in2)", "anka_tmp anka___cil_tmp3 anka___cil_tmp4 anka___cil_tmp5",
-            "anka");
-  in2 = anka(in2);
-  funcExit();
-  add_entryToSTable("in2", ret_SymValue, ret_ConValue, & in2, 1);
+  __cil_tmp20 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp20, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", mempool[0],
+          mempool[1], mempool[2], mempool[3], mempool[4], n, dx[0], dx[1], dx[2],
+          dx[3], dx[4], icx);
+  printTestCase("linpack_idamax_1434219023.tc", __cil_tmp20);
+  add_entryToSTable("icx", "s3", & icx, & icx, 1);
+  add_entryToArraySTable("dx", 0, "dx_0", dx, dx, 1);
+  add_entryToSTable("n", "s1", & n, & n, 1);
+  add_entryToArraySTable("mempool", 0, "mempool_0", mempool, mempool, 1);
+  printf((char const * __restrict )"n=%d, icx=%d\n", n, icx);
   {
-  exp_outcome = in2 > 15;
-  handleAssignmentSymbolically("exp_outcome", "(> in2 15)", & exp_outcome, & exp_outcome,
+  exp_outcome = n < 1;
+  handleAssignmentSymbolically("exp_outcome", "(< n 1)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(30, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(403, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(30, 1, 0);
-    setTrueExpr(30, "(> in2 15)");
-    setFalseExpr(30, "(not (> in2 15))");
-    addToTree(30, 1, "(> in2 15)", "(not (> in2 15))", 0, 1);
+    setBranchInfo(403, 1, 0);
+    setTrueExpr(403, "(< n 1)");
+    setFalseExpr(403, "(not (< n 1))");
+    addToTree(403, 1, "(< n 1)", "(not (< n 1))", 0, 1);
     delete_allVariableTableEntry();
-    printf((char const * __restrict )"%d\n", in2);
+    {
+    __cil_tmp15 = -1;
+    add_entryToSTable("__cil_tmp15", "Constant", & __cil_tmp15, & __cil_tmp15, 1);
+    __cil_tmp19 = isNotQueueEmpty();
+    if (__cil_tmp19) {
+      enQueue();
+      directPathConditions();
+      delete_allSTableEntry();
+      delete_allStructTableEntry();
+      idamax(mempool, n, dx, icx);
+    } else {
+      __cil_tmp19 = startCDG();
+      if (__cil_tmp19) {
+        __cil_tmp19 = getTestCases();
+        idamax(mempool, n, dx, icx);
+      }
+    }
+    return (__cil_tmp15);
+    }
   } else {
-    setBranchInfo(30, 0, 1);
-    setTrueExpr(30, "(> in2 15)");
-    setFalseExpr(30, "(not (> in2 15))");
-    addToTree(30, 1, "(> in2 15)", "(not (> in2 15))", 0, 0);
+    setBranchInfo(403, 0, 1);
+    setTrueExpr(403, "(< n 1)");
+    setFalseExpr(403, "(not (< n 1))");
+    addToTree(403, 1, "(< n 1)", "(not (< n 1))", 0, 0);
     delete_allVariableTableEntry();
-    printf((char const * __restrict )"%d\n", -1);
   }
   }
   {
-  __cil_tmp2 = 0;
-  add_entryToSTable("__cil_tmp2", "Constant", & __cil_tmp2, & __cil_tmp2, 1);
-  __cil_tmp5 = isNotQueueEmpty();
-  if (__cil_tmp5) {
+  exp_outcome = n == 1;
+  handleAssignmentSymbolically("exp_outcome", "(= n 1)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(407, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(407, 1, 0);
+    setTrueExpr(407, "(= n 1)");
+    setFalseExpr(407, "(not (= n 1))");
+    addToTree(407, 1, "(= n 1)", "(not (= n 1))", 0, 1);
+    delete_allVariableTableEntry();
+    {
+    __cil_tmp16 = 0;
+    add_entryToSTable("__cil_tmp16", "Constant", & __cil_tmp16, & __cil_tmp16, 1);
+    __cil_tmp19 = isNotQueueEmpty();
+    if (__cil_tmp19) {
+      enQueue();
+      directPathConditions();
+      delete_allSTableEntry();
+      delete_allStructTableEntry();
+      idamax(mempool, n, dx, icx);
+    } else {
+      __cil_tmp19 = startCDG();
+      if (__cil_tmp19) {
+        __cil_tmp19 = getTestCases();
+        idamax(mempool, n, dx, icx);
+      }
+    }
+    return (__cil_tmp16);
+    }
+  } else {
+    setBranchInfo(407, 0, 1);
+    setTrueExpr(407, "(= n 1)");
+    setFalseExpr(407, "(not (= n 1))");
+    addToTree(407, 1, "(= n 1)", "(not (= n 1))", 0, 0);
+    delete_allVariableTableEntry();
+  }
+  }
+  {
+  exp_outcome = icx != 1;
+  handleAssignmentSymbolically("exp_outcome", "(! (= icx 1))", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(411, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(411, 1, 0);
+    setTrueExpr(411, "(not (= icx 1))");
+    setFalseExpr(411, "(not (not (= icx 1)))");
+    addToTree(411, 1, "(not (= icx 1))", "(not (not (= icx 1)))", 0, 1);
+    delete_allVariableTableEntry();
+    ix = 1;
+    add_entryToSTable("ix", "Constant", & ix, & ix, 1);
+    tmp = fabs((double )*(dx + 0));
+    dmax = (int )tmp;
+    handleAssignmentSymbolically("dmax", "tmp", & dmax, & dmax, 1);
+    ix += icx;
+    handleAssignmentSymbolically("ix", "(+ ix icx)", & ix, & ix, 1);
+    i___0 = 1;
+    add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
+    {
+    {
+    exp_outcome = i___0 < n;
+    handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(414, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(414, 1, 0);
+      setTrueExpr(414, "(< i___0 n)");
+      setFalseExpr(414, "(not (< i___0 n))");
+      addToTree(414, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 1);
+      delete_allVariableTableEntry();
+      tmp___0 = fabs((double )*(dx + ix));
+      temp1 = (int )tmp___0;
+      handleAssignmentSymbolically("temp1", "tmp___0", & temp1, & temp1, 1);
+      {
+      exp_outcome = temp1 > dmax;
+      handleAssignmentSymbolically("exp_outcome", "(> temp1 dmax)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(416, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(416, 1, 0);
+        setTrueExpr(416, "(> temp1 dmax)");
+        setFalseExpr(416, "(not (> temp1 dmax))");
+        addToTree(416, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 414, 1);
+        delete_allVariableTableEntry();
+        itemp = i___0;
+        handleAssignmentSymbolically("itemp", "i___0", & i___0, & i___0, 1);
+        tmp___1 = fabs((double )*(dx + ix));
+        dmax = (int )tmp___1;
+        handleAssignmentSymbolically("dmax", "tmp___1", & dmax, & dmax, 1);
+      } else {
+        setBranchInfo(416, 0, 1);
+        setTrueExpr(416, "(> temp1 dmax)");
+        setFalseExpr(416, "(not (> temp1 dmax))");
+        addToTree(416, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 414, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      ix += icx;
+      handleAssignmentSymbolically("ix", "(+ ix icx)", & ix, & ix, 1);
+      i___0 ++;
+      handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(414, 0, 1);
+      setTrueExpr(414, "(< i___0 n)");
+      setFalseExpr(414, "(not (< i___0 n))");
+      addToTree(414, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 0);
+      delete_allVariableTableEntry();
+    }
+    }
+    {
+    exp_outcome = i___0 < n;
+    handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(419, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(419, 1, 0);
+      setTrueExpr(419, "(< i___0 n)");
+      setFalseExpr(419, "(not (< i___0 n))");
+      addToTree(419, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 1);
+      delete_allVariableTableEntry();
+      tmp___0 = fabs((double )*(dx + ix));
+      temp1 = (int )tmp___0;
+      handleAssignmentSymbolically("temp1", "tmp___0", & temp1, & temp1, 1);
+      {
+      exp_outcome = temp1 > dmax;
+      handleAssignmentSymbolically("exp_outcome", "(> temp1 dmax)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(421, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(421, 1, 0);
+        setTrueExpr(421, "(> temp1 dmax)");
+        setFalseExpr(421, "(not (> temp1 dmax))");
+        addToTree(421, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 419, 1);
+        delete_allVariableTableEntry();
+        itemp = i___0;
+        handleAssignmentSymbolically("itemp", "i___0", & i___0, & i___0, 1);
+        tmp___1 = fabs((double )*(dx + ix));
+        dmax = (int )tmp___1;
+        handleAssignmentSymbolically("dmax", "tmp___1", & dmax, & dmax, 1);
+      } else {
+        setBranchInfo(421, 0, 1);
+        setTrueExpr(421, "(> temp1 dmax)");
+        setFalseExpr(421, "(not (> temp1 dmax))");
+        addToTree(421, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 419, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      ix += icx;
+      handleAssignmentSymbolically("ix", "(+ ix icx)", & ix, & ix, 1);
+      i___0 ++;
+      handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(419, 0, 1);
+      setTrueExpr(419, "(< i___0 n)");
+      setFalseExpr(419, "(not (< i___0 n))");
+      addToTree(419, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 0);
+      delete_allVariableTableEntry();
+    }
+    }
+    }
+  } else {
+    setBranchInfo(411, 0, 1);
+    setTrueExpr(411, "(not (= icx 1))");
+    setFalseExpr(411, "(not (not (= icx 1)))");
+    addToTree(411, 1, "(not (= icx 1))", "(not (not (= icx 1)))", 0, 0);
+    delete_allVariableTableEntry();
+    itemp = 0;
+    add_entryToSTable("itemp", "Constant", & itemp, & itemp, 1);
+    tmp___2 = fabs((double )*(dx + 0));
+    dmax = (int )tmp___2;
+    handleAssignmentSymbolically("dmax", "tmp___2", & dmax, & dmax, 1);
+    i___0 = 1;
+    add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
+    {
+    {
+    exp_outcome = i___0 < n;
+    handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(426, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(426, 1, 0);
+      setTrueExpr(426, "(< i___0 n)");
+      setFalseExpr(426, "(not (< i___0 n))");
+      addToTree(426, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 1);
+      delete_allVariableTableEntry();
+      tmp___3 = fabs((double )*(dx + i___0));
+      temp1 = (int )tmp___3;
+      handleAssignmentSymbolically("temp1", "tmp___3", & temp1, & temp1, 1);
+      {
+      exp_outcome = temp1 > dmax;
+      handleAssignmentSymbolically("exp_outcome", "(> temp1 dmax)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(428, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(428, 1, 0);
+        setTrueExpr(428, "(> temp1 dmax)");
+        setFalseExpr(428, "(not (> temp1 dmax))");
+        addToTree(428, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 426, 1);
+        delete_allVariableTableEntry();
+        itemp = i___0;
+        handleAssignmentSymbolically("itemp", "i___0", & i___0, & i___0, 1);
+        tmp___4 = fabs((double )*(dx + i___0));
+        dmax = (int )tmp___4;
+        handleAssignmentSymbolically("dmax", "tmp___4", & dmax, & dmax, 1);
+      } else {
+        setBranchInfo(428, 0, 1);
+        setTrueExpr(428, "(> temp1 dmax)");
+        setFalseExpr(428, "(not (> temp1 dmax))");
+        addToTree(428, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 426, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      i___0 ++;
+      handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(426, 0, 1);
+      setTrueExpr(426, "(< i___0 n)");
+      setFalseExpr(426, "(not (< i___0 n))");
+      addToTree(426, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 0);
+      delete_allVariableTableEntry();
+    }
+    }
+    {
+    exp_outcome = i___0 < n;
+    handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(431, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(431, 1, 0);
+      setTrueExpr(431, "(< i___0 n)");
+      setFalseExpr(431, "(not (< i___0 n))");
+      addToTree(431, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 1);
+      delete_allVariableTableEntry();
+      tmp___3 = fabs((double )*(dx + i___0));
+      temp1 = (int )tmp___3;
+      handleAssignmentSymbolically("temp1", "tmp___3", & temp1, & temp1, 1);
+      {
+      exp_outcome = temp1 > dmax;
+      handleAssignmentSymbolically("exp_outcome", "(> temp1 dmax)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(433, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(433, 1, 0);
+        setTrueExpr(433, "(> temp1 dmax)");
+        setFalseExpr(433, "(not (> temp1 dmax))");
+        addToTree(433, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 431, 1);
+        delete_allVariableTableEntry();
+        itemp = i___0;
+        handleAssignmentSymbolically("itemp", "i___0", & i___0, & i___0, 1);
+        tmp___4 = fabs((double )*(dx + i___0));
+        dmax = (int )tmp___4;
+        handleAssignmentSymbolically("dmax", "tmp___4", & dmax, & dmax, 1);
+      } else {
+        setBranchInfo(433, 0, 1);
+        setTrueExpr(433, "(> temp1 dmax)");
+        setFalseExpr(433, "(not (> temp1 dmax))");
+        addToTree(433, 3, "(> temp1 dmax)", "(not (> temp1 dmax))", 431, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      i___0 ++;
+      handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(431, 0, 1);
+      setTrueExpr(431, "(< i___0 n)");
+      setFalseExpr(431, "(not (< i___0 n))");
+      addToTree(431, 2, "(< i___0 n)", "(not (< i___0 n))", 411, 0);
+      delete_allVariableTableEntry();
+    }
+    }
+    }
+  }
+  }
+  __cil_tmp19 = isNotQueueEmpty();
+  if (__cil_tmp19) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(in2);
+    idamax(mempool, n, dx, icx);
   } else {
-    __cil_tmp5 = startCDG();
-    if (__cil_tmp5) {
-      __cil_tmp5 = getTestCases();
-      main1(in2);
+    __cil_tmp19 = startCDG();
+    if (__cil_tmp19) {
+      __cil_tmp19 = getTestCases();
+      idamax(mempool, n, dx, icx);
     }
   }
-  return (__cil_tmp2);
-  }
+  return (itemp);
 }
 }
 void getPrint(void)
@@ -15606,18 +18730,48 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.in2);
+  idamax(argvar.mempool, argvar.n, argvar.dx, argvar.icx);
 }
 }
 void main(void)
 {
-  int in2 ;
+  int *mempool ;
+  int n ;
+  int *dx ;
+  int icx ;
   int temp ;
   int __cil_tmp2 ;
+  int __cil_tmp3 ;
+  int __cil_tmp4 ;
+  int __cil_tmp5 ;
 
   {
+  argvar.mempool = (int *)malloc(30 * sizeof(int ));
+  __cil_tmp5 = 0;
+  while (1) {
+    if (__cil_tmp5 >= 30) {
+      break;
+    } else {
+      temp = rand();
+      *(argvar.mempool + __cil_tmp5) = temp % 20;
+      __cil_tmp5 ++;
+    }
+  }
+  __cil_tmp4 = rand();
+  argvar.n = __cil_tmp4 % 20;
+  argvar.dx = (int *)malloc(30 * sizeof(int ));
+  __cil_tmp3 = 0;
+  while (1) {
+    if (__cil_tmp3 >= 30) {
+      break;
+    } else {
+      temp = rand();
+      *(argvar.dx + __cil_tmp3) = temp % 20;
+      __cil_tmp3 ++;
+    }
+  }
   __cil_tmp2 = rand();
-  argvar.in2 = __cil_tmp2 % 20;
+  argvar.icx = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();
