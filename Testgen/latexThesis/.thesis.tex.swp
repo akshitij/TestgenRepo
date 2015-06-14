@@ -557,11 +557,39 @@ The behavior of variable stack is a lot alike to function call stack. Whenever w
 When we return from a function call, we pop an element from the stack and delete the entries in the symbol table by referring the popped element.\\
 The task of pushing the element on encountering a function call is done by a method \textit{funcEntry} and popping the element after returning from that function is done by \textit{funcExit}, both of which are defined in C modules.
 
+\subsection{Return Handling}
+After the environment is set up for \textit{f}, it executes symbolically covering some path in control flow graph of \textit{f}. It collects a summary that tranforms the symbolic values of parameters to new symbolic return values (if \textit{f} returns something). We need to map the concolic return values to appropriate variable at call site.\\ 
+For this, just before the function \textit{f} returns, we copy the concolic return value to a global variable. Then at call site, we assign the lvalue of call instruction to this global concolic variable. Thus, the concolic execution flows to and from the callee correctly.   
+
+\vspace{0.3cm}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.40]{return.png}
+\caption{Concolic Return}
+\end{figure}
+
+Here in \textit{figure 3.7}, function \textit{f} is called with parameter x. Its symbolic and concrete value is modified according to function f', which is a transition function along some path in \textit{f}. Variable \textit{z} attains this new concolic value and is returned. To ensure transfer of modified symbolic information on function return, we map the concolic value of \textit{z} to global variable and from them to \textit{t} in \textit{main}, which is the intended recipient.
 
 \newpage
 
-\section{Stack Manipulation}
-\section{Return Handling}
+\section{Recursion}
+\subsection{Limitation of previous approach}
+The approach that we have discussed until now can only handle non-recursive procedure calls. The reason being that our algorithm did not have support for multiple versions of same variable of the same function in the symbolic table. Our variable stack can handle atmost one instance of a function at any given time.
+\{Recall that in \textit{section 3.2.2} we have resolved the issue of same named variables in different procedures.\}\\
+To understand this, let us consider an example of recursive code.
+
+\vspace{0.4cm}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.60]{fac.png}
+\caption{WCET program for factorial}
+\end{figure}
+
+In this example,at \textit{line 14} a function call has been made to \textit{fac}. Before the call instruction executes, our algorithm maps concolic values from \textit{x} to \textit{fac\_n} and creates an entry in the symbol table using \textit{fac\_n} as the key. Now when the \textit{fac} executes, it again encounters a call instruction at \textit{line 7}. Our algorithm should map the values from \textit{fac\_n - 1} to "new" \textit{fac\_n}. But it has no mechanism implemented to distinguish between different versions of same variable of the same procedure. This leads to overwriting of previously present entry of \textit{fac\_n} in the symbol table.\\
+Therefore, we need to modify the key of symbol table such that it can handle multiple instances of same function in the variable stack, thereby allowing recursive call analysis.
+
+
+ 
 
 \chapter{Experiments}
 \section{Result}
