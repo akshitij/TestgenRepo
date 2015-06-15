@@ -6,7 +6,8 @@
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{graphicx}
-
+\usepackage{soul}
+\usepackage{subcaption}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{fancyhdr}
@@ -585,11 +586,95 @@ To understand this, let us consider an example of recursive code.
 \caption{WCET program for factorial}
 \end{figure}
 
-In this example,at \textit{line 14} a function call has been made to \textit{fac}. Before the call instruction executes, our algorithm maps concolic values from \textit{x} to \textit{fac\_n} and creates an entry in the symbol table using \textit{fac\_n} as the key. Now when the \textit{fac} executes, it again encounters a call instruction at \textit{line 7}. Our algorithm should map the values from \textit{fac\_n - 1} to "new" \textit{fac\_n}. But it has no mechanism implemented to distinguish between different versions of same variable of the same procedure. This leads to overwriting of previously present entry of \textit{fac\_n} in the symbol table.\\
-Therefore, we need to modify the key of symbol table such that it can handle multiple instances of same function in the variable stack, thereby allowing recursive call analysis.
+In this example,at \textit{line 14} a function call has been made to \textit{fac}. Before the call instruction executes, our algorithm maps concolic values from \textit{x} to \textit{fac\_n} and creates an entry in the symbol table using \textit{fac\_n} as the key. Now when the \textit{fac} executes, it again encounters a call instruction at \textit{line 7}. Our algorithm should map the values from \textit{fac\_n - 1} to "new" \textit{fac\_n}. But it has no mechanism implemented to distinguish between different versions of same variable of the same procedure. This leads to overwriting of previously present entry of \textit{fac\_n} in the symbol table (refer to \textit{table 3.1}) . More important problem that will arise is that after \textit{fact} at \textit{line 7} executes and returns, it cannot restore the previous symbolic state (i.e. before call was made). The concolic values of previous versions of the recurring function in the stack will be lost. \\
+Therefore, we need to modify the key of symbol table such that we can keep track of multiple instances of same function in the variable stack, allowing recursive call analysis.
 
 
- 
+
+\begin{table}	
+\begin{subtable}{.5\linewidth}
+\centering
+\begin{tabular}{||c c c||} 
+ \hline
+ \textbf{key} & \textbf{symVal} & \textbf{conVal} \\ [0.5ex] 
+ \hline\hline
+  & : &   \\ 
+ %%\hline
+  & : &  \\
+ \hline
+ fac\_n & s0 & c0 \\
+ \hline
+  & : &  \\ [1ex] 
+ \hline
+\end{tabular}
+\caption{call at line 14}
+\end{subtable}%
+\begin{subtable}{.5\linewidth}
+\centering
+ \begin{tabular}{||c c c||} 
+ \hline
+ \textbf{key} & \textbf{symVal} & \textbf{conVal} \\ [0.5ex] 
+ \hline\hline
+   & : &   \\ 
+  \hline
+  fac\_n & s1 & c1 \\
+  %%\hline
+  \st{fac\_n} & \st{s0} & \st{c0} \\
+  \hline
+  & : &  \\ [1ex] 
+ \hline
+\end{tabular}
+\caption{call at line 7}
+\end{subtable}
+\caption{Symbol Table} 
+\end{table}
+
+\subsection{Need for Versions}
+We have to maintain versions of function variables according to number of instances they have in the variable stack. We have to make sure that the entries in the symbol table dont get deleted or overwritten unless they are not needed anymore. One way is to modify the keys (of symbol table) such that they have function version associated with them. \\
+Let \textbf{occurence} of a procedure at any time be defined as the number of instances of that same procedure present in the call stack.\\
+
+\vspace{0.4cm}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.50]{symtableandstack.png}
+\caption{Function Variable Versions in Symbol Table}
+\end{figure}
+Therefore we remodify the key defined in \textit{section 3.2.2} to keep track its associated variable, procedure to which that variable belongs and that procedure's version (\textit{occurence}) it the call stack. The new key is:
+
+\begin{equation}
+K' = f'(V,P,O_{\tiny{P}})
+\end{equation}
+
+where O$_{\tiny{P}}$ is the occurence of P in function call stack.
+In \textit{figure 3.9} we can see the version handling of multiple instances of same functions in the symbol table. When another instance of function is pushed in the stack (recursively), no value in the symbol table is overwritten. Similarly, when a function instance is popped from the stack, the concolic values of previous version should be accessed.
+
+\subsection{Variable Hash-Map}
+The issue that arises with this approach is that we cannot rename variables in conjunction with their versions (like we did in \textit{section 3.2.2} using static analysis). This is because the versions are created dynamically at runtime when function call stack is manipulated. Therefore we create a hashmap \textit{M} that maps the variable name to key in the symbol table. At any point during execution, if procedure P is in the call stack, there will exist a mapping such that if K = f(V,P) then \textit{M} has following \textit{(key, value)} pairs
+
+\begin{equation}
+\textit{M} = (K,K')
+\end{equation}
+
+Whenever concolic execution needs to refer the symbol table using variable V, we look up the \textit{value} corresponding to V in \textit{M} and return the \textit{key}. But we still have to maintain the hashmap so that it always give the correct version of the key (the state of the variable stack is dynamic and so are the versions of function variables).
+
+\subsubsection{Before Function Execution}
+In \textit{section 3.2.2} we discussed the algorithm to populate the symbol table with specific values before executing a call instruction. We modify that algorithm slightly, instead of using variable name K as key in \textit{addEntryToSTable}, we use our new key K'. Then we add the new mapping (K, K') to \textit{M}. This keeps track of key K' and its concolic values, for when we need to do a query on the symbol table.
+
+\newpage
+\subsubsection{After Function Execution}
+When a function is done executing, the entries in the symbol table for that particular version of function are deleted. To do this, we again use the hashmap to get the current keys (containing current version of variables also) of symbol table that are no longer required.
+
+\subsection{Bound on Recursion}
+To keep the size of symbol table in check and prevent the variable stack from overflowing, we have to put an upper limit on the maximum number of instances that the variable stack can have of a given function. This puts a cap on the precision of symbolic execution. \\
+If the maximum number of versions allowed for a particular function be \textit{C}, then the symbolic execution will only continue uptil stack depth of C, after that the function executes using only concrete values. The symbolic execution resumes when the stack depth with respect to that function becomes less than or equal to \textit{C}.
+
+
+
+
+
+
+
+
 
 \chapter{Experiments}
 \section{Result}
@@ -603,5 +688,33 @@ Therefore, we need to modify the key of symbol table such that it can handle mul
 \begin{center}
 \textbf{\Large{Bibliography}}
 \end{center}
+
+
+\newpage
+\vspace{0.5cm} 
+\begin{tabular}{||c c c||} 
+ \hline
+ \textbf{key} & \textbf{symVal} & \textbf{conVal} \\ [0.5ex] 
+ \hline\hline
+   & : &   \\ [1ex]
+  \hline
+  fac\_n\_1 & s1 & c1 \\ [-1ex]
+  fac\_m\_1 & - & - \\
+  \hline
+   & : &  \\ [1ex] 
+  \hline
+  fac\_n\_0 & s0 & c0 \\[-1ex]
+  fac\_m\_1 & - & - \\
+  \hline
+  & : &  \\ [1ex] 
+  \hline
+  main\_i\_0 & s' & c' \\[-1ex]
+  main\_j\_0 & - & - \\
+  \hline
+  & : &  \\ [1ex] 
+ \hline
+\end{tabular}
+ 
+
 
 \end{document}
