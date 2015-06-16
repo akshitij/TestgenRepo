@@ -381,7 +381,7 @@ We have used a tool called \textbf{CIL} (\textbf{C} \textbf{I}ntermediate \textb
 
 This module accomplishes two tasks. It involves the simplification at call site with respect to the arguments (if any) passed to the function. It also simplifies the return expression at the end of function (if functions returns anything). 
 
-At the call site the arguments of the function are examined one by one. If an argument is not a variable then it must be an expression or a constant value. In latter case, we store the argument in a temporary local variable and pass that new variable as the parameter instead. Similar approach applies to return values. If the return statement consists of a variable, it is left unchanged otherwise it is transformed.\\
+At the call site the arguments of the function are examined one by one. If an argument is not a variable or literal then it must be an expression. In latter case, we store the argument in a temporary local variable and pass that new variable as the parameter instead. Similar approach applies to return values. If the return statement consists of a variable, it is left unchanged otherwise it is transformed.\\
 
 \begin{figure}[htbp]
 \centering
@@ -389,7 +389,7 @@ At the call site the arguments of the function are examined one by one. If an ar
 \caption{Original and Modified Function}
 \end{figure}  
 
-We can see in \textit{figure 3.1} the call sites and return statements have been transformed such that in further stages we only have to deal with variables. We will not have to deal with complicated expressions or constants. To create new local temporary variable we use CIL API's. It ensures that the variable have unique names thus avoiding any ambiguity.
+We can see in \textit{figure 3.1} the call sites and return statements have been transformed such that in further stages we only have to deal with variables. We will not have to deal with complicated expressions. To create new local temporary variable we use CIL API's. It ensures that the variable have unique names thus avoiding any ambiguity.
 This phase will have no effect on function calls with no arguments or functions which don't return any value (void).
 \newpage
 
