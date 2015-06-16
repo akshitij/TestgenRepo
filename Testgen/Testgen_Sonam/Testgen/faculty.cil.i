@@ -1,9 +1,9 @@
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./faculty.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./sixTimesFunc.cil.c"
+# 1 "./faculty.cil.c"
 
 
 
@@ -15341,42 +15341,50 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./sixTimesFunc.i","-g,-g")
-extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-int inc(int inc_x )
+#pragma merger("0","./faculty.i","-g,-g")
+int fac(int fac_n )
 {
+  int fac_tmp ;
+  int fac___cil_tmp3 ;
+  int fac___cil_tmp4 ;
+  int fac___cil_tmp5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  inc_x ++;
-  handleAssignmentSymbolically("inc_x", "(+ inc_x 1)", & inc_x, & inc_x, 1);
-  {
-  mapConcolicValues("inc_x", & inc_x);
-  return (inc_x);
+  if (fac_n == 0) {
+    {
+    fac___cil_tmp3 = 1;
+    add_entryToSTable("fac___cil_tmp3", "Constant", & fac___cil_tmp3, & fac___cil_tmp3,
+                      1);
+    {
+    mapConcolicValues("fac___cil_tmp3", & fac___cil_tmp3);
+    return (fac___cil_tmp3);
+    }
+    }
+  } else {
+    fac___cil_tmp5 = fac_n - 1;
+    handleAssignmentSymbolically("fac___cil_tmp5", "(- fac_n 1)", & fac___cil_tmp5,
+                                 & fac___cil_tmp5, 1);
+    funcEntry("(int,fac_n,variable,fac___cil_tmp5)", "fac_tmp fac___cil_tmp3 fac___cil_tmp4 fac___cil_tmp5",
+              "fac");
+    fac_tmp = fac(fac___cil_tmp5);
+    funcExit();
+    add_entryToSTable("fac_tmp", ret_SymValue, ret_ConValue, & fac_tmp, 1);
+    {
+    fac___cil_tmp4 = fac_n * fac_tmp;
+    handleAssignmentSymbolically("fac___cil_tmp4", "(* fac_n fac_tmp)", & fac___cil_tmp4,
+                                 & fac___cil_tmp4, 1);
+    {
+    mapConcolicValues("fac___cil_tmp4", & fac___cil_tmp4);
+    return (fac___cil_tmp4);
+    }
+    }
   }
 }
 }
-int mult(int mult_y )
-{
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  mult_y = 6 * mult_y;
-  handleAssignmentSymbolically("mult_y", "(* 6 mult_y)", & mult_y, & mult_y, 1);
-  funcEntry("(int,inc_x,variable,mult_y)", "", "inc");
-  mult_y = inc(mult_y);
-  funcExit();
-  add_entryToSTable("mult_y", ret_SymValue, ret_ConValue, & mult_y, 1);
-  {
-  mapConcolicValues("mult_y", & mult_y);
-  return (mult_y);
-  }
-}
-}
+extern int ( scanf)() ;
 void createCDG(void)
 {
 
@@ -15384,15 +15392,18 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(6, 0, 1);
-  setArray(6, "(= a 31)");
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(8, 6, 0);
-  addtoCDGnode(9, 0, 1);
-  addtoCDGnode(9, 0, 1);
   addtoCDGnode(10, 0, 1);
   addtoCDGnode(11, 0, 1);
-  addtoCDGnode(12, 0, 1);
+  setArray(11, "(<= i___0 (int )n)");
+  addtoCDGnode(12, 11, 1);
+  addtoCDGnode(13, 0, 1);
+  setArray(13, "(<= i___0 (int )n)");
+  addtoCDGnode(13, 0, 1);
+  setArray(13, "(<= i___0 (int )n)");
+  addtoCDGnode(14, 13, 1);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(15, 0, 1);
+  addtoCDGnode(16, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15400,7 +15411,8 @@ void isCopyOfHolder(void)
 
 
   {
-
+  isCopyOf(11, 11);
+  isCopyOf(13, 11);
 }
 }
 void createSidTable(void)
@@ -15408,76 +15420,109 @@ void createSidTable(void)
 
 
   {
-  add_condition(6, "(= a 31)", "(not (= a 31))", 0, 0);
+  add_condition(11, "(<= i___0 n)", "(not (<= i___0 n))", 0, 0);
+  add_condition(13, "(<= i___0 n)", "(not (<= i___0 n))", 0, 0);
 }
 }
 struct arguments {
-   int a ;
+   int volatile n ;
 };
 struct arguments argvar ;
-int main1(int a )
+int main1(int volatile n )
 {
-  int b ;
-  int __cil_tmp3 ;
+  int i___0 ;
+  int s ;
+  int tmp ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp6 ;
-  char *__cil_tmp7 ;
+  int __cil_tmp7 ;
+  char *__cil_tmp8 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp7 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1434453211.tc", __cil_tmp7);
-  add_entryToSTable("a", "s0", & a, & a, 1);
-  funcEntry("(int,mult_y,variable,a)", "", "mult");
-  a = mult(a);
-  funcExit();
-  add_entryToSTable("a", ret_SymValue, ret_ConValue, & a, 1);
+  __cil_tmp8 = malloc(100 * sizeof(char ));
+  sprintf(__cil_tmp8, "\t%d\n", n);
+  printTestCase("faculty_main1_1434454244.tc", __cil_tmp8);
+  add_entryToSTable("n", "s0", & n, & n, 1);
+  s = 0;
+  add_entryToSTable("s", "Constant", & s, & s, 1);
+  i___0 = 0;
+  add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
   {
-  exp_outcome = a == 31;
-  handleAssignmentSymbolically("exp_outcome", "(= a 31)", & exp_outcome, & exp_outcome,
+  {
+  exp_outcome = i___0 <= (int )n;
+  handleAssignmentSymbolically("exp_outcome", "(<= i___0 n)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(6, 1, 0);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 1);
+    setBranchInfo(11, 1, 0);
+    setTrueExpr(11, "(<= i___0 n)");
+    setFalseExpr(11, "(not (<= i___0 n))");
+    addToTree(11, 1, "(<= i___0 n)", "(not (<= i___0 n))", 0, 1);
     delete_allVariableTableEntry();
-    b = 1;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
+    funcEntry("(int,fac_n,variable,i___0)", "fac_tmp fac___cil_tmp3 fac___cil_tmp4 fac___cil_tmp5",
+              "fac");
+    tmp = fac(i___0);
+    funcExit();
+    add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+    s += tmp;
+    handleAssignmentSymbolically("s", "(+ s tmp)", & s, & s, 1);
+    i___0 ++;
+    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
   } else {
-    setBranchInfo(6, 0, 1);
-    setTrueExpr(6, "(= a 31)");
-    setFalseExpr(6, "(not (= a 31))");
-    addToTree(6, 1, "(= a 31)", "(not (= a 31))", 0, 0);
+    setBranchInfo(11, 0, 1);
+    setTrueExpr(11, "(<= i___0 n)");
+    setFalseExpr(11, "(not (<= i___0 n))");
+    addToTree(11, 1, "(<= i___0 n)", "(not (<= i___0 n))", 0, 0);
     delete_allVariableTableEntry();
-    b = 2;
-    add_entryToSTable("b", "Constant", & b, & b, 1);
   }
   }
   {
-  __cil_tmp3 = 0;
-  add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
-  __cil_tmp6 = isNotQueueEmpty();
-  if (__cil_tmp6) {
+  exp_outcome = i___0 <= (int )n;
+  handleAssignmentSymbolically("exp_outcome", "(<= i___0 n)", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(13, 1, 0);
+    setTrueExpr(13, "(<= i___0 n)");
+    setFalseExpr(13, "(not (<= i___0 n))");
+    addToTree(13, 1, "(<= i___0 n)", "(not (<= i___0 n))", 0, 1);
+    delete_allVariableTableEntry();
+    funcEntry("(int,fac_n,variable,i___0)", "fac_tmp fac___cil_tmp3 fac___cil_tmp4 fac___cil_tmp5",
+              "fac");
+    tmp = fac(i___0);
+    funcExit();
+    add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+    s += tmp;
+    handleAssignmentSymbolically("s", "(+ s tmp)", & s, & s, 1);
+    i___0 ++;
+    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
+  } else {
+    setBranchInfo(13, 0, 1);
+    setTrueExpr(13, "(<= i___0 n)");
+    setFalseExpr(13, "(not (<= i___0 n))");
+    addToTree(13, 1, "(<= i___0 n)", "(not (<= i___0 n))", 0, 0);
+    delete_allVariableTableEntry();
+  }
+  }
+  }
+  __cil_tmp7 = isNotQueueEmpty();
+  if (__cil_tmp7) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(a);
+    main1(n);
   } else {
-    __cil_tmp6 = startCDG();
-    if (__cil_tmp6) {
-      __cil_tmp6 = getTestCases();
-      main1(a);
+    __cil_tmp7 = startCDG();
+    if (__cil_tmp7) {
+      __cil_tmp7 = getTestCases();
+      main1(n);
     }
   }
-  return (__cil_tmp3);
-  }
+  return (s);
 }
 }
 void getPrint(void)
@@ -15494,18 +15539,18 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.a);
+  main1(argvar.n);
 }
 }
 void main(void)
 {
-  int a ;
+  int volatile n ;
   int temp ;
   int __cil_tmp2 ;
 
   {
   __cil_tmp2 = rand();
-  argvar.a = __cil_tmp2 % 20;
+  argvar.n = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

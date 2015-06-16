@@ -1,63 +1,16 @@
 digraph CDG {
 ENTRY -> 1
-403 [shape=diamond, color=red]
-ENTRY -> 403
-403-> 404
-407 [shape=diamond, color=red]
-403-> 407
-403-> 405
-403-> 406
-ENTRY -> 437
-407-> 408
-411 [shape=diamond, color=red]
-407-> 411
-407-> 409
-407-> 410
-ENTRY -> 437
-411-> 412
-411-> 424
-411-> 413
-414 [shape=diamond, color=red]
-411-> 414
-414-> 415
-419 [shape=diamond, color=red]
-411-> 419
-416 [shape=diamond, color=red]
-414-> 416
-416-> 417
-414-> 418
-414-> 418
-419 [shape=diamond, color=red]
-411-> 419
-419-> 420
-407-> 436
-421 [shape=diamond, color=red]
-419-> 421
-421-> 422
-419-> 423
-419-> 423
-407-> 436
-411-> 425
-426 [shape=diamond, color=red]
-411-> 426
-426-> 427
-431 [shape=diamond, color=red]
-411-> 431
-428 [shape=diamond, color=red]
-426-> 428
-428-> 429
-426-> 430
-426-> 430
-431 [shape=diamond, color=red]
-411-> 431
-431-> 432
-407-> 436
-433 [shape=diamond, color=red]
-431-> 433
-433-> 434
-431-> 435
-431-> 435
-407-> 436
-ENTRY -> 437
+ENTRY -> 10
+11 [shape=diamond, color=red]
+ENTRY -> 11
+11-> 12
+13 [shape=diamond, color=red]
+ENTRY -> 13
+13 [shape=diamond, color=red]
+ENTRY -> 13
+13-> 14
+ENTRY -> 15
+ENTRY -> 15
+ENTRY -> 16
 }
 

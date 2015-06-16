@@ -15424,7 +15424,7 @@ int main1(int a )
   {
   __cil_tmp7 = malloc(100 * sizeof(char ));
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1434147155.tc", __cil_tmp7);
+  printTestCase("sixTimesFunc_main1_1434453211.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(int,mult_y,variable,a)", "", "mult");
   a = mult(a);
