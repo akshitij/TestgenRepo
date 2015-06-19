@@ -413,7 +413,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   	add_entryToSTable(lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
-  
+  }
 }
 
 char *getPrepositionalFormula(char *expr) {

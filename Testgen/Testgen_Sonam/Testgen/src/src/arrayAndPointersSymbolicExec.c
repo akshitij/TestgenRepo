@@ -12,6 +12,15 @@ static int toInt(void* addr) {
 
 void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void* address, int type) {
     struct arraySym_table *s, r;
+    char new_aname[55];
+    char* hash_aname = get_vnameHash(aname);
+    if(hash_aname == NULL){
+    	strcpy(new_aname, aname);
+    }
+    else{
+    	strcpy(new_aname, hash_aname);
+    }
+    
     int size;
 
    // strcpy(r.key.arrayName, aname);
@@ -22,11 +31,11 @@ void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void
 
     for(s=arraySTable; s != NULL; s=(struct arraySym_table*)(s->hh.next)) 
     {
-        if(strcmp(s->key.arrayName, aname)==0 && s->key.index==index && strcmp(s->sname,"Constant")==0)
+        if(strcmp(s->key.arrayName, new_aname)==0 && s->key.index==index && strcmp(s->sname,"Constant")==0)
           { strcpy(s->sname,sname);
           break;}
      
-        if(strcmp(s->key.arrayName, aname)==0 && s->key.index==index)
+        if(strcmp(s->key.arrayName, new_aname)==0 && s->key.index==index)
            return;
 
     }
@@ -34,7 +43,7 @@ void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void
 
   if(s == NULL)
      { s = (struct arraySym_table *)malloc(sizeof(struct arraySym_table));
-      strcpy(s->key.arrayName, aname);
+      strcpy(s->key.arrayName, new_aname);
       s->key.index = index;
       HASH_ADD(hh, arraySTable, key, sizeof(struct arrayKey), s);
   
@@ -104,7 +113,7 @@ void deleteArrayTable()
 
 void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *address, int type) {
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp;
+  char *token, *result, *symName, *temp, *vname_occ, *arrname;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -160,7 +169,14 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrname = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrname);
+      if(vname_occ == NULL){
+        symName = findArrayRecord(arrname, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -180,11 +196,19 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
+      vname_occ = get_vnameHash(token);
+      if(vname_occ == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vname_occ);
+      }
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
-          sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          //This will return same value for all Constant variables ....see example constantFunc.c
+          //sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
           strcat(result, buff);
         } else if (strcmp(symName, "Function") == 0) {
@@ -206,8 +230,14 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
   strcat(result, "\0");
 
   //printf("result=%s\n",result);
-
-  add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  char* lhs_vn = get_vnameHash(lhs);
+  if (lhs_vn != NULL){
+  	add_entryToArraySTable(lhs_vn, index, result, val, address, type) ;
+  }
+  else{
+  	add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  }
+  
   delete_allVariableTableEntry();
 }
 

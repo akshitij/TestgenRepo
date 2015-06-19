@@ -1,4 +1,4 @@
 (benchmark res
   :logic AUFLIA
-:extrafuns ((s0 Int))
+:extrafuns ((s0 Real))
 )

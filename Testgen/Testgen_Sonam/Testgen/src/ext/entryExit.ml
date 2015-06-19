@@ -168,11 +168,11 @@ class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
 	                        	List.iter2 (fun a b ->
 	                        		    let (fp,t) = a in
 	                        		    let (ap,corv) = b in
-	                        		    str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ") ")
+	                        		    str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ")#")
 	                        		   formals actuals
 	                              end;
 	                            (*let f = "(type,formals,actuals,CorV)" in*) 
-	                            let p = String.trim !str in
+	                            let p = String.sub !str 0 ((String.length !str) - 1) in
 	                            let func = funcName in
 	                            let localVars = (getLocalVarString fl func) in
 	                            begin

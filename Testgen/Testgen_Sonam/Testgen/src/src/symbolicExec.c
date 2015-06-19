@@ -297,7 +297,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp, *vname_occ;
+  char *token, *result, *symName, *temp, *vname_occ, *arrname;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -351,7 +351,14 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrname = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrname);
+      if(vname_occ == NULL){
+        symName = findArrayRecord(arrname, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
