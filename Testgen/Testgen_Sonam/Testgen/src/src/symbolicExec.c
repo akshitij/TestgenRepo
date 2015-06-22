@@ -234,7 +234,7 @@ void updateValBySymbolicName(char *sname, void *value) {
    {  if((*(int*)value) < 0)
           { updateFloatValBySname(sname, (*(int *)value));}
      else
-     updateFloatValBySname(sname, (*(float *)value));
+     updateFloatValBySname(sname, (*(int *)value));
    }
 }
 
@@ -297,7 +297,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp, *vname_occ, *arrname;
+  char *token, *result, *symName, *temp, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -319,6 +319,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
     case POINTER:
       parameter = findParameter(token);
+      temp = getPointerName(token);
       j = 0;
 
       while (j < (2 * parameter + 1)) {
@@ -351,14 +352,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      arrname = (char *)getArrayName(token);
-      vname_occ = get_vnameHash(arrname);
-      if(vname_occ == NULL){
-        symName = findArrayRecord(arrname, parameter);
-      }
-      else{
-        symName = findArrayRecord(vname_occ, parameter);
-      }
+      symName = findArrayRecord((char *)getArrayName(token), parameter);
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -411,13 +405,42 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
   strcat(result, "\0");
 
+  int j2 = 0, k, len2 = strlen(lhs);
+  char* temp2;
+  char *symName2;
+  char new_lhs[100];
+  char *token2 = getNextToken(lhs, &j2, len2);
+  if(token2 != NULL){
+    switch (token_type) {
+      case POINTER:
+        parameter = findParameter(token2);
+        temp2 = getPointerName(token2);
+        k = 0;
+        while (k < (2 * parameter)) {
+          symName2 = find_symVal(temp2);
+          if (symName2 == NULL)
+            symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
+          temp2 = symName2;
+          k++;
+        }
+        //add_entryToSTable(symName2, result, val, address, type);
+        strcpy(new_lhs,symName2);
+        break;
+      
+      case VARIABLE:
+        //add_entryToSTable(lhs, result, val, address, type);
+        strcpy(new_lhs,lhs);
+        break;
+    }
+  }  
+       
   //printf("result=%s\n",result);
-  char* lhs_vn = get_vnameHash(lhs);
+  char* lhs_vn = get_vnameHash(new_lhs);
   if (lhs_vn != NULL){
   	add_entryToSTable(lhs_vn, result, val, address, type);
   }
   else{
-  	add_entryToSTable(lhs, result, val, address, type);
+  	add_entryToSTable(new_lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
   }

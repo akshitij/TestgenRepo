@@ -2306,7 +2306,6 @@ typedef struct functionArgument{
     void* val;
     char apname[50];
     int isConstant;
-    int isPointer;
 }funcArg;
 
 typedef struct {
@@ -2411,13 +2410,8 @@ funcArg* getArgument(char* argString, char* foo){
     strcpy(argument->funcName,foo);
 
     token = strtok(copy, s);
-    if(strcmp(token,"int") == 0 || strcmp(token,"int *") == 0){
+    if(strcmp(token,"int") == 0 || strcmp(token,"int *") == 0)
      argument->type = 1;
-     if(strcmp(token,"int *") == 0)
-      argument->isPointer = 1;
-     else
-      argument->isPointer = 0;
-    }
     else{
      if(strcmp(token,"double") == 0 || strcmp(token,"float")==0)
      argument->type = 2;
@@ -2485,40 +2479,30 @@ int getOccurence(char* funcName){
 
 void populateSTable(funcArg* a){
 
-    if(a->type == 1 && a->isPointer == 1){
-     if(symStack == ((void *)0) || stackSize(symStack) == 0){
-      add_vnameHash(a->vname, a->apname);
-     }
-     else{
-      add_vnameHash(a->vname, get_vnameHash(a->apname));
-     }
+    char tmp[5];
+    sprintf(tmp, "_%d", currentOccurence);
+    char key[55];
+    strcpy(key,a->vname);
+    strcat(key,tmp);
+    if(a->isConstant == 1){
+ add_entryToSTable(key,"Constant",a->val,a->val,a->type);
+ printf("%s Constant\n", key);
     }
     else{
- char tmp[5];
-     sprintf(tmp, "_%d", currentOccurence);
-     char key[55];
-     strcpy(key,a->vname);
-     strcat(key,tmp);
-     if(a->isConstant == 1){
-  add_entryToSTable(key,"Constant",a->val,a->val,a->type);
-  printf("%s Constant\n", key);
-     }
-     else{
-  char* sym;
-  void* val;
-  if(symStack == ((void *)0) || stackSize(symStack) == 0){
-      sym = find_symVal(a->apname);
-      val = find_conVal(a->apname);
-  }
-  else{
-      sym = find_symVal(get_vnameHash(a->apname));
-      val = find_conVal(get_vnameHash(a->apname));
-  }
-  add_entryToSTable(key,sym,val,val,a->type);
-  printf("%s %s %d\n", key, sym, *(int*)val);
-     }
-     add_vnameHash(a->vname, key);
+ char* sym;
+ void* val;
+ if(symStack == ((void *)0) || stackSize(symStack) == 0){
+     sym = find_symVal(a->apname);
+     val = find_conVal(a->apname);
+ }
+ else{
+     sym = find_symVal(get_vnameHash(a->apname));
+     val = find_conVal(get_vnameHash(a->apname));
+ }
+ add_entryToSTable(key,sym,val,val,a->type);
+ printf("%s %s %d\n", key, sym, *(int*)val);
     }
+    add_vnameHash(a->vname, key);
 }
 
 void populateSTableWithLocals(char *localVarName){
@@ -2565,7 +2549,7 @@ void funcEntry(char* args, char* locals, char* funcName) {
      char* tmp = copy;
      int count = 1;
      while (*tmp != '\0') {
-  if (*tmp++ == ' ')
+  if (*tmp++ == '#')
       count++;
      }
      varNames = (char**) malloc(count * sizeof(char*));
@@ -2658,7 +2642,12 @@ void funcExit(){
         if(*execFlag == 1){
       printf("funcEntry executed\n");
       printf("retSymVal : %s\n",ret_SymValue);
-
+      if(ret_ConValue == ((void *)0)){
+     printf("no return concrete value\n");
+  }
+         else{
+       printf("retConVal \"%d\"\n",*((int *)(ret_ConValue)));
+         }
       funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
       stackPop(symStack, (&fv));
       int j;
@@ -2714,7 +2703,12 @@ void mapConcolicValues (char* retVarName, void* concValue){
  }
  else{
      printf("symValue for variable \"%s\" is \"%s\"\n",retVarName,ret_SymValue);
-     printf("ConValue for variable \"%s\" is \"%d\"\n",retVarName,*((int *)(ret_ConValue)));
+     if(ret_ConValue == ((void *)0)){
+      printf("no return concrete value\n");
+     }
+     else{
+      printf("ConValue for variable \"%s\" is \"%d\"\n",retVarName,*((int *)(ret_ConValue)));
+     }
  }
     }
     else{

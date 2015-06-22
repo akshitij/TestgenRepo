@@ -2806,7 +2806,6 @@ typedef struct functionArgument{
     void* val;
     char apname[50];
     int isConstant;
-    int isPointer;
 }funcArg;
 
 typedef struct {
@@ -2911,13 +2910,8 @@ funcArg* getArgument(char* argString, char* foo){
     strcpy(argument->funcName,foo);
 
     token = strtok(copy, s);
-    if(strcmp(token,"int") == 0 || strcmp(token,"int *") == 0){
+    if(strcmp(token,"int") == 0 || strcmp(token,"int *") == 0)
      argument->type = 1;
-     if(strcmp(token,"int *") == 0)
-      argument->isPointer = 1;
-     else
-      argument->isPointer = 0;
-    }
     else{
      if(strcmp(token,"double") == 0 || strcmp(token,"float")==0)
      argument->type = 2;
@@ -2985,40 +2979,30 @@ int getOccurence(char* funcName){
 
 void populateSTable(funcArg* a){
 
-    if(a->type == 1 && a->isPointer == 1){
-     if(symStack == ((void *)0) || stackSize(symStack) == 0){
-      add_vnameHash(a->vname, a->apname);
-     }
-     else{
-      add_vnameHash(a->vname, get_vnameHash(a->apname));
-     }
+    char tmp[5];
+    sprintf(tmp, "_%d", currentOccurence);
+    char key[55];
+    strcpy(key,a->vname);
+    strcat(key,tmp);
+    if(a->isConstant == 1){
+ add_entryToSTable(key,"Constant",a->val,a->val,a->type);
+ printf("%s Constant\n", key);
     }
     else{
- char tmp[5];
-     sprintf(tmp, "_%d", currentOccurence);
-     char key[55];
-     strcpy(key,a->vname);
-     strcat(key,tmp);
-     if(a->isConstant == 1){
-  add_entryToSTable(key,"Constant",a->val,a->val,a->type);
-  printf("%s Constant\n", key);
-     }
-     else{
-  char* sym;
-  void* val;
-  if(symStack == ((void *)0) || stackSize(symStack) == 0){
-      sym = find_symVal(a->apname);
-      val = find_conVal(a->apname);
-  }
-  else{
-      sym = find_symVal(get_vnameHash(a->apname));
-      val = find_conVal(get_vnameHash(a->apname));
-  }
-  add_entryToSTable(key,sym,val,val,a->type);
-  printf("%s %s %d\n", key, sym, *(int*)val);
-     }
-     add_vnameHash(a->vname, key);
+ char* sym;
+ void* val;
+ if(symStack == ((void *)0) || stackSize(symStack) == 0){
+     sym = find_symVal(a->apname);
+     val = find_conVal(a->apname);
+ }
+ else{
+     sym = find_symVal(get_vnameHash(a->apname));
+     val = find_conVal(get_vnameHash(a->apname));
+ }
+ add_entryToSTable(key,sym,val,val,a->type);
+ printf("%s %s %d\n", key, sym, *(int*)val);
     }
+    add_vnameHash(a->vname, key);
 }
 
 void populateSTableWithLocals(char *localVarName){
@@ -3065,7 +3049,7 @@ void funcEntry(char* args, char* locals, char* funcName) {
      char* tmp = copy;
      int count = 1;
      while (*tmp != '\0') {
-  if (*tmp++ == ' ')
+  if (*tmp++ == '#')
       count++;
      }
      varNames = (char**) malloc(count * sizeof(char*));
@@ -3158,7 +3142,12 @@ void funcExit(){
         if(*execFlag == 1){
       printf("funcEntry executed\n");
       printf("retSymVal : %s\n",ret_SymValue);
-
+      if(ret_ConValue == ((void *)0)){
+     printf("no return concrete value\n");
+  }
+         else{
+       printf("retConVal \"%d\"\n",*((int *)(ret_ConValue)));
+         }
       funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
       stackPop(symStack, (&fv));
       int j;
@@ -3214,7 +3203,12 @@ void mapConcolicValues (char* retVarName, void* concValue){
  }
  else{
      printf("symValue for variable \"%s\" is \"%s\"\n",retVarName,ret_SymValue);
-     printf("ConValue for variable \"%s\" is \"%d\"\n",retVarName,*((int *)(ret_ConValue)));
+     if(ret_ConValue == ((void *)0)){
+      printf("no return concrete value\n");
+     }
+     else{
+      printf("ConValue for variable \"%s\" is \"%d\"\n",retVarName,*((int *)(ret_ConValue)));
+     }
  }
     }
     else{
@@ -3452,7 +3446,7 @@ void updateValBySymbolicName(char *sname, void *value) {
    { if((*(int*)value) < 0)
           { updateFloatValBySname(sname, (*(int *)value));}
      else
-     updateFloatValBySname(sname, (*(float *)value));
+     updateFloatValBySname(sname, (*(int *)value));
    }
 }
 
@@ -3515,7 +3509,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp, *vname_occ, *arrname;
+  char *token, *result, *symName, *temp, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -3537,6 +3531,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
     case POINTER:
       parameter = findParameter(token);
+      temp = getPointerName(token);
       j = 0;
 
       while (j < (2 * parameter + 1)) {
@@ -3569,14 +3564,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
 
-      arrname = (char *)getArrayName(token);
-      vname_occ = get_vnameHash(arrname);
-      if(vname_occ == ((void *)0)){
-        symName = findArrayRecord(arrname, parameter);
-      }
-      else{
-        symName = findArrayRecord(vname_occ, parameter);
-      }
+      symName = findArrayRecord((char *)getArrayName(token), parameter);
 
       if (symName != ((void *)0)) {
         if (strcmp(symName, "Constant") == 0) {
@@ -3629,13 +3617,42 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
   strcat(result, "\0");
 
+  int j2 = 0, k, len2 = strlen(lhs);
+  char* temp2;
+  char *symName2;
+  char new_lhs[100];
+  char *token2 = getNextToken(lhs, &j2, len2);
+  if(token2 != ((void *)0)){
+    switch (token_type) {
+      case POINTER:
+        parameter = findParameter(token2);
+        temp2 = getPointerName(token2);
+        k = 0;
+        while (k < (2 * parameter)) {
+          symName2 = find_symVal(temp2);
+          if (symName2 == ((void *)0))
+            symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
+          temp2 = symName2;
+          k++;
+        }
 
-  char* lhs_vn = get_vnameHash(lhs);
+        strcpy(new_lhs,symName2);
+        break;
+
+      case VARIABLE:
+
+        strcpy(new_lhs,lhs);
+        break;
+    }
+  }
+
+
+  char* lhs_vn = get_vnameHash(new_lhs);
   if (lhs_vn != ((void *)0)){
    add_entryToSTable(lhs_vn, result, val, address, type);
   }
   else{
-   add_entryToSTable(lhs, result, val, address, type);
+   add_entryToSTable(new_lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
   }

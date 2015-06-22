@@ -2848,7 +2848,7 @@ int getOutputFromConstraintSolver()
       if (negative)
  value = value * -1;
 
-
+      printf("save=%s, token=%s value=%d\n",save,token,value);
       updateValBySymbolicName(save, &value);
       break;
 
@@ -3053,6 +3053,7 @@ void directPathConditions() {
 
     getPrint();
     writeProgramSVariables();
+    printf("Path Condition : %s\n",(newPathCondition != ((void *)0) ? newPathCondition:"null"));
     writeConditionsToFile(newPathCondition);
 
     if (!getOutputFromConstraintSolver()) {

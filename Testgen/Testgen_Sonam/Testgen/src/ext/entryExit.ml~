@@ -12,24 +12,24 @@ let addEntryToSymbolTable = ref "add_entryToSTable"
 
 
 type functions = {
-  mutable funcEntry_instfun : varinfo;
-  mutable funcExit_instfun : varinfo;
-}
+    mutable funcEntry_instfun : varinfo;
+    mutable funcExit_instfun : varinfo;
+  }
 
 let dummyVar = makeVarinfo false "_tut_exit" voidType
 
 
 let instfuns = {
-  funcEntry_instfun = dummyVar;
-  funcExit_instfun = dummyVar;
-}
+    funcEntry_instfun = dummyVar;
+    funcExit_instfun = dummyVar;
+  }
 
 let funcEntry_instfun_str = "funcEntry"
 let funcExit_instfun_str = "funcExit"
 
 let mkFunTyp (rt : typ) (args : (string * typ) list) : typ =
   TFun(rt, Some(L.map (fun a -> (fst a, snd a, [])) args), false, [])
-  
+      
 let initInstFunctions (f : file) : unit =
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
   let instf_type = mkFunTyp voidType ["args",charPtrType; "locals", charPtrType; "funcName", charPtrType] in
@@ -37,21 +37,21 @@ let initInstFunctions (f : file) : unit =
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
   let instf_type = mkFunTyp voidType [] in
   instfuns.funcExit_instfun <- focf funcExit_instfun_str instf_type
- 
+				    
 let makeInstrStmts (func : varinfo) (argsList : exp list) (loc : location)
-                   : instr =
+    : instr =
   Call(None, v2e func, argsList, loc) 
- 
- 
+      
+      
 let varinfoList = ref [] 
 let getSymVarinfo (f : file) : unit =
   List.iter (fun g ->
 	     match g with
 	     |GVar (vi,_,_) ->
 	       if (vi.vname = "ret_SymValue") then 
-	       		varinfoList := !varinfoList @ [vi]
+	       	 varinfoList := !varinfoList @ [vi]
 	     |_ -> ())
-  f.globals
+	    f.globals
 
 (* values are repeating twice hence varinfo[0] and varinfo[3] are used sym sym con con *) 
 let getConVarinfo (f : file) : unit =
@@ -59,20 +59,20 @@ let getConVarinfo (f : file) : unit =
 	     match g with
 	     |GVar (vi,_,_) ->
 	       if (vi.vname = "ret_ConValue") then 
-	       		varinfoList := !varinfoList @ [vi]
+	       	 varinfoList := !varinfoList @ [vi]
 	     |_ -> ())
-  f.globals
+	    f.globals
 
 (* prototype for add_entryToSTable() *)
 let makeSTableEntryFunction () : varinfo = 
-        let v = makeGlobalVar !addEntryToSymbolTable 
-                    (TFun(voidType, Some [("s1", charConstPtrType, []);
-                                         ("s2", charConstPtrType, []);
-                                         ("val", voidPtrType, []);
-                                         ("address", voidPtrType, []);
-                                         ("type", intType, []); ],
-                             true, [])) in
-         v
+  let v = makeGlobalVar !addEntryToSymbolTable 
+			(TFun(voidType, Some [("s1", charConstPtrType, []);
+                                              ("s2", charConstPtrType, []);
+                                              ("val", voidPtrType, []);
+                                              ("address", voidPtrType, []);
+                                              ("type", intType, []); ],
+                              true, [])) in
+  v
 
 let mkstableEntryfxn2 (s1 : string) (e1 : exp) (e2 : exp) (e3 : exp) (t : int) : instr = 
   let i: varinfo = makeSTableEntryFunction () in 
@@ -82,15 +82,15 @@ let mkstableEntryfxn2 (s1 : string) (e1 : exp) (e2 : exp) (e3 : exp) (t : int) :
 let getLocalVarString (f : file) (funcName : string) : string = 
   let str = ref "" in
   List.iter ( fun g ->
-  		match g with
-  		|GFun(fd,loc) ->
-  		  if fd.svar.vname = funcName then
-  		    List.iter (fun var ->
-  			        if ((var.vname <> "symName") && (var.vname <> "in") && (var.vname <> "addr")) then
-  			          str := !str ^ var.vname ^ " "
-  			      ) fd.slocals
-  		| _ -> ()
-  ) f.globals;
+  	      match g with
+  	      |GFun(fd,loc) ->
+  		if fd.svar.vname = funcName then
+  		  List.iter (fun var ->
+  			     if ((var.vname <> "symName") && (var.vname <> "in") && (var.vname <> "addr")) then
+  			       str := !str ^ var.vname ^ " "
+  			    ) fd.slocals
+  	      | _ -> ()
+	    ) f.globals;
   let localVarString = String.trim !str in
   localVarString
 
@@ -158,97 +158,103 @@ class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
   inherit nopCilVisitor                        
   method vinst (i : instr) = begin
       match i with
-      
+	
       | Call (lv,f,expList,loc) -> 
          let fnam = Pretty.sprint max_int (d_exp () f) in
-	   if (List.mem fnam !Param.func_list && fnam <> !Param.func(* && (List.length expList) > 0*)) then begin 
+	 if (List.mem fnam !Param.func_list && fnam <> !Param.func(* && (List.length expList) > 0*)) then begin 
 	     let (formals,funcName),actuals = (analyse f), (genArgString expList) in
-	                        let str = ref "" in begin
-	                            if (List.length formals) == (List.length actuals) then begin
-	                        	List.iter2 (fun a b ->
-	                        		    let (fp,t) = a in
-	                        		    let (ap,corv) = b in
-	                        		    str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ")  ")
-	                        		   formals actuals
-	                              end;
-	                            (*let f = "(type,formals,actuals,CorV)" in*) 
-	                            let p = String.trim !str in
-	                            let func = funcName in
-	                            let localVars = (getLocalVarString fl func) in
-	                            begin
-	                        	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ((*[constS2e f] @ *)[constS2e p] @ [constS2e localVars] @ [constS2e func]) loc in
-	                        		ChangeTo [instrumentEntryFunc;i]	
-	                              end
-	                          end;
-	                      end
-           else 
-           	 ChangeTo[i]
-      
-      
+	     let str = ref "" in begin
+	         if (List.length formals) == (List.length actuals) then begin
+	             List.iter2 (fun a b ->
+	                         let (fp,t) = a in
+	                         let (ap,corv) = b in
+	                         str := !str ^ "(" ^ (String.trim t) ^ "," ^ fp ^ "," ^ corv ^ "," ^ ap ^ ")#")
+	                        formals actuals
+	           end;
+	         (*let f = "(type,formals,actuals,CorV)" in*) 
+	         let func = funcName in
+	         let localVars = (getLocalVarString fl func) in
+	         begin
+	           if (String.length !str) == 0 then
+	           	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ((*[constS2e f] @ *)[constS2e !str] @ [constS2e localVars] @ [constS2e func]) loc in
+	           	ChangeTo [instrumentEntryFunc;i]
+	           
+	           else
+	           	let p = String.sub !str 0 ((String.length !str) - 1) in
+	           	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ((*[constS2e f] @ *)[constS2e p] @ [constS2e localVars] @ [constS2e func]) loc in
+	           	ChangeTo [instrumentEntryFunc;i]
+	           	
+	         end
+	       end;
+	   end
+         else 
+           ChangeTo[i]
+		   
+		   
       |_  -> DoChildren
-      
-  end
+	       
+    end
 end  
 
 
- 
+							     
 class entryExitVisitorClass (fdec : fundec) = object (self)
   inherit nopCilVisitor                        
   method vinst (i : instr) = begin
       match i with
-      
+	
       | Call (Some (Var vi, NoOffset),f,_,loc) -> 
          let fnam = Pretty.sprint max_int (d_exp () f) in
-	   if (List.mem fnam !Param.func_list && fnam <> "main1") then begin 
+	 if (List.mem fnam !Param.func_list && fnam <> "main1") then begin 
 	     let varName = vi.vname in 
-               let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [] loc in
-                 let t = (match vi.vtype with
-                                     | TInt(_,_) -> 1
-                                     | TFloat(_,_) -> 2
-                                     | TPtr (_,_) -> 1
-                                     | _ -> -1) in
-                      let pre = mkstableEntryfxn2 (vi.vname) (v2e (List.nth !varinfoList 0)) (v2e (List.nth !varinfoList 2)) (AddrOf(Var vi, NoOffset)) t  in 
-                             ChangeTo [i;instrumentExitFunc;pre]
-                             (*ChangeTo[i;instrumentExitFunc]*)
+             let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [] loc in
+             let t = (match vi.vtype with
+                      | TInt(_,_) -> 1
+                      | TFloat(_,_) -> 2
+                      | TPtr (_,_) -> 1
+                      | _ -> -1) in
+             let pre = mkstableEntryfxn2 (vi.vname) (v2e (List.nth !varinfoList 0)) (v2e (List.nth !varinfoList 2)) (AddrOf(Var vi, NoOffset)) t  in 
+             ChangeTo [i;instrumentExitFunc;pre]
+           (*ChangeTo[i;instrumentExitFunc]*)
            end
-           else 
-           	 ChangeTo[i]
-      
+         else 
+           ChangeTo[i]
+		   
       |Call(None,f,_,loc) ->
-         let fnam = Pretty.sprint max_int (d_exp () f) in
-	   if (List.mem fnam !Param.func_list && fnam <> !Param.func) then begin 
-	     let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [] loc in
-               ChangeTo [i;instrumentExitFunc]
-           end
-           else
-               ChangeTo[i]
-      
+        let fnam = Pretty.sprint max_int (d_exp () f) in
+	if (List.mem fnam !Param.func_list && fnam <> !Param.func) then begin 
+	    let instrumentExitFunc = makeInstrStmts instfuns.funcExit_instfun [] loc in
+            ChangeTo [i;instrumentExitFunc]
+          end
+        else
+          ChangeTo[i]
+		  
       |_  -> DoChildren
-      
-  end
+	       
+    end
 end  
 
 
 let entryExit (f : file) : unit =
-   initInstFunctions f;
-   getSymVarinfo f;
-   getConVarinfo f;
-   List.iter (fun f -> E.log "%s " f.vname) !varinfoList ;
-   List.iter (fun g ->
+  initInstFunctions f;
+  getSymVarinfo f;
+  getConVarinfo f;
+  List.iter (fun f -> E.log "%s " f.vname) !varinfoList ;
+  List.iter (fun g ->
 	     match g with
 	     |GFun (fd, loc) ->
 	       if (List.mem fd.svar.vname !Param.func_list) then begin
-	          if fd.svar.vname <> "main" then 
-	          
-	          let entryExitVisitor = new entryExitVisitorClass fd in
-       		  ignore (visitCilFunction entryExitVisitor fd);
-       		  
-       		  let entryEntryVisitor = (new entryEntryVisitorClass f fd) in
-       		  ignore (visitCilFunction entryEntryVisitor fd)
-	       
-	       end
+	           if fd.svar.vname <> "main" then 
+	             
+	             let entryExitVisitor = new entryExitVisitorClass fd in
+       		     ignore (visitCilFunction entryExitVisitor fd);
+       		     
+       		     let entryEntryVisitor = (new entryEntryVisitorClass f fd) in
+       		     ignore (visitCilFunction entryEntryVisitor fd)
+			    
+		 end
 	     |_ -> ())
-  f.globals
+	    f.globals
 
 
 let feature : featureDescr = 

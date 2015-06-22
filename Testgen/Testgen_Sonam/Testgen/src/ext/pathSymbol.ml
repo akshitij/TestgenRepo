@@ -787,7 +787,11 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                                      | TFloat(_,_) -> 2
                                      | _ -> -1) in
                       let pre = mkstableEntryfxn vi.vname "Function" (AddrOf(Var vi, NoOffset)) t  in 
+                      let fnam = Pretty.sprint max_int (d_exp () nm) in
+                      if (List.mem fnam !Param.func_list) then
                              ChangeTo [i(* ; pre*)]
+                      else
+                      	     ChangeTo [i; pre]
                  end
 
    

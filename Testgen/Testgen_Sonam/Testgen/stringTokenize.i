@@ -2281,7 +2281,7 @@ char *getNextToken(const char *str, int *pos, int length) {
         str++;
         (*pos)++;
         i++;
-        token_type = ARRAY1;
+        token_type = POINTER;
       }
       res[i] = '\0';
 

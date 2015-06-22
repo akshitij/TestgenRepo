@@ -13,39 +13,39 @@
 typedef unsigned char bool;
 typedef unsigned int uint;
 
-bool divides (uint n, uint m);
-bool even (uint n);
-bool prime (uint n);
-void swap (uint* a, uint* b);
+int _divides (int n, int m);
+int even (int n);
+int prime (int n);
+void swap (int* a, int* b);
 
-bool divides (uint n, uint m) {
+int _divides (int n, int m) {
   return (m % n == 0);
 }
 
-bool even (uint n) {
-  return (divides (2, n));
+int even (int n) {
+  return (_divides (2, n));
 }
 
-bool prime (uint n) {
-  uint i;
+int prime (int n) {
+  int i;
   if (even (n))
       return (n == 2);
   for (i = 3; i * i <= n; i += 2) {
-      if (divides (i, n))
+      if (_divides (i, n))
           return 0;
   }
   return (n > 1);
 }
 
-void swap (uint* a, uint* b) {
-  uint tmp = *a;
+void swap (int* a, int* b) {
+  int tmp = *a;
   *a = *b;
   *b = tmp;
 }
 
 int main () {
-  uint x = 21649;
-  uint y = 513239;
+  int x = 21649;
+  int y = 513239;
   swap (&x, &y);
   return (!(prime(x) && prime(y)));
 }
