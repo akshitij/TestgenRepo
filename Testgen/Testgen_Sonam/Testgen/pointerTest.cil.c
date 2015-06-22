@@ -15457,7 +15457,7 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  setArray(2, "(= i___0 12)");
+  setArray(2, "(= *p 12)");
   addtoCDGnode(3, 2, 1);
   addtoCDGnode(4, 2, 0);
   addtoCDGnode(5, 0, 1);
@@ -15481,7 +15481,7 @@ void createSidTable(void)
 
 
   {
-  add_condition(2, "(= i___0 12)", "(not (= i___0 12))", 0, 0);
+  add_condition(2, "(= *p 12)", "(not (= *p 12))", 0, 0);
 }
 }
 struct arguments {
@@ -15505,7 +15505,7 @@ int main1(int i___0 )
   __cil_tmp8 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\n", i___0);
-  printTestCase("pointerTest_main1_1434979341.tc", __cil_tmp8);
+  printTestCase("pointerTest_main1_1435007858.tc", __cil_tmp8);
   add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
   p = & i___0;
   add_entryToSTable("p", "addr_i___0", & p, & p, 1);
@@ -15515,23 +15515,28 @@ int main1(int i___0 )
   handleArraySymbolically("p", 0, "(* *p 3)", p, p, 1);
   printf((char const   * __restrict  )"%d ", *p);
   {
-  exp_outcome = i___0 == 12;
-  handleAssignmentSymbolically("exp_outcome", "(= i___0 12)", & exp_outcome, & exp_outcome,
+  exp_outcome = *p == 12;
+  addEntryToVariableTable("*p", 1);
+  handleAssignmentSymbolically("exp_outcome", "(= *p 12)", & exp_outcome, & exp_outcome,
                                1);
   overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
+    addEntryToVariableTable("*p", 1);
+    add_entryToArraySTable("p", 0, "p10", p, p, 1);
     setBranchInfo(2, 1, 0);
-    setTrueExpr(2, "(= i___0 12)");
-    setFalseExpr(2, "(not (= i___0 12))");
-    addToTree(2, 1, "(= i___0 12)", "(not (= i___0 12))", 0, 1);
+    setTrueExpr(2, "(= *p 12)");
+    setFalseExpr(2, "(not (= *p 12))");
+    addToTree(2, 1, "(= *p 12)", "(not (= *p 12))", 0, 1);
     delete_allVariableTableEntry();
     j = 1;
     add_entryToSTable("j", "Constant", & j, & j, 1);
   } else {
+    addEntryToVariableTable("*p", 1);
+    add_entryToArraySTable("p", 0, "p10", p, p, 1);
     setBranchInfo(2, 0, 1);
-    setTrueExpr(2, "(= i___0 12)");
-    setFalseExpr(2, "(not (= i___0 12))");
-    addToTree(2, 1, "(= i___0 12)", "(not (= i___0 12))", 0, 0);
+    setTrueExpr(2, "(= *p 12)");
+    setFalseExpr(2, "(not (= *p 12))");
+    addToTree(2, 1, "(= *p 12)", "(not (= *p 12))", 0, 0);
     delete_allVariableTableEntry();
     j = -1;
     add_entryToSTable("j", "Constant", & j, & j, 1);

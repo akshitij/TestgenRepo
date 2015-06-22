@@ -842,7 +842,7 @@ int main(){
   p = &i;
   *p = *p * 3;
   printf("%d ",*p);
-  if (i == 12)
+  if (*p == 12)
     j=1;
   else
     j=-1;

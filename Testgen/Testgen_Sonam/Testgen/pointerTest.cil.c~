@@ -9176,6 +9176,18 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   void *tmp___44 ;
   int tmp___45 ;
   int tmp___46 ;
+  int j2 ;
+  int k ;
+  int len2 ;
+  size_t tmp___47 ;
+  char *temp2 ;
+  char *symName2 ;
+  char fixptr[50] ;
+  char *token2 ;
+  char *tmp___48 ;
+  int tmp___49 ;
+  int tmp___50 ;
+  int tmp___51 ;
 
   {
   i___0 = 0;
@@ -9314,7 +9326,37 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-  add_entryToArraySTable(lhs, index___0, result, val, address, type);
+  j2 = 0;
+  tmp___47 = strlen((char const   *)lhs);
+  len2 = (int )tmp___47;
+  tmp___48 = getNextToken((char const   *)lhs, & j2, len2);
+  token2 = tmp___48;
+  if ((unsigned long )token2 != (unsigned long )((void *)0)) {
+    switch ((int )token_type) {
+    case 5: 
+    strcpy((char * __restrict  )(fixptr), (char const   * __restrict  )"*");
+    strcat((char * __restrict  )(fixptr), (char const   * __restrict  )lhs);
+    parameter = findParameter(fixptr);
+    tmp___49 = (int )getPointerName(token2);
+    temp2 = (char *)tmp___49;
+    k = 0;
+    while (k < 2 * parameter) {
+      symName2 = find_symVal(temp2);
+      if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
+        tmp___50 = findParameter(temp2);
+        tmp___51 = (int )getArrayName(temp2);
+        symName2 = findArrayRecord((char *)tmp___51, tmp___50);
+      }
+      temp2 = symName2;
+      k ++;
+    }
+    add_entryToSTable(symName2, result, val, address, type);
+    break;
+    case 4: 
+    add_entryToArraySTable(lhs, index___0, result, val, address, type);
+    break;
+    }
+  }
   delete_allVariableTableEntry();
   return;
 }
@@ -15415,7 +15457,7 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  setArray(2, "(= i___0 12)");
+  setArray(2, "(= *p 12)");
   addtoCDGnode(3, 2, 1);
   addtoCDGnode(4, 2, 0);
   addtoCDGnode(5, 0, 1);
@@ -15439,7 +15481,7 @@ void createSidTable(void)
 
 
   {
-  add_condition(2, "(= i___0 12)", "(not (= i___0 12))", 0, 0);
+  add_condition(2, "(= *p 12)", "(not (= *p 12))", 0, 0);
 }
 }
 struct arguments {
@@ -15463,7 +15505,7 @@ int main1(int i___0 )
   __cil_tmp8 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\n", i___0);
-  printTestCase("pointerTest_main1_1434977900.tc", __cil_tmp8);
+  printTestCase("pointerTest_main1_1435006274.tc", __cil_tmp8);
   add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
   p = & i___0;
   add_entryToSTable("p", "addr_i___0", & p, & p, 1);
@@ -15473,23 +15515,28 @@ int main1(int i___0 )
   handleArraySymbolically("p", 0, "(* *p 3)", p, p, 1);
   printf((char const   * __restrict  )"%d ", *p);
   {
-  exp_outcome = i___0 == 12;
-  handleAssignmentSymbolically("exp_outcome", "(= i___0 12)", & exp_outcome, & exp_outcome,
+  exp_outcome = *p == 12;
+  addEntryToVariableTable("*p", 1);
+  handleAssignmentSymbolically("exp_outcome", "(= *p 12)", & exp_outcome, & exp_outcome,
                                1);
   overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
+    addEntryToVariableTable("*p", 0);
+    add_entryToArraySTable("p", 0, "p10", p, p, 1);
     setBranchInfo(2, 1, 0);
-    setTrueExpr(2, "(= i___0 12)");
-    setFalseExpr(2, "(not (= i___0 12))");
-    addToTree(2, 1, "(= i___0 12)", "(not (= i___0 12))", 0, 1);
+    setTrueExpr(2, "(= *p 12)");
+    setFalseExpr(2, "(not (= *p 12))");
+    addToTree(2, 1, "(= *p 12)", "(not (= *p 12))", 0, 1);
     delete_allVariableTableEntry();
     j = 1;
     add_entryToSTable("j", "Constant", & j, & j, 1);
   } else {
+    addEntryToVariableTable("*p", 0);
+    add_entryToArraySTable("p", 0, "p10", p, p, 1);
     setBranchInfo(2, 0, 1);
-    setTrueExpr(2, "(= i___0 12)");
-    setFalseExpr(2, "(not (= i___0 12))");
-    addToTree(2, 1, "(= i___0 12)", "(not (= i___0 12))", 0, 0);
+    setTrueExpr(2, "(= *p 12)");
+    setFalseExpr(2, "(not (= *p 12))");
+    addToTree(2, 1, "(= *p 12)", "(not (= *p 12))", 0, 0);
     delete_allVariableTableEntry();
     j = -1;
     add_entryToSTable("j", "Constant", & j, & j, 1);
