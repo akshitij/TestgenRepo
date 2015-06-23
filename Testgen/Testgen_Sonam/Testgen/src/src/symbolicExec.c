@@ -112,6 +112,10 @@ void addEntryToVariableTable(char *vname, int parameter) {
 int findParameter(char *key) {
   struct variable_table *s;
   HASH_FIND_STR(varTable, key, s);
+  if(s==NULL){
+    printf("pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return 1; //denoting *ptr
+  }
   return s->parameter;
 }
 
@@ -368,6 +372,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
+      /*
       else{
         //parameter = findParameter(token);
         parameter = 1;
@@ -395,7 +400,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           }
         }
       }
-
+      */
       break;
 
     case VARIABLE:

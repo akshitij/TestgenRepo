@@ -3325,6 +3325,10 @@ void addEntryToVariableTable(char *vname, int parameter) {
 int findParameter(char *key) {
   struct variable_table *s;
   do { unsigned _hf_bkt,_hf_hashv; s=((void *)0); if (varTable) { do { unsigned _hj_i,_hj_j,_hj_k; unsigned char *_hj_key=(unsigned char*)(key); _hf_hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = (unsigned)(strlen(key)); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); _hf_hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } _hf_hashv += strlen(key); switch ( _hj_k ) { case 11: _hf_hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: _hf_hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: _hf_hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 13 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 12 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= _hf_hashv; _hj_i ^= ( _hf_hashv >> 3 ); _hj_j -= _hf_hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); _hf_hashv -= _hj_i; _hf_hashv -= _hj_j; _hf_hashv ^= ( _hj_j >> 15 ); } while (0); _hf_bkt = _hf_hashv & ((varTable)->hh.tbl->num_buckets-1); } while(0); if ((1)) { do { if ((varTable)->hh.tbl->buckets[ _hf_bkt ].hh_head) do { (s) = (__typeof(s))(((void*)(((char*)((varTable)->hh.tbl->buckets[ _hf_bkt ].hh_head)) - (((varTable)->hh.tbl)->hho)))); } while(0); else s=((void *)0); while (s) { if ((s)->hh.keylen == strlen(key)) { if ((memcmp((s)->hh.key,key,strlen(key))) == 0) break; } if ((s)->hh.hh_next) do { (s) = (__typeof(s))(((void*)(((char*)((s)->hh.hh_next)) - (((varTable)->hh.tbl)->hho)))); } while(0); else s = ((void *)0); } } while(0); } } } while (0);
+  if(s==((void *)0)){
+    printf("pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return 1;
+  }
   return s->parameter;
 }
 
@@ -3581,34 +3585,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
-      else{
-
-        parameter = 1;
-        temp = (char *)getPointerName(token);
-        j = 0;
-        while (j < (2 * parameter + 1)) {
-          symName = find_symVal(temp);
-          if (symName == ((void *)0))
-            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
-          temp = symName;
-          j++;
-        }
-        if (symName != ((void *)0)) {
-          if (strcmp(symName, "Constant") == 0) {
-            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
-            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
-            strcat(result, buff);
-          }else if (strcmp(symName, "Function") == 0) {
-              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
-              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
-              strcat(result, buff);
-            } else {
-                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
-                strcat(result, symName);
-          }
-        }
-      }
-
+# 404 "src/src/symbolicExec.c"
       break;
 
     case VARIABLE:
@@ -3759,7 +3736,7 @@ char *getPrepositionalFormula(char *expr) {
           strcat(result, symName);
         }
       }
-# 578 "src/src/symbolicExec.c"
+# 583 "src/src/symbolicExec.c"
       break;
 
     case VARIABLE:

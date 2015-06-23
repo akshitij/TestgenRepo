@@ -2693,35 +2693,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
-      else{
-
-        parameter = 1;
-        temp = (char *)getPointerName(token);
-        j = 0;
-        while (j < (2 * parameter + 1)) {
-          symName = find_symVal(temp);
-          if (symName == ((void *)0))
-            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
-          temp = symName;
-          j++;
-        }
-        if (symName != ((void *)0)) {
-          if (strcmp(symName, "Constant") == 0) {
-            value = (*(int *)findValBySymbolicName(symName));
-            sprintf(buff, "%d", value);
-            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
-            strcat(result, buff);
-          }else if (strcmp(symName, "Function") == 0) {
-              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
-              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
-              strcat(result, buff);
-            } else {
-                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
-                strcat(result, symName);
-          }
-        }
-      }
-
+# 210 "src/src/arrayAndPointersSymbolicExec.c"
       break;
 
     case VARIABLE:

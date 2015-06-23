@@ -177,6 +177,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
+      /*
       else{
         //parameter = findParameter(token);
         parameter = 1;
@@ -205,7 +206,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           }
         }
       }
-
+      */
       break;
 
     case VARIABLE:
