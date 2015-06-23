@@ -587,7 +587,6 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
          
             stmtlist := [];
             checkExp e1;
-            E.log "Set((Var vi, Index(e, NoOffset)), e1 , loc)------------------------------\n";
                         
             let lhs = (d_string "%s" vi.vname) in
              let rhs = d_string "%a" d_exp e1 in
@@ -596,14 +595,8 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                               |TArray(TFloat(_,_),_,_) -> 2
                               | TPtr(_,_) -> 1
                               | _ -> -1 ) in 
-                (*if t == 3 then
-                  let lv = Lval(vi,(e, NoOffset)) in
-                  let lhsptr = (d_string "%a" d_lval lv) in
-                    let pre = mkassignmentfxn lhsptr rhs (AddrOf(Var vi, Index(e, NoOffset))) 1 in
-                      ChangeTo ([i] @ !stmtlist @ [pre])
-                else*)    
-                  let pre = mkArrayassignmentfxn lhs e rhs (AddrOf(Var vi, Index(e, NoOffset))) t in
-                    ChangeTo ([i] @ !stmtlist @ [pre])
+                let pre = mkArrayassignmentfxn lhs e rhs (AddrOf(Var vi, Index(e, NoOffset))) t in
+                  ChangeTo ([i] @ !stmtlist @ [pre])
 
 
     
@@ -649,7 +642,6 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
  
             stmtlist := [];
             checkExp e1;
-            E.log "Set((Mem e, NoOffset), e1 , loc)------------------------------\n";
                         
             let lhs = (match e with
                           |BinOp(op,e2,e3,l) -> d_string "%a" d_exp e2 
@@ -667,8 +659,11 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                               |TPtr(TInt(_,_),_) -> 1
                               |TPtr(TFloat(_,_),_) -> 2
                               | _ -> -1 ) in 
-                let pre = mkArrayassignmentfxn lhs ind rhs e t in
-                  ChangeTo ([i] @ !stmtlist @ [pre])
+                (*let pre = mkArrayassignmentfxn lhs ind rhs e t in
+                  ChangeTo ([i] @ !stmtlist @ [pre]) *)
+                 let lv = Lval(Mem e, NoOffset) in
+                 let pre = mkassignmentfxn (d_string "%a" d_lval lv) rhs e t in
+                     ChangeTo ([i] @ !stmtlist @ [pre])
 
       
 

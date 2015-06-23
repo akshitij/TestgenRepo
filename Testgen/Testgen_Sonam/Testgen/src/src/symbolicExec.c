@@ -368,6 +368,33 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
 
       break;
 
@@ -404,16 +431,17 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   }
 
   strcat(result, "\0");
-
+  
   int j2 = 0, k, len2 = strlen(lhs);
   char* temp2;
   char *symName2;
   char new_lhs[100];
+  strcpy(new_lhs,lhs);
   char *token2 = getNextToken(lhs, &j2, len2);
   if(token2 != NULL){
     switch (token_type) {
-      case POINTER:
-        parameter = findParameter(token2);
+      case POINTER: //pointer as variable "*p" as "p"
+        parameter = findParameter(token2); //entry is for "*p" not "p"
         temp2 = getPointerName(token2);
         k = 0;
         while (k < (2 * parameter)) {
@@ -423,17 +451,11 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           temp2 = symName2;
           k++;
         }
-        //add_entryToSTable(symName2, result, val, address, type);
         strcpy(new_lhs,symName2);
-        break;
-      
-      case VARIABLE:
-        //add_entryToSTable(lhs, result, val, address, type);
-        strcpy(new_lhs,lhs);
         break;
     }
   }  
-       
+
   //printf("result=%s\n",result);
   char* lhs_vn = get_vnameHash(new_lhs);
   if (lhs_vn != NULL){
@@ -524,7 +546,35 @@ char *getPrepositionalFormula(char *expr) {
           strcat(result, symName);
         }
       }
-
+      /*
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
+      */
       break;
 
     case VARIABLE:

@@ -659,8 +659,11 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                               |TPtr(TInt(_,_),_) -> 1
                               |TPtr(TFloat(_,_),_) -> 2
                               | _ -> -1 ) in 
-                let pre = mkArrayassignmentfxn lhs ind rhs e t in
-                  ChangeTo ([i] @ !stmtlist @ [pre])
+                (*let pre = mkArrayassignmentfxn lhs ind rhs e t in
+                  ChangeTo ([i] @ !stmtlist @ [pre]) *)
+                 let lv = (Mem e, NoOffset) in
+                 let pre = mkassignmentfxn (d_string "%a" d_lval lv) rhs e t in
+                     ChangeTo ([i] @ !stmtlist @ [pre])
 
       
 

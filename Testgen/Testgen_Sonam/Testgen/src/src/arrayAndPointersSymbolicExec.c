@@ -177,6 +177,34 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            value = (*(int *)findValBySymbolicName(symName));
+            sprintf(buff, "%d", value);
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
 
       break;
 
@@ -206,44 +234,9 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
   strcat(result, "\0");
 
-  int j2 = 0, k, len2 = strlen(lhs);
-  char* temp2;
-  char *symName2;
-  char fixptr[50];
-  //char new_lhs[100];
-  char *token2 = getNextToken(lhs, &j2, len2);
-  if(token2 != NULL){
-    switch (token_type) {
-      case VARIABLE: //pointer as variable "*p" as "p"
-        strcpy(fixptr,"*"); 
-        strcat(fixptr,lhs);
-        parameter = findParameter(fixptr); //entry is for "*p" not "p"
-        temp2 = getPointerName(token2);
-        k = 0;
-        while (k < (2 * parameter)) {
-          symName2 = find_symVal(temp2);
-          if (symName2 == NULL)
-            symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
-          temp2 = symName2;
-          k++;
-        }
-        add_entryToSTable(symName2, result, val, address, type);
-        //strcpy(new_lhs,symName2);
-        break;
-      
-      case ARRAY1:
-        //add_entryToSTable(lhs, result, val, address, type);
-	add_entryToArraySTable(lhs, index, result, val, address, type) ;
-        break;
-    }
-  }  
-  
-  
-  
-  
   //printf("result=%s\n",result);
 
-  //add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  add_entryToArraySTable(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();
 }
 

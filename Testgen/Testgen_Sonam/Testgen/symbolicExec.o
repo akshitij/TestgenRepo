@@ -3581,6 +3581,33 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
+      else{
+
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == ((void *)0))
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != ((void *)0)) {
+          if (strcmp(symName, "Constant") == 0) {
+            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
 
       break;
 
@@ -3622,6 +3649,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   char* temp2;
   char *symName2;
   char new_lhs[100];
+  strcpy(new_lhs,lhs);
   char *token2 = getNextToken(lhs, &j2, len2);
   if(token2 != ((void *)0)){
     switch (token_type) {
@@ -3636,13 +3664,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           temp2 = symName2;
           k++;
         }
-
         strcpy(new_lhs,symName2);
-        break;
-
-      case VARIABLE:
-
-        strcpy(new_lhs,lhs);
         break;
     }
   }
@@ -3737,7 +3759,7 @@ char *getPrepositionalFormula(char *expr) {
           strcat(result, symName);
         }
       }
-
+# 578 "src/src/symbolicExec.c"
       break;
 
     case VARIABLE:

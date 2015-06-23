@@ -2693,6 +2693,34 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
+      else{
+
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == ((void *)0))
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != ((void *)0)) {
+          if (strcmp(symName, "Constant") == 0) {
+            value = (*(int *)findValBySymbolicName(symName));
+            sprintf(buff, "%d", value);
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
 
       break;
 
@@ -2722,43 +2750,8 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
   strcat(result, "\0");
 
-  int j2 = 0, k, len2 = strlen(lhs);
-  char* temp2;
-  char *symName2;
-  char fixptr[50];
-
-  char *token2 = getNextToken(lhs, &j2, len2);
-  if(token2 != ((void *)0)){
-    switch (token_type) {
-      case VARIABLE:
-        strcpy(fixptr,"*");
-        strcat(fixptr,lhs);
-        parameter = findParameter(fixptr);
-        temp2 = getPointerName(token2);
-        k = 0;
-        while (k < (2 * parameter)) {
-          symName2 = find_symVal(temp2);
-          if (symName2 == ((void *)0))
-            symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
-          temp2 = symName2;
-          k++;
-        }
-        add_entryToSTable(symName2, result, val, address, type);
-
-        break;
-
-      case ARRAY1:
-
- add_entryToArraySTable(lhs, index, result, val, address, type) ;
-        break;
-    }
-  }
 
 
-
-
-
-
-
+  add_entryToArraySTable(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();
 }

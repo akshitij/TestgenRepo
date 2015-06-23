@@ -242,12 +242,15 @@ let rec checkExp e =
           aindex := !aindex + 1
 
        | _ ->      
-          let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 1) (* for *p entry in variable table*)
+          (*let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 0) (* for *p entry in variable table*)
           in
           let call1 = mkArrayStableEntryfxn (d_string "%a" d_exp e1) (integer 0) ((d_string "%a" d_exp e1) ^ "1" ^ (d_string "%d" !aindex)) e1 1
           in
           stmtlist := !stmtlist @ [mkStmtOneInstr call; mkStmtOneInstr call1];
-          aindex := !aindex + 1
+          aindex := !aindex + 1*)
+          let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 1) (* for *p entry in variable table*)
+          in
+          stmtlist := !stmtlist @ [mkStmtOneInstr call];
      end
 
   | Lval((Var v), (Index(e1, NoOffset))) ->  
