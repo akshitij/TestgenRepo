@@ -1,12 +1,8 @@
 #include<stdio.h>
  
-void swap(int *num1, int *num2) {
-   if(*num1 < *num2){
-     int temp;
-     temp = *num1;
-     *num1 = *num2;
-     *num2 = temp;
-   }
+void mult(int *a, int *b) {
+   *a = (*a * 3) + 1;
+   *b = (*b * 4) - 1;
 }
  
 int main() {
@@ -15,12 +11,11 @@ int main() {
    scanf("%d", &num2);
    int *p = &num1;
    int *q = &num2;
-   swap(p, q);
-   //swap(&num1,&num2);
+
+   mult(p, q);
    
-   //int c = num1 + num2;
    int j;
-   if(num1 < num2)
+   if(num1 == num2)
       j=1;
    else
       j =-1;

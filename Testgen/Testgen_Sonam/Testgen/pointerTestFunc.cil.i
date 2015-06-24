@@ -15443,27 +15443,19 @@ void stackPeek(Stack *s , void *element )
 #pragma merger("0","./ipaRecursive.i","-g,-g")
 #pragma merger("0","./pointerTestFunc.i","-g,-g")
 extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
-void swap(int *swap_num1 , int *swap_num2 )
+void mult(int *mult_a , int *mult_b )
 {
-  int swap_temp ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (*swap_num1 < *swap_num2) {
-    swap_temp = *swap_num1;
-    addEntryToVariableTable("*swap_num1", 1);
-    handleAssignmentSymbolically("swap_temp", "*swap_num1", & *swap_num1, & *swap_num1,
-                                 1);
-    *swap_num1 = *swap_num2;
-    addEntryToVariableTable("*swap_num2", 1);
-    handleAssignmentSymbolically("*swap_num1", "*swap_num2", swap_num1, swap_num1,
-                                 1);
-    *swap_num2 = swap_temp;
-    handleAssignmentSymbolically("*swap_num2", "swap_temp", swap_num2, swap_num2,
-                                 1);
-  }
+  *mult_a = *mult_a * 3 + 1;
+  addEntryToVariableTable("*mult_a", 1);
+  handleAssignmentSymbolically("*mult_a", "(+ (* *mult_a 3) 1)", mult_a, mult_a, 1);
+  *mult_b = *mult_b * 4 - 1;
+  addEntryToVariableTable("*mult_b", 1);
+  handleAssignmentSymbolically("*mult_b", "(- (* *mult_b 4) 1)", mult_b, mult_b, 1);
   return;
 }
 }
@@ -15474,16 +15466,16 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(< num1 num2)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(7, 5, 0);
-  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(4, 0, 1);
+  setArray(4, "(= num1 num2)");
+  addtoCDGnode(5, 4, 1);
+  addtoCDGnode(6, 4, 0);
+  addtoCDGnode(7, 0, 1);
+  addtoCDGnode(7, 0, 1);
   addtoCDGnode(8, 0, 1);
   addtoCDGnode(9, 0, 1);
   addtoCDGnode(10, 0, 1);
   addtoCDGnode(11, 0, 1);
-  addtoCDGnode(12, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15499,7 +15491,7 @@ void createSidTable(void)
 
 
   {
-  add_condition(5, "(< num1 num2)", "(not (< num1 num2))", 0, 0);
+  add_condition(4, "(= num1 num2)", "(not (= num1 num2))", 0, 0);
 }
 }
 struct arguments {
@@ -15525,7 +15517,7 @@ int main1(int num1 , int num2 )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, -1);
   sprintf(__cil_tmp10, "\t%d\t%d\n", num1, num2);
-  printTestCase("pointerTestFunc_main1_1435187645.tc", __cil_tmp10);
+  printTestCase("pointerTestFunc_main1_1435189468.tc", __cil_tmp10);
   add_entryToSTable("num2", "s1", & num2, & num2, 1);
   add_entryToSTable("num1", "s0", & num1, & num1, 1);
   p = & num1;
@@ -15534,28 +15526,27 @@ int main1(int num1 , int num2 )
   q = & num2;
   add_entryToSTable("q", "addr_num2", & q, & q, 1);
   add_entryToSTable("addr_num2", "num2", & num2, & num2, 1);
-  funcEntry("(int *,swap_num1,pointer,p)#(int *,swap_num2,pointer,q)", "swap_temp",
-            "swap");
-  swap(p, q);
+  funcEntry("(int *,mult_a,pointer,p)#(int *,mult_b,pointer,q)", "", "mult");
+  mult(p, q);
   funcExit();
   {
-  exp_outcome = num1 < num2;
-  handleAssignmentSymbolically("exp_outcome", "(< num1 num2)", & exp_outcome, & exp_outcome,
+  exp_outcome = num1 == num2;
+  handleAssignmentSymbolically("exp_outcome", "(= num1 num2)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(< num1 num2)");
-    setFalseExpr(5, "(not (< num1 num2))");
-    addToTree(5, 1, "(< num1 num2)", "(not (< num1 num2))", 0, 1);
+    setBranchInfo(4, 1, 0);
+    setTrueExpr(4, "(= num1 num2)");
+    setFalseExpr(4, "(not (= num1 num2))");
+    addToTree(4, 1, "(= num1 num2)", "(not (= num1 num2))", 0, 1);
     delete_allVariableTableEntry();
     j = 1;
     add_entryToSTable("j", "Constant", & j, & j, 1);
   } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(< num1 num2)");
-    setFalseExpr(5, "(not (< num1 num2))");
-    addToTree(5, 1, "(< num1 num2)", "(not (< num1 num2))", 0, 0);
+    setBranchInfo(4, 0, 1);
+    setTrueExpr(4, "(= num1 num2)");
+    setFalseExpr(4, "(not (= num1 num2))");
+    addToTree(4, 1, "(= num1 num2)", "(not (= num1 num2))", 0, 0);
     delete_allVariableTableEntry();
     j = -1;
     add_entryToSTable("j", "Constant", & j, & j, 1);

@@ -836,13 +836,9 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 2 "pointerTestFunc.c" 2
 
-void swap(int *num1, int *num2) {
-   if(*num1 < *num2){
-     int temp;
-     temp = *num1;
-     *num1 = *num2;
-     *num2 = temp;
-   }
+void mult(int *a, int *b) {
+   *a = (*a * 3) + 1;
+   *b = (*b * 4) - 1;
 }
 
 int main() {
@@ -851,12 +847,11 @@ int main() {
    scanf("%d", &num2);
    int *p = &num1;
    int *q = &num2;
-   swap(p, q);
 
-
+   mult(p, q);
 
    int j;
-   if(num1 < num2)
+   if(num1 == num2)
       j=1;
    else
       j =-1;
