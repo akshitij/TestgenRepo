@@ -73,7 +73,7 @@ class handleFuncArgVisitorClass (fdec : fundec) = object (self)
 	              		    match a with
 	               		    |Lval (_) -> 
 	              		    		newArgs := !newArgs @ [a]
-	               		    | _ -> 
+	              		    | _ -> 
 	            		    		let tmp = (makeTempVar fdec b) in
 	          		   		let setTmpInst = (Set((var tmp), a, loc)) in
 	               		    		begin
@@ -113,7 +113,7 @@ let handleExp (f : file) : unit =
 let feature : featureDescr = 
   { fd_name = "handleExp";
     fd_enabled = ref false;
-    fd_description = "handle expressions during return and function calls";
+    fd_description = "handles expression during return and function calls";
     fd_extraopt = [];
     fd_doit = handleExp;
     fd_post_check = true

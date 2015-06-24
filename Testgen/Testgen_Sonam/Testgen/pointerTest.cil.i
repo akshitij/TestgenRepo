@@ -15471,7 +15471,7 @@ int main1(int i___0 )
   __cil_tmp8 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\n", i___0);
-  printTestCase("pointerTest_main1_1435070498.tc", __cil_tmp8);
+  printTestCase("pointerTest_main1_1435097299.tc", __cil_tmp8);
   add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
   p = & i___0;
   add_entryToSTable("p", "addr_i___0", & p, & p, 1);

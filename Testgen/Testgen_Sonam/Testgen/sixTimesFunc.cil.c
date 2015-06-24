@@ -6563,6 +6563,10 @@ int findParameter(char *key )
     }
     break;
   }
+  if ((unsigned long )s == (unsigned long )((void *)0)) {
+    printf((char const   * __restrict  )"pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return (1);
+  }
   return (s->parameter);
 }
 }
@@ -7547,6 +7551,7 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
     j2 = 0;
     tmp___47 = strlen((char const   *)lhs);
     len2 = (int )tmp___47;
+    strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )lhs);
     tmp___48 = getNextToken((char const   *)lhs, & j2, len2);
     token2 = tmp___48;
     if ((unsigned long )token2 != (unsigned long )((void *)0)) {
@@ -7567,9 +7572,6 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
         k ++;
       }
       strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )symName2);
-      break;
-      case 5: 
-      strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )lhs);
       break;
       }
     }
@@ -9176,18 +9178,6 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   void *tmp___44 ;
   int tmp___45 ;
   int tmp___46 ;
-  int j2 ;
-  int k ;
-  int len2 ;
-  size_t tmp___47 ;
-  char *temp2 ;
-  char *symName2 ;
-  char fixptr[50] ;
-  char *token2 ;
-  char *tmp___48 ;
-  int tmp___49 ;
-  int tmp___50 ;
-  int tmp___51 ;
 
   {
   i___0 = 0;
@@ -9326,37 +9316,7 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-  j2 = 0;
-  tmp___47 = strlen((char const   *)lhs);
-  len2 = (int )tmp___47;
-  tmp___48 = getNextToken((char const   *)lhs, & j2, len2);
-  token2 = tmp___48;
-  if ((unsigned long )token2 != (unsigned long )((void *)0)) {
-    switch ((int )token_type) {
-    case 5: 
-    strcpy((char * __restrict  )(fixptr), (char const   * __restrict  )"*");
-    strcat((char * __restrict  )(fixptr), (char const   * __restrict  )lhs);
-    parameter = findParameter(fixptr);
-    tmp___49 = (int )getPointerName(token2);
-    temp2 = (char *)tmp___49;
-    k = 0;
-    while (k < 2 * parameter) {
-      symName2 = find_symVal(temp2);
-      if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
-        tmp___50 = findParameter(temp2);
-        tmp___51 = (int )getArrayName(temp2);
-        symName2 = findArrayRecord((char *)tmp___51, tmp___50);
-      }
-      temp2 = symName2;
-      k ++;
-    }
-    add_entryToSTable(symName2, result, val, address, type);
-    break;
-    case 4: 
-    add_entryToArraySTable(lhs, index___0, result, val, address, type);
-    break;
-    }
-  }
+  add_entryToArraySTable(lhs, index___0, result, val, address, type);
   delete_allVariableTableEntry();
   return;
 }
@@ -15537,7 +15497,7 @@ int main1(int a )
   __cil_tmp7 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1434979899.tc", __cil_tmp7);
+  printTestCase("sixTimesFunc_main1_1435097321.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(int,mult_y,variable,a)", "", "mult");
   a = mult(a);

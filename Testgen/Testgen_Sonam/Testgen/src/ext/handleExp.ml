@@ -73,6 +73,8 @@ class handleFuncArgVisitorClass (fdec : fundec) = object (self)
 	              		    match a with
 	               		    |Lval (_) -> 
 	              		    		newArgs := !newArgs @ [a]
+	              		    |AddrOf(_) ->
+	              		    		newArgs := !newArgs @ [a]
 	               		    | _ -> 
 	            		    		let tmp = (makeTempVar fdec b) in
 	          		   		let setTmpInst = (Set((var tmp), a, loc)) in

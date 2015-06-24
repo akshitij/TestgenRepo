@@ -327,7 +327,16 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
       j = 0;
 
       while (j < (2 * parameter + 1)) {
-        symName = find_symVal(temp);
+        //symName = find_symVal(temp);
+        
+        vname_occ = get_vnameHash(temp);
+        if(vname_occ == NULL){
+          symName = find_symVal(temp);
+        }
+        else{
+          symName = find_symVal(vname_occ);
+        }
+        
         if (symName == NULL)
           symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
 
@@ -450,7 +459,16 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
         temp2 = getPointerName(token2);
         k = 0;
         while (k < (2 * parameter)) {
-          symName2 = find_symVal(temp2);
+          //symName = find_symVal(temp);
+        
+          vname_occ = get_vnameHash(temp2);
+          if(vname_occ == NULL){
+            symName2 = find_symVal(temp2);
+          }
+          else{
+            symName2 = find_symVal(vname_occ);
+          }
+        
           if (symName2 == NULL)
             symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
           temp2 = symName2;

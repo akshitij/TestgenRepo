@@ -115,14 +115,21 @@ let genArgString (explist : exp list) : (string * string) list =
   List.iter (fun e ->
   	     match e with
  	     |Lval l -> 
-    	       let (lh,_) = l in begin
+      	       let (Var v, _) = l in 	     
+    	       let vt = typeOfLval l in
+    	         if (isPointerType vt) then
+      		    argActual := !argActual @ [(v.vname, "pointer")]
+      		 else
+      		    argActual := !argActual @ [(v.vname, "variable")]
+      		       	       
+    	       (*let (lh,_) = l in begin
       		   match lh with
       		   |Var v -> 
       		     let vt = Pretty.sprint max_int (d_type () v.vtype) in
       		     (*argString := !argString ^ "(variable," ^ v.vname ^ "," ^ vt ^ ") "*)
       		     argActual := !argActual @ [(v.vname, "variable")]
       		   |_ -> ()
-      		 end
+      		 end*)
   	     |Const c ->
   	       begin
   		 match c with
@@ -137,19 +144,10 @@ let genArgString (explist : exp list) : (string * string) list =
   		   argActual := !argActual @ [((Printf.sprintf "%Ld" i), "constant")]
   		 |_ -> ()
   	       end
-  	     |CastE (t,e1) ->
-  	       let tp = Pretty.sprint max_int (d_type () t) in begin
-  		   match e1 with
-  		   |Lval l -> 
-    		     let v1 = Pretty.sprint max_int (d_lval () l) in
-    		     (*argString := !argString ^ "(variable," ^ v1 ^ "," ^ tp ^ ") "*)
-    		     argActual := !argActual @ [(v1, "variable")]
-  		   |Const c ->
-  		     let v1 = Pretty.sprint max_int (d_const () c) in
-  		     (*argString := !argString ^ "(constant," ^ v1 ^ "," ^ tp ^ ") "*)
-  		     argActual := !argActual @ [(v1, "constant")]
-  		   |_ -> ()
-  		 end
+  	     |AddrOf (l) ->
+  	           let (Var v, _) = l in 	     
+    	             argActual := !argActual @ [(v.vname, "pointer")]
+  	       
   	     |_ -> E.log "non const non lval which is %a\n" d_exp e)
 	    explist;
   !argActual
@@ -175,6 +173,7 @@ class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
 	         let func = funcName in
 	         let localVars = (getLocalVarString fl func) in
 	         begin
+	           
 	           if (String.length !str) == 0 then
 	           	let instrumentEntryFunc = makeInstrStmts instfuns.funcEntry_instfun ((*[constS2e f] @ *)[constS2e !str] @ [constS2e localVars] @ [constS2e func]) loc in
 	           	ChangeTo [instrumentEntryFunc;i]

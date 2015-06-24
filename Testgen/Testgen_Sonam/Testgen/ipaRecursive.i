@@ -2305,7 +2305,7 @@ typedef struct functionArgument{
     char vname[50];
     void* val;
     char apname[50];
-    int isConstant;
+    int structure;
 }funcArg;
 
 typedef struct {
@@ -2413,7 +2413,7 @@ funcArg* getArgument(char* argString, char* foo){
     if(strcmp(token,"int") == 0 || strcmp(token,"int *") == 0)
      argument->type = 1;
     else{
-     if(strcmp(token,"double") == 0 || strcmp(token,"float")==0)
+     if(strcmp(token,"double") == 0 || strcmp(token,"float")==0 || strcmp(token,"float *") == 0 || strcmp(token,"double *") == 0)
      argument->type = 2;
      else
      argument->type = 3;
@@ -2424,12 +2424,15 @@ funcArg* getArgument(char* argString, char* foo){
 
     token = strtok(((void *)0), s);
     if(strcmp(token,"constant") == 0)
- argument->isConstant = 1;
-    else
-     argument->isConstant = 0;
-
+ argument->structure = 1;
+    else{
+     if(strcmp(token,"pointer") == 0)
+      argument->structure = 2;
+     else
+      argument->structure = 0;
+    }
     token = strtok(((void *)0), s);
-    if(argument->isConstant){
+    if(argument->structure == 1){
      if(argument->type == 1){
      i=atoi(token);
      argument->val = &i;
@@ -2484,24 +2487,26 @@ void populateSTable(funcArg* a){
     char key[55];
     strcpy(key,a->vname);
     strcat(key,tmp);
-    if(a->isConstant == 1){
+    if(a->structure == 1){
  add_entryToSTable(key,"Constant",a->val,a->val,a->type);
  printf("%s Constant\n", key);
     }
-    else{
- char* sym;
- void* val;
- if(symStack == ((void *)0) || stackSize(symStack) == 0){
-     sym = find_symVal(a->apname);
-     val = find_conVal(a->apname);
- }
+# 221 "src/src/ipaRecursive.c"
  else{
-     sym = find_symVal(get_vnameHash(a->apname));
-     val = find_conVal(get_vnameHash(a->apname));
- }
- add_entryToSTable(key,sym,val,val,a->type);
- printf("%s %s %d\n", key, sym, *(int*)val);
-    }
+  char* sym;
+  void* val;
+  if(symStack == ((void *)0) || stackSize(symStack) == 0){
+      sym = find_symVal(a->apname);
+      val = find_conVal(a->apname);
+  }
+  else{
+      sym = find_symVal(get_vnameHash(a->apname));
+      val = find_conVal(get_vnameHash(a->apname));
+  }
+  add_entryToSTable(key,sym,val,val,a->type);
+  printf("%s %s %d\n", key, sym, *(int*)val);
+     }
+
     add_vnameHash(a->vname, key);
 }
 
