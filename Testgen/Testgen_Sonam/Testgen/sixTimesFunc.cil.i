@@ -182,7 +182,7 @@ struct functionArgument {
    char vname[50] ;
    void *val ;
    char apname[50] ;
-   int isConstant ;
+   int structure ;
 };
 typedef struct functionArgument funcArg;
 struct __anonstruct_funcVars_27 {
@@ -4534,6 +4534,9 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___4 ;
   int tmp___5 ;
   int tmp___6 ;
+  int tmp___7 ;
+  int tmp___8 ;
+  int tmp___9 ;
 
   {
   s[0] = (char )',';
@@ -4547,12 +4550,12 @@ funcArg *getArgument(char *argString , char *foo )
   argument = (funcArg *)tmp___1;
   strcpy((char * __restrict )(argument->funcName), (char const * __restrict )foo);
   token = strtok((char * __restrict )copy, (char const * __restrict )(s));
-  tmp___4 = strcmp((char const *)token, "int");
-  if (tmp___4 == 0) {
+  tmp___6 = strcmp((char const *)token, "int");
+  if (tmp___6 == 0) {
     argument->type = 1;
   } else {
-    tmp___5 = strcmp((char const *)token, "int *");
-    if (tmp___5 == 0) {
+    tmp___7 = strcmp((char const *)token, "int *");
+    if (tmp___7 == 0) {
       argument->type = 1;
     } else {
       tmp___2 = strcmp((char const *)token, "double");
@@ -4563,7 +4566,17 @@ funcArg *getArgument(char *argString , char *foo )
         if (tmp___3 == 0) {
           argument->type = 2;
         } else {
-          argument->type = 3;
+          tmp___4 = strcmp((char const *)token, "float *");
+          if (tmp___4 == 0) {
+            argument->type = 2;
+          } else {
+            tmp___5 = strcmp((char const *)token, "double *");
+            if (tmp___5 == 0) {
+              argument->type = 2;
+            } else {
+              argument->type = 3;
+            }
+          }
         }
       }
     }
@@ -4571,14 +4584,19 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
   strcpy((char * __restrict )(argument->vname), (char const * __restrict )token);
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
-  tmp___6 = strcmp((char const *)token, "constant");
-  if (tmp___6 == 0) {
-    argument->isConstant = 1;
+  tmp___9 = strcmp((char const *)token, "constant");
+  if (tmp___9 == 0) {
+    argument->structure = 1;
   } else {
-    argument->isConstant = 0;
+    tmp___8 = strcmp((char const *)token, "pointer");
+    if (tmp___8 == 0) {
+      argument->structure = 2;
+    } else {
+      argument->structure = 0;
+    }
   }
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
-  if (argument->isConstant) {
+  if (argument->structure == 1) {
     if (argument->type == 1) {
       i___0 = atoi((char const *)token);
       argument->val = (void *)(& i___0);
@@ -4667,7 +4685,7 @@ void populateSTable(funcArg *a )
   sprintf((char * __restrict )(tmp), (char const * __restrict )"_%d", currentOccurence);
   strcpy((char * __restrict )(key), (char const * __restrict )(a->vname));
   strcat((char * __restrict )(key), (char const * __restrict )(tmp));
-  if (a->isConstant == 1) {
+  if (a->structure == 1) {
     add_entryToSTable(key, (char *)"Constant", a->val, a->val, a->type);
     printf((char const * __restrict )"%s Constant\n", key);
   } else {
@@ -7433,7 +7451,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       temp = (char *)tmp___4;
       j = 0;
       while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
+        vname_occ = get_vnameHash(temp);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName = find_symVal(temp);
+        } else {
+          symName = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName == (unsigned long )((void *)0)) {
           tmp___5 = findParameter(temp);
           tmp___6 = (int )getArrayName(temp);
@@ -7568,7 +7591,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       temp2 = (char *)tmp___49;
       k = 0;
       while (k < 2 * parameter) {
-        symName2 = find_symVal(temp2);
+        vname_occ = get_vnameHash(temp2);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName2 = find_symVal(temp2);
+        } else {
+          symName2 = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
           tmp___50 = findParameter(temp2);
           tmp___51 = (int )getArrayName(temp2);
@@ -15503,7 +15531,7 @@ int main1(int a )
   __cil_tmp7 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1435097321.tc", __cil_tmp7);
+  printTestCase("sixTimesFunc_main1_1435189668.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(int,mult_y,variable,a)", "", "mult");
   a = mult(a);

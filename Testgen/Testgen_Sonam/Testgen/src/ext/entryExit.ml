@@ -115,13 +115,17 @@ let genArgString (explist : exp list) : (string * string) list =
   List.iter (fun e ->
   	     match e with
  	     |Lval l -> 
-      	       let (Var v, _) = l in 	     
-    	       let vt = typeOfLval l in
+ 	       begin
+      	       match l with
+      	       | (Var v, _) ->
+      	         let vt = typeOfLval l in
     	         if (isPointerType vt) then
       		    argActual := !argActual @ [(v.vname, "pointer")]
       		 else
       		    argActual := !argActual @ [(v.vname, "variable")]
-      		       	       
+      	        |_ ->
+      	            argActual := !argActual @ [( (Pretty.sprint max_int (d_lval () l)), "variable" )]
+      	       end       	       
     	       (*let (lh,_) = l in begin
       		   match lh with
       		   |Var v -> 

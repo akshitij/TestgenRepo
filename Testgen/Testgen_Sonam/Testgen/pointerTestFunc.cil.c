@@ -15444,12 +15444,12 @@ void mult(int *mult_a , int *mult_b )
   char in[15] ;
 
   {
-  *mult_a *= 3;
+  *mult_a = *mult_a * 3 + 1;
   addEntryToVariableTable("*mult_a", 1);
-  handleAssignmentSymbolically("*mult_a", "(* *mult_a 3)", mult_a, mult_a, 1);
-  *mult_b *= 4;
+  handleAssignmentSymbolically("*mult_a", "(+ (* *mult_a 3) 1)", mult_a, mult_a, 1);
+  *mult_b = *mult_b * 4 - 1;
   addEntryToVariableTable("*mult_b", 1);
-  handleAssignmentSymbolically("*mult_b", "(* *mult_b 4)", mult_b, mult_b, 1);
+  handleAssignmentSymbolically("*mult_b", "(- (* *mult_b 4) 1)", mult_b, mult_b, 1);
   return;
 }
 }
@@ -15511,7 +15511,7 @@ int main1(int num1 , int num2 )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, -1);
   sprintf(__cil_tmp10, "\t%d\t%d\n", num1, num2);
-  printTestCase("pointerTestFunc_main1_1435189319.tc", __cil_tmp10);
+  printTestCase("pointerTestFunc_main1_1435191449.tc", __cil_tmp10);
   add_entryToSTable("num2", "s1", & num2, & num2, 1);
   add_entryToSTable("num1", "s0", & num1, & num1, 1);
   p = & num1;
