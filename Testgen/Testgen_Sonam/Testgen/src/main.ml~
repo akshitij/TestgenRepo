@@ -106,10 +106,11 @@ let features : C.featureDescr list =
     Liveness.feature;
     (* Our features *)
     Param.feature;
-    HandleExp.feature;
     InsertTestDriver.feature;
+    HandleExp.feature;
     ModifyVars.feature;
     LoopUnroll.feature;
+    LoopUnrollOthers.feature;
     ExtractStruct.feature;
     MakeCDG.feature;
     SidTable.feature;

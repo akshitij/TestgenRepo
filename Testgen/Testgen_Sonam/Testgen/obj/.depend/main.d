@@ -4,9 +4,9 @@
       $(OBJDIR)/sfi.cmo  $(OBJDIR)/rmtmps.cmi    $(OBJDIR)/ptranal.cmi \
      $(OBJDIR)/pretty.cmi   $(OBJDIR)/pathSymbol.cmo   $(OBJDIR)/partial.cmo \
       $(OBJDIR)/param.cmo   $(OBJDIR)/oneret.cmi   $(OBJDIR)/modifyVars.cmo \
-     $(OBJDIR)/mergecil.cmi   $(OBJDIR)/makeCDG.cmo   $(OBJDIR)/loopUnroll.cmo \
-      $(OBJDIR)/logwrites.cmo   $(OBJDIR)/logcalls.cmi   $(OBJDIR)/liveness.cmo \
-      $(OBJDIR)/level_struct.cmo   $(OBJDIR)/instMapConcolic.cmo \
+     $(OBJDIR)/mergecil.cmi   $(OBJDIR)/makeCDG.cmo   $(OBJDIR)/loopUnrollOthers.cmo \
+      $(OBJDIR)/loopUnroll.cmo   $(OBJDIR)/logwrites.cmo   $(OBJDIR)/logcalls.cmi \
+      $(OBJDIR)/liveness.cmo   $(OBJDIR)/level_struct.cmo   $(OBJDIR)/instMapConcolic.cmo \
       $(OBJDIR)/insertTestDriver.cmo   $(OBJDIR)/insertReturnHolders.cmo \
       $(OBJDIR)/helperpathsym.cmo   $(OBJDIR)/heapify.cmo \
       $(OBJDIR)/handleUnseenNodes.cmo   $(OBJDIR)/handleExp.cmo   $(OBJDIR)/frontc.cmi \
@@ -21,9 +21,9 @@
       $(OBJDIR)/sfi.cmx  $(OBJDIR)/rmtmps.cmx    $(OBJDIR)/ptranal.cmx \
      $(OBJDIR)/pretty.cmx   $(OBJDIR)/pathSymbol.cmx   $(OBJDIR)/partial.cmx \
       $(OBJDIR)/param.cmx   $(OBJDIR)/oneret.cmx   $(OBJDIR)/modifyVars.cmx \
-     $(OBJDIR)/mergecil.cmx   $(OBJDIR)/makeCDG.cmx   $(OBJDIR)/loopUnroll.cmx \
-      $(OBJDIR)/logwrites.cmx   $(OBJDIR)/logcalls.cmx   $(OBJDIR)/liveness.cmx \
-      $(OBJDIR)/level_struct.cmx   $(OBJDIR)/instMapConcolic.cmx \
+     $(OBJDIR)/mergecil.cmx   $(OBJDIR)/makeCDG.cmx   $(OBJDIR)/loopUnrollOthers.cmx \
+      $(OBJDIR)/loopUnroll.cmx   $(OBJDIR)/logwrites.cmx   $(OBJDIR)/logcalls.cmx \
+      $(OBJDIR)/liveness.cmx   $(OBJDIR)/level_struct.cmx   $(OBJDIR)/instMapConcolic.cmx \
       $(OBJDIR)/insertTestDriver.cmx   $(OBJDIR)/insertReturnHolders.cmx \
       $(OBJDIR)/helperpathsym.cmx   $(OBJDIR)/heapify.cmx \
       $(OBJDIR)/handleUnseenNodes.cmx   $(OBJDIR)/handleExp.cmx   $(OBJDIR)/frontc.cmx \

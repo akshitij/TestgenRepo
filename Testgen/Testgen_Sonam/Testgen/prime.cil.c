@@ -176,7 +176,7 @@ struct functionArgument {
    char vname[50] ;
    void *val ;
    char apname[50] ;
-   int isConstant ;
+   int structure ;
 };
 typedef struct functionArgument funcArg;
 struct __anonstruct_funcVars_27 {
@@ -4528,6 +4528,9 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___4 ;
   int tmp___5 ;
   int tmp___6 ;
+  int tmp___7 ;
+  int tmp___8 ;
+  int tmp___9 ;
 
   {
   s[0] = (char )',';
@@ -4541,12 +4544,12 @@ funcArg *getArgument(char *argString , char *foo )
   argument = (funcArg *)tmp___1;
   strcpy((char * __restrict  )(argument->funcName), (char const   * __restrict  )foo);
   token = strtok((char * __restrict  )copy, (char const   * __restrict  )(s));
-  tmp___4 = strcmp((char const   *)token, "int");
-  if (tmp___4 == 0) {
+  tmp___6 = strcmp((char const   *)token, "int");
+  if (tmp___6 == 0) {
     argument->type = 1;
   } else {
-    tmp___5 = strcmp((char const   *)token, "int *");
-    if (tmp___5 == 0) {
+    tmp___7 = strcmp((char const   *)token, "int *");
+    if (tmp___7 == 0) {
       argument->type = 1;
     } else {
       tmp___2 = strcmp((char const   *)token, "double");
@@ -4557,7 +4560,17 @@ funcArg *getArgument(char *argString , char *foo )
         if (tmp___3 == 0) {
           argument->type = 2;
         } else {
-          argument->type = 3;
+          tmp___4 = strcmp((char const   *)token, "float *");
+          if (tmp___4 == 0) {
+            argument->type = 2;
+          } else {
+            tmp___5 = strcmp((char const   *)token, "double *");
+            if (tmp___5 == 0) {
+              argument->type = 2;
+            } else {
+              argument->type = 3;
+            }
+          }
         }
       }
     }
@@ -4565,14 +4578,19 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
   strcpy((char * __restrict  )(argument->vname), (char const   * __restrict  )token);
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  tmp___6 = strcmp((char const   *)token, "constant");
-  if (tmp___6 == 0) {
-    argument->isConstant = 1;
+  tmp___9 = strcmp((char const   *)token, "constant");
+  if (tmp___9 == 0) {
+    argument->structure = 1;
   } else {
-    argument->isConstant = 0;
+    tmp___8 = strcmp((char const   *)token, "pointer");
+    if (tmp___8 == 0) {
+      argument->structure = 2;
+    } else {
+      argument->structure = 0;
+    }
   }
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  if (argument->isConstant) {
+  if (argument->structure == 1) {
     if (argument->type == 1) {
       i___0 = atoi((char const   *)token);
       argument->val = (void *)(& i___0);
@@ -4661,7 +4679,7 @@ void populateSTable(funcArg *a )
   sprintf((char * __restrict  )(tmp), (char const   * __restrict  )"_%d", currentOccurence);
   strcpy((char * __restrict  )(key), (char const   * __restrict  )(a->vname));
   strcat((char * __restrict  )(key), (char const   * __restrict  )(tmp));
-  if (a->isConstant == 1) {
+  if (a->structure == 1) {
     add_entryToSTable(key, (char *)"Constant", a->val, a->val, a->type);
     printf((char const   * __restrict  )"%s Constant\n", key);
   } else {
@@ -7427,7 +7445,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       temp = (char *)tmp___4;
       j = 0;
       while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
+        vname_occ = get_vnameHash(temp);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName = find_symVal(temp);
+        } else {
+          symName = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName == (unsigned long )((void *)0)) {
           tmp___5 = findParameter(temp);
           tmp___6 = (int )getArrayName(temp);
@@ -7562,7 +7585,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       temp2 = (char *)tmp___49;
       k = 0;
       while (k < 2 * parameter) {
-        symName2 = find_symVal(temp2);
+        vname_occ = get_vnameHash(temp2);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName2 = find_symVal(temp2);
+        } else {
+          symName2 = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
           tmp___50 = findParameter(temp2);
           tmp___51 = (int )getArrayName(temp2);
@@ -15461,41 +15489,41 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(9, 0, 1);
-  setArray(9, "tmp");
-  addtoCDGnode(10, 9, 1);
-  addtoCDGnode(13, 9, 0);
-  addtoCDGnode(11, 9, 1);
-  addtoCDGnode(12, 9, 1);
-  addtoCDGnode(32, 0, 1);
-  addtoCDGnode(14, 9, 0);
-  addtoCDGnode(15, 9, 0);
+  addtoCDGnode(2, 0, 1);
+  setArray(2, "tmp");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(6, 2, 0);
+  addtoCDGnode(4, 2, 1);
+  addtoCDGnode(5, 2, 1);
+  addtoCDGnode(25, 0, 1);
+  addtoCDGnode(7, 2, 0);
+  addtoCDGnode(8, 2, 0);
+  setArray(8, "(<= (* i___0 i___0) n)");
+  addtoCDGnode(9, 8, 1);
+  addtoCDGnode(15, 8, 0);
+  setArray(15, "(<= (* i___0 i___0) n)");
+  addtoCDGnode(10, 8, 1);
+  setArray(10, "tmp___0");
+  addtoCDGnode(11, 10, 1);
+  addtoCDGnode(14, 10, 0);
+  addtoCDGnode(12, 10, 1);
+  addtoCDGnode(13, 10, 1);
+  addtoCDGnode(25, 0, 1);
+  addtoCDGnode(15, 10, 0);
   setArray(15, "(<= (* i___0 i___0) n)");
   addtoCDGnode(16, 15, 1);
   addtoCDGnode(22, 15, 0);
-  setArray(22, "(<= (* i___0 i___0) n)");
   addtoCDGnode(17, 15, 1);
   setArray(17, "tmp___0");
   addtoCDGnode(18, 17, 1);
   addtoCDGnode(21, 17, 0);
   addtoCDGnode(19, 17, 1);
   addtoCDGnode(20, 17, 1);
-  addtoCDGnode(32, 0, 1);
+  addtoCDGnode(25, 0, 1);
   addtoCDGnode(22, 17, 0);
-  setArray(22, "(<= (* i___0 i___0) n)");
-  addtoCDGnode(23, 22, 1);
-  addtoCDGnode(29, 22, 0);
-  addtoCDGnode(24, 22, 1);
-  setArray(24, "tmp___0");
-  addtoCDGnode(25, 24, 1);
-  addtoCDGnode(28, 24, 0);
-  addtoCDGnode(26, 24, 1);
-  addtoCDGnode(27, 24, 1);
-  addtoCDGnode(32, 0, 1);
-  addtoCDGnode(29, 24, 0);
-  addtoCDGnode(30, 24, 0);
-  addtoCDGnode(31, 24, 0);
-  addtoCDGnode(32, 0, 1);
+  addtoCDGnode(23, 17, 0);
+  addtoCDGnode(24, 17, 0);
+  addtoCDGnode(25, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15503,10 +15531,10 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(17, 17);
-  isCopyOf(24, 17);
-  isCopyOf(15, 15);
-  isCopyOf(22, 15);
+  isCopyOf(10, 10);
+  isCopyOf(17, 10);
+  isCopyOf(8, 8);
+  isCopyOf(15, 8);
 }
 }
 void createSidTable(void) 
@@ -15514,11 +15542,11 @@ void createSidTable(void)
 
 
   {
-  add_condition(9, "tmp", "(not tmp)", 0, 0);
+  add_condition(2, "tmp", "(not tmp)", 0, 0);
+  add_condition(10, "tmp___0", "(not tmp___0)", 0, 0);
+  add_condition(8, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
   add_condition(17, "tmp___0", "(not tmp___0)", 0, 0);
   add_condition(15, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
-  add_condition(24, "tmp___0", "(not tmp___0)", 0, 0);
-  add_condition(22, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
 }
 }
 struct arguments {
@@ -15545,7 +15573,7 @@ int prime(int n )
   __cil_tmp11 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp11", "Function", & __cil_tmp11, & __cil_tmp11, -1);
   sprintf(__cil_tmp11, "\t%d\n", n);
-  printTestCase("prime_prime_1435143309.tc", __cil_tmp11);
+  printTestCase("prime_prime_1435406675.tc", __cil_tmp11);
   add_entryToSTable("n", "s0", & n, & n, 1);
   funcEntry("(int,even_n,variable,n)", "even_tmp even___cil_tmp3", "even");
   tmp = even(n);
@@ -15554,12 +15582,12 @@ int prime(int n )
   {
   exp_outcome = tmp;
   handleAssignmentSymbolically("exp_outcome", "tmp", & tmp, & tmp, 1);
-  overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(9, 1, 0);
-    setTrueExpr(9, "tmp");
-    setFalseExpr(9, "(not tmp)");
-    addToTree(9, 1, "tmp", "(not tmp)", 0, 1);
+    setBranchInfo(2, 1, 0);
+    setTrueExpr(2, "tmp");
+    setFalseExpr(2, "(not tmp)");
+    addToTree(2, 1, "tmp", "(not tmp)", 0, 1);
     delete_allVariableTableEntry();
     {
     __cil_tmp5 = n == 2;
@@ -15586,16 +15614,87 @@ int prime(int n )
     return (__cil_tmp5);
     }
   } else {
-    setBranchInfo(9, 0, 1);
-    setTrueExpr(9, "tmp");
-    setFalseExpr(9, "(not tmp)");
-    addToTree(9, 1, "tmp", "(not tmp)", 0, 0);
+    setBranchInfo(2, 0, 1);
+    setTrueExpr(2, "tmp");
+    setFalseExpr(2, "(not tmp)");
+    addToTree(2, 1, "tmp", "(not tmp)", 0, 0);
     delete_allVariableTableEntry();
   }
   }
   i___0 = 3;
   add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
   {
+  {
+  exp_outcome = i___0 * i___0 <= n;
+  handleAssignmentSymbolically("exp_outcome", "(<= (* i___0 i___0) n)", & exp_outcome,
+                               & exp_outcome, 1);
+  overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(8, 1, 0);
+    setTrueExpr(8, "(<= (* i___0 i___0) n)");
+    setFalseExpr(8, "(not (<= (* i___0 i___0) n))");
+    addToTree(8, 1, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 1);
+    delete_allVariableTableEntry();
+    funcEntry("(int,_divides_n,variable,i___0)#(int,_divides_m,variable,n)", "_divides___cil_tmp3",
+              "_divides");
+    tmp___0 = _divides(i___0, n);
+    funcExit();
+    add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
+    {
+    exp_outcome = tmp___0;
+    handleAssignmentSymbolically("exp_outcome", "tmp___0", & tmp___0, & tmp___0, 1);
+    overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(10, 1, 0);
+      setTrueExpr(10, "tmp___0");
+      setFalseExpr(10, "(not tmp___0)");
+      addToTree(10, 2, "tmp___0", "(not tmp___0)", 8, 1);
+      delete_allVariableTableEntry();
+      {
+      __cil_tmp6 = 0;
+      add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6, 1);
+      __cil_tmp10 = isNotQueueEmpty();
+      if (__cil_tmp10) {
+        enQueue();
+        directPathConditions();
+        delete_allSTableEntry();
+        delete_allStructTableEntry();
+        prime(n);
+      } else {
+        __cil_tmp10 = startCDG();
+        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                          1);
+        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                          1);
+        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                          1);
+        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                          1);
+        if (__cil_tmp10) {
+          __cil_tmp10 = getTestCases();
+          prime(n);
+        }
+      }
+      return (__cil_tmp6);
+      }
+    } else {
+      setBranchInfo(10, 0, 1);
+      setTrueExpr(10, "tmp___0");
+      setFalseExpr(10, "(not tmp___0)");
+      addToTree(10, 2, "tmp___0", "(not tmp___0)", 8, 0);
+      delete_allVariableTableEntry();
+    }
+    }
+    i___0 += 2;
+    handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
+  } else {
+    setBranchInfo(8, 0, 1);
+    setTrueExpr(8, "(<= (* i___0 i___0) n)");
+    setFalseExpr(8, "(not (<= (* i___0 i___0) n))");
+    addToTree(8, 1, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
+    delete_allVariableTableEntry();
+  }
+  }
   {
   exp_outcome = i___0 * i___0 <= n;
   handleAssignmentSymbolically("exp_outcome", "(<= (* i___0 i___0) n)", & exp_outcome,
@@ -15665,79 +15764,6 @@ int prime(int n )
     setTrueExpr(15, "(<= (* i___0 i___0) n)");
     setFalseExpr(15, "(not (<= (* i___0 i___0) n))");
     addToTree(15, 1, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0,
-              0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = i___0 * i___0 <= n;
-  handleAssignmentSymbolically("exp_outcome", "(<= (* i___0 i___0) n)", & exp_outcome,
-                               & exp_outcome, 1);
-  overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(22, 1, 0);
-    setTrueExpr(22, "(<= (* i___0 i___0) n)");
-    setFalseExpr(22, "(not (<= (* i___0 i___0) n))");
-    addToTree(22, 1, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0,
-              1);
-    delete_allVariableTableEntry();
-    funcEntry("(int,_divides_n,variable,i___0)#(int,_divides_m,variable,n)", "_divides___cil_tmp3",
-              "_divides");
-    tmp___0 = _divides(i___0, n);
-    funcExit();
-    add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
-    {
-    exp_outcome = tmp___0;
-    handleAssignmentSymbolically("exp_outcome", "tmp___0", & tmp___0, & tmp___0, 1);
-    overall_outcome = (int )getConditionalOutcome(24, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(24, 1, 0);
-      setTrueExpr(24, "tmp___0");
-      setFalseExpr(24, "(not tmp___0)");
-      addToTree(24, 2, "tmp___0", "(not tmp___0)", 22, 1);
-      delete_allVariableTableEntry();
-      {
-      __cil_tmp6 = 0;
-      add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6, 1);
-      __cil_tmp10 = isNotQueueEmpty();
-      if (__cil_tmp10) {
-        enQueue();
-        directPathConditions();
-        delete_allSTableEntry();
-        delete_allStructTableEntry();
-        prime(n);
-      } else {
-        __cil_tmp10 = startCDG();
-        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
-                          1);
-        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
-                          1);
-        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
-                          1);
-        add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
-                          1);
-        if (__cil_tmp10) {
-          __cil_tmp10 = getTestCases();
-          prime(n);
-        }
-      }
-      return (__cil_tmp6);
-      }
-    } else {
-      setBranchInfo(24, 0, 1);
-      setTrueExpr(24, "tmp___0");
-      setFalseExpr(24, "(not tmp___0)");
-      addToTree(24, 2, "tmp___0", "(not tmp___0)", 22, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    i___0 += 2;
-    handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(22, 0, 1);
-    setTrueExpr(22, "(<= (* i___0 i___0) n)");
-    setFalseExpr(22, "(not (<= (* i___0 i___0) n))");
-    addToTree(22, 1, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0,
               0);
     delete_allVariableTableEntry();
   }

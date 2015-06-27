@@ -112,6 +112,7 @@ let features : C.featureDescr list =
     LoopUnroll.feature;
     ExtractStruct.feature;
     MakeCDG.feature;
+    LoopUnrollOthers.feature;
     SidTable.feature;
     Sym.feature;
     Level_struct.feature;

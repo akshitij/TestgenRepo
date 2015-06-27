@@ -1,4 +1,4 @@
 (benchmark res
   :logic AUFLIA
-:extrafuns ((s1 Int)(s0 Int)(addr_num1 Int)(num1 Int)(addr_num2 Int)(num2 Int))
+:extrafuns ((s1 Int)(a_0 Int)(a14 Int)(1 Int)(a19 Int))
 )
