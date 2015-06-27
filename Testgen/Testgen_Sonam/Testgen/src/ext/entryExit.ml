@@ -108,9 +108,18 @@ let analyse (funcexp : exp) : ((string * string) list) * string =
   (* a contains the return type *)
   let al = argsToList b in
   analysisHelper al, Pretty.sprint max_int (d_exp () funcexp)
+			
+let checkFormalsForInt (forms : (string * string) list) : int =
+  let flag = ref 0 in
+  List.iter( fun f ->
+ 		let (_,t) = f in
+ 		let t2 = String.trim t in
+ 		  if t2 = "int" then
+ 		    flag := 1			
+	   ) forms;
+  !flag	  			   
 				   
-				   
-let genArgString (explist : exp list) : (string * string) list = 
+let genArgString (explist : exp list) (forms : (string * string) list): (string * string) list = 
   let argActual = ref [] in
   List.iter (fun e ->
   	     match e with
@@ -120,10 +129,24 @@ let genArgString (explist : exp list) : (string * string) list =
       	       | (Var v, _) ->
       	         let vt = typeOfLval l in
     	         if (isPointerType vt) then
-      		    argActual := !argActual @ [(v.vname, "pointer")]
+    	            let isArray = checkFormalsForInt forms in
+    	              if isArray == 1 then
+    	                argActual := !argActual @ [(v.vname, "array")]  
+    	              else
+    	                argActual := !argActual @ [(v.vname, "pointer")]
       		 else
       		    argActual := !argActual @ [(v.vname, "variable")]
-      	        |_ ->
+      	       (* 
+      	       |(Mem e, NoOffset) ->
+      	         begin
+      	         match e with
+                 |Lval(_,_) ->
+		    argActual := !argActual @ [("random", "pointer")]
+		 |_ ->
+		    argActual := !argActual @ [("random", "array")] 
+      	         end
+      	       *) 
+      	       |_ ->
       	            argActual := !argActual @ [( (Pretty.sprint max_int (d_lval () l)), "variable" )]
       	       end       	       
     	       (*let (lh,_) = l in begin
@@ -165,7 +188,8 @@ class entryEntryVisitorClass (fl : file) (fdec : fundec) = object (self)
       | Call (lv,f,expList,loc) -> 
          let fnam = Pretty.sprint max_int (d_exp () f) in
 	 if (List.mem fnam !Param.func_list && fnam <> !Param.func(* && (List.length expList) > 0*)) then begin 
-	     let (formals,funcName),actuals = (analyse f), (genArgString expList) in
+	     let (formals,funcName) = (analyse f) in
+	     let actuals = (genArgString expList formals) in
 	     let str = ref "" in begin
 	         if (List.length formals) == (List.length actuals) then begin
 	             List.iter2 (fun a b ->

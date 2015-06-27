@@ -2428,8 +2428,12 @@ funcArg* getArgument(char* argString, char* foo){
     else{
      if(strcmp(token,"pointer") == 0)
       argument->structure = 2;
-     else
-      argument->structure = 0;
+     else{
+      if(strcmp(token,"array") == 0)
+       argument->structure = 3;
+      else
+       argument->structure = 0;
+     }
     }
     token = strtok(((void *)0), s);
     if(argument->structure == 1){
@@ -2491,7 +2495,7 @@ void populateSTable(funcArg* a){
  add_entryToSTable(key,"Constant",a->val,a->val,a->type);
  printf("%s Constant\n", key);
     }
-# 221 "src/src/ipaRecursive.c"
+# 225 "src/src/ipaRecursive.c"
  else{
   char* sym;
   void* val;

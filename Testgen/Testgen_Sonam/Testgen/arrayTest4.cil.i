@@ -15757,7 +15757,7 @@ int foo1(int *b )
   __cil_tmp7 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
   sprintf(__cil_tmp7, "\t%d\t%d\t%d\t%d\t%d\n", b[0], b[1], b[2], b[3], b[4]);
-  printTestCase("arrayTest4_foo1_1435433454.tc", __cil_tmp7);
+  printTestCase("arrayTest4_foo1_1435438812.tc", __cil_tmp7);
   add_entryToArraySTable("b", 0, "b_0", b, b, 1);
   printf((char const * __restrict )"----------------------------------EXECUTION START------------------------\n");
   *(b + 0) = 3 * *(b + 0);

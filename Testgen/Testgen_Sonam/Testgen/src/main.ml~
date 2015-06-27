@@ -110,9 +110,9 @@ let features : C.featureDescr list =
     HandleExp.feature;
     ModifyVars.feature;
     LoopUnroll.feature;
-    LoopUnrollOthers.feature;
     ExtractStruct.feature;
     MakeCDG.feature;
+    LoopUnrollOthers.feature;
     SidTable.feature;
     Sym.feature;
     Level_struct.feature;
