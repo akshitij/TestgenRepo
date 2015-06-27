@@ -56,6 +56,43 @@ void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void
 }
 
 
+void add_entryToArraySTable2(char *aname, int index, char *sname, void* val, void* address, int type) {
+    struct arraySym_table *s, r;
+    int size;
+
+    for(s=arraySTable; s != NULL; s=(struct arraySym_table*)(s->hh.next)) 
+    {
+        if(strcmp(s->key.arrayName, aname)==0 && s->key.index==index)
+        { 
+          strcpy(s->sname,sname);
+          break;
+        }
+    }
+
+     if(s == NULL)
+     { 
+       s = (struct arraySym_table *)malloc(sizeof(struct arraySym_table));
+       strcpy(s->key.arrayName, aname);
+       s->key.index = index;
+       HASH_ADD(hh, arraySTable, key, sizeof(struct arrayKey), s);
+       strcpy(s->sname,sname);
+     }
+
+
+  //printf("aname=%s, index=%d, sname=%s\n",s->key.arrayName,s->key.index,s->sname);
+   if(type == 1)
+  { size = sizeof(int);  addToIntTable(sname, (int *)val);}
+  else
+  { size = sizeof(float);   addToFloatTable(sname, (float *)val); }
+  
+  s->cval = malloc(size);
+  memcpy(s->cval, val, size);
+  s->address = toInt(address); 
+  s->type = type;
+
+}
+
+
 char* findArrayRecord(char* aname, int index)
 {
   struct arraySym_table k;
@@ -237,7 +274,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
   //printf("result=%s\n",result);
 
-  add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  add_entryToArraySTable2(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();
 }
 

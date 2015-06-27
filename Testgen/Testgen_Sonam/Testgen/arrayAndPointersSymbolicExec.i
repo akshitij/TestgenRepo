@@ -2572,6 +2572,43 @@ void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void
 }
 
 
+void add_entryToArraySTable2(char *aname, int index, char *sname, void* val, void* address, int type) {
+    struct arraySym_table *s, r;
+    int size;
+
+    for(s=arraySTable; s != ((void *)0); s=(struct arraySym_table*)(s->hh.next))
+    {
+        if(strcmp(s->key.arrayName, aname)==0 && s->key.index==index)
+        {
+          strcpy(s->sname,sname);
+          break;
+        }
+    }
+
+     if(s == ((void *)0))
+     {
+       s = (struct arraySym_table *)malloc(sizeof(struct arraySym_table));
+       strcpy(s->key.arrayName, aname);
+       s->key.index = index;
+       do { unsigned _ha_bkt; (s)->hh.next = ((void *)0); (s)->hh.key = (char*)(&((s)->key)); (s)->hh.keylen = (unsigned)(sizeof(struct arrayKey)); if (!(arraySTable)) { arraySTable = (s); (arraySTable)->hh.prev = ((void *)0); do { (arraySTable)->hh.tbl = (UT_hash_table*)malloc(sizeof(UT_hash_table)); if (!((arraySTable)->hh.tbl)) { exit(-1); } memset((arraySTable)->hh.tbl, 0, sizeof(UT_hash_table)); (arraySTable)->hh.tbl->tail = &((arraySTable)->hh); (arraySTable)->hh.tbl->num_buckets = 32; (arraySTable)->hh.tbl->log2_num_buckets = 5; (arraySTable)->hh.tbl->hho = (char*)(&(arraySTable)->hh) - (char*)(arraySTable); (arraySTable)->hh.tbl->buckets = (UT_hash_bucket*)malloc(32*sizeof(struct UT_hash_bucket)); if (! (arraySTable)->hh.tbl->buckets) { exit(-1); } memset((arraySTable)->hh.tbl->buckets, 0, 32*sizeof(struct UT_hash_bucket)); ; (arraySTable)->hh.tbl->signature = 0xa0111fe1; } while(0); } else { (arraySTable)->hh.tbl->tail->next = (s); (s)->hh.prev = ((void*)(((char*)((arraySTable)->hh.tbl->tail)) - (((arraySTable)->hh.tbl)->hho))); (arraySTable)->hh.tbl->tail = &((s)->hh); } (arraySTable)->hh.tbl->num_items++; (s)->hh.tbl = (arraySTable)->hh.tbl; do { unsigned _hj_i,_hj_j,_hj_k; unsigned char *_hj_key=(unsigned char*)(&((s)->key)); (s)->hh.hashv = 0xfeedbeef; _hj_i = _hj_j = 0x9e3779b9; _hj_k = (unsigned)(sizeof(struct arrayKey)); while (_hj_k >= 12) { _hj_i += (_hj_key[0] + ( (unsigned)_hj_key[1] << 8 ) + ( (unsigned)_hj_key[2] << 16 ) + ( (unsigned)_hj_key[3] << 24 ) ); _hj_j += (_hj_key[4] + ( (unsigned)_hj_key[5] << 8 ) + ( (unsigned)_hj_key[6] << 16 ) + ( (unsigned)_hj_key[7] << 24 ) ); (s)->hh.hashv += (_hj_key[8] + ( (unsigned)_hj_key[9] << 8 ) + ( (unsigned)_hj_key[10] << 16 ) + ( (unsigned)_hj_key[11] << 24 ) ); do { _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 13 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 12 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 3 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _hj_key += 12; _hj_k -= 12; } (s)->hh.hashv += sizeof(struct arrayKey); switch ( _hj_k ) { case 11: (s)->hh.hashv += ( (unsigned)_hj_key[10] << 24 ); case 10: (s)->hh.hashv += ( (unsigned)_hj_key[9] << 16 ); case 9: (s)->hh.hashv += ( (unsigned)_hj_key[8] << 8 ); case 8: _hj_j += ( (unsigned)_hj_key[7] << 24 ); case 7: _hj_j += ( (unsigned)_hj_key[6] << 16 ); case 6: _hj_j += ( (unsigned)_hj_key[5] << 8 ); case 5: _hj_j += _hj_key[4]; case 4: _hj_i += ( (unsigned)_hj_key[3] << 24 ); case 3: _hj_i += ( (unsigned)_hj_key[2] << 16 ); case 2: _hj_i += ( (unsigned)_hj_key[1] << 8 ); case 1: _hj_i += _hj_key[0]; } do { _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 13 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 8 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 13 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 12 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 16 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 5 ); _hj_i -= _hj_j; _hj_i -= (s)->hh.hashv; _hj_i ^= ( (s)->hh.hashv >> 3 ); _hj_j -= (s)->hh.hashv; _hj_j -= _hj_i; _hj_j ^= ( _hj_i << 10 ); (s)->hh.hashv -= _hj_i; (s)->hh.hashv -= _hj_j; (s)->hh.hashv ^= ( _hj_j >> 15 ); } while (0); _ha_bkt = (s)->hh.hashv & ((arraySTable)->hh.tbl->num_buckets-1); } while(0); do { (arraySTable)->hh.tbl->buckets[_ha_bkt].count++; (&(s)->hh)->hh_next = (arraySTable)->hh.tbl->buckets[_ha_bkt].hh_head; (&(s)->hh)->hh_prev = ((void *)0); if ((arraySTable)->hh.tbl->buckets[_ha_bkt].hh_head) { ((arraySTable)->hh.tbl->buckets[_ha_bkt]).hh_head->hh_prev = (&(s)->hh); } ((arraySTable)->hh.tbl->buckets[_ha_bkt]).hh_head=&(s)->hh; if ((arraySTable)->hh.tbl->buckets[_ha_bkt].count >= (((arraySTable)->hh.tbl->buckets[_ha_bkt].expand_mult+1) * 10) && (&(s)->hh)->tbl->noexpand != 1) { do { unsigned _he_bkt; unsigned _he_bkt_i; struct UT_hash_handle *_he_thh, *_he_hh_nxt; UT_hash_bucket *_he_new_buckets, *_he_newbkt; _he_new_buckets = (UT_hash_bucket*)malloc(2 * (&(s)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); if (!_he_new_buckets) { exit(-1); } memset(_he_new_buckets, 0, 2 * (&(s)->hh)->tbl->num_buckets * sizeof(struct UT_hash_bucket)); (&(s)->hh)->tbl->ideal_chain_maxlen = ((&(s)->hh)->tbl->num_items >> ((&(s)->hh)->tbl->log2_num_buckets+1)) + (((&(s)->hh)->tbl->num_items & (((&(s)->hh)->tbl->num_buckets*2)-1)) ? 1 : 0); (&(s)->hh)->tbl->nonideal_items = 0; for(_he_bkt_i = 0; _he_bkt_i < (&(s)->hh)->tbl->num_buckets; _he_bkt_i++) { _he_thh = (&(s)->hh)->tbl->buckets[ _he_bkt_i ].hh_head; while (_he_thh) { _he_hh_nxt = _he_thh->hh_next; do { _he_bkt = ((_he_thh->hashv) & (((&(s)->hh)->tbl->num_buckets*2) - 1)); } while(0); _he_newbkt = &(_he_new_buckets[ _he_bkt ]); if (++(_he_newbkt->count) > (&(s)->hh)->tbl->ideal_chain_maxlen) { (&(s)->hh)->tbl->nonideal_items++; _he_newbkt->expand_mult = _he_newbkt->count / (&(s)->hh)->tbl->ideal_chain_maxlen; } _he_thh->hh_prev = ((void *)0); _he_thh->hh_next = _he_newbkt->hh_head; if (_he_newbkt->hh_head) _he_newbkt->hh_head->hh_prev = _he_thh; _he_newbkt->hh_head = _he_thh; _he_thh = _he_hh_nxt; } } free((&(s)->hh)->tbl->buckets); (&(s)->hh)->tbl->num_buckets *= 2; (&(s)->hh)->tbl->log2_num_buckets++; (&(s)->hh)->tbl->buckets = _he_new_buckets; (&(s)->hh)->tbl->ineff_expands = ((&(s)->hh)->tbl->nonideal_items > ((&(s)->hh)->tbl->num_items >> 1)) ? ((&(s)->hh)->tbl->ineff_expands+1) : 0; if ((&(s)->hh)->tbl->ineff_expands > 1) { (&(s)->hh)->tbl->noexpand=1; ; } ; } while(0); } } while(0); ; ; ; } while(0);
+       strcpy(s->sname,sname);
+     }
+
+
+
+   if(type == 1)
+  { size = sizeof(int); addToIntTable(sname, (int *)val);}
+  else
+  { size = sizeof(float); addToFloatTable(sname, (float *)val); }
+
+  s->cval = malloc(size);
+  memcpy(s->cval, val, size);
+  s->address = toInt(address);
+  s->type = type;
+
+}
+
+
 char* findArrayRecord(char* aname, int index)
 {
   struct arraySym_table k;
@@ -2693,7 +2730,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
-# 210 "src/src/arrayAndPointersSymbolicExec.c"
+# 247 "src/src/arrayAndPointersSymbolicExec.c"
       break;
 
     case VARIABLE:
@@ -2724,6 +2761,6 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
 
 
-  add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  add_entryToArraySTable2(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();
 }

@@ -1,0 +1,13 @@
+#include <stdio.h>
+int foo1(int b[]){
+	int j;
+	printf("----------------------------------EXECUTION START------------------------\n");
+	b[0] = 3*b[0];
+	if(b[0] == 6)
+		j=1;
+	else
+		j=-1;
+	printf("j = %d\n",j);
+	return 0;
+}
+	
