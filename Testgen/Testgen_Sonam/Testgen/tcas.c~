@@ -55,7 +55,7 @@ void initialize()
 
 int ALIM ()
 {
- return /*Positive_RA_Alt_Thresh[Alt_Layer_Value]*/ 1;
+ return Positive_RA_Alt_Thresh[Alt_Layer_Value];
 }
 
 int Inhibit_Biased_Climb ()

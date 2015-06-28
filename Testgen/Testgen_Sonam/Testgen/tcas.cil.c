@@ -176,7 +176,7 @@ struct functionArgument {
    char vname[50] ;
    void *val ;
    char apname[50] ;
-   int isConstant ;
+   int structure ;
 };
 typedef struct functionArgument funcArg;
 struct __anonstruct_funcVars_27 {
@@ -4528,6 +4528,10 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___4 ;
   int tmp___5 ;
   int tmp___6 ;
+  int tmp___7 ;
+  int tmp___8 ;
+  int tmp___9 ;
+  int tmp___10 ;
 
   {
   s[0] = (char )',';
@@ -4541,12 +4545,12 @@ funcArg *getArgument(char *argString , char *foo )
   argument = (funcArg *)tmp___1;
   strcpy((char * __restrict  )(argument->funcName), (char const   * __restrict  )foo);
   token = strtok((char * __restrict  )copy, (char const   * __restrict  )(s));
-  tmp___4 = strcmp((char const   *)token, "int");
-  if (tmp___4 == 0) {
+  tmp___6 = strcmp((char const   *)token, "int");
+  if (tmp___6 == 0) {
     argument->type = 1;
   } else {
-    tmp___5 = strcmp((char const   *)token, "int *");
-    if (tmp___5 == 0) {
+    tmp___7 = strcmp((char const   *)token, "int *");
+    if (tmp___7 == 0) {
       argument->type = 1;
     } else {
       tmp___2 = strcmp((char const   *)token, "double");
@@ -4557,7 +4561,17 @@ funcArg *getArgument(char *argString , char *foo )
         if (tmp___3 == 0) {
           argument->type = 2;
         } else {
-          argument->type = 3;
+          tmp___4 = strcmp((char const   *)token, "float *");
+          if (tmp___4 == 0) {
+            argument->type = 2;
+          } else {
+            tmp___5 = strcmp((char const   *)token, "double *");
+            if (tmp___5 == 0) {
+              argument->type = 2;
+            } else {
+              argument->type = 3;
+            }
+          }
         }
       }
     }
@@ -4565,14 +4579,24 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
   strcpy((char * __restrict  )(argument->vname), (char const   * __restrict  )token);
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  tmp___6 = strcmp((char const   *)token, "constant");
-  if (tmp___6 == 0) {
-    argument->isConstant = 1;
+  tmp___10 = strcmp((char const   *)token, "constant");
+  if (tmp___10 == 0) {
+    argument->structure = 1;
   } else {
-    argument->isConstant = 0;
+    tmp___9 = strcmp((char const   *)token, "pointer");
+    if (tmp___9 == 0) {
+      argument->structure = 2;
+    } else {
+      tmp___8 = strcmp((char const   *)token, "array");
+      if (tmp___8 == 0) {
+        argument->structure = 3;
+      } else {
+        argument->structure = 0;
+      }
+    }
   }
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  if (argument->isConstant) {
+  if (argument->structure == 1) {
     if (argument->type == 1) {
       i___0 = atoi((char const   *)token);
       argument->val = (void *)(& i___0);
@@ -4661,7 +4685,7 @@ void populateSTable(funcArg *a )
   sprintf((char * __restrict  )(tmp), (char const   * __restrict  )"_%d", currentOccurence);
   strcpy((char * __restrict  )(key), (char const   * __restrict  )(a->vname));
   strcat((char * __restrict  )(key), (char const   * __restrict  )(tmp));
-  if (a->isConstant == 1) {
+  if (a->structure == 1) {
     add_entryToSTable(key, (char *)"Constant", a->val, a->val, a->type);
     printf((char const   * __restrict  )"%s Constant\n", key);
   } else {
@@ -6563,6 +6587,10 @@ int findParameter(char *key )
     }
     break;
   }
+  if ((unsigned long )s == (unsigned long )((void *)0)) {
+    printf((char const   * __restrict  )"pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return (1);
+  }
   return (s->parameter);
 }
 }
@@ -7040,7 +7068,7 @@ void updateValBySymbolicName(char *sname , void *value )
     if (*((int *)value) < 0) {
       updateFloatValBySname(sname, (float )*((int *)value));
     } else {
-      updateFloatValBySname(sname, *((float *)value));
+      updateFloatValBySname(sname, (float )*((int *)value));
     }
   }
   return;
@@ -7317,6 +7345,7 @@ char *getAllSymbolicNamesinAPath(char *rhs )
   return (result);
 }
 }
+char *getPointerName(char const   *str ) ;
 char *getArrayName(char const   *str ) ;
 void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *address ,
                                   int type ) 
@@ -7339,53 +7368,66 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
   void *tmp___3 ;
   int tmp___4 ;
   int tmp___5 ;
-  void *tmp___6 ;
-  size_t tmp___7 ;
+  int tmp___6 ;
+  void *tmp___7 ;
   size_t tmp___8 ;
-  void *tmp___9 ;
+  size_t tmp___9 ;
   void *tmp___10 ;
-  size_t tmp___11 ;
+  void *tmp___11 ;
   size_t tmp___12 ;
-  void *tmp___13 ;
-  size_t tmp___14 ;
+  size_t tmp___13 ;
+  void *tmp___14 ;
   size_t tmp___15 ;
-  void *tmp___16 ;
-  int tmp___17 ;
+  size_t tmp___16 ;
+  void *tmp___17 ;
   int tmp___18 ;
   int tmp___19 ;
-  void *tmp___20 ;
-  size_t tmp___21 ;
+  int tmp___20 ;
+  void *tmp___21 ;
   size_t tmp___22 ;
-  void *tmp___23 ;
+  size_t tmp___23 ;
   void *tmp___24 ;
-  size_t tmp___25 ;
+  void *tmp___25 ;
   size_t tmp___26 ;
-  void *tmp___27 ;
-  size_t tmp___28 ;
+  size_t tmp___27 ;
+  void *tmp___28 ;
   size_t tmp___29 ;
-  void *tmp___30 ;
-  int tmp___31 ;
+  size_t tmp___30 ;
+  void *tmp___31 ;
   int tmp___32 ;
-  void *tmp___33 ;
-  size_t tmp___34 ;
+  int tmp___33 ;
+  void *tmp___34 ;
   size_t tmp___35 ;
-  void *tmp___36 ;
+  size_t tmp___36 ;
   void *tmp___37 ;
-  size_t tmp___38 ;
+  void *tmp___38 ;
   size_t tmp___39 ;
-  void *tmp___40 ;
-  size_t tmp___41 ;
+  size_t tmp___40 ;
+  void *tmp___41 ;
   size_t tmp___42 ;
-  void *tmp___43 ;
-  int tmp___44 ;
+  size_t tmp___43 ;
+  void *tmp___44 ;
   int tmp___45 ;
+  int tmp___46 ;
+  int j2 ;
+  int k ;
+  int len2 ;
+  size_t tmp___47 ;
+  char *temp2 ;
+  char *symName2 ;
+  char new_lhs[100] ;
+  char *token2 ;
+  char *tmp___48 ;
+  int tmp___49 ;
+  int tmp___50 ;
+  int tmp___51 ;
   char *lhs_vn ;
-  char *tmp___46 ;
-  int tmp___47 ;
+  char *tmp___52 ;
+  int tmp___53 ;
 
   {
-  tmp___47 = getExecutionFlag();
-  if (tmp___47 == 1) {
+  tmp___53 = getExecutionFlag();
+  if (tmp___53 == 1) {
     i___0 = 0;
     tmp = calloc((size_t )2, sizeof(char ));
     result = (char *)tmp;
@@ -7405,45 +7447,52 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       break;
       case 3: 
       parameter = findParameter(token);
+      tmp___4 = (int )getPointerName(token);
+      temp = (char *)tmp___4;
       j = 0;
       while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
+        vname_occ = get_vnameHash(temp);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName = find_symVal(temp);
+        } else {
+          symName = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName == (unsigned long )((void *)0)) {
-          tmp___4 = findParameter(temp);
-          tmp___5 = (int )getArrayName(temp);
-          symName = findArrayRecord((char *)tmp___5, tmp___4);
+          tmp___5 = findParameter(temp);
+          tmp___6 = (int )getArrayName(temp);
+          symName = findArrayRecord((char *)tmp___6, tmp___5);
         }
         temp = symName;
         j ++;
       }
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___18 = strcmp((char const   *)symName, "Constant");
-        if (tmp___18 == 0) {
-          tmp___6 = findValBySymbolicName(symName);
-          value = *((int *)tmp___6);
+        tmp___19 = strcmp((char const   *)symName, "Constant");
+        if (tmp___19 == 0) {
+          tmp___7 = findValBySymbolicName(symName);
+          value = *((int *)tmp___7);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
                   value);
-          tmp___7 = strlen((char const   *)result);
-          tmp___8 = strlen((char const   *)(buff));
-          tmp___9 = realloc((void *)result, ((tmp___7 + tmp___8) + 1UL) * sizeof(char ));
-          result = (char *)tmp___9;
+          tmp___8 = strlen((char const   *)result);
+          tmp___9 = strlen((char const   *)(buff));
+          tmp___10 = realloc((void *)result, ((tmp___8 + tmp___9) + 1UL) * sizeof(char ));
+          result = (char *)tmp___10;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___17 = strcmp((char const   *)symName, "Function");
-          if (tmp___17 == 0) {
-            tmp___10 = findValBySymbolicName(symName);
+          tmp___18 = strcmp((char const   *)symName, "Function");
+          if (tmp___18 == 0) {
+            tmp___11 = findValBySymbolicName(symName);
             sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___10));
-            tmp___11 = strlen((char const   *)result);
-            tmp___12 = strlen((char const   *)(buff));
-            tmp___13 = realloc((void *)result, ((tmp___11 + tmp___12) + 1UL) * sizeof(char ));
-            result = (char *)tmp___13;
+                    *((int *)tmp___11));
+            tmp___12 = strlen((char const   *)result);
+            tmp___13 = strlen((char const   *)(buff));
+            tmp___14 = realloc((void *)result, ((tmp___12 + tmp___13) + 1UL) * sizeof(char ));
+            result = (char *)tmp___14;
             strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
           } else {
-            tmp___14 = strlen((char const   *)result);
-            tmp___15 = strlen((char const   *)symName);
-            tmp___16 = realloc((void *)result, ((tmp___14 + tmp___15) + 1UL) * sizeof(char ));
-            result = (char *)tmp___16;
+            tmp___15 = strlen((char const   *)result);
+            tmp___16 = strlen((char const   *)symName);
+            tmp___17 = realloc((void *)result, ((tmp___15 + tmp___16) + 1UL) * sizeof(char ));
+            result = (char *)tmp___17;
             strcat((char * __restrict  )result, (char const   * __restrict  )symName);
           }
         }
@@ -7451,35 +7500,35 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       break;
       case 4: 
       parameter = findParameter(token);
-      tmp___19 = (int )getArrayName(token);
-      symName = findArrayRecord((char *)tmp___19, parameter);
+      tmp___20 = (int )getArrayName(token);
+      symName = findArrayRecord((char *)tmp___20, parameter);
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___32 = strcmp((char const   *)symName, "Constant");
-        if (tmp___32 == 0) {
-          tmp___20 = findValBySymbolicName(symName);
+        tmp___33 = strcmp((char const   *)symName, "Constant");
+        if (tmp___33 == 0) {
+          tmp___21 = findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___20));
-          tmp___21 = strlen((char const   *)result);
-          tmp___22 = strlen((char const   *)(buff));
-          tmp___23 = realloc((void *)result, ((tmp___21 + tmp___22) + 1UL) * sizeof(char ));
-          result = (char *)tmp___23;
+                  *((int *)tmp___21));
+          tmp___22 = strlen((char const   *)result);
+          tmp___23 = strlen((char const   *)(buff));
+          tmp___24 = realloc((void *)result, ((tmp___22 + tmp___23) + 1UL) * sizeof(char ));
+          result = (char *)tmp___24;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___31 = strcmp((char const   *)symName, "Function");
-          if (tmp___31 == 0) {
-            tmp___24 = findValBySymbolicName(symName);
+          tmp___32 = strcmp((char const   *)symName, "Function");
+          if (tmp___32 == 0) {
+            tmp___25 = findValBySymbolicName(symName);
             sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___24));
-            tmp___25 = strlen((char const   *)result);
-            tmp___26 = strlen((char const   *)(buff));
-            tmp___27 = realloc((void *)result, ((tmp___25 + tmp___26) + 1UL) * sizeof(char ));
-            result = (char *)tmp___27;
+                    *((int *)tmp___25));
+            tmp___26 = strlen((char const   *)result);
+            tmp___27 = strlen((char const   *)(buff));
+            tmp___28 = realloc((void *)result, ((tmp___26 + tmp___27) + 1UL) * sizeof(char ));
+            result = (char *)tmp___28;
             strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
           } else {
-            tmp___28 = strlen((char const   *)result);
-            tmp___29 = strlen((char const   *)symName);
-            tmp___30 = realloc((void *)result, ((tmp___28 + tmp___29) + 1UL) * sizeof(char ));
-            result = (char *)tmp___30;
+            tmp___29 = strlen((char const   *)result);
+            tmp___30 = strlen((char const   *)symName);
+            tmp___31 = realloc((void *)result, ((tmp___29 + tmp___30) + 1UL) * sizeof(char ));
+            result = (char *)tmp___31;
             strcat((char * __restrict  )result, (char const   * __restrict  )symName);
           }
         }
@@ -7493,32 +7542,32 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
         symName = find_symVal(vname_occ);
       }
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___45 = strcmp((char const   *)symName, "Constant");
-        if (tmp___45 == 0) {
-          tmp___33 = find_conVal(token);
+        tmp___46 = strcmp((char const   *)symName, "Constant");
+        if (tmp___46 == 0) {
+          tmp___34 = find_conVal(token);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___33));
-          tmp___34 = strlen((char const   *)result);
-          tmp___35 = strlen((char const   *)(buff));
-          tmp___36 = realloc((void *)result, ((tmp___34 + tmp___35) + 1UL) * sizeof(char ));
-          result = (char *)tmp___36;
+                  *((int *)tmp___34));
+          tmp___35 = strlen((char const   *)result);
+          tmp___36 = strlen((char const   *)(buff));
+          tmp___37 = realloc((void *)result, ((tmp___35 + tmp___36) + 1UL) * sizeof(char ));
+          result = (char *)tmp___37;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___44 = strcmp((char const   *)symName, "Function");
-          if (tmp___44 == 0) {
-            tmp___37 = findValBySymbolicName(symName);
+          tmp___45 = strcmp((char const   *)symName, "Function");
+          if (tmp___45 == 0) {
+            tmp___38 = findValBySymbolicName(symName);
             sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___37));
-            tmp___38 = strlen((char const   *)result);
-            tmp___39 = strlen((char const   *)(buff));
-            tmp___40 = realloc((void *)result, ((tmp___38 + tmp___39) + 1UL) * sizeof(char ));
-            result = (char *)tmp___40;
+                    *((int *)tmp___38));
+            tmp___39 = strlen((char const   *)result);
+            tmp___40 = strlen((char const   *)(buff));
+            tmp___41 = realloc((void *)result, ((tmp___39 + tmp___40) + 1UL) * sizeof(char ));
+            result = (char *)tmp___41;
             strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
           } else {
-            tmp___41 = strlen((char const   *)result);
-            tmp___42 = strlen((char const   *)symName);
-            tmp___43 = realloc((void *)result, ((tmp___41 + tmp___42) + 1UL) * sizeof(char ));
-            result = (char *)tmp___43;
+            tmp___42 = strlen((char const   *)result);
+            tmp___43 = strlen((char const   *)symName);
+            tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
+            result = (char *)tmp___44;
             strcat((char * __restrict  )result, (char const   * __restrict  )symName);
           }
         }
@@ -7528,19 +7577,50 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
     }
     strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-    tmp___46 = get_vnameHash(lhs);
-    lhs_vn = tmp___46;
+    j2 = 0;
+    tmp___47 = strlen((char const   *)lhs);
+    len2 = (int )tmp___47;
+    strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )lhs);
+    tmp___48 = getNextToken((char const   *)lhs, & j2, len2);
+    token2 = tmp___48;
+    if ((unsigned long )token2 != (unsigned long )((void *)0)) {
+      switch ((int )token_type) {
+      case 3: 
+      parameter = findParameter(token2);
+      tmp___49 = (int )getPointerName(token2);
+      temp2 = (char *)tmp___49;
+      k = 0;
+      while (k < 2 * parameter) {
+        vname_occ = get_vnameHash(temp2);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName2 = find_symVal(temp2);
+        } else {
+          symName2 = find_symVal(vname_occ);
+        }
+        if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
+          tmp___50 = findParameter(temp2);
+          tmp___51 = (int )getArrayName(temp2);
+          symName2 = findArrayRecord((char *)tmp___51, tmp___50);
+        }
+        temp2 = symName2;
+        k ++;
+      }
+      strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )symName2);
+      break;
+      }
+    }
+    tmp___52 = get_vnameHash(new_lhs);
+    lhs_vn = tmp___52;
     if ((unsigned long )lhs_vn != (unsigned long )((void *)0)) {
       add_entryToSTable(lhs_vn, result, val, address, type);
     } else {
-      add_entryToSTable(lhs, result, val, address, type);
+      add_entryToSTable(new_lhs, result, val, address, type);
     }
     delete_allVariableTableEntry();
   }
   return;
 }
 }
-char *getPointerName(char const   *str ) ;
 char *getPrepositionalFormula(char *expr ) 
 { 
   int i___0 ;
@@ -8320,7 +8400,7 @@ char *getNextToken(char const   *str , int *pos , int length )
         str ++;
         (*pos) ++;
         i___0 ++;
-        token_type = (enum TOKENTYPE )4;
+        token_type = (enum TOKENTYPE )3;
       }
       *(res + i___0) = (char )'\000';
       return (res);
@@ -8960,6 +9040,266 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
   return;
 }
 }
+void add_entryToArraySTable2(char *aname , int index___0 , char *sname , void *val ,
+                             void *address , int type ) 
+{ 
+  struct arraySym_table *s ;
+  int size ;
+  int tmp ;
+  void *tmp___0 ;
+  unsigned int _ha_bkt ;
+  void *tmp___1 ;
+  void *tmp___2 ;
+  unsigned int _hj_i ;
+  unsigned int _hj_j ;
+  unsigned int _hj_k ;
+  unsigned char *_hj_key ;
+  unsigned int _he_bkt ;
+  unsigned int _he_bkt_i ;
+  struct UT_hash_handle *_he_thh ;
+  struct UT_hash_handle *_he_hh_nxt ;
+  UT_hash_bucket *_he_new_buckets ;
+  UT_hash_bucket *_he_newbkt ;
+  void *tmp___3 ;
+  int tmp___4 ;
+
+  {
+  s = arraySTable;
+  while ((unsigned long )s != (unsigned long )((void *)0)) {
+    tmp = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
+    if (tmp == 0) {
+      if (s->key.index == index___0) {
+        strcpy((char * __restrict  )(s->sname), (char const   * __restrict  )sname);
+        break;
+      }
+    }
+    s = (struct arraySym_table *)s->hh.next;
+  }
+  if ((unsigned long )s == (unsigned long )((void *)0)) {
+    tmp___0 = malloc(sizeof(struct arraySym_table ));
+    s = (struct arraySym_table *)tmp___0;
+    strcpy((char * __restrict  )(s->key.arrayName), (char const   * __restrict  )aname);
+    s->key.index = index___0;
+    while (1) {
+      s->hh.next = (void *)0;
+      s->hh.key = (void *)((char *)(& s->key));
+      s->hh.keylen = (unsigned int )sizeof(struct arrayKey );
+      if (! arraySTable) {
+        arraySTable = s;
+        arraySTable->hh.prev = (void *)0;
+        while (1) {
+          tmp___1 = malloc(sizeof(UT_hash_table ));
+          arraySTable->hh.tbl = (UT_hash_table *)tmp___1;
+          if (! arraySTable->hh.tbl) {
+            exit(-1);
+          }
+          memset((void *)arraySTable->hh.tbl, 0, sizeof(UT_hash_table ));
+          (arraySTable->hh.tbl)->tail = & arraySTable->hh;
+          (arraySTable->hh.tbl)->num_buckets = 32U;
+          (arraySTable->hh.tbl)->log2_num_buckets = 5U;
+          (arraySTable->hh.tbl)->hho = (char *)(& arraySTable->hh) - (char *)arraySTable;
+          tmp___2 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___2;
+          if (! (arraySTable->hh.tbl)->buckets) {
+            exit(-1);
+          }
+          memset((void *)(arraySTable->hh.tbl)->buckets, 0, 32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->signature = 2685476833U;
+          break;
+        }
+      } else {
+        ((arraySTable->hh.tbl)->tail)->next = (void *)s;
+        s->hh.prev = (void *)((char *)(arraySTable->hh.tbl)->tail - (arraySTable->hh.tbl)->hho);
+        (arraySTable->hh.tbl)->tail = & s->hh;
+      }
+      ((arraySTable->hh.tbl)->num_items) ++;
+      s->hh.tbl = arraySTable->hh.tbl;
+      while (1) {
+        _hj_key = (unsigned char *)(& s->key);
+        s->hh.hashv = 4276993775U;
+        _hj_j = 2654435769U;
+        _hj_i = _hj_j;
+        _hj_k = (unsigned int )sizeof(struct arrayKey );
+        while (_hj_k >= 12U) {
+          _hj_i += (((unsigned int )*(_hj_key + 0) + ((unsigned int )*(_hj_key + 1) << 8)) + ((unsigned int )*(_hj_key + 2) << 16)) + ((unsigned int )*(_hj_key + 3) << 24);
+          _hj_j += (((unsigned int )*(_hj_key + 4) + ((unsigned int )*(_hj_key + 5) << 8)) + ((unsigned int )*(_hj_key + 6) << 16)) + ((unsigned int )*(_hj_key + 7) << 24);
+          s->hh.hashv += (((unsigned int )*(_hj_key + 8) + ((unsigned int )*(_hj_key + 9) << 8)) + ((unsigned int )*(_hj_key + 10) << 16)) + ((unsigned int )*(_hj_key + 11) << 24);
+          while (1) {
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 13;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 8;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 13;
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 12;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 16;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 5;
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 3;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 10;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 15;
+            break;
+          }
+          _hj_key += 12;
+          _hj_k -= 12U;
+        }
+        s->hh.hashv = (unsigned int )((unsigned long )s->hh.hashv + sizeof(struct arrayKey ));
+        switch (_hj_k) {
+        case 11U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 10) << 24;
+        case 10U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 9) << 16;
+        case 9U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 8) << 8;
+        case 8U: 
+        _hj_j += (unsigned int )*(_hj_key + 7) << 24;
+        case 7U: 
+        _hj_j += (unsigned int )*(_hj_key + 6) << 16;
+        case 6U: 
+        _hj_j += (unsigned int )*(_hj_key + 5) << 8;
+        case 5U: 
+        _hj_j += (unsigned int )*(_hj_key + 4);
+        case 4U: 
+        _hj_i += (unsigned int )*(_hj_key + 3) << 24;
+        case 3U: 
+        _hj_i += (unsigned int )*(_hj_key + 2) << 16;
+        case 2U: 
+        _hj_i += (unsigned int )*(_hj_key + 1) << 8;
+        case 1U: 
+        _hj_i += (unsigned int )*(_hj_key + 0);
+        }
+        while (1) {
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 13;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 8;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 13;
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 12;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 16;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 5;
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 3;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 10;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 15;
+          break;
+        }
+        _ha_bkt = s->hh.hashv & ((arraySTable->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count) ++;
+        s->hh.hh_next = ((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head;
+        s->hh.hh_prev = (struct UT_hash_handle *)((void *)0);
+        if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head) {
+          (((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head)->hh_prev = & s->hh;
+        }
+        ((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head = & s->hh;
+        if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count >= (((arraySTable->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
+          if ((s->hh.tbl)->noexpand != 1U) {
+            while (1) {
+              tmp___3 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets = (UT_hash_bucket *)tmp___3;
+              if (! _he_new_buckets) {
+                exit(-1);
+              }
+              memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              if ((s->hh.tbl)->num_items & ((s->hh.tbl)->num_buckets * 2U - 1U)) {
+                tmp___4 = 1;
+              } else {
+                tmp___4 = 0;
+              }
+              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___4;
+              (s->hh.tbl)->nonideal_items = 0U;
+              _he_bkt_i = 0U;
+              while (_he_bkt_i < (s->hh.tbl)->num_buckets) {
+                _he_thh = ((s->hh.tbl)->buckets + _he_bkt_i)->hh_head;
+                while (_he_thh) {
+                  _he_hh_nxt = _he_thh->hh_next;
+                  while (1) {
+                    _he_bkt = _he_thh->hashv & ((s->hh.tbl)->num_buckets * 2U - 1U);
+                    break;
+                  }
+                  _he_newbkt = _he_new_buckets + _he_bkt;
+                  (_he_newbkt->count) ++;
+                  if (_he_newbkt->count > (s->hh.tbl)->ideal_chain_maxlen) {
+                    ((s->hh.tbl)->nonideal_items) ++;
+                    _he_newbkt->expand_mult = _he_newbkt->count / (s->hh.tbl)->ideal_chain_maxlen;
+                  }
+                  _he_thh->hh_prev = (struct UT_hash_handle *)((void *)0);
+                  _he_thh->hh_next = _he_newbkt->hh_head;
+                  if (_he_newbkt->hh_head) {
+                    (_he_newbkt->hh_head)->hh_prev = _he_thh;
+                  }
+                  _he_newbkt->hh_head = _he_thh;
+                  _he_thh = _he_hh_nxt;
+                }
+                _he_bkt_i ++;
+              }
+              free((void *)(s->hh.tbl)->buckets);
+              (s->hh.tbl)->num_buckets *= 2U;
+              ((s->hh.tbl)->log2_num_buckets) ++;
+              (s->hh.tbl)->buckets = _he_new_buckets;
+              if ((s->hh.tbl)->nonideal_items > (s->hh.tbl)->num_items >> 1) {
+                ((s->hh.tbl)->ineff_expands) ++;
+              } else {
+                (s->hh.tbl)->ineff_expands = 0U;
+              }
+              if ((s->hh.tbl)->ineff_expands > 1U) {
+                (s->hh.tbl)->noexpand = 1U;
+              }
+              break;
+            }
+          }
+        }
+        break;
+      }
+      break;
+    }
+    strcpy((char * __restrict  )(s->sname), (char const   * __restrict  )sname);
+  }
+  if (type == 1) {
+    size = (int )sizeof(int );
+    addToIntTable(sname, (int *)val);
+  } else {
+    size = (int )sizeof(float );
+    addToFloatTable(sname, (float *)val);
+  }
+  s->cval = malloc((size_t )size);
+  memcpy((void * __restrict  )s->cval, (void const   * __restrict  )val, (size_t )size);
+  s->address = toInt___0(address);
+  s->type = type;
+  return;
+}
+}
 char *findArrayRecord(char *aname , int index___0 ) 
 { 
   struct arraySym_table k ;
@@ -9092,45 +9432,46 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   int tmp___4 ;
   int tmp___5 ;
   int tmp___6 ;
-  size_t tmp___7 ;
+  int tmp___7 ;
   size_t tmp___8 ;
-  void *tmp___9 ;
-  int tmp___10 ;
-  size_t tmp___11 ;
+  size_t tmp___9 ;
+  void *tmp___10 ;
+  int tmp___11 ;
   size_t tmp___12 ;
-  void *tmp___13 ;
-  size_t tmp___14 ;
+  size_t tmp___13 ;
+  void *tmp___14 ;
   size_t tmp___15 ;
-  void *tmp___16 ;
-  int tmp___17 ;
+  size_t tmp___16 ;
+  void *tmp___17 ;
   int tmp___18 ;
   int tmp___19 ;
   int tmp___20 ;
-  size_t tmp___21 ;
+  int tmp___21 ;
   size_t tmp___22 ;
-  void *tmp___23 ;
-  int tmp___24 ;
-  size_t tmp___25 ;
+  size_t tmp___23 ;
+  void *tmp___24 ;
+  int tmp___25 ;
   size_t tmp___26 ;
-  void *tmp___27 ;
-  size_t tmp___28 ;
+  size_t tmp___27 ;
+  void *tmp___28 ;
   size_t tmp___29 ;
-  void *tmp___30 ;
-  int tmp___31 ;
+  size_t tmp___30 ;
+  void *tmp___31 ;
   int tmp___32 ;
   int tmp___33 ;
-  size_t tmp___34 ;
+  int tmp___34 ;
   size_t tmp___35 ;
-  void *tmp___36 ;
-  int tmp___37 ;
-  size_t tmp___38 ;
+  size_t tmp___36 ;
+  void *tmp___37 ;
+  int tmp___38 ;
   size_t tmp___39 ;
-  void *tmp___40 ;
-  size_t tmp___41 ;
+  size_t tmp___40 ;
+  void *tmp___41 ;
   size_t tmp___42 ;
-  void *tmp___43 ;
-  int tmp___44 ;
+  size_t tmp___43 ;
+  void *tmp___44 ;
   int tmp___45 ;
+  int tmp___46 ;
 
   {
   i___0 = 0;
@@ -9152,44 +9493,46 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     break;
     case 3: 
     parameter = findParameter(token);
+    tmp___4 = (int )getPointerName(token);
+    temp = (char *)tmp___4;
     j = 0;
     while (j < 2 * parameter + 1) {
       symName = find_symVal(temp);
       if ((unsigned long )symName == (unsigned long )((void *)0)) {
-        tmp___4 = findParameter(temp);
-        tmp___5 = (int )getArrayName(temp);
-        symName = findArrayRecord((char *)tmp___5, tmp___4);
+        tmp___5 = findParameter(temp);
+        tmp___6 = (int )getArrayName(temp);
+        symName = findArrayRecord((char *)tmp___6, tmp___5);
       }
       temp = symName;
       j ++;
     }
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___18 = strcmp((char const   *)symName, "Constant");
-      if (tmp___18 == 0) {
-        tmp___6 = (int )findValBySymbolicName(symName);
-        value = *((int *)tmp___6);
+      tmp___19 = strcmp((char const   *)symName, "Constant");
+      if (tmp___19 == 0) {
+        tmp___7 = (int )findValBySymbolicName(symName);
+        value = *((int *)tmp___7);
         sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", value);
-        tmp___7 = strlen((char const   *)result);
-        tmp___8 = strlen((char const   *)(buff));
-        tmp___9 = realloc((void *)result, ((tmp___7 + tmp___8) + 1UL) * sizeof(char ));
-        result = (char *)tmp___9;
+        tmp___8 = strlen((char const   *)result);
+        tmp___9 = strlen((char const   *)(buff));
+        tmp___10 = realloc((void *)result, ((tmp___8 + tmp___9) + 1UL) * sizeof(char ));
+        result = (char *)tmp___10;
         strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
       } else {
-        tmp___17 = strcmp((char const   *)symName, "Function");
-        if (tmp___17 == 0) {
-          tmp___10 = (int )findValBySymbolicName(symName);
+        tmp___18 = strcmp((char const   *)symName, "Function");
+        if (tmp___18 == 0) {
+          tmp___11 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___10));
-          tmp___11 = strlen((char const   *)result);
-          tmp___12 = strlen((char const   *)(buff));
-          tmp___13 = realloc((void *)result, ((tmp___11 + tmp___12) + 1UL) * sizeof(char ));
-          result = (char *)tmp___13;
+                  *((int *)tmp___11));
+          tmp___12 = strlen((char const   *)result);
+          tmp___13 = strlen((char const   *)(buff));
+          tmp___14 = realloc((void *)result, ((tmp___12 + tmp___13) + 1UL) * sizeof(char ));
+          result = (char *)tmp___14;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___14 = strlen((char const   *)result);
-          tmp___15 = strlen((char const   *)symName);
-          tmp___16 = realloc((void *)result, ((tmp___14 + tmp___15) + 1UL) * sizeof(char ));
-          result = (char *)tmp___16;
+          tmp___15 = strlen((char const   *)result);
+          tmp___16 = strlen((char const   *)symName);
+          tmp___17 = realloc((void *)result, ((tmp___15 + tmp___16) + 1UL) * sizeof(char ));
+          result = (char *)tmp___17;
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
         }
       }
@@ -9197,34 +9540,34 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     break;
     case 4: 
     parameter = findParameter(token);
-    tmp___19 = (int )getArrayName(token);
-    symName = findArrayRecord((char *)tmp___19, parameter);
+    tmp___20 = (int )getArrayName(token);
+    symName = findArrayRecord((char *)tmp___20, parameter);
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___32 = strcmp((char const   *)symName, "Constant");
-      if (tmp___32 == 0) {
-        tmp___20 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___20));
-        tmp___21 = strlen((char const   *)result);
-        tmp___22 = strlen((char const   *)(buff));
-        tmp___23 = realloc((void *)result, ((tmp___21 + tmp___22) + 1UL) * sizeof(char ));
-        result = (char *)tmp___23;
+      tmp___33 = strcmp((char const   *)symName, "Constant");
+      if (tmp___33 == 0) {
+        tmp___21 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___21));
+        tmp___22 = strlen((char const   *)result);
+        tmp___23 = strlen((char const   *)(buff));
+        tmp___24 = realloc((void *)result, ((tmp___22 + tmp___23) + 1UL) * sizeof(char ));
+        result = (char *)tmp___24;
         strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
       } else {
-        tmp___31 = strcmp((char const   *)symName, "Function");
-        if (tmp___31 == 0) {
-          tmp___24 = (int )findValBySymbolicName(symName);
+        tmp___32 = strcmp((char const   *)symName, "Function");
+        if (tmp___32 == 0) {
+          tmp___25 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___24));
-          tmp___25 = strlen((char const   *)result);
-          tmp___26 = strlen((char const   *)(buff));
-          tmp___27 = realloc((void *)result, ((tmp___25 + tmp___26) + 1UL) * sizeof(char ));
-          result = (char *)tmp___27;
+                  *((int *)tmp___25));
+          tmp___26 = strlen((char const   *)result);
+          tmp___27 = strlen((char const   *)(buff));
+          tmp___28 = realloc((void *)result, ((tmp___26 + tmp___27) + 1UL) * sizeof(char ));
+          result = (char *)tmp___28;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___28 = strlen((char const   *)result);
-          tmp___29 = strlen((char const   *)symName);
-          tmp___30 = realloc((void *)result, ((tmp___28 + tmp___29) + 1UL) * sizeof(char ));
-          result = (char *)tmp___30;
+          tmp___29 = strlen((char const   *)result);
+          tmp___30 = strlen((char const   *)symName);
+          tmp___31 = realloc((void *)result, ((tmp___29 + tmp___30) + 1UL) * sizeof(char ));
+          result = (char *)tmp___31;
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
         }
       }
@@ -9233,31 +9576,31 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     case 5: 
     symName = find_symVal(token);
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___45 = strcmp((char const   *)symName, "Constant");
-      if (tmp___45 == 0) {
-        tmp___33 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___33));
-        tmp___34 = strlen((char const   *)result);
-        tmp___35 = strlen((char const   *)(buff));
-        tmp___36 = realloc((void *)result, ((tmp___34 + tmp___35) + 1UL) * sizeof(char ));
-        result = (char *)tmp___36;
+      tmp___46 = strcmp((char const   *)symName, "Constant");
+      if (tmp___46 == 0) {
+        tmp___34 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___34));
+        tmp___35 = strlen((char const   *)result);
+        tmp___36 = strlen((char const   *)(buff));
+        tmp___37 = realloc((void *)result, ((tmp___35 + tmp___36) + 1UL) * sizeof(char ));
+        result = (char *)tmp___37;
         strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
       } else {
-        tmp___44 = strcmp((char const   *)symName, "Function");
-        if (tmp___44 == 0) {
-          tmp___37 = (int )findValBySymbolicName(symName);
+        tmp___45 = strcmp((char const   *)symName, "Function");
+        if (tmp___45 == 0) {
+          tmp___38 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___37));
-          tmp___38 = strlen((char const   *)result);
-          tmp___39 = strlen((char const   *)(buff));
-          tmp___40 = realloc((void *)result, ((tmp___38 + tmp___39) + 1UL) * sizeof(char ));
-          result = (char *)tmp___40;
+                  *((int *)tmp___38));
+          tmp___39 = strlen((char const   *)result);
+          tmp___40 = strlen((char const   *)(buff));
+          tmp___41 = realloc((void *)result, ((tmp___39 + tmp___40) + 1UL) * sizeof(char ));
+          result = (char *)tmp___41;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___41 = strlen((char const   *)result);
-          tmp___42 = strlen((char const   *)symName);
-          tmp___43 = realloc((void *)result, ((tmp___41 + tmp___42) + 1UL) * sizeof(char ));
-          result = (char *)tmp___43;
+          tmp___42 = strlen((char const   *)result);
+          tmp___43 = strlen((char const   *)symName);
+          tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
+          result = (char *)tmp___44;
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
         }
       }
@@ -9267,7 +9610,7 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-  add_entryToArraySTable(lhs, index___0, result, val, address, type);
+  add_entryToArraySTable2(lhs, index___0, result, val, address, type);
   delete_allVariableTableEntry();
   return;
 }
@@ -15397,14 +15740,20 @@ void initialize(void)
 }
 int ALIM(void) 
 { 
+  int ALIM___cil_tmp1 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
   {
-  mapConcolicValues("Positive_RA_Alt_Thresh[Alt_Layer_Value]", & Positive_RA_Alt_Thresh[Alt_Layer_Value]);
-  return (Positive_RA_Alt_Thresh[Alt_Layer_Value]);
+  ALIM___cil_tmp1 = 1;
+  add_entryToSTable("ALIM___cil_tmp1", "Constant", & ALIM___cil_tmp1, & ALIM___cil_tmp1,
+                    1);
+  {
+  mapConcolicValues("ALIM___cil_tmp1", & ALIM___cil_tmp1);
+  return (ALIM___cil_tmp1);
+  }
   }
 }
 }
@@ -15432,7 +15781,11 @@ int Inhibit_Biased_Climb(void)
   }
 }
 }
-int Own_Below_Threat(void) ;
+int Own_Below_Threat(int global_Cur_Vertical_Sep , int global_High_Confidence , int global_Two_of_Three_Reports_Valid ,
+                     int global_Own_Tracked_Alt , int global_Own_Tracked_Alt_Rate ,
+                     int global_Other_Tracked_Alt , int global_Alt_Layer_Value , int global_Positive_RA_Alt_Thresh[4] ,
+                     int global_Up_Separation , int global_Down_Separation , int global_Other_RAC ,
+                     int global_Other_Capability , int global_Climb_Inhibit ) ;
 int Non_Crossing_Biased_Climb(void) 
 { 
   int Non_Crossing_Biased_Climb_upward_preferred ;
@@ -15459,19 +15812,11 @@ int Non_Crossing_Biased_Climb(void)
                                & Non_Crossing_Biased_Climb_upward_preferred, & Non_Crossing_Biased_Climb_upward_preferred,
                                1);
   if (Non_Crossing_Biased_Climb_upward_preferred) {
-    funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-    Non_Crossing_Biased_Climb_tmp___0 = Own_Below_Threat();
-    funcExit();
-    add_entryToSTable("Non_Crossing_Biased_Climb_tmp___0", ret_SymValue, ret_ConValue,
-                      & Non_Crossing_Biased_Climb_tmp___0, 1);
+
     if (Non_Crossing_Biased_Climb_tmp___0) {
-      funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-      Non_Crossing_Biased_Climb_tmp___1 = Own_Below_Threat();
-      funcExit();
-      add_entryToSTable("Non_Crossing_Biased_Climb_tmp___1", ret_SymValue, ret_ConValue,
-                        & Non_Crossing_Biased_Climb_tmp___1, 1);
+
       if (Non_Crossing_Biased_Climb_tmp___1) {
-        funcEntry("", "", "ALIM");
+        funcEntry("", "ALIM___cil_tmp1", "ALIM");
         Non_Crossing_Biased_Climb_tmp___2 = ALIM();
         funcExit();
         add_entryToSTable("Non_Crossing_Biased_Climb_tmp___2", ret_SymValue, ret_ConValue,
@@ -15501,7 +15846,7 @@ int Non_Crossing_Biased_Climb(void)
                                  1);
   } else {
     if (Cur_Vertical_Sep >= 300) {
-      funcEntry("", "", "ALIM");
+      funcEntry("", "ALIM___cil_tmp1", "ALIM");
       Non_Crossing_Biased_Climb_tmp___4 = ALIM();
       funcExit();
       add_entryToSTable("Non_Crossing_Biased_Climb_tmp___4", ret_SymValue, ret_ConValue,
@@ -15559,14 +15904,10 @@ int Non_Crossing_Biased_Descend(void)
                                & Non_Crossing_Biased_Descend_upward_preferred, & Non_Crossing_Biased_Descend_upward_preferred,
                                1);
   if (Non_Crossing_Biased_Descend_upward_preferred) {
-    funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-    Non_Crossing_Biased_Descend_tmp___0 = Own_Below_Threat();
-    funcExit();
-    add_entryToSTable("Non_Crossing_Biased_Descend_tmp___0", ret_SymValue, ret_ConValue,
-                      & Non_Crossing_Biased_Descend_tmp___0, 1);
+
     if (Non_Crossing_Biased_Descend_tmp___0) {
       if (Cur_Vertical_Sep >= 300) {
-        funcEntry("", "", "ALIM");
+        funcEntry("", "ALIM___cil_tmp1", "ALIM");
         Non_Crossing_Biased_Descend_tmp___1 = ALIM();
         funcExit();
         add_entryToSTable("Non_Crossing_Biased_Descend_tmp___1", ret_SymValue, ret_ConValue,
@@ -15607,7 +15948,7 @@ int Non_Crossing_Biased_Descend(void)
       add_entryToSTable("Non_Crossing_Biased_Descend_tmp___4", ret_SymValue, ret_ConValue,
                         & Non_Crossing_Biased_Descend_tmp___4, 1);
       if (Non_Crossing_Biased_Descend_tmp___4) {
-        funcEntry("", "", "ALIM");
+        funcEntry("", "ALIM___cil_tmp1", "ALIM");
         Non_Crossing_Biased_Descend_tmp___5 = ALIM();
         funcExit();
         add_entryToSTable("Non_Crossing_Biased_Descend_tmp___5", ret_SymValue, ret_ConValue,
@@ -15642,23 +15983,122 @@ int Non_Crossing_Biased_Descend(void)
   }
 }
 }
-int Own_Below_Threat(void) 
+void createCDG(void) 
 { 
-  int Own_Below_Threat___cil_tmp1 ;
+
+
+  {
+  addtoCDGnode(0, 0, 0);
+  addtoCDGnode(1, 0, 1);
+  addtoCDGnode(2, 0, 1);
+  addtoCDGnode(3, 0, 1);
+  addtoCDGnode(4, 0, 1);
+}
+}
+void isCopyOfHolder(void) 
+{ 
+
+
+  {
+
+}
+}
+void createSidTable(void) 
+{ 
+
+
+  {
+
+}
+}
+struct arguments {
+   int Cur_Vertical_Sep ;
+   int High_Confidence ;
+   int Two_of_Three_Reports_Valid ;
+   int Own_Tracked_Alt ;
+   int Own_Tracked_Alt_Rate ;
+   int Other_Tracked_Alt ;
+   int Alt_Layer_Value ;
+   int Positive_RA_Alt_Thresh[4] ;
+   int Up_Separation ;
+   int Down_Separation ;
+   int Other_RAC ;
+   int Other_Capability ;
+   int Climb_Inhibit ;
+};
+struct arguments argvar ;
+int Own_Below_Threat(int global_Cur_Vertical_Sep , int global_High_Confidence , int global_Two_of_Three_Reports_Valid ,
+                     int global_Own_Tracked_Alt , int global_Own_Tracked_Alt_Rate ,
+                     int global_Other_Tracked_Alt , int global_Alt_Layer_Value , int global_Positive_RA_Alt_Thresh[4] ,
+                     int global_Up_Separation , int global_Down_Separation , int global_Other_RAC ,
+                     int global_Other_Capability , int global_Climb_Inhibit ) 
+{ 
+  int __cil_tmp1 ;
+  int exp_outcome ;
+  int overall_outcome ;
+  int __cil_tmp4 ;
+  char *__cil_tmp5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
+  __cil_tmp5 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
+  sprintf(__cil_tmp5, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+          Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
+          Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh[0],
+          Positive_RA_Alt_Thresh[1], Positive_RA_Alt_Thresh[2], Positive_RA_Alt_Thresh[3],
+          Positive_RA_Alt_Thresh[4], Up_Separation, Down_Separation, Other_RAC, Other_Capability,
+          Climb_Inhibit);
+  printTestCase("tcas_Own_Below_Threat_1435497499.tc", __cil_tmp5);
+  add_entryToSTable("Climb_Inhibit", "s12", & Climb_Inhibit, & Climb_Inhibit, 1);
+  add_entryToSTable("Other_Capability", "s11", & Other_Capability, & Other_Capability,
+                    1);
+  add_entryToSTable("Other_RAC", "s10", & Other_RAC, & Other_RAC, 1);
+  add_entryToSTable("Down_Separation", "s9", & Down_Separation, & Down_Separation,
+                    1);
+  add_entryToSTable("Up_Separation", "s8", & Up_Separation, & Up_Separation, 1);
+  add_entryToSTable("Alt_Layer_Value", "s6", & Alt_Layer_Value, & Alt_Layer_Value,
+                    1);
+  add_entryToSTable("Other_Tracked_Alt", "s5", & Other_Tracked_Alt, & Other_Tracked_Alt,
+                    1);
+  add_entryToSTable("Own_Tracked_Alt_Rate", "s4", & Own_Tracked_Alt_Rate, & Own_Tracked_Alt_Rate,
+                    1);
+  add_entryToSTable("Own_Tracked_Alt", "s3", & Own_Tracked_Alt, & Own_Tracked_Alt,
+                    1);
+  add_entryToSTable("Two_of_Three_Reports_Valid", "s2", & Two_of_Three_Reports_Valid,
+                    & Two_of_Three_Reports_Valid, 1);
+  add_entryToSTable("High_Confidence", "s1", & High_Confidence, & High_Confidence,
+                    1);
+  add_entryToSTable("Cur_Vertical_Sep", "s0", & Cur_Vertical_Sep, & Cur_Vertical_Sep,
+                    1);
   {
-  Own_Below_Threat___cil_tmp1 = Own_Tracked_Alt < Other_Tracked_Alt;
-  handleAssignmentSymbolically("Own_Below_Threat___cil_tmp1", "(< Own_Tracked_Alt Other_Tracked_Alt)",
-                               & Own_Below_Threat___cil_tmp1, & Own_Below_Threat___cil_tmp1,
-                               1);
-  {
-  mapConcolicValues("Own_Below_Threat___cil_tmp1", & Own_Below_Threat___cil_tmp1);
-  return (Own_Below_Threat___cil_tmp1);
+  __cil_tmp1 = Own_Tracked_Alt < Other_Tracked_Alt;
+  handleAssignmentSymbolically("__cil_tmp1", "(< Own_Tracked_Alt Other_Tracked_Alt)",
+                               & __cil_tmp1, & __cil_tmp1, 1);
+  __cil_tmp4 = isNotQueueEmpty();
+  if (__cil_tmp4) {
+    enQueue();
+    directPathConditions();
+    delete_allSTableEntry();
+    delete_allStructTableEntry();
+    Own_Below_Threat(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
+                     Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value,
+                     Positive_RA_Alt_Thresh, Up_Separation, Down_Separation, Other_RAC,
+                     Other_Capability, Climb_Inhibit);
+  } else {
+    __cil_tmp4 = startCDG();
+    add_entryToSTable("__cil_tmp4", "Function", & __cil_tmp4, & __cil_tmp4, 1);
+    if (__cil_tmp4) {
+      __cil_tmp4 = getTestCases();
+      Own_Below_Threat(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
+                       Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value,
+                       Positive_RA_Alt_Thresh, Up_Separation, Down_Separation, Other_RAC,
+                       Other_Capability, Climb_Inhibit);
+    }
   }
+  return (__cil_tmp1);
   }
 }
 }
@@ -15682,629 +16122,173 @@ int Own_Above_Threat(void)
   }
 }
 }
-void createCDG(void) 
+int alt_sep_test(void) 
 { 
-
-
-  {
-  addtoCDGnode(0, 0, 0);
-  addtoCDGnode(59, 58, 1);
-  setArray(59, "High_Confidence");
-  addtoCDGnode(60, 59, 1);
-  setArray(60, "(<= Own_Tracked_Alt_Rate 600)");
-  addtoCDGnode(65, 59, 0);
-  addtoCDGnode(61, 60, 1);
-  setArray(61, "(> Cur_Vertical_Sep 600)");
-  addtoCDGnode(64, 60, 0);
-  addtoCDGnode(62, 61, 1);
-  addtoCDGnode(63, 61, 0);
-  addtoCDGnode(66, 0, 1);
-  addtoCDGnode(66, 0, 1);
-  addtoCDGnode(66, 0, 1);
-  addtoCDGnode(66, 0, 1);
-  addtoCDGnode(67, 0, 1);
-  setArray(67, "Two_of_Three_Reports_Valid");
-  addtoCDGnode(68, 67, 1);
-  setArray(68, "(= Other_RAC 0)");
-  addtoCDGnode(71, 67, 0);
-  addtoCDGnode(69, 68, 1);
-  addtoCDGnode(70, 68, 0);
-  addtoCDGnode(72, 0, 1);
-  addtoCDGnode(72, 0, 1);
-  addtoCDGnode(72, 0, 1);
-  addtoCDGnode(73, 0, 1);
-  setArray(73, "enabled");
-  addtoCDGnode(74, 73, 1);
-  setArray(74, "tcas_equipped");
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(75, 74, 1);
-  setArray(75, "intent_not_known");
-  addtoCDGnode(78, 74, 0);
-  setArray(78, "(! tcas_equipped)");
-  addtoCDGnode(76, 75, 1);
-  addtoCDGnode(77, 75, 0);
-  addtoCDGnode(79, 78, 1);
-  addtoCDGnode(78, 75, 0);
-  setArray(78, "(! tcas_equipped)");
-  addtoCDGnode(79, 78, 1);
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(80, 78, 1);
-  setArray(80, "tmp___1");
-  addtoCDGnode(81, 80, 1);
-  addtoCDGnode(85, 80, 0);
-  addtoCDGnode(82, 80, 1);
-  setArray(82, "tmp___2");
-  addtoCDGnode(83, 82, 1);
-  addtoCDGnode(84, 82, 0);
-  addtoCDGnode(86, 78, 1);
-  addtoCDGnode(86, 78, 1);
-  addtoCDGnode(86, 78, 1);
-  addtoCDGnode(87, 78, 1);
-  setArray(87, "tmp___4");
-  addtoCDGnode(88, 87, 1);
-  addtoCDGnode(92, 87, 0);
-  addtoCDGnode(89, 87, 1);
-  setArray(89, "tmp___5");
-  addtoCDGnode(90, 89, 1);
-  addtoCDGnode(91, 89, 0);
-  addtoCDGnode(93, 78, 1);
-  addtoCDGnode(93, 78, 1);
-  addtoCDGnode(93, 78, 1);
-  addtoCDGnode(94, 78, 1);
-  setArray(94, "need_upward_RA");
-  addtoCDGnode(95, 94, 1);
-  setArray(95, "need_downward_RA");
-  addtoCDGnode(98, 94, 0);
-  setArray(98, "need_upward_RA");
-  addtoCDGnode(96, 95, 1);
-  addtoCDGnode(97, 95, 0);
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(98, 95, 0);
-  setArray(98, "need_upward_RA");
-  addtoCDGnode(99, 98, 1);
-  addtoCDGnode(100, 98, 0);
-  setArray(100, "need_downward_RA");
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(101, 100, 1);
-  addtoCDGnode(102, 100, 0);
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(103, 0, 1);
-  addtoCDGnode(104, 0, 1);
-}
-}
-void isCopyOfHolder(void) 
-{ 
-
-
-  {
-
-}
-}
-void createSidTable(void) 
-{ 
-
-
-  {
-  add_condition(61, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))",
-                0, 0);
-  add_condition(60, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
-                0, 0);
-  add_condition(59, "High_Confidence", "(not High_Confidence)", 0, 0);
-  add_condition(68, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 0, 0);
-  add_condition(67, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
-                0, 0);
-  add_condition(75, "intent_not_known", "(not intent_not_known)", 0, 0);
-  add_condition(82, "tmp___2", "(not tmp___2)", 0, 0);
-  add_condition(80, "tmp___1", "(not tmp___1)", 0, 0);
-  add_condition(89, "tmp___5", "(not tmp___5)", 0, 0);
-  add_condition(87, "tmp___4", "(not tmp___4)", 0, 0);
-  add_condition(95, "need_downward_RA", "(not need_downward_RA)", 0, 0);
-  add_condition(100, "need_downward_RA", "(not need_downward_RA)", 0, 0);
-  add_condition(98, "need_upward_RA", "(not need_upward_RA)", 0, 0);
-  add_condition(94, "need_upward_RA", "(not need_upward_RA)", 0, 0);
-  add_condition(78, "(not tcas_equipped)", "tcas_equipped", 0, 0);
-  add_condition(74, "tcas_equipped", "(not tcas_equipped)", 0, 0);
-  add_condition(73, "enabled", "(not enabled)", 0, 0);
-}
-}
-struct arguments {
-   int Cur_Vertical_Sep ;
-   int High_Confidence ;
-   int Two_of_Three_Reports_Valid ;
-   int Own_Tracked_Alt ;
-   int Own_Tracked_Alt_Rate ;
-   int Other_Tracked_Alt ;
-   int Alt_Layer_Value ;
-   int Positive_RA_Alt_Thresh[4] ;
-   int Up_Separation ;
-   int Down_Separation ;
-   int Other_RAC ;
-   int Other_Capability ;
-   int Climb_Inhibit ;
-};
-struct arguments argvar ;
-int alt_sep_test(int global_Cur_Vertical_Sep , int global_High_Confidence , int global_Two_of_Three_Reports_Valid ,
-                 int global_Own_Tracked_Alt , int global_Own_Tracked_Alt_Rate , int global_Other_Tracked_Alt ,
-                 int global_Alt_Layer_Value , int global_Positive_RA_Alt_Thresh[4] ,
-                 int global_Up_Separation , int global_Down_Separation , int global_Other_RAC ,
-                 int global_Other_Capability , int global_Climb_Inhibit ) 
-{ 
-  int enabled ;
-  int tcas_equipped ;
-  int intent_not_known ;
-  int need_upward_RA ;
-  int need_downward_RA ;
-  int alt_sep ;
-  int tmp ;
-  int tmp___0 ;
-  int tmp___1 ;
-  int tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-  int tmp___6 ;
-  int exp_outcome ;
-  int overall_outcome ;
-  int __cil_tmp17 ;
-  char *__cil_tmp18 ;
+  int alt_sep_test_enabled ;
+  int alt_sep_test_tcas_equipped ;
+  int alt_sep_test_intent_not_known ;
+  int alt_sep_test_need_upward_RA ;
+  int alt_sep_test_need_downward_RA ;
+  int alt_sep_test_alt_sep ;
+  int alt_sep_test_tmp ;
+  int alt_sep_test_tmp___0 ;
+  int alt_sep_test_tmp___1 ;
+  int alt_sep_test_tmp___2 ;
+  int alt_sep_test_tmp___3 ;
+  int alt_sep_test_tmp___4 ;
+  int alt_sep_test_tmp___5 ;
+  int alt_sep_test_tmp___6 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp18 = malloc(100 * sizeof(char ));
-  sprintf(__cil_tmp18, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-          Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
-          Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh[0],
-          Positive_RA_Alt_Thresh[1], Positive_RA_Alt_Thresh[2], Positive_RA_Alt_Thresh[3],
-          Positive_RA_Alt_Thresh[4], Up_Separation, Down_Separation, Other_RAC, Other_Capability,
-          Climb_Inhibit);
-  printTestCase("tcas_alt_sep_test_1434827688.tc", __cil_tmp18);
-  add_entryToSTable("Climb_Inhibit", "s12", & Climb_Inhibit, & Climb_Inhibit, 1);
-  add_entryToSTable("Other_Capability", "s11", & Other_Capability, & Other_Capability,
-                    1);
-  add_entryToSTable("Other_RAC", "s10", & Other_RAC, & Other_RAC, 1);
-  add_entryToSTable("Down_Separation", "s9", & Down_Separation, & Down_Separation,
-                    1);
-  add_entryToSTable("Up_Separation", "s8", & Up_Separation, & Up_Separation, 1);
-  add_entryToSTable("Alt_Layer_Value", "s6", & Alt_Layer_Value, & Alt_Layer_Value,
-                    1);
-  add_entryToSTable("Other_Tracked_Alt", "s5", & Other_Tracked_Alt, & Other_Tracked_Alt,
-                    1);
-  add_entryToSTable("Own_Tracked_Alt_Rate", "s4", & Own_Tracked_Alt_Rate, & Own_Tracked_Alt_Rate,
-                    1);
-  add_entryToSTable("Own_Tracked_Alt", "s3", & Own_Tracked_Alt, & Own_Tracked_Alt,
-                    1);
-  add_entryToSTable("Two_of_Three_Reports_Valid", "s2", & Two_of_Three_Reports_Valid,
-                    & Two_of_Three_Reports_Valid, 1);
-  add_entryToSTable("High_Confidence", "s1", & High_Confidence, & High_Confidence,
-                    1);
-  add_entryToSTable("Cur_Vertical_Sep", "s0", & Cur_Vertical_Sep, & Cur_Vertical_Sep,
-                    1);
-  {
-  exp_outcome = High_Confidence;
-  handleAssignmentSymbolically("exp_outcome", "High_Confidence", & High_Confidence,
-                               & High_Confidence, 1);
-  overall_outcome = (int )getConditionalOutcome(59, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(59, 1, 0);
-    setTrueExpr(59, "High_Confidence");
-    setFalseExpr(59, "(not High_Confidence)");
-    addToTree(59, 1, "High_Confidence", "(not High_Confidence)", 0, 1);
-    delete_allVariableTableEntry();
-    {
-    exp_outcome = Own_Tracked_Alt_Rate <= 600;
-    handleAssignmentSymbolically("exp_outcome", "(<= Own_Tracked_Alt_Rate 600)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(60, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(60, 1, 0);
-      setTrueExpr(60, "(<= Own_Tracked_Alt_Rate 600)");
-      setFalseExpr(60, "(not (<= Own_Tracked_Alt_Rate 600))");
-      addToTree(60, 2, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
-                59, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = Cur_Vertical_Sep > 600;
-      handleAssignmentSymbolically("exp_outcome", "(> Cur_Vertical_Sep 600)", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(61, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(61, 1, 0);
-        setTrueExpr(61, "(> Cur_Vertical_Sep 600)");
-        setFalseExpr(61, "(not (> Cur_Vertical_Sep 600))");
-        addToTree(61, 3, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))",
-                  60, 1);
-        delete_allVariableTableEntry();
-        tmp = 1;
-        add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
+  if (High_Confidence) {
+    if (Own_Tracked_Alt_Rate <= 600) {
+      if (Cur_Vertical_Sep > 600) {
+        alt_sep_test_tmp = 1;
+        add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
+                          1);
       } else {
-        setBranchInfo(61, 0, 1);
-        setTrueExpr(61, "(> Cur_Vertical_Sep 600)");
-        setFalseExpr(61, "(not (> Cur_Vertical_Sep 600))");
-        addToTree(61, 3, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))",
-                  60, 0);
-        delete_allVariableTableEntry();
-        tmp = 0;
-        add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
-      }
+        alt_sep_test_tmp = 0;
+        add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
+                          1);
       }
     } else {
-      setBranchInfo(60, 0, 1);
-      setTrueExpr(60, "(<= Own_Tracked_Alt_Rate 600)");
-      setFalseExpr(60, "(not (<= Own_Tracked_Alt_Rate 600))");
-      addToTree(60, 2, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
-                59, 0);
-      delete_allVariableTableEntry();
-      tmp = 0;
-      add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
-    }
+      alt_sep_test_tmp = 0;
+      add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
+                        1);
     }
   } else {
-    setBranchInfo(59, 0, 1);
-    setTrueExpr(59, "High_Confidence");
-    setFalseExpr(59, "(not High_Confidence)");
-    addToTree(59, 1, "High_Confidence", "(not High_Confidence)", 0, 0);
-    delete_allVariableTableEntry();
-    tmp = 0;
-    add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
+    alt_sep_test_tmp = 0;
+    add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
+                      1);
   }
-  }
-  enabled = tmp;
-  handleAssignmentSymbolically("enabled", "tmp", & tmp, & tmp, 1);
-  tcas_equipped = Other_Capability == 1;
-  handleAssignmentSymbolically("tcas_equipped", "(= Other_Capability 1)", & tcas_equipped,
-                               & tcas_equipped, 1);
-  {
-  exp_outcome = Two_of_Three_Reports_Valid;
-  handleAssignmentSymbolically("exp_outcome", "Two_of_Three_Reports_Valid", & Two_of_Three_Reports_Valid,
-                               & Two_of_Three_Reports_Valid, 1);
-  overall_outcome = (int )getConditionalOutcome(67, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(67, 1, 0);
-    setTrueExpr(67, "Two_of_Three_Reports_Valid");
-    setFalseExpr(67, "(not Two_of_Three_Reports_Valid)");
-    addToTree(67, 1, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
-              0, 1);
-    delete_allVariableTableEntry();
-    {
-    exp_outcome = Other_RAC == 0;
-    handleAssignmentSymbolically("exp_outcome", "(= Other_RAC 0)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(68, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(68, 1, 0);
-      setTrueExpr(68, "(= Other_RAC 0)");
-      setFalseExpr(68, "(not (= Other_RAC 0))");
-      addToTree(68, 2, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 67, 1);
-      delete_allVariableTableEntry();
-      tmp___0 = 1;
-      add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
-    } else {
-      setBranchInfo(68, 0, 1);
-      setTrueExpr(68, "(= Other_RAC 0)");
-      setFalseExpr(68, "(not (= Other_RAC 0))");
-      addToTree(68, 2, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 67, 0);
-      delete_allVariableTableEntry();
-      tmp___0 = 0;
-      add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
-    }
-    }
-  } else {
-    setBranchInfo(67, 0, 1);
-    setTrueExpr(67, "Two_of_Three_Reports_Valid");
-    setFalseExpr(67, "(not Two_of_Three_Reports_Valid)");
-    addToTree(67, 1, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
-              0, 0);
-    delete_allVariableTableEntry();
-    tmp___0 = 0;
-    add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
-  }
-  }
-  intent_not_known = tmp___0;
-  handleAssignmentSymbolically("intent_not_known", "tmp___0", & tmp___0, & tmp___0,
+  alt_sep_test_enabled = alt_sep_test_tmp;
+  handleAssignmentSymbolically("alt_sep_test_enabled", "alt_sep_test_tmp", & alt_sep_test_tmp,
+                               & alt_sep_test_tmp, 1);
+  alt_sep_test_tcas_equipped = Other_Capability == 1;
+  handleAssignmentSymbolically("alt_sep_test_tcas_equipped", "(= Other_Capability 1)",
+                               & alt_sep_test_tcas_equipped, & alt_sep_test_tcas_equipped,
                                1);
-  alt_sep = 0;
-  add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
-  {
-  exp_outcome = enabled;
-  handleAssignmentSymbolically("exp_outcome", "enabled", & enabled, & enabled, 1);
-  overall_outcome = (int )getConditionalOutcome(73, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(73, 1, 0);
-    setTrueExpr(73, "enabled");
-    setFalseExpr(73, "(not enabled)");
-    addToTree(73, 1, "enabled", "(not enabled)", 0, 1);
-    delete_allVariableTableEntry();
-    {
-    exp_outcome = tcas_equipped;
-    handleAssignmentSymbolically("exp_outcome", "tcas_equipped", & tcas_equipped,
-                                 & tcas_equipped, 1);
-    overall_outcome = (int )getConditionalOutcome(74, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(74, 1, 0);
-      setTrueExpr(74, "tcas_equipped");
-      setFalseExpr(74, "(not tcas_equipped)");
-      addToTree(74, 2, "tcas_equipped", "(not tcas_equipped)", 73, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = intent_not_known;
-      handleAssignmentSymbolically("exp_outcome", "intent_not_known", & intent_not_known,
-                                   & intent_not_known, 1);
-      overall_outcome = (int )getConditionalOutcome(75, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(75, 1, 0);
-        setTrueExpr(75, "intent_not_known");
-        setFalseExpr(75, "(not intent_not_known)");
-        addToTree(75, 3, "intent_not_known", "(not intent_not_known)", 74, 1);
-        delete_allVariableTableEntry();
+  if (Two_of_Three_Reports_Valid) {
+    if (Other_RAC == 0) {
+      alt_sep_test_tmp___0 = 1;
+      add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
+                        & alt_sep_test_tmp___0, 1);
+    } else {
+      alt_sep_test_tmp___0 = 0;
+      add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
+                        & alt_sep_test_tmp___0, 1);
+    }
+  } else {
+    alt_sep_test_tmp___0 = 0;
+    add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
+                      & alt_sep_test_tmp___0, 1);
+  }
+  alt_sep_test_intent_not_known = alt_sep_test_tmp___0;
+  handleAssignmentSymbolically("alt_sep_test_intent_not_known", "alt_sep_test_tmp___0",
+                               & alt_sep_test_tmp___0, & alt_sep_test_tmp___0, 1);
+  alt_sep_test_alt_sep = 0;
+  add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep, & alt_sep_test_alt_sep,
+                    1);
+  if (alt_sep_test_enabled) {
+    if (alt_sep_test_tcas_equipped) {
+      if (alt_sep_test_intent_not_known) {
         goto _L___0;
       } else {
-        setBranchInfo(75, 0, 1);
-        setTrueExpr(75, "intent_not_known");
-        setFalseExpr(75, "(not intent_not_known)");
-        addToTree(75, 3, "intent_not_known", "(not intent_not_known)", 74, 0);
-        delete_allVariableTableEntry();
         goto _L___1;
       }
-      }
-    } else {
-      setBranchInfo(74, 0, 1);
-      setTrueExpr(74, "tcas_equipped");
-      setFalseExpr(74, "(not tcas_equipped)");
-      addToTree(74, 2, "tcas_equipped", "(not tcas_equipped)", 73, 0);
-      delete_allVariableTableEntry();
-      _L___1: /* CIL Label */ 
-      {
-      exp_outcome = ! tcas_equipped;
-      handleAssignmentSymbolically("exp_outcome", "(! tcas_equipped)", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(78, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(78, 1, 0);
-        setTrueExpr(78, "(not tcas_equipped)");
-        setFalseExpr(78, "tcas_equipped");
-        addToTree(78, 3, "(not tcas_equipped)", "tcas_equipped", 74, 1);
-        delete_allVariableTableEntry();
-        _L___0: /* CIL Label */ 
-        funcEntry("", "Non_Crossing_Biased_Climb_upward_preferred Non_Crossing_Biased_Climb_result Non_Crossing_Biased_Climb_tmp Non_Crossing_Biased_Climb_tmp___0 Non_Crossing_Biased_Climb_tmp___1 Non_Crossing_Biased_Climb_tmp___2 Non_Crossing_Biased_Climb_tmp___3 Non_Crossing_Biased_Climb_tmp___4 Non_Crossing_Biased_Climb_tmp___5",
-                  "Non_Crossing_Biased_Climb");
-        tmp___1 = Non_Crossing_Biased_Climb();
-        funcExit();
-        add_entryToSTable("tmp___1", ret_SymValue, ret_ConValue, & tmp___1, 1);
-        {
-        exp_outcome = tmp___1;
-        handleAssignmentSymbolically("exp_outcome", "tmp___1", & tmp___1, & tmp___1,
-                                     1);
-        overall_outcome = (int )getConditionalOutcome(80, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(80, 1, 0);
-          setTrueExpr(80, "tmp___1");
-          setFalseExpr(80, "(not tmp___1)");
-          addToTree(80, 4, "tmp___1", "(not tmp___1)", 78, 1);
-          delete_allVariableTableEntry();
-          funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-          tmp___2 = Own_Below_Threat();
-          funcExit();
-          add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-          {
-          exp_outcome = tmp___2;
-          handleAssignmentSymbolically("exp_outcome", "tmp___2", & tmp___2, & tmp___2,
-                                       1);
-          overall_outcome = (int )getConditionalOutcome(82, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(82, 1, 0);
-            setTrueExpr(82, "tmp___2");
-            setFalseExpr(82, "(not tmp___2)");
-            addToTree(82, 5, "tmp___2", "(not tmp___2)", 80, 1);
-            delete_allVariableTableEntry();
-            tmp___3 = 1;
-            add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
-          } else {
-            setBranchInfo(82, 0, 1);
-            setTrueExpr(82, "tmp___2");
-            setFalseExpr(82, "(not tmp___2)");
-            addToTree(82, 5, "tmp___2", "(not tmp___2)", 80, 0);
-            delete_allVariableTableEntry();
-            tmp___3 = 0;
-            add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
-          }
-          }
-        } else {
-          setBranchInfo(80, 0, 1);
-          setTrueExpr(80, "tmp___1");
-          setFalseExpr(80, "(not tmp___1)");
-          addToTree(80, 4, "tmp___1", "(not tmp___1)", 78, 0);
-          delete_allVariableTableEntry();
-          tmp___3 = 0;
-          add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
-        }
-        }
-        need_upward_RA = tmp___3;
-        handleAssignmentSymbolically("need_upward_RA", "tmp___3", & tmp___3, & tmp___3,
-                                     1);
-        funcEntry("", "Non_Crossing_Biased_Descend_upward_preferred Non_Crossing_Biased_Descend_result Non_Crossing_Biased_Descend_tmp Non_Crossing_Biased_Descend_tmp___0 Non_Crossing_Biased_Descend_tmp___1 Non_Crossing_Biased_Descend_tmp___2 Non_Crossing_Biased_Descend_tmp___3 Non_Crossing_Biased_Descend_tmp___4 Non_Crossing_Biased_Descend_tmp___5 Non_Crossing_Biased_Descend_tmp___6",
-                  "Non_Crossing_Biased_Descend");
-        tmp___4 = Non_Crossing_Biased_Descend();
-        funcExit();
-        add_entryToSTable("tmp___4", ret_SymValue, ret_ConValue, & tmp___4, 1);
-        {
-        exp_outcome = tmp___4;
-        handleAssignmentSymbolically("exp_outcome", "tmp___4", & tmp___4, & tmp___4,
-                                     1);
-        overall_outcome = (int )getConditionalOutcome(87, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(87, 1, 0);
-          setTrueExpr(87, "tmp___4");
-          setFalseExpr(87, "(not tmp___4)");
-          addToTree(87, 4, "tmp___4", "(not tmp___4)", 78, 1);
-          delete_allVariableTableEntry();
-          funcEntry("", "Own_Above_Threat___cil_tmp1", "Own_Above_Threat");
-          tmp___5 = Own_Above_Threat();
-          funcExit();
-          add_entryToSTable("tmp___5", ret_SymValue, ret_ConValue, & tmp___5, 1);
-          {
-          exp_outcome = tmp___5;
-          handleAssignmentSymbolically("exp_outcome", "tmp___5", & tmp___5, & tmp___5,
-                                       1);
-          overall_outcome = (int )getConditionalOutcome(89, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(89, 1, 0);
-            setTrueExpr(89, "tmp___5");
-            setFalseExpr(89, "(not tmp___5)");
-            addToTree(89, 5, "tmp___5", "(not tmp___5)", 87, 1);
-            delete_allVariableTableEntry();
-            tmp___6 = 1;
-            add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
-          } else {
-            setBranchInfo(89, 0, 1);
-            setTrueExpr(89, "tmp___5");
-            setFalseExpr(89, "(not tmp___5)");
-            addToTree(89, 5, "tmp___5", "(not tmp___5)", 87, 0);
-            delete_allVariableTableEntry();
-            tmp___6 = 0;
-            add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
-          }
-          }
-        } else {
-          setBranchInfo(87, 0, 1);
-          setTrueExpr(87, "tmp___4");
-          setFalseExpr(87, "(not tmp___4)");
-          addToTree(87, 4, "tmp___4", "(not tmp___4)", 78, 0);
-          delete_allVariableTableEntry();
-          tmp___6 = 0;
-          add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
-        }
-        }
-        need_downward_RA = tmp___6;
-        handleAssignmentSymbolically("need_downward_RA", "tmp___6", & tmp___6, & tmp___6,
-                                     1);
-        {
-        exp_outcome = need_upward_RA;
-        handleAssignmentSymbolically("exp_outcome", "need_upward_RA", & need_upward_RA,
-                                     & need_upward_RA, 1);
-        overall_outcome = (int )getConditionalOutcome(94, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(94, 1, 0);
-          setTrueExpr(94, "need_upward_RA");
-          setFalseExpr(94, "(not need_upward_RA)");
-          addToTree(94, 4, "need_upward_RA", "(not need_upward_RA)", 78, 1);
-          delete_allVariableTableEntry();
-          {
-          exp_outcome = need_downward_RA;
-          handleAssignmentSymbolically("exp_outcome", "need_downward_RA", & need_downward_RA,
-                                       & need_downward_RA, 1);
-          overall_outcome = (int )getConditionalOutcome(95, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(95, 1, 0);
-            setTrueExpr(95, "need_downward_RA");
-            setFalseExpr(95, "(not need_downward_RA)");
-            addToTree(95, 5, "need_downward_RA", "(not need_downward_RA)", 94, 1);
-            delete_allVariableTableEntry();
-            alt_sep = 0;
-            add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
-          } else {
-            setBranchInfo(95, 0, 1);
-            setTrueExpr(95, "need_downward_RA");
-            setFalseExpr(95, "(not need_downward_RA)");
-            addToTree(95, 5, "need_downward_RA", "(not need_downward_RA)", 94, 0);
-            delete_allVariableTableEntry();
-            goto _L;
-          }
-          }
-        } else {
-          setBranchInfo(94, 0, 1);
-          setTrueExpr(94, "need_upward_RA");
-          setFalseExpr(94, "(not need_upward_RA)");
-          addToTree(94, 4, "need_upward_RA", "(not need_upward_RA)", 78, 0);
-          delete_allVariableTableEntry();
-          _L: /* CIL Label */ 
-          {
-          exp_outcome = need_upward_RA;
-          handleAssignmentSymbolically("exp_outcome", "need_upward_RA", & need_upward_RA,
-                                       & need_upward_RA, 1);
-          overall_outcome = (int )getConditionalOutcome(98, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(98, 1, 0);
-            setTrueExpr(98, "need_upward_RA");
-            setFalseExpr(98, "(not need_upward_RA)");
-            addToTree(98, 5, "need_upward_RA", "(not need_upward_RA)", 94, 1);
-            delete_allVariableTableEntry();
-            alt_sep = 1;
-            add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
-          } else {
-            setBranchInfo(98, 0, 1);
-            setTrueExpr(98, "need_upward_RA");
-            setFalseExpr(98, "(not need_upward_RA)");
-            addToTree(98, 5, "need_upward_RA", "(not need_upward_RA)", 94, 0);
-            delete_allVariableTableEntry();
-            {
-            exp_outcome = need_downward_RA;
-            handleAssignmentSymbolically("exp_outcome", "need_downward_RA", & need_downward_RA,
-                                         & need_downward_RA, 1);
-            overall_outcome = (int )getConditionalOutcome(100, exp_outcome);
-            if (overall_outcome) {
-              setBranchInfo(100, 1, 0);
-              setTrueExpr(100, "need_downward_RA");
-              setFalseExpr(100, "(not need_downward_RA)");
-              addToTree(100, 6, "need_downward_RA", "(not need_downward_RA)", 98,
+    } else
+    _L___1: /* CIL Label */ 
+    if (! alt_sep_test_tcas_equipped) {
+      _L___0: /* CIL Label */ 
+      funcEntry("", "Non_Crossing_Biased_Climb_upward_preferred Non_Crossing_Biased_Climb_result Non_Crossing_Biased_Climb_tmp Non_Crossing_Biased_Climb_tmp___0 Non_Crossing_Biased_Climb_tmp___1 Non_Crossing_Biased_Climb_tmp___2 Non_Crossing_Biased_Climb_tmp___3 Non_Crossing_Biased_Climb_tmp___4 Non_Crossing_Biased_Climb_tmp___5",
+                "Non_Crossing_Biased_Climb");
+      alt_sep_test_tmp___1 = Non_Crossing_Biased_Climb();
+      funcExit();
+      add_entryToSTable("alt_sep_test_tmp___1", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___1,
                         1);
-              delete_allVariableTableEntry();
-              alt_sep = 2;
-              add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
-            } else {
-              setBranchInfo(100, 0, 1);
-              setTrueExpr(100, "need_downward_RA");
-              setFalseExpr(100, "(not need_downward_RA)");
-              addToTree(100, 6, "need_downward_RA", "(not need_downward_RA)", 98,
-                        0);
-              delete_allVariableTableEntry();
-              alt_sep = 0;
-              add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
-            }
-            }
-          }
-          }
-        }
+      if (alt_sep_test_tmp___1) {
+
+        if (alt_sep_test_tmp___2) {
+          alt_sep_test_tmp___3 = 1;
+          add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
+                            & alt_sep_test_tmp___3, 1);
+        } else {
+          alt_sep_test_tmp___3 = 0;
+          add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
+                            & alt_sep_test_tmp___3, 1);
         }
       } else {
-        setBranchInfo(78, 0, 1);
-        setTrueExpr(78, "(not tcas_equipped)");
-        setFalseExpr(78, "tcas_equipped");
-        addToTree(78, 3, "(not tcas_equipped)", "tcas_equipped", 74, 0);
-        delete_allVariableTableEntry();
+        alt_sep_test_tmp___3 = 0;
+        add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
+                          & alt_sep_test_tmp___3, 1);
       }
+      alt_sep_test_need_upward_RA = alt_sep_test_tmp___3;
+      handleAssignmentSymbolically("alt_sep_test_need_upward_RA", "alt_sep_test_tmp___3",
+                                   & alt_sep_test_tmp___3, & alt_sep_test_tmp___3,
+                                   1);
+      funcEntry("", "Non_Crossing_Biased_Descend_upward_preferred Non_Crossing_Biased_Descend_result Non_Crossing_Biased_Descend_tmp Non_Crossing_Biased_Descend_tmp___0 Non_Crossing_Biased_Descend_tmp___1 Non_Crossing_Biased_Descend_tmp___2 Non_Crossing_Biased_Descend_tmp___3 Non_Crossing_Biased_Descend_tmp___4 Non_Crossing_Biased_Descend_tmp___5 Non_Crossing_Biased_Descend_tmp___6",
+                "Non_Crossing_Biased_Descend");
+      alt_sep_test_tmp___4 = Non_Crossing_Biased_Descend();
+      funcExit();
+      add_entryToSTable("alt_sep_test_tmp___4", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___4,
+                        1);
+      if (alt_sep_test_tmp___4) {
+        funcEntry("", "Own_Above_Threat___cil_tmp1", "Own_Above_Threat");
+        alt_sep_test_tmp___5 = Own_Above_Threat();
+        funcExit();
+        add_entryToSTable("alt_sep_test_tmp___5", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___5,
+                          1);
+        if (alt_sep_test_tmp___5) {
+          alt_sep_test_tmp___6 = 1;
+          add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
+                            & alt_sep_test_tmp___6, 1);
+        } else {
+          alt_sep_test_tmp___6 = 0;
+          add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
+                            & alt_sep_test_tmp___6, 1);
+        }
+      } else {
+        alt_sep_test_tmp___6 = 0;
+        add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
+                          & alt_sep_test_tmp___6, 1);
+      }
+      alt_sep_test_need_downward_RA = alt_sep_test_tmp___6;
+      handleAssignmentSymbolically("alt_sep_test_need_downward_RA", "alt_sep_test_tmp___6",
+                                   & alt_sep_test_tmp___6, & alt_sep_test_tmp___6,
+                                   1);
+      if (alt_sep_test_need_upward_RA) {
+        if (alt_sep_test_need_downward_RA) {
+          alt_sep_test_alt_sep = 0;
+          add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
+                            & alt_sep_test_alt_sep, 1);
+        } else {
+          goto _L;
+        }
+      } else
+      _L: /* CIL Label */ 
+      if (alt_sep_test_need_upward_RA) {
+        alt_sep_test_alt_sep = 1;
+        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
+                          & alt_sep_test_alt_sep, 1);
+      } else
+      if (alt_sep_test_need_downward_RA) {
+        alt_sep_test_alt_sep = 2;
+        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
+                          & alt_sep_test_alt_sep, 1);
+      } else {
+        alt_sep_test_alt_sep = 0;
+        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
+                          & alt_sep_test_alt_sep, 1);
       }
     }
-    }
-  } else {
-    setBranchInfo(73, 0, 1);
-    setTrueExpr(73, "enabled");
-    setFalseExpr(73, "(not enabled)");
-    addToTree(73, 1, "enabled", "(not enabled)", 0, 0);
-    delete_allVariableTableEntry();
   }
+  {
+  mapConcolicValues("alt_sep_test_alt_sep", & alt_sep_test_alt_sep);
+  return (alt_sep_test_alt_sep);
   }
-  __cil_tmp17 = isNotQueueEmpty();
-  if (__cil_tmp17) {
-    enQueue();
-    directPathConditions();
-    delete_allSTableEntry();
-    delete_allStructTableEntry();
-    alt_sep_test(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
-                 Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh,
-                 Up_Separation, Down_Separation, Other_RAC, Other_Capability, Climb_Inhibit);
-  } else {
-    __cil_tmp17 = startCDG();
-    if (__cil_tmp17) {
-      __cil_tmp17 = getTestCases();
-      alt_sep_test(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
-                   Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value,
-                   Positive_RA_Alt_Thresh, Up_Separation, Down_Separation, Other_RAC,
-                   Other_Capability, Climb_Inhibit);
-    }
-  }
-  return (alt_sep);
 }
 }
 int main1(int argc , char **argv ) 
@@ -16349,11 +16333,11 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  alt_sep_test(argvar.Cur_Vertical_Sep, argvar.High_Confidence, argvar.Two_of_Three_Reports_Valid,
-               argvar.Own_Tracked_Alt, argvar.Own_Tracked_Alt_Rate, argvar.Other_Tracked_Alt,
-               argvar.Alt_Layer_Value, argvar.Positive_RA_Alt_Thresh, argvar.Up_Separation,
-               argvar.Down_Separation, argvar.Other_RAC, argvar.Other_Capability,
-               argvar.Climb_Inhibit);
+  Own_Below_Threat(argvar.Cur_Vertical_Sep, argvar.High_Confidence, argvar.Two_of_Three_Reports_Valid,
+                   argvar.Own_Tracked_Alt, argvar.Own_Tracked_Alt_Rate, argvar.Other_Tracked_Alt,
+                   argvar.Alt_Layer_Value, argvar.Positive_RA_Alt_Thresh, argvar.Up_Separation,
+                   argvar.Down_Separation, argvar.Other_RAC, argvar.Other_Capability,
+                   argvar.Climb_Inhibit);
 }
 }
 void main(void) 
