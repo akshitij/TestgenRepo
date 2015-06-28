@@ -835,7 +835,7 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 # 943 "/usr/include/stdio.h" 3 4
 
 # 2 "arrayTest4.c" 2
-int foo1(int b[]){
+int foo1(int b[], int n){
  int j;
  printf("----------------------------------EXECUTION START------------------------\n");
  b[0] = 3*b[0];

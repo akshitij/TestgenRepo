@@ -4531,6 +4531,7 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___7 ;
   int tmp___8 ;
   int tmp___9 ;
+  int tmp___10 ;
 
   {
   s[0] = (char )',';
@@ -4578,15 +4579,20 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
   strcpy((char * __restrict  )(argument->vname), (char const   * __restrict  )token);
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  tmp___9 = strcmp((char const   *)token, "constant");
-  if (tmp___9 == 0) {
+  tmp___10 = strcmp((char const   *)token, "constant");
+  if (tmp___10 == 0) {
     argument->structure = 1;
   } else {
-    tmp___8 = strcmp((char const   *)token, "pointer");
-    if (tmp___8 == 0) {
+    tmp___9 = strcmp((char const   *)token, "pointer");
+    if (tmp___9 == 0) {
       argument->structure = 2;
     } else {
-      argument->structure = 0;
+      tmp___8 = strcmp((char const   *)token, "array");
+      if (tmp___8 == 0) {
+        argument->structure = 3;
+      } else {
+        argument->structure = 0;
+      }
     }
   }
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
@@ -15733,25 +15739,28 @@ void createSidTable(void)
 }
 struct arguments {
    int *b ;
+   int n ;
 };
 struct arguments argvar ;
-int foo1(int *b ) 
+int foo1(int *b , int n ) 
 { 
   int j ;
-  int __cil_tmp3 ;
+  int __cil_tmp4 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp6 ;
-  char *__cil_tmp7 ;
+  int __cil_tmp7 ;
+  char *__cil_tmp8 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp7 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
-  sprintf(__cil_tmp7, "\t%d\t%d\t%d\t%d\t%d\n", b[0], b[1], b[2], b[3], b[4]);
-  printTestCase("arrayTest4_foo1_1435438812.tc", __cil_tmp7);
+  __cil_tmp8 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
+  sprintf(__cil_tmp8, "\t%d\t%d\t%d\t%d\t%d\t%d\n", b[0], b[1], b[2], b[3], b[4],
+          n);
+  printTestCase("arrayTest4_foo1_1435498328.tc", __cil_tmp8);
+  add_entryToSTable("n", "s1", & n, & n, 1);
   add_entryToArraySTable("b", 0, "b_0", b, b, 1);
   printf((char const   * __restrict  )"----------------------------------EXECUTION START------------------------\n");
   *(b + 0) = 3 * *(b + 0);
@@ -15789,24 +15798,24 @@ int foo1(int *b )
   }
   printf((char const   * __restrict  )"j = %d\n", j);
   {
-  __cil_tmp3 = 0;
-  add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
-  __cil_tmp6 = isNotQueueEmpty();
-  if (__cil_tmp6) {
+  __cil_tmp4 = 0;
+  add_entryToSTable("__cil_tmp4", "Constant", & __cil_tmp4, & __cil_tmp4, 1);
+  __cil_tmp7 = isNotQueueEmpty();
+  if (__cil_tmp7) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    foo1(b);
+    foo1(b, n);
   } else {
-    __cil_tmp6 = startCDG();
-    add_entryToSTable("__cil_tmp6", "Function", & __cil_tmp6, & __cil_tmp6, 1);
-    if (__cil_tmp6) {
-      __cil_tmp6 = getTestCases();
-      foo1(b);
+    __cil_tmp7 = startCDG();
+    add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
+    if (__cil_tmp7) {
+      __cil_tmp7 = getTestCases();
+      foo1(b, n);
     }
   }
-  return (__cil_tmp3);
+  return (__cil_tmp4);
   }
 }
 }
@@ -15824,27 +15833,31 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  foo1(argvar.b);
+  foo1(argvar.b, argvar.n);
 }
 }
 void main(void) 
 { 
   int *b ;
+  int n ;
   int temp ;
   int __cil_tmp2 ;
+  int __cil_tmp3 ;
 
   {
   argvar.b = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp2 = 0;
+  __cil_tmp3 = 0;
   while (1) {
-    if (__cil_tmp2 >= 30) {
+    if (__cil_tmp3 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.b + __cil_tmp2) = temp % 20;
-      __cil_tmp2 ++;
+      *(argvar.b + __cil_tmp3) = temp % 20;
+      __cil_tmp3 ++;
     }
   }
+  __cil_tmp2 = rand();
+  argvar.n = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

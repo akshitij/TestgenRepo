@@ -2657,7 +2657,7 @@ void deleteArrayTable()
 
 void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *address, int type) {
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp;
+  char *token, *result, *symName, *temp, *arrName, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -2714,7 +2714,14 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
       parameter = findParameter(token);
 
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrName = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrName);
+      if(vname_occ == ((void *)0)){
+        symName = findArrayRecord(arrName, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
 
       if (symName != ((void *)0)) {
         if (strcmp(symName, "Constant") == 0) {
@@ -2730,7 +2737,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
-# 247 "src/src/arrayAndPointersSymbolicExec.c"
+# 254 "src/src/arrayAndPointersSymbolicExec.c"
       break;
 
     case VARIABLE:
@@ -2760,6 +2767,13 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
   strcat(result, "\0");
 
 
+  char *new_lhs = get_vnameHash(lhs);
+  if(new_lhs == ((void *)0)){
+       add_entryToArraySTable2(lhs, index, result, val, address, type) ;
+  }
+  else{
+       add_entryToArraySTable2(new_lhs, index, result, val, address, type) ;
+  }
 
   add_entryToArraySTable2(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();

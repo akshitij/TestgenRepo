@@ -138,7 +138,7 @@ funcArg* getArgument(char* argString, char* foo){
     	if(strcmp(token,"pointer") == 0) 
     		argument->structure = 2;
     	else{
-    		if(strcmp(token,"pointer") == 0)
+    		if(strcmp(token,"array") == 0)
     			argument->structure = 3;
     		else
     			argument->structure = 0;

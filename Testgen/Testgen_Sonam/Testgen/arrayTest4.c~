@@ -1,5 +1,5 @@
 #include <stdio.h>
-int foo1(int b[], int n){
+int foo1(int b[],int n){
 	int j;
 	printf("----------------------------------EXECUTION START------------------------\n");
 	b[0] = 3*b[0];

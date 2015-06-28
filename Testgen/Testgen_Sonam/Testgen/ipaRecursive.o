@@ -2495,9 +2495,10 @@ void populateSTable(funcArg* a){
     if(a->structure == 1){
  add_entryToSTable(key,"Constant",a->val,a->val,a->type);
  printf("%s Constant\n", key);
+ add_vnameHash(a->vname, key);
     }
-# 225 "src/src/ipaRecursive.c"
- else{
+    else{
+ if(a->structure == 0 || a->structure == 2){
   char* sym;
   void* val;
   if(symStack == ((void *)0) || stackSize(symStack) == 0){
@@ -2510,9 +2511,17 @@ void populateSTable(funcArg* a){
   }
   add_entryToSTable(key,sym,val,val,a->type);
   printf("%s %s %d\n", key, sym, *(int*)val);
+         add_vnameHash(a->vname, key);
      }
-
-    add_vnameHash(a->vname, key);
+     else{
+      if(symStack == ((void *)0) || stackSize(symStack) == 0){
+       add_vnameHash(a->vname, a->apname);
+      }
+      else{
+       add_vnameHash(a->vname, get_vnameHash(a->apname));
+      }
+     }
+    }
 }
 
 void populateSTableWithLocals(char *localVarName){
