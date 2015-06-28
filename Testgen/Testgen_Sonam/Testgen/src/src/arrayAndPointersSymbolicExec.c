@@ -262,7 +262,13 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
+      vname_occ = get_vnameHash(token);
+      if(vname_occ == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vname_occ);
+      }
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -290,9 +296,11 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
   //printf("result=%s\n",result);
   char *new_lhs = get_vnameHash(lhs);
   if(new_lhs == NULL){
+       printf("add_entryToArraySTable2(%s,%d,%s)\n",lhs,index,result);
        add_entryToArraySTable2(lhs, index, result, val, address, type) ;
   }
   else{
+       printf("add_entryToArraySTable2(%s,%d,%s)\n",new_lhs,index,result);     
        add_entryToArraySTable2(new_lhs, index, result, val, address, type) ;
   }
   

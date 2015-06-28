@@ -301,7 +301,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp, *vname_occ;
+  char *token, *result, *symName, *temp, *arrName, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -365,7 +365,14 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrName = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrName);
+      if(vname_occ == NULL){
+        symName = findArrayRecord(arrName, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -463,10 +470,10 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
         
           vname_occ = get_vnameHash(temp2);
           if(vname_occ == NULL){
-            symName = find_symVal(temp2);
+            symName2 = find_symVal(temp2);
           }
           else{
-            symName = find_symVal(vname_occ);
+            symName2 = find_symVal(vname_occ);
           }
         
           if (symName2 == NULL)
@@ -482,9 +489,11 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   //printf("result=%s\n",result);
   char* lhs_vn = get_vnameHash(new_lhs);
   if (lhs_vn != NULL){
+  	printf("add_entryToSTable(%s,%s)\n",lhs_vn,result);
   	add_entryToSTable(lhs_vn, result, val, address, type);
   }
   else{
+  	printf("add_entryToSTable(%s,%s)\n",new_lhs,result);
   	add_entryToSTable(new_lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
@@ -632,7 +641,7 @@ char *getPrepositionalFormula(char *expr) {
 
   strcat(result, "\0");
 //printf("Prep result = %s\n",result);
-
+  printf("getPrepositionalFormula = %s\n",result);
   return result;
 }
 

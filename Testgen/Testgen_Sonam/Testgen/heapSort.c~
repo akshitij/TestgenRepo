@@ -2,7 +2,7 @@
  
  
 void heapsort(int[],int);
-void heapify(float[],int);
+void heapify(int[],int);
 void adjust(int[],int);
  
  
@@ -31,7 +31,7 @@ void heapSort(int a[],int n)
 {
  int i,t;
  
- heapify(a,n);
+ //heapify(a,n);
  
  for(i=n-1;i>0;i--)
  {
@@ -42,7 +42,7 @@ void heapSort(int a[],int n)
  }
 }
  
-void heapify(float a[],int n)
+void heapify(int a[],int n)
 {
  int k,i,j,item;
  

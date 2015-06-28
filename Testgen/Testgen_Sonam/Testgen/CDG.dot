@@ -1,14 +1,16 @@
 digraph CDG {
 ENTRY -> 1
-2 [shape=diamond, color=red]
 ENTRY -> 2
-2-> 3
-2-> 4
+3 [shape=diamond, color=red]
+ENTRY -> 3
+3-> 4
+5 [shape=diamond, color=red]
 ENTRY -> 5
+5 [shape=diamond, color=red]
 ENTRY -> 5
-ENTRY -> 6
+5-> 6
+ENTRY -> 7
 ENTRY -> 7
 ENTRY -> 8
-ENTRY -> 9
 }
 

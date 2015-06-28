@@ -3531,7 +3531,7 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
   if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp, *vname_occ;
+  char *token, *result, *symName, *temp, *arrName, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -3595,7 +3595,14 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
 
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrName = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrName);
+      if(vname_occ == ((void *)0)){
+        symName = findArrayRecord(arrName, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
 
       if (symName != ((void *)0)) {
         if (strcmp(symName, "Constant") == 0) {
@@ -3611,7 +3618,7 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
-# 413 "src/src/symbolicExec.c"
+# 420 "src/src/symbolicExec.c"
       break;
 
     case VARIABLE:
@@ -3684,9 +3691,11 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
   char* lhs_vn = get_vnameHash(new_lhs);
   if (lhs_vn != ((void *)0)){
+   printf("add_entryToSTable(%s,%s)\n",lhs_vn,result);
    add_entryToSTable(lhs_vn, result, val, address, type);
   }
   else{
+   printf("add_entryToSTable(%s,%s)\n",new_lhs,result);
    add_entryToSTable(new_lhs, result, val, address, type);
   }
   delete_allVariableTableEntry();
@@ -3771,7 +3780,7 @@ char *getPrepositionalFormula(char *expr) {
           strcat(result, symName);
         }
       }
-# 601 "src/src/symbolicExec.c"
+# 610 "src/src/symbolicExec.c"
       break;
 
     case VARIABLE:
@@ -3806,6 +3815,6 @@ char *getPrepositionalFormula(char *expr) {
 
   strcat(result, "\0");
 
-
+  printf("PrepositionalFormula = %s\n",result);
   return result;
 }
