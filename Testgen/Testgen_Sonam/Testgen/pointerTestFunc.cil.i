@@ -4537,6 +4537,7 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___7 ;
   int tmp___8 ;
   int tmp___9 ;
+  int tmp___10 ;
 
   {
   s[0] = (char )',';
@@ -4584,15 +4585,20 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
   strcpy((char * __restrict )(argument->vname), (char const * __restrict )token);
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
-  tmp___9 = strcmp((char const *)token, "constant");
-  if (tmp___9 == 0) {
+  tmp___10 = strcmp((char const *)token, "constant");
+  if (tmp___10 == 0) {
     argument->structure = 1;
   } else {
-    tmp___8 = strcmp((char const *)token, "pointer");
-    if (tmp___8 == 0) {
+    tmp___9 = strcmp((char const *)token, "pointer");
+    if (tmp___9 == 0) {
       argument->structure = 2;
     } else {
-      argument->structure = 0;
+      tmp___8 = strcmp((char const *)token, "array");
+      if (tmp___8 == 0) {
+        argument->structure = 3;
+      } else {
+        argument->structure = 0;
+      }
     }
   }
   token = strtok((char * __restrict )((void *)0), (char const * __restrict )(s));
@@ -4680,6 +4686,8 @@ void populateSTable(funcArg *a )
   char *tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
+  char *tmp___3 ;
+  int tmp___4 ;
 
   {
   sprintf((char * __restrict )(tmp), (char const * __restrict )"_%d", currentOccurence);
@@ -4688,7 +4696,13 @@ void populateSTable(funcArg *a )
   if (a->structure == 1) {
     add_entryToSTable(key, (char *)"Constant", a->val, a->val, a->type);
     printf((char const * __restrict )"%s Constant\n", key);
-  } else {
+    add_vnameHash(a->vname, key);
+  } else
+  if (a->structure == 0) {
+    goto _L;
+  } else
+  if (a->structure == 2) {
+    _L:
     if ((unsigned long )symStack == (unsigned long )((void *)0)) {
       sym = find_symVal(a->apname);
       val = find_conVal(a->apname);
@@ -4706,8 +4720,19 @@ void populateSTable(funcArg *a )
     }
     add_entryToSTable(key, sym, val, val, a->type);
     printf((char const * __restrict )"%s %s %d\n", key, sym, *((int *)val));
+    add_vnameHash(a->vname, key);
+  } else
+  if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+    add_vnameHash(a->vname, a->apname);
+  } else {
+    tmp___4 = stackSize(symStack);
+    if (tmp___4 == 0) {
+      add_vnameHash(a->vname, a->apname);
+    } else {
+      tmp___3 = get_vnameHash(a->apname);
+      add_vnameHash(a->vname, tmp___3);
+    }
   }
-  add_vnameHash(a->vname, key);
   return;
 }
 }
@@ -8773,14 +8798,16 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
                             void *address , int type )
 {
   struct arraySym_table *s ;
-  int size ;
+  char *vname_occ ;
   int tmp ;
+  int size ;
   int tmp___0 ;
   int tmp___1 ;
-  void *tmp___2 ;
-  unsigned int _ha_bkt ;
+  int tmp___2 ;
   void *tmp___3 ;
+  unsigned int _ha_bkt ;
   void *tmp___4 ;
+  void *tmp___5 ;
   unsigned int _hj_i ;
   unsigned int _hj_j ;
   unsigned int _hj_k ;
@@ -8791,24 +8818,31 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
   struct UT_hash_handle *_he_hh_nxt ;
   UT_hash_bucket *_he_new_buckets ;
   UT_hash_bucket *_he_newbkt ;
-  void *tmp___5 ;
-  int tmp___6 ;
+  void *tmp___6 ;
+  int tmp___7 ;
 
   {
+  tmp = (int )get_vnameHash(aname);
+  vname_occ = (char *)tmp;
+  if ((unsigned long )vname_occ != (unsigned long )((void *)0)) {
+    aname = vname_occ;
+  }
+  printf((char const * __restrict )"addEntryToArraySTable :: aname=%s, index=%d, sname=%s\n",
+         aname, index___0, sname);
   s = arraySTable;
   while ((unsigned long )s != (unsigned long )((void *)0)) {
-    tmp = strcmp((char const *)(s->key.arrayName), (char const *)aname);
-    if (tmp == 0) {
+    tmp___0 = strcmp((char const *)(s->key.arrayName), (char const *)aname);
+    if (tmp___0 == 0) {
       if (s->key.index == index___0) {
-        tmp___0 = strcmp((char const *)(s->sname), "Constant");
-        if (tmp___0 == 0) {
+        tmp___1 = strcmp((char const *)(s->sname), "Constant");
+        if (tmp___1 == 0) {
           strcpy((char * __restrict )(s->sname), (char const * __restrict )sname);
           break;
         }
       }
     }
-    tmp___1 = strcmp((char const *)(s->key.arrayName), (char const *)aname);
-    if (tmp___1 == 0) {
+    tmp___2 = strcmp((char const *)(s->key.arrayName), (char const *)aname);
+    if (tmp___2 == 0) {
       if (s->key.index == index___0) {
         return;
       }
@@ -8816,8 +8850,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
     s = (struct arraySym_table *)s->hh.next;
   }
   if ((unsigned long )s == (unsigned long )((void *)0)) {
-    tmp___2 = malloc(sizeof(struct arraySym_table ));
-    s = (struct arraySym_table *)tmp___2;
+    tmp___3 = malloc(sizeof(struct arraySym_table ));
+    s = (struct arraySym_table *)tmp___3;
     strcpy((char * __restrict )(s->key.arrayName), (char const * __restrict )aname);
     s->key.index = index___0;
     while (1) {
@@ -8828,8 +8862,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
         arraySTable = s;
         arraySTable->hh.prev = (void *)0;
         while (1) {
-          tmp___3 = malloc(sizeof(UT_hash_table ));
-          arraySTable->hh.tbl = (UT_hash_table *)tmp___3;
+          tmp___4 = malloc(sizeof(UT_hash_table ));
+          arraySTable->hh.tbl = (UT_hash_table *)tmp___4;
           if (! arraySTable->hh.tbl) {
             exit(-1);
           }
@@ -8838,8 +8872,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
           (arraySTable->hh.tbl)->num_buckets = 32U;
           (arraySTable->hh.tbl)->log2_num_buckets = 5U;
           (arraySTable->hh.tbl)->hho = (char *)(& arraySTable->hh) - (char *)arraySTable;
-          tmp___4 = malloc(32UL * sizeof(struct UT_hash_bucket ));
-          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___4;
+          tmp___5 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___5;
           if (! (arraySTable->hh.tbl)->buckets) {
             exit(-1);
           }
@@ -8966,18 +9000,18 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
         if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count >= (((arraySTable->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
           if ((s->hh.tbl)->noexpand != 1U) {
             while (1) {
-              tmp___5 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
-              _he_new_buckets = (UT_hash_bucket *)tmp___5;
+              tmp___6 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets = (UT_hash_bucket *)tmp___6;
               if (! _he_new_buckets) {
                 exit(-1);
               }
               memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
               if ((s->hh.tbl)->num_items & ((s->hh.tbl)->num_buckets * 2U - 1U)) {
-                tmp___6 = 1;
+                tmp___7 = 1;
               } else {
-                tmp___6 = 0;
+                tmp___7 = 0;
               }
-              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___6;
+              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___7;
               (s->hh.tbl)->nonideal_items = 0U;
               _he_bkt_i = 0U;
               while (_he_bkt_i < (s->hh.tbl)->num_buckets) {
@@ -9423,6 +9457,8 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   char *result ;
   char *symName ;
   char *temp ;
+  char *arrName ;
+  char *vname_occ ;
   char buff[15] ;
   void *tmp ;
   size_t tmp___0 ;
@@ -9447,31 +9483,34 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   int tmp___19 ;
   int tmp___20 ;
   int tmp___21 ;
-  size_t tmp___22 ;
+  int tmp___22 ;
   size_t tmp___23 ;
-  void *tmp___24 ;
-  int tmp___25 ;
-  size_t tmp___26 ;
+  size_t tmp___24 ;
+  void *tmp___25 ;
+  int tmp___26 ;
   size_t tmp___27 ;
-  void *tmp___28 ;
-  size_t tmp___29 ;
+  size_t tmp___28 ;
+  void *tmp___29 ;
   size_t tmp___30 ;
-  void *tmp___31 ;
-  int tmp___32 ;
+  size_t tmp___31 ;
+  void *tmp___32 ;
   int tmp___33 ;
   int tmp___34 ;
-  size_t tmp___35 ;
+  int tmp___35 ;
   size_t tmp___36 ;
-  void *tmp___37 ;
-  int tmp___38 ;
-  size_t tmp___39 ;
+  size_t tmp___37 ;
+  void *tmp___38 ;
+  int tmp___39 ;
   size_t tmp___40 ;
-  void *tmp___41 ;
-  size_t tmp___42 ;
+  size_t tmp___41 ;
+  void *tmp___42 ;
   size_t tmp___43 ;
-  void *tmp___44 ;
-  int tmp___45 ;
+  size_t tmp___44 ;
+  void *tmp___45 ;
   int tmp___46 ;
+  int tmp___47 ;
+  char *new_lhs ;
+  int tmp___48 ;
 
   {
   i___0 = 0;
@@ -9541,33 +9580,40 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     case 4:
     parameter = findParameter(token);
     tmp___20 = (int )getArrayName(token);
-    symName = findArrayRecord((char *)tmp___20, parameter);
+    arrName = (char *)tmp___20;
+    tmp___21 = (int )get_vnameHash(arrName);
+    vname_occ = (char *)tmp___21;
+    if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+      symName = findArrayRecord(arrName, parameter);
+    } else {
+      symName = findArrayRecord(vname_occ, parameter);
+    }
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___33 = strcmp((char const *)symName, "Constant");
-      if (tmp___33 == 0) {
-        tmp___21 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict )(buff), (char const * __restrict )"%d", *((int *)tmp___21));
-        tmp___22 = strlen((char const *)result);
-        tmp___23 = strlen((char const *)(buff));
-        tmp___24 = realloc((void *)result, ((tmp___22 + tmp___23) + 1UL) * sizeof(char ));
-        result = (char *)tmp___24;
+      tmp___34 = strcmp((char const *)symName, "Constant");
+      if (tmp___34 == 0) {
+        tmp___22 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict )(buff), (char const * __restrict )"%d", *((int *)tmp___22));
+        tmp___23 = strlen((char const *)result);
+        tmp___24 = strlen((char const *)(buff));
+        tmp___25 = realloc((void *)result, ((tmp___23 + tmp___24) + 1UL) * sizeof(char ));
+        result = (char *)tmp___25;
         strcat((char * __restrict )result, (char const * __restrict )(buff));
       } else {
-        tmp___32 = strcmp((char const *)symName, "Function");
-        if (tmp___32 == 0) {
-          tmp___25 = (int )findValBySymbolicName(symName);
+        tmp___33 = strcmp((char const *)symName, "Function");
+        if (tmp___33 == 0) {
+          tmp___26 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict )(buff), (char const * __restrict )"%d",
-                  *((int *)tmp___25));
-          tmp___26 = strlen((char const *)result);
-          tmp___27 = strlen((char const *)(buff));
-          tmp___28 = realloc((void *)result, ((tmp___26 + tmp___27) + 1UL) * sizeof(char ));
-          result = (char *)tmp___28;
+                  *((int *)tmp___26));
+          tmp___27 = strlen((char const *)result);
+          tmp___28 = strlen((char const *)(buff));
+          tmp___29 = realloc((void *)result, ((tmp___27 + tmp___28) + 1UL) * sizeof(char ));
+          result = (char *)tmp___29;
           strcat((char * __restrict )result, (char const * __restrict )(buff));
         } else {
-          tmp___29 = strlen((char const *)result);
-          tmp___30 = strlen((char const *)symName);
-          tmp___31 = realloc((void *)result, ((tmp___29 + tmp___30) + 1UL) * sizeof(char ));
-          result = (char *)tmp___31;
+          tmp___30 = strlen((char const *)result);
+          tmp___31 = strlen((char const *)symName);
+          tmp___32 = realloc((void *)result, ((tmp___30 + tmp___31) + 1UL) * sizeof(char ));
+          result = (char *)tmp___32;
           strcat((char * __restrict )result, (char const * __restrict )symName);
         }
       }
@@ -9576,31 +9622,31 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     case 5:
     symName = find_symVal(token);
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___46 = strcmp((char const *)symName, "Constant");
-      if (tmp___46 == 0) {
-        tmp___34 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict )(buff), (char const * __restrict )"%d", *((int *)tmp___34));
-        tmp___35 = strlen((char const *)result);
-        tmp___36 = strlen((char const *)(buff));
-        tmp___37 = realloc((void *)result, ((tmp___35 + tmp___36) + 1UL) * sizeof(char ));
-        result = (char *)tmp___37;
+      tmp___47 = strcmp((char const *)symName, "Constant");
+      if (tmp___47 == 0) {
+        tmp___35 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict )(buff), (char const * __restrict )"%d", *((int *)tmp___35));
+        tmp___36 = strlen((char const *)result);
+        tmp___37 = strlen((char const *)(buff));
+        tmp___38 = realloc((void *)result, ((tmp___36 + tmp___37) + 1UL) * sizeof(char ));
+        result = (char *)tmp___38;
         strcat((char * __restrict )result, (char const * __restrict )(buff));
       } else {
-        tmp___45 = strcmp((char const *)symName, "Function");
-        if (tmp___45 == 0) {
-          tmp___38 = (int )findValBySymbolicName(symName);
+        tmp___46 = strcmp((char const *)symName, "Function");
+        if (tmp___46 == 0) {
+          tmp___39 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict )(buff), (char const * __restrict )"%d",
-                  *((int *)tmp___38));
-          tmp___39 = strlen((char const *)result);
-          tmp___40 = strlen((char const *)(buff));
-          tmp___41 = realloc((void *)result, ((tmp___39 + tmp___40) + 1UL) * sizeof(char ));
-          result = (char *)tmp___41;
+                  *((int *)tmp___39));
+          tmp___40 = strlen((char const *)result);
+          tmp___41 = strlen((char const *)(buff));
+          tmp___42 = realloc((void *)result, ((tmp___40 + tmp___41) + 1UL) * sizeof(char ));
+          result = (char *)tmp___42;
           strcat((char * __restrict )result, (char const * __restrict )(buff));
         } else {
-          tmp___42 = strlen((char const *)result);
-          tmp___43 = strlen((char const *)symName);
-          tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
-          result = (char *)tmp___44;
+          tmp___43 = strlen((char const *)result);
+          tmp___44 = strlen((char const *)symName);
+          tmp___45 = realloc((void *)result, ((tmp___43 + tmp___44) + 1UL) * sizeof(char ));
+          result = (char *)tmp___45;
           strcat((char * __restrict )result, (char const * __restrict )symName);
         }
       }
@@ -9610,6 +9656,13 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     token = getNextToken((char const *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict )result, (char const * __restrict )"\000");
+  tmp___48 = (int )get_vnameHash(lhs);
+  new_lhs = (char *)tmp___48;
+  if ((unsigned long )new_lhs == (unsigned long )((void *)0)) {
+    add_entryToArraySTable2(lhs, index___0, result, val, address, type);
+  } else {
+    add_entryToArraySTable2(new_lhs, index___0, result, val, address, type);
+  }
   add_entryToArraySTable2(lhs, index___0, result, val, address, type);
   delete_allVariableTableEntry();
   return;
@@ -15777,7 +15830,7 @@ int main1(int num1 , int num2 )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, -1);
   sprintf(__cil_tmp10, "\t%d\t%d\n", num1, num2);
-  printTestCase("pointerTestFunc_main1_1435443162.tc", __cil_tmp10);
+  printTestCase("pointerTestFunc_main1_1435510418.tc", __cil_tmp10);
   add_entryToSTable("num2", "s1", & num2, & num2, 1);
   add_entryToSTable("num1", "s0", & num1, & num1, 1);
   p = & num1;

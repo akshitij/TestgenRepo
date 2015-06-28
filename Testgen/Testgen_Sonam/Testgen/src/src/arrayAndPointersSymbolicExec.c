@@ -12,13 +12,21 @@ static int toInt(void* addr) {
 
 void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void* address, int type) {
     struct arraySym_table *s, r;
+    
+    char* vname_occ = get_vnameHash(aname);
+    if(vname_occ != NULL){
+        aname = vname_occ;
+    }
+    
+    
+    
     int size;
 
    // strcpy(r.key.arrayName, aname);
    // r.key.index = index;
 
    // HASH_FIND(hh, arraySTable, &r.key, sizeof(struct arrayKey), s); 
-   // printf("aname=%s, index=%d, sname=%s\n",aname,index,sname);
+   printf("addEntryToArraySTable :: aname=%s, index=%d, sname=%s\n",aname,index,sname);
 
     for(s=arraySTable; s != NULL; s=(struct arraySym_table*)(s->hh.next)) 
     {

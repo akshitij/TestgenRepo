@@ -2528,13 +2528,21 @@ static int toInt(void* addr) {
 
 void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void* address, int type) {
     struct arraySym_table *s, r;
+
+    char* vname_occ = get_vnameHash(aname);
+    if(vname_occ != ((void *)0)){
+        aname = vname_occ;
+    }
+
+
+
     int size;
 
 
 
 
 
-
+   printf("addEntryToArraySTable :: aname=%s, index=%d, sname=%s\n",aname,index,sname);
 
     for(s=arraySTable; s != ((void *)0); s=(struct arraySym_table*)(s->hh.next))
     {
@@ -2737,7 +2745,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
-# 254 "src/src/arrayAndPointersSymbolicExec.c"
+# 262 "src/src/arrayAndPointersSymbolicExec.c"
       break;
 
     case VARIABLE:
