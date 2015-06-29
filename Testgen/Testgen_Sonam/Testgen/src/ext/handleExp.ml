@@ -34,7 +34,7 @@ class handleReturnExpVisitorClass (fdec : fundec) = object (self)
       |Return (Some e,loc) ->
        
        (match e with
-        | Lval (_) -> SkipChildren
+        | Lval (Var v, NoOffset) -> SkipChildren
         | _ -> 
         
           let tmp = (match fdec.svar.vtype with

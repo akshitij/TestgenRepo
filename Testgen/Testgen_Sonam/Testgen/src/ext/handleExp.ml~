@@ -34,7 +34,7 @@ class handleReturnExpVisitorClass (fdec : fundec) = object (self)
       |Return (Some e,loc) ->
        
        (match e with
-        | Lval (_) -> SkipChildren
+        | Lval (Var v, NoOffset) -> SkipChildren
         | _ -> 
         
           let tmp = (match fdec.svar.vtype with
@@ -71,7 +71,7 @@ class handleFuncArgVisitorClass (fdec : fundec) = object (self)
 	        if (List.length argExps) == (List.length argTypes) then begin
 	          List.iter2 (fun a b ->
 	              		    match a with
-	               		    | (Var v, _) -> 
+	               		    |Lval (Var v, _) -> 
 	              		    		newArgs := !newArgs @ [a]
 	              		    | _ -> 
 	            		    		let tmp = (makeTempVar fdec b) in

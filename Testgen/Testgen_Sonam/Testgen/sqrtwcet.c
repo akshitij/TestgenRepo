@@ -48,8 +48,8 @@
 /*                                                                       */
 /*************************************************************************/
 
-
-float fabs(float x)
+#include <stdio.h>
+float fabs1(float x)
 {
    if (x < 0)
       return -x;
@@ -78,7 +78,7 @@ float sqrtfcn(float val)
             dx = (val - (x*x)) / (2.0 * x);
             x = x + dx;
             diff = val - (x*x);
-            if (fabs(diff) <= min_tol)
+            if (fabs1(diff) <= min_tol)
                flag = 1;
          }
          else {} /* JG */
@@ -88,3 +88,8 @@ float sqrtfcn(float val)
    return (x);
 }
 
+int main(){
+ double a;
+ scanf("%lf",&a);
+ printf("%f\n",sqrtfcn(a));
+}

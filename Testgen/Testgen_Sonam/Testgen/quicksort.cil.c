@@ -176,7 +176,7 @@ struct functionArgument {
    char vname[50] ;
    void *val ;
    char apname[50] ;
-   int isConstant ;
+   int structure ;
 };
 typedef struct functionArgument funcArg;
 struct __anonstruct_funcVars_27 {
@@ -4528,6 +4528,10 @@ funcArg *getArgument(char *argString , char *foo )
   int tmp___4 ;
   int tmp___5 ;
   int tmp___6 ;
+  int tmp___7 ;
+  int tmp___8 ;
+  int tmp___9 ;
+  int tmp___10 ;
 
   {
   s[0] = (char )',';
@@ -4541,12 +4545,12 @@ funcArg *getArgument(char *argString , char *foo )
   argument = (funcArg *)tmp___1;
   strcpy((char * __restrict  )(argument->funcName), (char const   * __restrict  )foo);
   token = strtok((char * __restrict  )copy, (char const   * __restrict  )(s));
-  tmp___4 = strcmp((char const   *)token, "int");
-  if (tmp___4 == 0) {
+  tmp___6 = strcmp((char const   *)token, "int");
+  if (tmp___6 == 0) {
     argument->type = 1;
   } else {
-    tmp___5 = strcmp((char const   *)token, "int *");
-    if (tmp___5 == 0) {
+    tmp___7 = strcmp((char const   *)token, "int *");
+    if (tmp___7 == 0) {
       argument->type = 1;
     } else {
       tmp___2 = strcmp((char const   *)token, "double");
@@ -4557,7 +4561,17 @@ funcArg *getArgument(char *argString , char *foo )
         if (tmp___3 == 0) {
           argument->type = 2;
         } else {
-          argument->type = 3;
+          tmp___4 = strcmp((char const   *)token, "float *");
+          if (tmp___4 == 0) {
+            argument->type = 2;
+          } else {
+            tmp___5 = strcmp((char const   *)token, "double *");
+            if (tmp___5 == 0) {
+              argument->type = 2;
+            } else {
+              argument->type = 3;
+            }
+          }
         }
       }
     }
@@ -4565,14 +4579,24 @@ funcArg *getArgument(char *argString , char *foo )
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
   strcpy((char * __restrict  )(argument->vname), (char const   * __restrict  )token);
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  tmp___6 = strcmp((char const   *)token, "constant");
-  if (tmp___6 == 0) {
-    argument->isConstant = 1;
+  tmp___10 = strcmp((char const   *)token, "constant");
+  if (tmp___10 == 0) {
+    argument->structure = 1;
   } else {
-    argument->isConstant = 0;
+    tmp___9 = strcmp((char const   *)token, "pointer");
+    if (tmp___9 == 0) {
+      argument->structure = 2;
+    } else {
+      tmp___8 = strcmp((char const   *)token, "array");
+      if (tmp___8 == 0) {
+        argument->structure = 3;
+      } else {
+        argument->structure = 0;
+      }
+    }
   }
   token = strtok((char * __restrict  )((void *)0), (char const   * __restrict  )(s));
-  if (argument->isConstant) {
+  if (argument->structure == 1) {
     if (argument->type == 1) {
       i___0 = atoi((char const   *)token);
       argument->val = (void *)(& i___0);
@@ -4656,15 +4680,23 @@ void populateSTable(funcArg *a )
   char *tmp___0 ;
   char *tmp___1 ;
   int tmp___2 ;
+  char *tmp___3 ;
+  int tmp___4 ;
 
   {
   sprintf((char * __restrict  )(tmp), (char const   * __restrict  )"_%d", currentOccurence);
   strcpy((char * __restrict  )(key), (char const   * __restrict  )(a->vname));
   strcat((char * __restrict  )(key), (char const   * __restrict  )(tmp));
-  if (a->isConstant == 1) {
+  if (a->structure == 1) {
     add_entryToSTable(key, (char *)"Constant", a->val, a->val, a->type);
     printf((char const   * __restrict  )"%s Constant\n", key);
-  } else {
+    add_vnameHash(a->vname, key);
+  } else
+  if (a->structure == 0) {
+    goto _L;
+  } else
+  if (a->structure == 2) {
+    _L: /* CIL Label */ 
     if ((unsigned long )symStack == (unsigned long )((void *)0)) {
       sym = find_symVal(a->apname);
       val = find_conVal(a->apname);
@@ -4682,8 +4714,19 @@ void populateSTable(funcArg *a )
     }
     add_entryToSTable(key, sym, val, val, a->type);
     printf((char const   * __restrict  )"%s %s %d\n", key, sym, *((int *)val));
+    add_vnameHash(a->vname, key);
+  } else
+  if ((unsigned long )symStack == (unsigned long )((void *)0)) {
+    add_vnameHash(a->vname, a->apname);
+  } else {
+    tmp___4 = stackSize(symStack);
+    if (tmp___4 == 0) {
+      add_vnameHash(a->vname, a->apname);
+    } else {
+      tmp___3 = get_vnameHash(a->apname);
+      add_vnameHash(a->vname, tmp___3);
+    }
   }
-  add_vnameHash(a->vname, key);
   return;
 }
 }
@@ -6563,6 +6606,10 @@ int findParameter(char *key )
     }
     break;
   }
+  if ((unsigned long )s == (unsigned long )((void *)0)) {
+    printf((char const   * __restrict  )"pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return (1);
+  }
   return (s->parameter);
 }
 }
@@ -7331,6 +7378,7 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
   char *result ;
   char *symName ;
   char *temp ;
+  char *arrName ;
   char *vname_occ ;
   char buff[15] ;
   void *tmp ;
@@ -7368,42 +7416,38 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
   void *tmp___31 ;
   int tmp___32 ;
   int tmp___33 ;
-  int tmp___34 ;
-  int tmp___35 ;
-  int tmp___36 ;
+  void *tmp___34 ;
+  size_t tmp___35 ;
+  size_t tmp___36 ;
   void *tmp___37 ;
-  size_t tmp___38 ;
+  void *tmp___38 ;
   size_t tmp___39 ;
-  void *tmp___40 ;
+  size_t tmp___40 ;
   void *tmp___41 ;
   size_t tmp___42 ;
   size_t tmp___43 ;
   void *tmp___44 ;
-  size_t tmp___45 ;
-  size_t tmp___46 ;
-  void *tmp___47 ;
-  int tmp___48 ;
+  int tmp___45 ;
+  int tmp___46 ;
+  int j2 ;
+  int k ;
+  int len2 ;
+  size_t tmp___47 ;
+  char *temp2 ;
+  char *symName2 ;
+  char new_lhs[100] ;
+  char *token2 ;
+  char *tmp___48 ;
   int tmp___49 ;
-  void *tmp___50 ;
-  size_t tmp___51 ;
-  size_t tmp___52 ;
-  void *tmp___53 ;
-  void *tmp___54 ;
-  size_t tmp___55 ;
-  size_t tmp___56 ;
-  void *tmp___57 ;
-  size_t tmp___58 ;
-  size_t tmp___59 ;
-  void *tmp___60 ;
-  int tmp___61 ;
-  int tmp___62 ;
+  int tmp___50 ;
+  int tmp___51 ;
   char *lhs_vn ;
-  char *tmp___63 ;
-  int tmp___64 ;
+  char *tmp___52 ;
+  int tmp___53 ;
 
   {
-  tmp___64 = getExecutionFlag();
-  if (tmp___64 == 1) {
+  tmp___53 = getExecutionFlag();
+  if (tmp___53 == 1) {
     i___0 = 0;
     tmp = calloc((size_t )2, sizeof(char ));
     result = (char *)tmp;
@@ -7427,7 +7471,12 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       temp = (char *)tmp___4;
       j = 0;
       while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
+        vname_occ = get_vnameHash(temp);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName = find_symVal(temp);
+        } else {
+          symName = find_symVal(vname_occ);
+        }
         if ((unsigned long )symName == (unsigned long )((void *)0)) {
           tmp___5 = findParameter(temp);
           tmp___6 = (int )getArrayName(temp);
@@ -7472,7 +7521,13 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       case 4: 
       parameter = findParameter(token);
       tmp___20 = (int )getArrayName(token);
-      symName = findArrayRecord((char *)tmp___20, parameter);
+      arrName = (char *)tmp___20;
+      vname_occ = get_vnameHash(arrName);
+      if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+        symName = findArrayRecord(arrName, parameter);
+      } else {
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
         tmp___33 = strcmp((char const   *)symName, "Constant");
         if (tmp___33 == 0) {
@@ -7503,52 +7558,6 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
             strcat((char * __restrict  )result, (char const   * __restrict  )symName);
           }
         }
-      } else {
-        parameter = findParameter(token);
-        tmp___34 = (int )getPointerName(token);
-        temp = (char *)tmp___34;
-        j = 0;
-        while (j < 2 * parameter + 1) {
-          symName = find_symVal(temp);
-          if ((unsigned long )symName == (unsigned long )((void *)0)) {
-            tmp___35 = findParameter(temp);
-            tmp___36 = (int )getArrayName(temp);
-            symName = findArrayRecord((char *)tmp___36, tmp___35);
-          }
-          temp = symName;
-          j ++;
-        }
-        if ((unsigned long )symName != (unsigned long )((void *)0)) {
-          tmp___49 = strcmp((char const   *)symName, "Constant");
-          if (tmp___49 == 0) {
-            tmp___37 = findValBySymbolicName(symName);
-            sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___37));
-            tmp___38 = strlen((char const   *)result);
-            tmp___39 = strlen((char const   *)(buff));
-            tmp___40 = realloc((void *)result, ((tmp___38 + tmp___39) + 1UL) * sizeof(char ));
-            result = (char *)tmp___40;
-            strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-          } else {
-            tmp___48 = strcmp((char const   *)symName, "Function");
-            if (tmp___48 == 0) {
-              tmp___41 = findValBySymbolicName(symName);
-              sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                      *((int *)tmp___41));
-              tmp___42 = strlen((char const   *)result);
-              tmp___43 = strlen((char const   *)(buff));
-              tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
-              result = (char *)tmp___44;
-              strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-            } else {
-              tmp___45 = strlen((char const   *)result);
-              tmp___46 = strlen((char const   *)symName);
-              tmp___47 = realloc((void *)result, ((tmp___45 + tmp___46) + 1UL) * sizeof(char ));
-              result = (char *)tmp___47;
-              strcat((char * __restrict  )result, (char const   * __restrict  )symName);
-            }
-          }
-        }
       }
       break;
       case 5: 
@@ -7559,32 +7568,32 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
         symName = find_symVal(vname_occ);
       }
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___62 = strcmp((char const   *)symName, "Constant");
-        if (tmp___62 == 0) {
-          tmp___50 = find_conVal(token);
+        tmp___46 = strcmp((char const   *)symName, "Constant");
+        if (tmp___46 == 0) {
+          tmp___34 = find_conVal(token);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___50));
-          tmp___51 = strlen((char const   *)result);
-          tmp___52 = strlen((char const   *)(buff));
-          tmp___53 = realloc((void *)result, ((tmp___51 + tmp___52) + 1UL) * sizeof(char ));
-          result = (char *)tmp___53;
+                  *((int *)tmp___34));
+          tmp___35 = strlen((char const   *)result);
+          tmp___36 = strlen((char const   *)(buff));
+          tmp___37 = realloc((void *)result, ((tmp___35 + tmp___36) + 1UL) * sizeof(char ));
+          result = (char *)tmp___37;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___61 = strcmp((char const   *)symName, "Function");
-          if (tmp___61 == 0) {
-            tmp___54 = findValBySymbolicName(symName);
+          tmp___45 = strcmp((char const   *)symName, "Function");
+          if (tmp___45 == 0) {
+            tmp___38 = findValBySymbolicName(symName);
             sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___54));
-            tmp___55 = strlen((char const   *)result);
-            tmp___56 = strlen((char const   *)(buff));
-            tmp___57 = realloc((void *)result, ((tmp___55 + tmp___56) + 1UL) * sizeof(char ));
-            result = (char *)tmp___57;
+                    *((int *)tmp___38));
+            tmp___39 = strlen((char const   *)result);
+            tmp___40 = strlen((char const   *)(buff));
+            tmp___41 = realloc((void *)result, ((tmp___39 + tmp___40) + 1UL) * sizeof(char ));
+            result = (char *)tmp___41;
             strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
           } else {
-            tmp___58 = strlen((char const   *)result);
-            tmp___59 = strlen((char const   *)symName);
-            tmp___60 = realloc((void *)result, ((tmp___58 + tmp___59) + 1UL) * sizeof(char ));
-            result = (char *)tmp___60;
+            tmp___42 = strlen((char const   *)result);
+            tmp___43 = strlen((char const   *)symName);
+            tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
+            result = (char *)tmp___44;
             strcat((char * __restrict  )result, (char const   * __restrict  )symName);
           }
         }
@@ -7594,12 +7603,46 @@ void handleAssignmentSymbolically(char *lhs , char *rhs , void *val , void *addr
       token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
     }
     strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-    tmp___63 = get_vnameHash(lhs);
-    lhs_vn = tmp___63;
+    j2 = 0;
+    tmp___47 = strlen((char const   *)lhs);
+    len2 = (int )tmp___47;
+    strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )lhs);
+    tmp___48 = getNextToken((char const   *)lhs, & j2, len2);
+    token2 = tmp___48;
+    if ((unsigned long )token2 != (unsigned long )((void *)0)) {
+      switch ((int )token_type) {
+      case 3: 
+      parameter = findParameter(token2);
+      tmp___49 = (int )getPointerName(token2);
+      temp2 = (char *)tmp___49;
+      k = 0;
+      while (k < 2 * parameter) {
+        vname_occ = get_vnameHash(temp2);
+        if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+          symName2 = find_symVal(temp2);
+        } else {
+          symName2 = find_symVal(vname_occ);
+        }
+        if ((unsigned long )symName2 == (unsigned long )((void *)0)) {
+          tmp___50 = findParameter(temp2);
+          tmp___51 = (int )getArrayName(temp2);
+          symName2 = findArrayRecord((char *)tmp___51, tmp___50);
+        }
+        temp2 = symName2;
+        k ++;
+      }
+      strcpy((char * __restrict  )(new_lhs), (char const   * __restrict  )symName2);
+      break;
+      }
+    }
+    tmp___52 = get_vnameHash(new_lhs);
+    lhs_vn = tmp___52;
     if ((unsigned long )lhs_vn != (unsigned long )((void *)0)) {
+      printf((char const   * __restrict  )"add_entryToSTable(%s,%s)\n", lhs_vn, result);
       add_entryToSTable(lhs_vn, result, val, address, type);
     } else {
-      add_entryToSTable(lhs, result, val, address, type);
+      printf((char const   * __restrict  )"add_entryToSTable(%s,%s)\n", new_lhs, result);
+      add_entryToSTable(new_lhs, result, val, address, type);
     }
     delete_allVariableTableEntry();
   }
@@ -7652,9 +7695,9 @@ char *getPrepositionalFormula(char *expr )
   void *tmp___31 ;
   int tmp___32 ;
   int tmp___33 ;
-  int tmp___34 ;
-  int tmp___35 ;
-  int tmp___36 ;
+  size_t tmp___34 ;
+  size_t tmp___35 ;
+  void *tmp___36 ;
   void *tmp___37 ;
   size_t tmp___38 ;
   size_t tmp___39 ;
@@ -7668,23 +7711,7 @@ char *getPrepositionalFormula(char *expr )
   void *tmp___47 ;
   int tmp___48 ;
   int tmp___49 ;
-  size_t tmp___50 ;
-  size_t tmp___51 ;
-  void *tmp___52 ;
-  void *tmp___53 ;
-  size_t tmp___54 ;
-  size_t tmp___55 ;
-  void *tmp___56 ;
-  void *tmp___57 ;
-  size_t tmp___58 ;
-  size_t tmp___59 ;
-  void *tmp___60 ;
-  size_t tmp___61 ;
-  size_t tmp___62 ;
-  void *tmp___63 ;
-  int tmp___64 ;
-  int tmp___65 ;
-  int tmp___66 ;
+  int tmp___50 ;
 
   {
   i___0 = 0;
@@ -7783,21 +7810,18 @@ char *getPrepositionalFormula(char *expr )
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
         }
       }
+    }
+    break;
+    case 5: 
+    tmp___50 = strcmp((char const   *)token, "not");
+    if (tmp___50 == 0) {
+      tmp___34 = strlen((char const   *)result);
+      tmp___35 = strlen((char const   *)token);
+      tmp___36 = realloc((void *)result, ((tmp___34 + tmp___35) + 1UL) * sizeof(char ));
+      result = (char *)tmp___36;
+      strcat((char * __restrict  )result, (char const   * __restrict  )token);
     } else {
-      parameter = findParameter(token);
-      tmp___34 = (int )getPointerName(token);
-      temp = (char *)tmp___34;
-      j = 0;
-      while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
-        if ((unsigned long )symName == (unsigned long )((void *)0)) {
-          tmp___35 = findParameter(temp);
-          tmp___36 = (int )getArrayName(temp);
-          symName = findArrayRecord((char *)tmp___36, tmp___35);
-        }
-        temp = symName;
-        j ++;
-      }
+      symName = find_symVal(token);
       if ((unsigned long )symName != (unsigned long )((void *)0)) {
         tmp___49 = strcmp((char const   *)symName, "Constant");
         if (tmp___49 == 0) {
@@ -7831,54 +7855,12 @@ char *getPrepositionalFormula(char *expr )
       }
     }
     break;
-    case 5: 
-    tmp___66 = strcmp((char const   *)token, "not");
-    if (tmp___66 == 0) {
-      tmp___50 = strlen((char const   *)result);
-      tmp___51 = strlen((char const   *)token);
-      tmp___52 = realloc((void *)result, ((tmp___50 + tmp___51) + 1UL) * sizeof(char ));
-      result = (char *)tmp___52;
-      strcat((char * __restrict  )result, (char const   * __restrict  )token);
-    } else {
-      symName = find_symVal(token);
-      if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___65 = strcmp((char const   *)symName, "Constant");
-        if (tmp___65 == 0) {
-          tmp___53 = findValBySymbolicName(symName);
-          sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___53));
-          tmp___54 = strlen((char const   *)result);
-          tmp___55 = strlen((char const   *)(buff));
-          tmp___56 = realloc((void *)result, ((tmp___54 + tmp___55) + 1UL) * sizeof(char ));
-          result = (char *)tmp___56;
-          strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-        } else {
-          tmp___64 = strcmp((char const   *)symName, "Function");
-          if (tmp___64 == 0) {
-            tmp___57 = findValBySymbolicName(symName);
-            sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___57));
-            tmp___58 = strlen((char const   *)result);
-            tmp___59 = strlen((char const   *)(buff));
-            tmp___60 = realloc((void *)result, ((tmp___58 + tmp___59) + 1UL) * sizeof(char ));
-            result = (char *)tmp___60;
-            strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-          } else {
-            tmp___61 = strlen((char const   *)result);
-            tmp___62 = strlen((char const   *)symName);
-            tmp___63 = realloc((void *)result, ((tmp___61 + tmp___62) + 1UL) * sizeof(char ));
-            result = (char *)tmp___63;
-            strcat((char * __restrict  )result, (char const   * __restrict  )symName);
-          }
-        }
-      }
-    }
-    break;
     }
     free((void *)token);
     token = getNextToken((char const   *)(expr + i___0), & i___0, len);
   }
   strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
+  printf((char const   * __restrict  )"PrepositionalFormula = %s\n", result);
   return (result);
 }
 }
@@ -8447,7 +8429,7 @@ char *getNextToken(char const   *str , int *pos , int length )
         str ++;
         (*pos) ++;
         i___0 ++;
-        token_type = (enum TOKENTYPE )4;
+        token_type = (enum TOKENTYPE )3;
       }
       *(res + i___0) = (char )'\000';
       return (res);
@@ -8820,14 +8802,16 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
                             void *address , int type ) 
 { 
   struct arraySym_table *s ;
-  int size ;
+  char *vname_occ ;
   int tmp ;
+  int size ;
   int tmp___0 ;
   int tmp___1 ;
-  void *tmp___2 ;
-  unsigned int _ha_bkt ;
+  int tmp___2 ;
   void *tmp___3 ;
+  unsigned int _ha_bkt ;
   void *tmp___4 ;
+  void *tmp___5 ;
   unsigned int _hj_i ;
   unsigned int _hj_j ;
   unsigned int _hj_k ;
@@ -8838,24 +8822,31 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
   struct UT_hash_handle *_he_hh_nxt ;
   UT_hash_bucket *_he_new_buckets ;
   UT_hash_bucket *_he_newbkt ;
-  void *tmp___5 ;
-  int tmp___6 ;
+  void *tmp___6 ;
+  int tmp___7 ;
 
   {
+  tmp = (int )get_vnameHash(aname);
+  vname_occ = (char *)tmp;
+  if ((unsigned long )vname_occ != (unsigned long )((void *)0)) {
+    aname = vname_occ;
+  }
+  printf((char const   * __restrict  )"addEntryToArraySTable :: aname=%s, index=%d, sname=%s\n",
+         aname, index___0, sname);
   s = arraySTable;
   while ((unsigned long )s != (unsigned long )((void *)0)) {
-    tmp = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
-    if (tmp == 0) {
+    tmp___0 = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
+    if (tmp___0 == 0) {
       if (s->key.index == index___0) {
-        tmp___0 = strcmp((char const   *)(s->sname), "Constant");
-        if (tmp___0 == 0) {
+        tmp___1 = strcmp((char const   *)(s->sname), "Constant");
+        if (tmp___1 == 0) {
           strcpy((char * __restrict  )(s->sname), (char const   * __restrict  )sname);
           break;
         }
       }
     }
-    tmp___1 = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
-    if (tmp___1 == 0) {
+    tmp___2 = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
+    if (tmp___2 == 0) {
       if (s->key.index == index___0) {
         return;
       }
@@ -8863,8 +8854,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
     s = (struct arraySym_table *)s->hh.next;
   }
   if ((unsigned long )s == (unsigned long )((void *)0)) {
-    tmp___2 = malloc(sizeof(struct arraySym_table ));
-    s = (struct arraySym_table *)tmp___2;
+    tmp___3 = malloc(sizeof(struct arraySym_table ));
+    s = (struct arraySym_table *)tmp___3;
     strcpy((char * __restrict  )(s->key.arrayName), (char const   * __restrict  )aname);
     s->key.index = index___0;
     while (1) {
@@ -8875,8 +8866,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
         arraySTable = s;
         arraySTable->hh.prev = (void *)0;
         while (1) {
-          tmp___3 = malloc(sizeof(UT_hash_table ));
-          arraySTable->hh.tbl = (UT_hash_table *)tmp___3;
+          tmp___4 = malloc(sizeof(UT_hash_table ));
+          arraySTable->hh.tbl = (UT_hash_table *)tmp___4;
           if (! arraySTable->hh.tbl) {
             exit(-1);
           }
@@ -8885,8 +8876,8 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
           (arraySTable->hh.tbl)->num_buckets = 32U;
           (arraySTable->hh.tbl)->log2_num_buckets = 5U;
           (arraySTable->hh.tbl)->hho = (char *)(& arraySTable->hh) - (char *)arraySTable;
-          tmp___4 = malloc(32UL * sizeof(struct UT_hash_bucket ));
-          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___4;
+          tmp___5 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___5;
           if (! (arraySTable->hh.tbl)->buckets) {
             exit(-1);
           }
@@ -9013,18 +9004,278 @@ void add_entryToArraySTable(char *aname , int index___0 , char *sname , void *va
         if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count >= (((arraySTable->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
           if ((s->hh.tbl)->noexpand != 1U) {
             while (1) {
-              tmp___5 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
-              _he_new_buckets = (UT_hash_bucket *)tmp___5;
+              tmp___6 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets = (UT_hash_bucket *)tmp___6;
               if (! _he_new_buckets) {
                 exit(-1);
               }
               memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
               if ((s->hh.tbl)->num_items & ((s->hh.tbl)->num_buckets * 2U - 1U)) {
-                tmp___6 = 1;
+                tmp___7 = 1;
               } else {
-                tmp___6 = 0;
+                tmp___7 = 0;
               }
-              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___6;
+              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___7;
+              (s->hh.tbl)->nonideal_items = 0U;
+              _he_bkt_i = 0U;
+              while (_he_bkt_i < (s->hh.tbl)->num_buckets) {
+                _he_thh = ((s->hh.tbl)->buckets + _he_bkt_i)->hh_head;
+                while (_he_thh) {
+                  _he_hh_nxt = _he_thh->hh_next;
+                  while (1) {
+                    _he_bkt = _he_thh->hashv & ((s->hh.tbl)->num_buckets * 2U - 1U);
+                    break;
+                  }
+                  _he_newbkt = _he_new_buckets + _he_bkt;
+                  (_he_newbkt->count) ++;
+                  if (_he_newbkt->count > (s->hh.tbl)->ideal_chain_maxlen) {
+                    ((s->hh.tbl)->nonideal_items) ++;
+                    _he_newbkt->expand_mult = _he_newbkt->count / (s->hh.tbl)->ideal_chain_maxlen;
+                  }
+                  _he_thh->hh_prev = (struct UT_hash_handle *)((void *)0);
+                  _he_thh->hh_next = _he_newbkt->hh_head;
+                  if (_he_newbkt->hh_head) {
+                    (_he_newbkt->hh_head)->hh_prev = _he_thh;
+                  }
+                  _he_newbkt->hh_head = _he_thh;
+                  _he_thh = _he_hh_nxt;
+                }
+                _he_bkt_i ++;
+              }
+              free((void *)(s->hh.tbl)->buckets);
+              (s->hh.tbl)->num_buckets *= 2U;
+              ((s->hh.tbl)->log2_num_buckets) ++;
+              (s->hh.tbl)->buckets = _he_new_buckets;
+              if ((s->hh.tbl)->nonideal_items > (s->hh.tbl)->num_items >> 1) {
+                ((s->hh.tbl)->ineff_expands) ++;
+              } else {
+                (s->hh.tbl)->ineff_expands = 0U;
+              }
+              if ((s->hh.tbl)->ineff_expands > 1U) {
+                (s->hh.tbl)->noexpand = 1U;
+              }
+              break;
+            }
+          }
+        }
+        break;
+      }
+      break;
+    }
+    strcpy((char * __restrict  )(s->sname), (char const   * __restrict  )sname);
+  }
+  if (type == 1) {
+    size = (int )sizeof(int );
+    addToIntTable(sname, (int *)val);
+  } else {
+    size = (int )sizeof(float );
+    addToFloatTable(sname, (float *)val);
+  }
+  s->cval = malloc((size_t )size);
+  memcpy((void * __restrict  )s->cval, (void const   * __restrict  )val, (size_t )size);
+  s->address = toInt___0(address);
+  s->type = type;
+  return;
+}
+}
+void add_entryToArraySTable2(char *aname , int index___0 , char *sname , void *val ,
+                             void *address , int type ) 
+{ 
+  struct arraySym_table *s ;
+  int size ;
+  int tmp ;
+  void *tmp___0 ;
+  unsigned int _ha_bkt ;
+  void *tmp___1 ;
+  void *tmp___2 ;
+  unsigned int _hj_i ;
+  unsigned int _hj_j ;
+  unsigned int _hj_k ;
+  unsigned char *_hj_key ;
+  unsigned int _he_bkt ;
+  unsigned int _he_bkt_i ;
+  struct UT_hash_handle *_he_thh ;
+  struct UT_hash_handle *_he_hh_nxt ;
+  UT_hash_bucket *_he_new_buckets ;
+  UT_hash_bucket *_he_newbkt ;
+  void *tmp___3 ;
+  int tmp___4 ;
+
+  {
+  s = arraySTable;
+  while ((unsigned long )s != (unsigned long )((void *)0)) {
+    tmp = strcmp((char const   *)(s->key.arrayName), (char const   *)aname);
+    if (tmp == 0) {
+      if (s->key.index == index___0) {
+        strcpy((char * __restrict  )(s->sname), (char const   * __restrict  )sname);
+        break;
+      }
+    }
+    s = (struct arraySym_table *)s->hh.next;
+  }
+  if ((unsigned long )s == (unsigned long )((void *)0)) {
+    tmp___0 = malloc(sizeof(struct arraySym_table ));
+    s = (struct arraySym_table *)tmp___0;
+    strcpy((char * __restrict  )(s->key.arrayName), (char const   * __restrict  )aname);
+    s->key.index = index___0;
+    while (1) {
+      s->hh.next = (void *)0;
+      s->hh.key = (void *)((char *)(& s->key));
+      s->hh.keylen = (unsigned int )sizeof(struct arrayKey );
+      if (! arraySTable) {
+        arraySTable = s;
+        arraySTable->hh.prev = (void *)0;
+        while (1) {
+          tmp___1 = malloc(sizeof(UT_hash_table ));
+          arraySTable->hh.tbl = (UT_hash_table *)tmp___1;
+          if (! arraySTable->hh.tbl) {
+            exit(-1);
+          }
+          memset((void *)arraySTable->hh.tbl, 0, sizeof(UT_hash_table ));
+          (arraySTable->hh.tbl)->tail = & arraySTable->hh;
+          (arraySTable->hh.tbl)->num_buckets = 32U;
+          (arraySTable->hh.tbl)->log2_num_buckets = 5U;
+          (arraySTable->hh.tbl)->hho = (char *)(& arraySTable->hh) - (char *)arraySTable;
+          tmp___2 = malloc(32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->buckets = (UT_hash_bucket *)tmp___2;
+          if (! (arraySTable->hh.tbl)->buckets) {
+            exit(-1);
+          }
+          memset((void *)(arraySTable->hh.tbl)->buckets, 0, 32UL * sizeof(struct UT_hash_bucket ));
+          (arraySTable->hh.tbl)->signature = 2685476833U;
+          break;
+        }
+      } else {
+        ((arraySTable->hh.tbl)->tail)->next = (void *)s;
+        s->hh.prev = (void *)((char *)(arraySTable->hh.tbl)->tail - (arraySTable->hh.tbl)->hho);
+        (arraySTable->hh.tbl)->tail = & s->hh;
+      }
+      ((arraySTable->hh.tbl)->num_items) ++;
+      s->hh.tbl = arraySTable->hh.tbl;
+      while (1) {
+        _hj_key = (unsigned char *)(& s->key);
+        s->hh.hashv = 4276993775U;
+        _hj_j = 2654435769U;
+        _hj_i = _hj_j;
+        _hj_k = (unsigned int )sizeof(struct arrayKey );
+        while (_hj_k >= 12U) {
+          _hj_i += (((unsigned int )*(_hj_key + 0) + ((unsigned int )*(_hj_key + 1) << 8)) + ((unsigned int )*(_hj_key + 2) << 16)) + ((unsigned int )*(_hj_key + 3) << 24);
+          _hj_j += (((unsigned int )*(_hj_key + 4) + ((unsigned int )*(_hj_key + 5) << 8)) + ((unsigned int )*(_hj_key + 6) << 16)) + ((unsigned int )*(_hj_key + 7) << 24);
+          s->hh.hashv += (((unsigned int )*(_hj_key + 8) + ((unsigned int )*(_hj_key + 9) << 8)) + ((unsigned int )*(_hj_key + 10) << 16)) + ((unsigned int )*(_hj_key + 11) << 24);
+          while (1) {
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 13;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 8;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 13;
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 12;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 16;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 5;
+            _hj_i -= _hj_j;
+            _hj_i -= s->hh.hashv;
+            _hj_i ^= s->hh.hashv >> 3;
+            _hj_j -= s->hh.hashv;
+            _hj_j -= _hj_i;
+            _hj_j ^= _hj_i << 10;
+            s->hh.hashv -= _hj_i;
+            s->hh.hashv -= _hj_j;
+            s->hh.hashv ^= _hj_j >> 15;
+            break;
+          }
+          _hj_key += 12;
+          _hj_k -= 12U;
+        }
+        s->hh.hashv = (unsigned int )((unsigned long )s->hh.hashv + sizeof(struct arrayKey ));
+        switch (_hj_k) {
+        case 11U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 10) << 24;
+        case 10U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 9) << 16;
+        case 9U: 
+        s->hh.hashv += (unsigned int )*(_hj_key + 8) << 8;
+        case 8U: 
+        _hj_j += (unsigned int )*(_hj_key + 7) << 24;
+        case 7U: 
+        _hj_j += (unsigned int )*(_hj_key + 6) << 16;
+        case 6U: 
+        _hj_j += (unsigned int )*(_hj_key + 5) << 8;
+        case 5U: 
+        _hj_j += (unsigned int )*(_hj_key + 4);
+        case 4U: 
+        _hj_i += (unsigned int )*(_hj_key + 3) << 24;
+        case 3U: 
+        _hj_i += (unsigned int )*(_hj_key + 2) << 16;
+        case 2U: 
+        _hj_i += (unsigned int )*(_hj_key + 1) << 8;
+        case 1U: 
+        _hj_i += (unsigned int )*(_hj_key + 0);
+        }
+        while (1) {
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 13;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 8;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 13;
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 12;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 16;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 5;
+          _hj_i -= _hj_j;
+          _hj_i -= s->hh.hashv;
+          _hj_i ^= s->hh.hashv >> 3;
+          _hj_j -= s->hh.hashv;
+          _hj_j -= _hj_i;
+          _hj_j ^= _hj_i << 10;
+          s->hh.hashv -= _hj_i;
+          s->hh.hashv -= _hj_j;
+          s->hh.hashv ^= _hj_j >> 15;
+          break;
+        }
+        _ha_bkt = s->hh.hashv & ((arraySTable->hh.tbl)->num_buckets - 1U);
+        break;
+      }
+      while (1) {
+        (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count) ++;
+        s->hh.hh_next = ((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head;
+        s->hh.hh_prev = (struct UT_hash_handle *)((void *)0);
+        if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head) {
+          (((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head)->hh_prev = & s->hh;
+        }
+        ((arraySTable->hh.tbl)->buckets + _ha_bkt)->hh_head = & s->hh;
+        if (((arraySTable->hh.tbl)->buckets + _ha_bkt)->count >= (((arraySTable->hh.tbl)->buckets + _ha_bkt)->expand_mult + 1U) * 10U) {
+          if ((s->hh.tbl)->noexpand != 1U) {
+            while (1) {
+              tmp___3 = malloc((unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              _he_new_buckets = (UT_hash_bucket *)tmp___3;
+              if (! _he_new_buckets) {
+                exit(-1);
+              }
+              memset((void *)_he_new_buckets, 0, (unsigned long )(2U * (s->hh.tbl)->num_buckets) * sizeof(struct UT_hash_bucket ));
+              if ((s->hh.tbl)->num_items & ((s->hh.tbl)->num_buckets * 2U - 1U)) {
+                tmp___4 = 1;
+              } else {
+                tmp___4 = 0;
+              }
+              (s->hh.tbl)->ideal_chain_maxlen = ((s->hh.tbl)->num_items >> ((s->hh.tbl)->log2_num_buckets + 1U)) + (unsigned int )tmp___4;
               (s->hh.tbl)->nonideal_items = 0U;
               _he_bkt_i = 0U;
               while (_he_bkt_i < (s->hh.tbl)->num_buckets) {
@@ -9210,6 +9461,8 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   char *result ;
   char *symName ;
   char *temp ;
+  char *arrName ;
+  char *vname_occ ;
   char buff[15] ;
   void *tmp ;
   size_t tmp___0 ;
@@ -9234,47 +9487,35 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
   int tmp___19 ;
   int tmp___20 ;
   int tmp___21 ;
-  size_t tmp___22 ;
+  int tmp___22 ;
   size_t tmp___23 ;
-  void *tmp___24 ;
-  int tmp___25 ;
-  size_t tmp___26 ;
+  size_t tmp___24 ;
+  void *tmp___25 ;
+  int tmp___26 ;
   size_t tmp___27 ;
-  void *tmp___28 ;
-  size_t tmp___29 ;
+  size_t tmp___28 ;
+  void *tmp___29 ;
   size_t tmp___30 ;
-  void *tmp___31 ;
-  int tmp___32 ;
+  size_t tmp___31 ;
+  void *tmp___32 ;
   int tmp___33 ;
   int tmp___34 ;
   int tmp___35 ;
   int tmp___36 ;
-  int tmp___37 ;
+  size_t tmp___37 ;
   size_t tmp___38 ;
-  size_t tmp___39 ;
-  void *tmp___40 ;
-  int tmp___41 ;
+  void *tmp___39 ;
+  int tmp___40 ;
+  size_t tmp___41 ;
   size_t tmp___42 ;
-  size_t tmp___43 ;
-  void *tmp___44 ;
+  void *tmp___43 ;
+  size_t tmp___44 ;
   size_t tmp___45 ;
-  size_t tmp___46 ;
-  void *tmp___47 ;
+  void *tmp___46 ;
+  int tmp___47 ;
   int tmp___48 ;
+  char *new_lhs ;
   int tmp___49 ;
-  int tmp___50 ;
-  size_t tmp___51 ;
-  size_t tmp___52 ;
-  void *tmp___53 ;
-  int tmp___54 ;
-  size_t tmp___55 ;
-  size_t tmp___56 ;
-  void *tmp___57 ;
-  size_t tmp___58 ;
-  size_t tmp___59 ;
-  void *tmp___60 ;
-  int tmp___61 ;
-  int tmp___62 ;
 
   {
   i___0 = 0;
@@ -9344,113 +9585,79 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     case 4: 
     parameter = findParameter(token);
     tmp___20 = (int )getArrayName(token);
-    symName = findArrayRecord((char *)tmp___20, parameter);
+    arrName = (char *)tmp___20;
+    tmp___21 = (int )get_vnameHash(arrName);
+    vname_occ = (char *)tmp___21;
+    if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+      symName = findArrayRecord(arrName, parameter);
+    } else {
+      symName = findArrayRecord(vname_occ, parameter);
+    }
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___33 = strcmp((char const   *)symName, "Constant");
-      if (tmp___33 == 0) {
-        tmp___21 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___21));
-        tmp___22 = strlen((char const   *)result);
-        tmp___23 = strlen((char const   *)(buff));
-        tmp___24 = realloc((void *)result, ((tmp___22 + tmp___23) + 1UL) * sizeof(char ));
-        result = (char *)tmp___24;
+      tmp___34 = strcmp((char const   *)symName, "Constant");
+      if (tmp___34 == 0) {
+        tmp___22 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___22));
+        tmp___23 = strlen((char const   *)result);
+        tmp___24 = strlen((char const   *)(buff));
+        tmp___25 = realloc((void *)result, ((tmp___23 + tmp___24) + 1UL) * sizeof(char ));
+        result = (char *)tmp___25;
         strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
       } else {
-        tmp___32 = strcmp((char const   *)symName, "Function");
-        if (tmp___32 == 0) {
-          tmp___25 = (int )findValBySymbolicName(symName);
+        tmp___33 = strcmp((char const   *)symName, "Function");
+        if (tmp___33 == 0) {
+          tmp___26 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___25));
-          tmp___26 = strlen((char const   *)result);
-          tmp___27 = strlen((char const   *)(buff));
-          tmp___28 = realloc((void *)result, ((tmp___26 + tmp___27) + 1UL) * sizeof(char ));
-          result = (char *)tmp___28;
+                  *((int *)tmp___26));
+          tmp___27 = strlen((char const   *)result);
+          tmp___28 = strlen((char const   *)(buff));
+          tmp___29 = realloc((void *)result, ((tmp___27 + tmp___28) + 1UL) * sizeof(char ));
+          result = (char *)tmp___29;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___29 = strlen((char const   *)result);
-          tmp___30 = strlen((char const   *)symName);
-          tmp___31 = realloc((void *)result, ((tmp___29 + tmp___30) + 1UL) * sizeof(char ));
-          result = (char *)tmp___31;
+          tmp___30 = strlen((char const   *)result);
+          tmp___31 = strlen((char const   *)symName);
+          tmp___32 = realloc((void *)result, ((tmp___30 + tmp___31) + 1UL) * sizeof(char ));
+          result = (char *)tmp___32;
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
-        }
-      }
-    } else {
-      parameter = findParameter(token);
-      tmp___34 = (int )getPointerName(token);
-      temp = (char *)tmp___34;
-      j = 0;
-      while (j < 2 * parameter + 1) {
-        symName = find_symVal(temp);
-        if ((unsigned long )symName == (unsigned long )((void *)0)) {
-          tmp___35 = findParameter(temp);
-          tmp___36 = (int )getArrayName(temp);
-          symName = findArrayRecord((char *)tmp___36, tmp___35);
-        }
-        temp = symName;
-        j ++;
-      }
-      if ((unsigned long )symName != (unsigned long )((void *)0)) {
-        tmp___49 = strcmp((char const   *)symName, "Constant");
-        if (tmp___49 == 0) {
-          tmp___37 = (int )findValBySymbolicName(symName);
-          value = *((int *)tmp___37);
-          sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  value);
-          tmp___38 = strlen((char const   *)result);
-          tmp___39 = strlen((char const   *)(buff));
-          tmp___40 = realloc((void *)result, ((tmp___38 + tmp___39) + 1UL) * sizeof(char ));
-          result = (char *)tmp___40;
-          strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-        } else {
-          tmp___48 = strcmp((char const   *)symName, "Function");
-          if (tmp___48 == 0) {
-            tmp___41 = (int )findValBySymbolicName(symName);
-            sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                    *((int *)tmp___41));
-            tmp___42 = strlen((char const   *)result);
-            tmp___43 = strlen((char const   *)(buff));
-            tmp___44 = realloc((void *)result, ((tmp___42 + tmp___43) + 1UL) * sizeof(char ));
-            result = (char *)tmp___44;
-            strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
-          } else {
-            tmp___45 = strlen((char const   *)result);
-            tmp___46 = strlen((char const   *)symName);
-            tmp___47 = realloc((void *)result, ((tmp___45 + tmp___46) + 1UL) * sizeof(char ));
-            result = (char *)tmp___47;
-            strcat((char * __restrict  )result, (char const   * __restrict  )symName);
-          }
         }
       }
     }
     break;
     case 5: 
-    symName = find_symVal(token);
+    tmp___35 = (int )get_vnameHash(token);
+    vname_occ = (char *)tmp___35;
+    if ((unsigned long )vname_occ == (unsigned long )((void *)0)) {
+      symName = find_symVal(token);
+    } else {
+      symName = find_symVal(vname_occ);
+    }
     if ((unsigned long )symName != (unsigned long )((void *)0)) {
-      tmp___62 = strcmp((char const   *)symName, "Constant");
-      if (tmp___62 == 0) {
-        tmp___50 = (int )findValBySymbolicName(symName);
-        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___50));
-        tmp___51 = strlen((char const   *)result);
-        tmp___52 = strlen((char const   *)(buff));
-        tmp___53 = realloc((void *)result, ((tmp___51 + tmp___52) + 1UL) * sizeof(char ));
-        result = (char *)tmp___53;
+      tmp___48 = strcmp((char const   *)symName, "Constant");
+      if (tmp___48 == 0) {
+        tmp___36 = (int )findValBySymbolicName(symName);
+        sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d", *((int *)tmp___36));
+        tmp___37 = strlen((char const   *)result);
+        tmp___38 = strlen((char const   *)(buff));
+        tmp___39 = realloc((void *)result, ((tmp___37 + tmp___38) + 1UL) * sizeof(char ));
+        result = (char *)tmp___39;
         strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
       } else {
-        tmp___61 = strcmp((char const   *)symName, "Function");
-        if (tmp___61 == 0) {
-          tmp___54 = (int )findValBySymbolicName(symName);
+        tmp___47 = strcmp((char const   *)symName, "Function");
+        if (tmp___47 == 0) {
+          tmp___40 = (int )findValBySymbolicName(symName);
           sprintf((char * __restrict  )(buff), (char const   * __restrict  )"%d",
-                  *((int *)tmp___54));
-          tmp___55 = strlen((char const   *)result);
-          tmp___56 = strlen((char const   *)(buff));
-          tmp___57 = realloc((void *)result, ((tmp___55 + tmp___56) + 1UL) * sizeof(char ));
-          result = (char *)tmp___57;
+                  *((int *)tmp___40));
+          tmp___41 = strlen((char const   *)result);
+          tmp___42 = strlen((char const   *)(buff));
+          tmp___43 = realloc((void *)result, ((tmp___41 + tmp___42) + 1UL) * sizeof(char ));
+          result = (char *)tmp___43;
           strcat((char * __restrict  )result, (char const   * __restrict  )(buff));
         } else {
-          tmp___58 = strlen((char const   *)result);
-          tmp___59 = strlen((char const   *)symName);
-          tmp___60 = realloc((void *)result, ((tmp___58 + tmp___59) + 1UL) * sizeof(char ));
-          result = (char *)tmp___60;
+          tmp___44 = strlen((char const   *)result);
+          tmp___45 = strlen((char const   *)symName);
+          tmp___46 = realloc((void *)result, ((tmp___44 + tmp___45) + 1UL) * sizeof(char ));
+          result = (char *)tmp___46;
           strcat((char * __restrict  )result, (char const   * __restrict  )symName);
         }
       }
@@ -9460,7 +9667,18 @@ void handleArraySymbolically(char *lhs , int index___0 , char *rhs , void *val ,
     token = getNextToken((char const   *)(rhs + i___0), & i___0, len);
   }
   strcat((char * __restrict  )result, (char const   * __restrict  )"\000");
-  add_entryToArraySTable(lhs, index___0, result, val, address, type);
+  tmp___49 = (int )get_vnameHash(lhs);
+  new_lhs = (char *)tmp___49;
+  if ((unsigned long )new_lhs == (unsigned long )((void *)0)) {
+    printf((char const   * __restrict  )"add_entryToArraySTable2(%s,%d,%s)\n", lhs,
+           index___0, result);
+    add_entryToArraySTable2(lhs, index___0, result, val, address, type);
+  } else {
+    printf((char const   * __restrict  )"add_entryToArraySTable2(%s,%d,%s)\n", new_lhs,
+           index___0, result);
+    add_entryToArraySTable2(new_lhs, index___0, result, val, address, type);
+  }
+  add_entryToArraySTable2(lhs, index___0, result, val, address, type);
   delete_allVariableTableEntry();
   return;
 }
@@ -15567,9 +15785,9 @@ void swap(int *swap_a , int *swap_b )
   handleAssignmentSymbolically("swap_t", "*swap_a", & *swap_a, & *swap_a, 1);
   *swap_a = *swap_b;
   addEntryToVariableTable("*swap_b", 1);
-  handleArraySymbolically("swap_a", 0, "*swap_b", swap_a, swap_a, 1);
+  handleAssignmentSymbolically("*swap_a", "*swap_b", swap_a, swap_a, 1);
   *swap_b = swap_t;
-  handleArraySymbolically("swap_b", 0, "swap_t", swap_b, swap_b, 1);
+  handleAssignmentSymbolically("*swap_b", "swap_t", swap_b, swap_b, 1);
   return;
 }
 }
@@ -15577,12 +15795,10 @@ int partition(int *partition_arr , int partition_l , int partition_h )
 { 
   int partition_x ;
   int partition_i___0 ;
+  int *partition_p ;
+  int *partition_q ;
   int partition_j ;
-  int partition___cil_tmp7 ;
-  int *partition___cil_tmp8 ;
-  int *partition___cil_tmp9 ;
-  int *partition___cil_tmp10 ;
-  int *partition___cil_tmp11 ;
+  int partition___cil_tmp9 ;
   char *symName ;
   void *addr ;
   char in[15] ;
@@ -15607,17 +15823,15 @@ int partition(int *partition_arr , int partition_l , int partition_h )
       partition_i___0 ++;
       handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
                                    & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,variable,partition___cil_tmp8)#(int *,swap_b,variable,partition___cil_tmp9)",
+      partition_p = partition_arr + partition_i___0;
+      handleAssignmentSymbolically("partition_p", "(+ partition_arr partition_i___0)",
+                                   & partition_p, & partition_p, 1);
+      partition_q = partition_arr + partition_j;
+      handleAssignmentSymbolically("partition_q", "(+ partition_arr partition_j)",
+                                   & partition_q, & partition_q, 1);
+      funcEntry("(int *,swap_a,pointer,partition_p)#(int *,swap_b,pointer,partition_q)",
                 "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
+      swap(partition_p, partition_q);
       funcExit();
     }
     partition_j ++;
@@ -15629,17 +15843,15 @@ int partition(int *partition_arr , int partition_l , int partition_h )
       partition_i___0 ++;
       handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
                                    & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,variable,partition___cil_tmp8)#(int *,swap_b,variable,partition___cil_tmp9)",
+      partition_p = partition_arr + partition_i___0;
+      handleAssignmentSymbolically("partition_p", "(+ partition_arr partition_i___0)",
+                                   & partition_p, & partition_p, 1);
+      partition_q = partition_arr + partition_j;
+      handleAssignmentSymbolically("partition_q", "(+ partition_arr partition_j)",
+                                   & partition_q, & partition_q, 1);
+      funcEntry("(int *,swap_a,pointer,partition_p)#(int *,swap_b,pointer,partition_q)",
                 "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
+      swap(partition_p, partition_q);
       funcExit();
     }
     partition_j ++;
@@ -15647,23 +15859,23 @@ int partition(int *partition_arr , int partition_l , int partition_h )
                                  & partition_j, 1);
   }
   }
-  partition___cil_tmp10 = partition_arr + (partition_i___0 + 1);
-  handleAssignmentSymbolically("partition___cil_tmp10", "(+ partition_arr (+ partition_i___0 1))",
-                               & partition___cil_tmp10, & partition___cil_tmp10, 1);
-  partition___cil_tmp11 = partition_arr + partition_h;
-  handleAssignmentSymbolically("partition___cil_tmp11", "(+ partition_arr partition_h)",
-                               & partition___cil_tmp11, & partition___cil_tmp11, 1);
-  funcEntry("(int *,swap_a,variable,partition___cil_tmp10)#(int *,swap_b,variable,partition___cil_tmp11)",
+  partition_p = partition_arr + (partition_i___0 + 1);
+  handleAssignmentSymbolically("partition_p", "(+ partition_arr (+ partition_i___0 1))",
+                               & partition_p, & partition_p, 1);
+  partition_q = partition_arr + partition_h;
+  handleAssignmentSymbolically("partition_q", "(+ partition_arr partition_h)", & partition_q,
+                               & partition_q, 1);
+  funcEntry("(int *,swap_a,pointer,partition_p)#(int *,swap_b,pointer,partition_q)",
             "swap_t", "swap");
-  swap(partition___cil_tmp10, partition___cil_tmp11);
+  swap(partition_p, partition_q);
   funcExit();
   {
-  partition___cil_tmp7 = partition_i___0 + 1;
-  handleAssignmentSymbolically("partition___cil_tmp7", "(+ partition_i___0 1)", & partition___cil_tmp7,
-                               & partition___cil_tmp7, 1);
+  partition___cil_tmp9 = partition_i___0 + 1;
+  handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_i___0 1)", & partition___cil_tmp9,
+                               & partition___cil_tmp9, 1);
   {
-  mapConcolicValues("partition___cil_tmp7", & partition___cil_tmp7);
-  return (partition___cil_tmp7);
+  mapConcolicValues("partition___cil_tmp9", & partition___cil_tmp9);
+  return (partition___cil_tmp9);
   }
   }
 }
@@ -15675,51 +15887,51 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(25, 0, 1);
-  addtoCDGnode(26, 0, 1);
-  setArray(26, "(>= top 0)");
-  addtoCDGnode(27, 26, 1);
-  setArray(27, "(> l 0)");
-  addtoCDGnode(34, 0, 1);
-  setArray(34, "(>= top 0)");
-  addtoCDGnode(28, 27, 1);
-  setArray(28, "(> h l)");
-  addtoCDGnode(34, 0, 1);
-  setArray(34, "(>= top 0)");
-  addtoCDGnode(29, 28, 1);
-  addtoCDGnode(34, 0, 1);
-  setArray(34, "(>= top 0)");
-  addtoCDGnode(30, 28, 1);
-  setArray(30, "(> (- p 1) l)");
-  addtoCDGnode(31, 30, 1);
-  addtoCDGnode(32, 28, 1);
-  setArray(32, "(< (+ p 1) h)");
-  addtoCDGnode(32, 28, 1);
-  setArray(32, "(< (+ p 1) h)");
-  addtoCDGnode(33, 32, 1);
-  addtoCDGnode(34, 0, 1);
-  setArray(34, "(>= top 0)");
-  addtoCDGnode(34, 0, 1);
-  setArray(34, "(>= top 0)");
-  addtoCDGnode(35, 34, 1);
-  setArray(35, "(> l 0)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(36, 35, 1);
-  setArray(36, "(> h l)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(37, 36, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(38, 36, 1);
-  setArray(38, "(> (- p 1) l)");
-  addtoCDGnode(39, 38, 1);
-  addtoCDGnode(40, 36, 1);
-  setArray(40, "(< (+ p 1) h)");
-  addtoCDGnode(40, 36, 1);
-  setArray(40, "(< (+ p 1) h)");
-  addtoCDGnode(41, 40, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(43, 0, 1);
+  addtoCDGnode(2, 0, 1);
+  addtoCDGnode(3, 0, 1);
+  setArray(3, "(>= top 0)");
+  addtoCDGnode(4, 3, 1);
+  setArray(4, "(> l 0)");
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(>= top 0)");
+  addtoCDGnode(5, 4, 1);
+  setArray(5, "(> h l)");
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(>= top 0)");
+  addtoCDGnode(6, 5, 1);
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(>= top 0)");
+  addtoCDGnode(7, 5, 1);
+  setArray(7, "(> (- p 1) l)");
+  addtoCDGnode(8, 7, 1);
+  addtoCDGnode(9, 5, 1);
+  setArray(9, "(< (+ p 1) h)");
+  addtoCDGnode(9, 5, 1);
+  setArray(9, "(< (+ p 1) h)");
+  addtoCDGnode(10, 9, 1);
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(>= top 0)");
+  addtoCDGnode(11, 0, 1);
+  setArray(11, "(>= top 0)");
+  addtoCDGnode(12, 11, 1);
+  setArray(12, "(> l 0)");
+  addtoCDGnode(19, 0, 1);
+  addtoCDGnode(13, 12, 1);
+  setArray(13, "(> h l)");
+  addtoCDGnode(19, 0, 1);
+  addtoCDGnode(14, 13, 1);
+  addtoCDGnode(19, 0, 1);
+  addtoCDGnode(15, 13, 1);
+  setArray(15, "(> (- p 1) l)");
+  addtoCDGnode(16, 15, 1);
+  addtoCDGnode(17, 13, 1);
+  setArray(17, "(< (+ p 1) h)");
+  addtoCDGnode(17, 13, 1);
+  setArray(17, "(< (+ p 1) h)");
+  addtoCDGnode(18, 17, 1);
+  addtoCDGnode(19, 0, 1);
+  addtoCDGnode(19, 0, 1);
+  addtoCDGnode(20, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15727,16 +15939,16 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(30, 30);
-  isCopyOf(38, 30);
-  isCopyOf(32, 32);
-  isCopyOf(40, 32);
-  isCopyOf(26, 26);
-  isCopyOf(34, 26);
-  isCopyOf(28, 28);
-  isCopyOf(36, 28);
-  isCopyOf(27, 27);
-  isCopyOf(35, 27);
+  isCopyOf(7, 7);
+  isCopyOf(15, 7);
+  isCopyOf(9, 9);
+  isCopyOf(17, 9);
+  isCopyOf(3, 3);
+  isCopyOf(11, 3);
+  isCopyOf(5, 5);
+  isCopyOf(13, 5);
+  isCopyOf(4, 4);
+  isCopyOf(12, 4);
 }
 }
 void createSidTable(void) 
@@ -15744,16 +15956,16 @@ void createSidTable(void)
 
 
   {
-  add_condition(30, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(32, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(28, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(27, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(26, "(>= top 0)", "(not (>= top 0))", 0, 0);
-  add_condition(38, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(40, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(36, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(35, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(34, "(>= top 0)", "(not (>= top 0))", 0, 0);
+  add_condition(7, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
+  add_condition(9, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
+  add_condition(5, "(> h l)", "(not (> h l))", 0, 0);
+  add_condition(4, "(> l 0)", "(not (> l 0))", 0, 0);
+  add_condition(3, "(>= top 0)", "(not (>= top 0))", 0, 0);
+  add_condition(15, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
+  add_condition(17, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
+  add_condition(13, "(> h l)", "(not (> h l))", 0, 0);
+  add_condition(12, "(> l 0)", "(not (> l 0))", 0, 0);
+  add_condition(11, "(>= top 0)", "(not (>= top 0))", 0, 0);
 }
 }
 struct arguments {
@@ -15785,7 +15997,7 @@ void quickSort(int *arr , int l , int h )
   add_entryToSTable("__cil_tmp15", "Function", & __cil_tmp15, & __cil_tmp15, -1);
   sprintf(__cil_tmp15, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", arr[0], arr[1], arr[2], arr[3],
           arr[4], l, h);
-  printTestCase("quicksort_quickSort_1435061379.tc", __cil_tmp15);
+  printTestCase("quicksort_quickSort_1435527709.tc", __cil_tmp15);
   add_entryToSTable("h", "s2", & h, & h, 1);
   add_entryToSTable("l", "s1", & l, & l, 1);
   add_entryToArraySTable("arr", 0, "arr_0", arr, arr, 1);
@@ -15811,34 +16023,34 @@ void quickSort(int *arr , int l , int h )
   exp_outcome = top >= 0;
   handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(26, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(26, 1, 0);
-    setTrueExpr(26, "(>= top 0)");
-    setFalseExpr(26, "(not (>= top 0))");
-    addToTree(26, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
+    setBranchInfo(3, 1, 0);
+    setTrueExpr(3, "(>= top 0)");
+    setFalseExpr(3, "(not (>= top 0))");
+    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
     delete_allVariableTableEntry();
     {
     exp_outcome = l > 0;
     handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
                                  1);
-    overall_outcome = (int )getConditionalOutcome(27, exp_outcome);
+    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(27, 1, 0);
-      setTrueExpr(27, "(> l 0)");
-      setFalseExpr(27, "(not (> l 0))");
-      addToTree(27, 2, "(> l 0)", "(not (> l 0))", 26, 1);
+      setBranchInfo(4, 1, 0);
+      setTrueExpr(4, "(> l 0)");
+      setFalseExpr(4, "(not (> l 0))");
+      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 1);
       delete_allVariableTableEntry();
       {
       exp_outcome = h > l;
       handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
                                    1);
-      overall_outcome = (int )getConditionalOutcome(28, exp_outcome);
+      overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
       if (overall_outcome) {
-        setBranchInfo(28, 1, 0);
-        setTrueExpr(28, "(> h l)");
-        setFalseExpr(28, "(not (> h l))");
-        addToTree(28, 3, "(> h l)", "(not (> h l))", 27, 1);
+        setBranchInfo(5, 1, 0);
+        setTrueExpr(5, "(> h l)");
+        setFalseExpr(5, "(not (> h l))");
+        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 1);
         delete_allVariableTableEntry();
         tmp___0 = top;
         handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
@@ -15860,8 +16072,8 @@ void quickSort(int *arr , int l , int h )
                                1);
         handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
                                      & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,variable,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
+        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
+                  "partition_x partition_i___0 partition_p partition_q partition_j partition___cil_tmp9",
                   "partition");
         tmp___2 = partition(arr, l, h);
         funcExit();
@@ -15872,12 +16084,12 @@ void quickSort(int *arr , int l , int h )
         exp_outcome = p - 1 > l;
         handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
                                      & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(30, exp_outcome);
+        overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
         if (overall_outcome) {
-          setBranchInfo(30, 1, 0);
-          setTrueExpr(30, "(> (- p 1) l)");
-          setFalseExpr(30, "(not (> (- p 1) l))");
-          addToTree(30, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 28, 1);
+          setBranchInfo(7, 1, 0);
+          setTrueExpr(7, "(> (- p 1) l)");
+          setFalseExpr(7, "(not (> (- p 1) l))");
+          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 1);
           delete_allVariableTableEntry();
           top ++;
           handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
@@ -15889,10 +16101,10 @@ void quickSort(int *arr , int l , int h )
           handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
                                   1);
         } else {
-          setBranchInfo(30, 0, 1);
-          setTrueExpr(30, "(> (- p 1) l)");
-          setFalseExpr(30, "(not (> (- p 1) l))");
-          addToTree(30, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 28, 0);
+          setBranchInfo(7, 0, 1);
+          setTrueExpr(7, "(> (- p 1) l)");
+          setFalseExpr(7, "(not (> (- p 1) l))");
+          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 0);
           delete_allVariableTableEntry();
         }
         }
@@ -15900,12 +16112,12 @@ void quickSort(int *arr , int l , int h )
         exp_outcome = p + 1 < h;
         handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
                                      & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(32, exp_outcome);
+        overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
         if (overall_outcome) {
-          setBranchInfo(32, 1, 0);
-          setTrueExpr(32, "(< (+ p 1) h)");
-          setFalseExpr(32, "(not (< (+ p 1) h))");
-          addToTree(32, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 28, 1);
+          setBranchInfo(9, 1, 0);
+          setTrueExpr(9, "(< (+ p 1) h)");
+          setFalseExpr(9, "(not (< (+ p 1) h))");
+          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 1);
           delete_allVariableTableEntry();
           top ++;
           handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
@@ -15917,34 +16129,34 @@ void quickSort(int *arr , int l , int h )
           *(stack + top) = h;
           handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
         } else {
-          setBranchInfo(32, 0, 1);
-          setTrueExpr(32, "(< (+ p 1) h)");
-          setFalseExpr(32, "(not (< (+ p 1) h))");
-          addToTree(32, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 28, 0);
+          setBranchInfo(9, 0, 1);
+          setTrueExpr(9, "(< (+ p 1) h)");
+          setFalseExpr(9, "(not (< (+ p 1) h))");
+          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 0);
           delete_allVariableTableEntry();
         }
         }
       } else {
-        setBranchInfo(28, 0, 1);
-        setTrueExpr(28, "(> h l)");
-        setFalseExpr(28, "(not (> h l))");
-        addToTree(28, 3, "(> h l)", "(not (> h l))", 27, 0);
+        setBranchInfo(5, 0, 1);
+        setTrueExpr(5, "(> h l)");
+        setFalseExpr(5, "(not (> h l))");
+        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(27, 0, 1);
-      setTrueExpr(27, "(> l 0)");
-      setFalseExpr(27, "(not (> l 0))");
-      addToTree(27, 2, "(> l 0)", "(not (> l 0))", 26, 0);
+      setBranchInfo(4, 0, 1);
+      setTrueExpr(4, "(> l 0)");
+      setFalseExpr(4, "(not (> l 0))");
+      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 0);
       delete_allVariableTableEntry();
     }
     }
   } else {
-    setBranchInfo(26, 0, 1);
-    setTrueExpr(26, "(>= top 0)");
-    setFalseExpr(26, "(not (>= top 0))");
-    addToTree(26, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
+    setBranchInfo(3, 0, 1);
+    setTrueExpr(3, "(>= top 0)");
+    setFalseExpr(3, "(not (>= top 0))");
+    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
@@ -15952,34 +16164,34 @@ void quickSort(int *arr , int l , int h )
   exp_outcome = top >= 0;
   handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(34, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(34, 1, 0);
-    setTrueExpr(34, "(>= top 0)");
-    setFalseExpr(34, "(not (>= top 0))");
-    addToTree(34, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
+    setBranchInfo(11, 1, 0);
+    setTrueExpr(11, "(>= top 0)");
+    setFalseExpr(11, "(not (>= top 0))");
+    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
     delete_allVariableTableEntry();
     {
     exp_outcome = l > 0;
     handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
                                  1);
-    overall_outcome = (int )getConditionalOutcome(35, exp_outcome);
+    overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(35, 1, 0);
-      setTrueExpr(35, "(> l 0)");
-      setFalseExpr(35, "(not (> l 0))");
-      addToTree(35, 2, "(> l 0)", "(not (> l 0))", 34, 1);
+      setBranchInfo(12, 1, 0);
+      setTrueExpr(12, "(> l 0)");
+      setFalseExpr(12, "(not (> l 0))");
+      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 1);
       delete_allVariableTableEntry();
       {
       exp_outcome = h > l;
       handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
                                    1);
-      overall_outcome = (int )getConditionalOutcome(36, exp_outcome);
+      overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
       if (overall_outcome) {
-        setBranchInfo(36, 1, 0);
-        setTrueExpr(36, "(> h l)");
-        setFalseExpr(36, "(not (> h l))");
-        addToTree(36, 3, "(> h l)", "(not (> h l))", 35, 1);
+        setBranchInfo(13, 1, 0);
+        setTrueExpr(13, "(> h l)");
+        setFalseExpr(13, "(not (> h l))");
+        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 1);
         delete_allVariableTableEntry();
         tmp___0 = top;
         handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
@@ -16001,8 +16213,8 @@ void quickSort(int *arr , int l , int h )
                                1);
         handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
                                      & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,variable,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
+        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
+                  "partition_x partition_i___0 partition_p partition_q partition_j partition___cil_tmp9",
                   "partition");
         tmp___2 = partition(arr, l, h);
         funcExit();
@@ -16013,12 +16225,12 @@ void quickSort(int *arr , int l , int h )
         exp_outcome = p - 1 > l;
         handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
                                      & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(38, exp_outcome);
+        overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
         if (overall_outcome) {
-          setBranchInfo(38, 1, 0);
-          setTrueExpr(38, "(> (- p 1) l)");
-          setFalseExpr(38, "(not (> (- p 1) l))");
-          addToTree(38, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 36, 1);
+          setBranchInfo(15, 1, 0);
+          setTrueExpr(15, "(> (- p 1) l)");
+          setFalseExpr(15, "(not (> (- p 1) l))");
+          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 1);
           delete_allVariableTableEntry();
           top ++;
           handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
@@ -16030,10 +16242,10 @@ void quickSort(int *arr , int l , int h )
           handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
                                   1);
         } else {
-          setBranchInfo(38, 0, 1);
-          setTrueExpr(38, "(> (- p 1) l)");
-          setFalseExpr(38, "(not (> (- p 1) l))");
-          addToTree(38, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 36, 0);
+          setBranchInfo(15, 0, 1);
+          setTrueExpr(15, "(> (- p 1) l)");
+          setFalseExpr(15, "(not (> (- p 1) l))");
+          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 0);
           delete_allVariableTableEntry();
         }
         }
@@ -16041,12 +16253,12 @@ void quickSort(int *arr , int l , int h )
         exp_outcome = p + 1 < h;
         handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
                                      & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(40, exp_outcome);
+        overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
         if (overall_outcome) {
-          setBranchInfo(40, 1, 0);
-          setTrueExpr(40, "(< (+ p 1) h)");
-          setFalseExpr(40, "(not (< (+ p 1) h))");
-          addToTree(40, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 36, 1);
+          setBranchInfo(17, 1, 0);
+          setTrueExpr(17, "(< (+ p 1) h)");
+          setFalseExpr(17, "(not (< (+ p 1) h))");
+          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 1);
           delete_allVariableTableEntry();
           top ++;
           handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
@@ -16058,34 +16270,34 @@ void quickSort(int *arr , int l , int h )
           *(stack + top) = h;
           handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
         } else {
-          setBranchInfo(40, 0, 1);
-          setTrueExpr(40, "(< (+ p 1) h)");
-          setFalseExpr(40, "(not (< (+ p 1) h))");
-          addToTree(40, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 36, 0);
+          setBranchInfo(17, 0, 1);
+          setTrueExpr(17, "(< (+ p 1) h)");
+          setFalseExpr(17, "(not (< (+ p 1) h))");
+          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 0);
           delete_allVariableTableEntry();
         }
         }
       } else {
-        setBranchInfo(36, 0, 1);
-        setTrueExpr(36, "(> h l)");
-        setFalseExpr(36, "(not (> h l))");
-        addToTree(36, 3, "(> h l)", "(not (> h l))", 35, 0);
+        setBranchInfo(13, 0, 1);
+        setTrueExpr(13, "(> h l)");
+        setFalseExpr(13, "(not (> h l))");
+        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 0);
         delete_allVariableTableEntry();
       }
       }
     } else {
-      setBranchInfo(35, 0, 1);
-      setTrueExpr(35, "(> l 0)");
-      setFalseExpr(35, "(not (> l 0))");
-      addToTree(35, 2, "(> l 0)", "(not (> l 0))", 34, 0);
+      setBranchInfo(12, 0, 1);
+      setTrueExpr(12, "(> l 0)");
+      setFalseExpr(12, "(not (> l 0))");
+      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 0);
       delete_allVariableTableEntry();
     }
     }
   } else {
-    setBranchInfo(34, 0, 1);
-    setTrueExpr(34, "(>= top 0)");
-    setFalseExpr(34, "(not (>= top 0))");
-    addToTree(34, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
+    setBranchInfo(11, 0, 1);
+    setTrueExpr(11, "(>= top 0)");
+    setFalseExpr(11, "(not (>= top 0))");
+    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
     delete_allVariableTableEntry();
   }
   }
