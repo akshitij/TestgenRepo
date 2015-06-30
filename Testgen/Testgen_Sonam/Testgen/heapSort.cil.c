@@ -15843,7 +15843,7 @@ void heapSort(int *a , int n )
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
           n);
-  printTestCase("heapSort_heapSort_1435703867.tc", __cil_tmp8);
+  printTestCase("heapSort_heapSort_1435705823.tc", __cil_tmp8);
   add_entryToSTable("n", "s1", & n, & n, 1);
   add_entryToArraySTable("a", 0, "a_0", a, a, 1);
   funcEntry("(int *,heapify_a,array,a)#(int,heapify_n,variable,n)", "heapify_k heapify_i___0 heapify_j heapify_item",

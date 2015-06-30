@@ -15784,10 +15784,10 @@ extern  __attribute__((__nothrow__)) double ( __attribute__((__leaf__)) fabs)(do
 void matgen(int *matgen_a , int matgen_lda , int matgen_n , int *matgen_b , int *matgen_norma ) ;
 void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *dgefa_info ,
            int dgefa_roll ) ;
-void dgesl(int *dgesl_a , int dgesl_lda , int dgesl_n , int *dgesl_ipvt , int *dgesl_b ,
-           int dgesl_job , int dgesl_roll ) ;
-void daxpy_r(int *global_mempool , int n , int da , int *dx , int icx , int *dy ,
-             int icy ) ;
+void dgesl(int *global_mempool , int *a , int lda , int n , int *ipvt , int *b , int job ,
+           int roll ) ;
+void daxpy_r(int daxpy_r_n , int daxpy_r_da , int *daxpy_r_dx , int daxpy_r_icx ,
+             int *daxpy_r_dy , int daxpy_r_icy ) ;
 int ddot_r(int ddot_r_n , int *ddot_r_dx , int ddot_r_icx , int *ddot_r_dy , int ddot_r_icy ) ;
 void dscal_r(int dscal_r_n , int dscal_r_da , int *dscal_r_dx , int dscal_r_ic ) ;
 void daxpy_ur(int daxpy_ur_n , int daxpy_ur_da , int *daxpy_ur_dx , int daxpy_ur_icx ,
@@ -16059,14 +16059,19 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
   int dgefa___cil_tmp21 ;
   int *dgefa___cil_tmp22 ;
   int dgefa___cil_tmp23 ;
-  int dgefa___cil_tmp24 ;
-  int *dgefa___cil_tmp25 ;
+  int *dgefa___cil_tmp24 ;
+  int dgefa___cil_tmp25 ;
   int dgefa___cil_tmp26 ;
-  int dgefa___cil_tmp27 ;
-  int *dgefa___cil_tmp28 ;
+  int *dgefa___cil_tmp27 ;
+  int dgefa___cil_tmp28 ;
   int dgefa___cil_tmp29 ;
   int *dgefa___cil_tmp30 ;
   int dgefa___cil_tmp31 ;
+  int dgefa___cil_tmp32 ;
+  int *dgefa___cil_tmp33 ;
+  int dgefa___cil_tmp34 ;
+  int *dgefa___cil_tmp35 ;
+  int dgefa___cil_tmp36 ;
   char *symName ;
   void *addr ;
   char in[15] ;
@@ -16184,6 +16189,29 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21)#(int,daxpy_r_da,variable,dgefa_t)#(int *,daxpy_r_dx,array,dgefa___cil_tmp22)#(int,daxpy_r_icx,variable,dgefa___cil_tmp23)#(int *,daxpy_r_dy,array,dgefa___cil_tmp24)#(int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
                                          1);
@@ -16214,6 +16242,29 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21)#(int,daxpy_r_da,variable,dgefa_t)#(int *,daxpy_r_dx,array,dgefa___cil_tmp22)#(int,daxpy_r_icx,variable,dgefa___cil_tmp23)#(int *,daxpy_r_dy,array,dgefa___cil_tmp24)#(int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
                                          1);
@@ -16330,6 +16381,29 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21)#(int,daxpy_r_da,variable,dgefa_t)#(int *,daxpy_r_dx,array,dgefa___cil_tmp22)#(int,daxpy_r_icx,variable,dgefa___cil_tmp23)#(int *,daxpy_r_dy,array,dgefa___cil_tmp24)#(int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
                                          1);
@@ -16360,6 +16434,29 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
+            dgefa___cil_tmp21 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp21, & dgefa___cil_tmp21,
+                                         1);
+            dgefa___cil_tmp22 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp22, & dgefa___cil_tmp22,
+                                         1);
+            dgefa___cil_tmp23 = 1;
+            add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23,
+                              & dgefa___cil_tmp23, 1);
+            dgefa___cil_tmp24 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp24", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp24, & dgefa___cil_tmp24,
+                                         1);
+            dgefa___cil_tmp25 = 1;
+            add_entryToSTable("dgefa___cil_tmp25", "Constant", & dgefa___cil_tmp25,
+                              & dgefa___cil_tmp25, 1);
+            funcEntry("(int,daxpy_r_n,variable,dgefa___cil_tmp21)#(int,daxpy_r_da,variable,dgefa_t)#(int *,daxpy_r_dx,array,dgefa___cil_tmp22)#(int,daxpy_r_icx,variable,dgefa___cil_tmp23)#(int *,daxpy_r_dy,array,dgefa___cil_tmp24)#(int,daxpy_r_icy,variable,dgefa___cil_tmp25)",
+                      "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+            daxpy_r(dgefa___cil_tmp21, dgefa_t, dgefa___cil_tmp22, dgefa___cil_tmp23,
+                    dgefa___cil_tmp24, dgefa___cil_tmp25);
+            funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
                                          1);
@@ -16398,19 +16495,19 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
         dgefa_kp1 = dgefa_k + 1;
         handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
                                      1);
-        dgefa___cil_tmp21 = dgefa_n - dgefa_k;
-        handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp21,
-                                     & dgefa___cil_tmp21, 1);
-        dgefa___cil_tmp22 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
-        handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
-                                     & dgefa___cil_tmp22, & dgefa___cil_tmp22, 1);
-        dgefa___cil_tmp23 = 1;
-        add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23, & dgefa___cil_tmp23,
+        dgefa___cil_tmp26 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp26", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp26,
+                                     & dgefa___cil_tmp26, 1);
+        dgefa___cil_tmp27 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp27", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp27, & dgefa___cil_tmp27, 1);
+        dgefa___cil_tmp28 = 1;
+        add_entryToSTable("dgefa___cil_tmp28", "Constant", & dgefa___cil_tmp28, & dgefa___cil_tmp28,
                           1);
-        funcEntry("(int,idamax_n,variable,dgefa___cil_tmp21)#(int *,idamax_dx,array,dgefa___cil_tmp22)#(int,idamax_icx,variable,dgefa___cil_tmp23)",
+        funcEntry("(int,idamax_n,variable,dgefa___cil_tmp26)#(int *,idamax_dx,array,dgefa___cil_tmp27)#(int,idamax_icx,variable,dgefa___cil_tmp28)",
                   "idamax_dmax idamax_temp1 idamax_i___0 idamax_ix idamax_itemp idamax_tmp idamax_tmp___0 idamax_tmp___1 idamax_tmp___2 idamax_tmp___3 idamax_tmp___4 idamax___cil_tmp15 idamax___cil_tmp16",
                   "idamax");
-        dgefa_tmp___0 = idamax(dgefa___cil_tmp21, dgefa___cil_tmp22, dgefa___cil_tmp23);
+        dgefa_tmp___0 = idamax(dgefa___cil_tmp26, dgefa___cil_tmp27, dgefa___cil_tmp28);
         funcExit();
         add_entryToSTable("dgefa_tmp___0", ret_SymValue, ret_ConValue, & dgefa_tmp___0,
                           1);
@@ -16454,18 +16551,18 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                  1);
           handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
                                        & dgefa_t, & dgefa_t, 1);
-          dgefa___cil_tmp24 = dgefa_n - (dgefa_k + 1);
-          handleAssignmentSymbolically("dgefa___cil_tmp24", "(- dgefa_n (+ dgefa_k 1))",
-                                       & dgefa___cil_tmp24, & dgefa___cil_tmp24, 1);
-          dgefa___cil_tmp25 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-          handleAssignmentSymbolically("dgefa___cil_tmp25", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                       & dgefa___cil_tmp25, & dgefa___cil_tmp25, 1);
-          dgefa___cil_tmp26 = 1;
-          add_entryToSTable("dgefa___cil_tmp26", "Constant", & dgefa___cil_tmp26,
-                            & dgefa___cil_tmp26, 1);
-          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp24)#(int,dscal_ur_da,variable,dgefa_t)#(int *,dscal_ur_dx,array,dgefa___cil_tmp25)#(int,dscal_ur_icx,variable,dgefa___cil_tmp26)",
+          dgefa___cil_tmp29 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp29", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp29, & dgefa___cil_tmp29, 1);
+          dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp30, & dgefa___cil_tmp30, 1);
+          dgefa___cil_tmp31 = 1;
+          add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
+                            & dgefa___cil_tmp31, 1);
+          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp29)#(int,dscal_ur_da,variable,dgefa_t)#(int *,dscal_ur_dx,array,dgefa___cil_tmp30)#(int,dscal_ur_icx,variable,dgefa___cil_tmp31)",
                     "dscal_ur_i___0 dscal_ur_m dscal_ur_nincx", "dscal_ur");
-          dscal_ur(dgefa___cil_tmp24, dgefa_t, dgefa___cil_tmp25, dgefa___cil_tmp26);
+          dscal_ur(dgefa___cil_tmp29, dgefa_t, dgefa___cil_tmp30, dgefa___cil_tmp31);
           funcExit();
           dgefa_j = dgefa_kp1;
           handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
@@ -16497,28 +16594,28 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
-            dgefa___cil_tmp27 = dgefa_n - (dgefa_k + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp27", "(- dgefa_n (+ dgefa_k 1))",
-                                         & dgefa___cil_tmp27, & dgefa___cil_tmp27,
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
                                          1);
-            dgefa___cil_tmp28 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp28", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                         & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
                                          1);
-            dgefa___cil_tmp29 = 1;
-            add_entryToSTable("dgefa___cil_tmp29", "Constant", & dgefa___cil_tmp29,
-                              & dgefa___cil_tmp29, 1);
-            dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
-                                         & dgefa___cil_tmp30, & dgefa___cil_tmp30,
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
                                          1);
-            dgefa___cil_tmp31 = 1;
-            add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
-                              & dgefa___cil_tmp31, 1);
-            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp27)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp28)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp29)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp30)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp31)",
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp33)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp34)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp35)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
                       "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-            daxpy_ur(dgefa___cil_tmp27, dgefa_t, dgefa___cil_tmp28, dgefa___cil_tmp29,
-                     dgefa___cil_tmp30, dgefa___cil_tmp31);
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
             funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
@@ -16550,28 +16647,28 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
-            dgefa___cil_tmp27 = dgefa_n - (dgefa_k + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp27", "(- dgefa_n (+ dgefa_k 1))",
-                                         & dgefa___cil_tmp27, & dgefa___cil_tmp27,
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
                                          1);
-            dgefa___cil_tmp28 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp28", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                         & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
                                          1);
-            dgefa___cil_tmp29 = 1;
-            add_entryToSTable("dgefa___cil_tmp29", "Constant", & dgefa___cil_tmp29,
-                              & dgefa___cil_tmp29, 1);
-            dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
-                                         & dgefa___cil_tmp30, & dgefa___cil_tmp30,
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
                                          1);
-            dgefa___cil_tmp31 = 1;
-            add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
-                              & dgefa___cil_tmp31, 1);
-            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp27)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp28)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp29)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp30)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp31)",
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp33)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp34)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp35)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
                       "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-            daxpy_ur(dgefa___cil_tmp27, dgefa_t, dgefa___cil_tmp28, dgefa___cil_tmp29,
-                     dgefa___cil_tmp30, dgefa___cil_tmp31);
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
             funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
@@ -16591,19 +16688,19 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
         dgefa_kp1 = dgefa_k + 1;
         handleAssignmentSymbolically("dgefa_kp1", "(+ dgefa_k 1)", & dgefa_kp1, & dgefa_kp1,
                                      1);
-        dgefa___cil_tmp21 = dgefa_n - dgefa_k;
-        handleAssignmentSymbolically("dgefa___cil_tmp21", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp21,
-                                     & dgefa___cil_tmp21, 1);
-        dgefa___cil_tmp22 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
-        handleAssignmentSymbolically("dgefa___cil_tmp22", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
-                                     & dgefa___cil_tmp22, & dgefa___cil_tmp22, 1);
-        dgefa___cil_tmp23 = 1;
-        add_entryToSTable("dgefa___cil_tmp23", "Constant", & dgefa___cil_tmp23, & dgefa___cil_tmp23,
+        dgefa___cil_tmp26 = dgefa_n - dgefa_k;
+        handleAssignmentSymbolically("dgefa___cil_tmp26", "(- dgefa_n dgefa_k)", & dgefa___cil_tmp26,
+                                     & dgefa___cil_tmp26, 1);
+        dgefa___cil_tmp27 = dgefa_a + (dgefa_lda * dgefa_k + dgefa_k);
+        handleAssignmentSymbolically("dgefa___cil_tmp27", "(+ dgefa_a (+ (* dgefa_lda dgefa_k) dgefa_k))",
+                                     & dgefa___cil_tmp27, & dgefa___cil_tmp27, 1);
+        dgefa___cil_tmp28 = 1;
+        add_entryToSTable("dgefa___cil_tmp28", "Constant", & dgefa___cil_tmp28, & dgefa___cil_tmp28,
                           1);
-        funcEntry("(int,idamax_n,variable,dgefa___cil_tmp21)#(int *,idamax_dx,array,dgefa___cil_tmp22)#(int,idamax_icx,variable,dgefa___cil_tmp23)",
+        funcEntry("(int,idamax_n,variable,dgefa___cil_tmp26)#(int *,idamax_dx,array,dgefa___cil_tmp27)#(int,idamax_icx,variable,dgefa___cil_tmp28)",
                   "idamax_dmax idamax_temp1 idamax_i___0 idamax_ix idamax_itemp idamax_tmp idamax_tmp___0 idamax_tmp___1 idamax_tmp___2 idamax_tmp___3 idamax_tmp___4 idamax___cil_tmp15 idamax___cil_tmp16",
                   "idamax");
-        dgefa_tmp___0 = idamax(dgefa___cil_tmp21, dgefa___cil_tmp22, dgefa___cil_tmp23);
+        dgefa_tmp___0 = idamax(dgefa___cil_tmp26, dgefa___cil_tmp27, dgefa___cil_tmp28);
         funcExit();
         add_entryToSTable("dgefa_tmp___0", ret_SymValue, ret_ConValue, & dgefa_tmp___0,
                           1);
@@ -16647,18 +16744,18 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                  1);
           handleAssignmentSymbolically("dgefa_t", "(/ -1 *(dgefa_a + (dgefa_lda * dgefa_k + dgefa_k)))",
                                        & dgefa_t, & dgefa_t, 1);
-          dgefa___cil_tmp24 = dgefa_n - (dgefa_k + 1);
-          handleAssignmentSymbolically("dgefa___cil_tmp24", "(- dgefa_n (+ dgefa_k 1))",
-                                       & dgefa___cil_tmp24, & dgefa___cil_tmp24, 1);
-          dgefa___cil_tmp25 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-          handleAssignmentSymbolically("dgefa___cil_tmp25", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                       & dgefa___cil_tmp25, & dgefa___cil_tmp25, 1);
-          dgefa___cil_tmp26 = 1;
-          add_entryToSTable("dgefa___cil_tmp26", "Constant", & dgefa___cil_tmp26,
-                            & dgefa___cil_tmp26, 1);
-          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp24)#(int,dscal_ur_da,variable,dgefa_t)#(int *,dscal_ur_dx,array,dgefa___cil_tmp25)#(int,dscal_ur_icx,variable,dgefa___cil_tmp26)",
+          dgefa___cil_tmp29 = dgefa_n - (dgefa_k + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp29", "(- dgefa_n (+ dgefa_k 1))",
+                                       & dgefa___cil_tmp29, & dgefa___cil_tmp29, 1);
+          dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+          handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                       & dgefa___cil_tmp30, & dgefa___cil_tmp30, 1);
+          dgefa___cil_tmp31 = 1;
+          add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
+                            & dgefa___cil_tmp31, 1);
+          funcEntry("(int,dscal_ur_n,variable,dgefa___cil_tmp29)#(int,dscal_ur_da,variable,dgefa_t)#(int *,dscal_ur_dx,array,dgefa___cil_tmp30)#(int,dscal_ur_icx,variable,dgefa___cil_tmp31)",
                     "dscal_ur_i___0 dscal_ur_m dscal_ur_nincx", "dscal_ur");
-          dscal_ur(dgefa___cil_tmp24, dgefa_t, dgefa___cil_tmp25, dgefa___cil_tmp26);
+          dscal_ur(dgefa___cil_tmp29, dgefa_t, dgefa___cil_tmp30, dgefa___cil_tmp31);
           funcExit();
           dgefa_j = dgefa_kp1;
           handleAssignmentSymbolically("dgefa_j", "dgefa_kp1", & dgefa_kp1, & dgefa_kp1,
@@ -16690,28 +16787,28 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
-            dgefa___cil_tmp27 = dgefa_n - (dgefa_k + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp27", "(- dgefa_n (+ dgefa_k 1))",
-                                         & dgefa___cil_tmp27, & dgefa___cil_tmp27,
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
                                          1);
-            dgefa___cil_tmp28 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp28", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                         & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
                                          1);
-            dgefa___cil_tmp29 = 1;
-            add_entryToSTable("dgefa___cil_tmp29", "Constant", & dgefa___cil_tmp29,
-                              & dgefa___cil_tmp29, 1);
-            dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
-                                         & dgefa___cil_tmp30, & dgefa___cil_tmp30,
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
                                          1);
-            dgefa___cil_tmp31 = 1;
-            add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
-                              & dgefa___cil_tmp31, 1);
-            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp27)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp28)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp29)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp30)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp31)",
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp33)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp34)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp35)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
                       "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-            daxpy_ur(dgefa___cil_tmp27, dgefa_t, dgefa___cil_tmp28, dgefa___cil_tmp29,
-                     dgefa___cil_tmp30, dgefa___cil_tmp31);
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
             funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
@@ -16743,28 +16840,28 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
                                       dgefa_a + (dgefa_lda * dgefa_j + dgefa_k), dgefa_a + (dgefa_lda * dgefa_j + dgefa_k),
                                       1);
             }
-            dgefa___cil_tmp27 = dgefa_n - (dgefa_k + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp27", "(- dgefa_n (+ dgefa_k 1))",
-                                         & dgefa___cil_tmp27, & dgefa___cil_tmp27,
+            dgefa___cil_tmp32 = dgefa_n - (dgefa_k + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp32", "(- dgefa_n (+ dgefa_k 1))",
+                                         & dgefa___cil_tmp32, & dgefa___cil_tmp32,
                                          1);
-            dgefa___cil_tmp28 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp28", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
-                                         & dgefa___cil_tmp28, & dgefa___cil_tmp28,
+            dgefa___cil_tmp33 = dgefa_a + ((dgefa_lda * dgefa_k + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp33", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_k) dgefa_k) 1))",
+                                         & dgefa___cil_tmp33, & dgefa___cil_tmp33,
                                          1);
-            dgefa___cil_tmp29 = 1;
-            add_entryToSTable("dgefa___cil_tmp29", "Constant", & dgefa___cil_tmp29,
-                              & dgefa___cil_tmp29, 1);
-            dgefa___cil_tmp30 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
-            handleAssignmentSymbolically("dgefa___cil_tmp30", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
-                                         & dgefa___cil_tmp30, & dgefa___cil_tmp30,
+            dgefa___cil_tmp34 = 1;
+            add_entryToSTable("dgefa___cil_tmp34", "Constant", & dgefa___cil_tmp34,
+                              & dgefa___cil_tmp34, 1);
+            dgefa___cil_tmp35 = dgefa_a + ((dgefa_lda * dgefa_j + dgefa_k) + 1);
+            handleAssignmentSymbolically("dgefa___cil_tmp35", "(+ dgefa_a (+ (+ (* dgefa_lda dgefa_j) dgefa_k) 1))",
+                                         & dgefa___cil_tmp35, & dgefa___cil_tmp35,
                                          1);
-            dgefa___cil_tmp31 = 1;
-            add_entryToSTable("dgefa___cil_tmp31", "Constant", & dgefa___cil_tmp31,
-                              & dgefa___cil_tmp31, 1);
-            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp27)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp28)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp29)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp30)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp31)",
+            dgefa___cil_tmp36 = 1;
+            add_entryToSTable("dgefa___cil_tmp36", "Constant", & dgefa___cil_tmp36,
+                              & dgefa___cil_tmp36, 1);
+            funcEntry("(int,daxpy_ur_n,variable,dgefa___cil_tmp32)#(int,daxpy_ur_da,variable,dgefa_t)#(int *,daxpy_ur_dx,array,dgefa___cil_tmp33)#(int,daxpy_ur_icx,variable,dgefa___cil_tmp34)#(int *,daxpy_ur_dy,array,dgefa___cil_tmp35)#(int,daxpy_ur_icy,variable,dgefa___cil_tmp36)",
                       "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-            daxpy_ur(dgefa___cil_tmp27, dgefa_t, dgefa___cil_tmp28, dgefa___cil_tmp29,
-                     dgefa___cil_tmp30, dgefa___cil_tmp31);
+            daxpy_ur(dgefa___cil_tmp32, dgefa_t, dgefa___cil_tmp33, dgefa___cil_tmp34,
+                     dgefa___cil_tmp35, dgefa___cil_tmp36);
             funcExit();
             dgefa_j ++;
             handleAssignmentSymbolically("dgefa_j", "(+ dgefa_j 1)", & dgefa_j, & dgefa_j,
@@ -16794,764 +16891,6 @@ void dgefa(int *dgefa_a , int dgefa_lda , int dgefa_n , int *dgefa_ipvt , int *d
   return;
 }
 }
-void dgesl(int *dgesl_a , int dgesl_lda , int dgesl_n , int *dgesl_ipvt , int *dgesl_b ,
-           int dgesl_job , int dgesl_roll ) 
-{ 
-  int dgesl_t ;
-  int dgesl_k ;
-  int dgesl_kb ;
-  int dgesl_l ;
-  int dgesl_nm1 ;
-  int dgesl_tmp ;
-  int dgesl_tmp___0 ;
-  int *dgesl___cil_tmp15 ;
-  int dgesl___cil_tmp16 ;
-  int *dgesl___cil_tmp17 ;
-  int dgesl___cil_tmp18 ;
-  int dgesl___cil_tmp19 ;
-  int *dgesl___cil_tmp20 ;
-  int dgesl___cil_tmp21 ;
-  int *dgesl___cil_tmp22 ;
-  int dgesl___cil_tmp23 ;
-  int dgesl___cil_tmp24 ;
-  int *dgesl___cil_tmp25 ;
-  int dgesl___cil_tmp26 ;
-  int *dgesl___cil_tmp27 ;
-  int dgesl___cil_tmp28 ;
-  int *dgesl___cil_tmp29 ;
-  int dgesl___cil_tmp30 ;
-  int *dgesl___cil_tmp31 ;
-  int dgesl___cil_tmp32 ;
-  int *dgesl___cil_tmp33 ;
-  int dgesl___cil_tmp34 ;
-  int *dgesl___cil_tmp35 ;
-  int dgesl___cil_tmp36 ;
-  int dgesl___cil_tmp37 ;
-  int *dgesl___cil_tmp38 ;
-  int dgesl___cil_tmp39 ;
-  int *dgesl___cil_tmp40 ;
-  int dgesl___cil_tmp41 ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  if (dgesl_roll >= 1) {
-    dgesl_nm1 = dgesl_n - 1;
-    handleAssignmentSymbolically("dgesl_nm1", "(- dgesl_n 1)", & dgesl_nm1, & dgesl_nm1,
-                                 1);
-    if (dgesl_job == 0) {
-      if (dgesl_nm1 >= 1) {
-        dgesl_k = 0;
-        add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
-        {
-        if (dgesl_k < dgesl_nm1) {
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt140", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          dgesl_t = *(dgesl_b + dgesl_l);
-          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b141", dgesl_b + dgesl_l,
-                                 dgesl_b + dgesl_l, 1);
-          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                       & *(dgesl_b + dgesl_l), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b142", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_k ++;
-          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                       1);
-        }
-        if (dgesl_k < dgesl_nm1) {
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt143", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          dgesl_t = *(dgesl_b + dgesl_l);
-          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b144", dgesl_b + dgesl_l,
-                                 dgesl_b + dgesl_l, 1);
-          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                       & *(dgesl_b + dgesl_l), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b145", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_k ++;
-          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                       1);
-        }
-        }
-      }
-      dgesl_kb = 0;
-      add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
-      {
-      if (dgesl_kb < dgesl_n) {
-        dgesl_k = dgesl_n - (dgesl_kb + 1);
-        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                     & dgesl_k, 1);
-        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b146", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a147",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_t = - *(dgesl_b + dgesl_k);
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b148", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
-                                     & dgesl_t, 1);
-        dgesl_kb ++;
-        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                     1);
-      }
-      if (dgesl_kb < dgesl_n) {
-        dgesl_k = dgesl_n - (dgesl_kb + 1);
-        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                     & dgesl_k, 1);
-        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b149", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a150",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_t = - *(dgesl_b + dgesl_k);
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b151", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
-                                     & dgesl_t, 1);
-        dgesl_kb ++;
-        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                     1);
-      }
-      }
-    } else {
-      dgesl_k = 0;
-      add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
-      {
-      if (dgesl_k < dgesl_n) {
-        dgesl___cil_tmp15 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp15", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp15, & dgesl___cil_tmp15, 1);
-        dgesl___cil_tmp16 = 1;
-        add_entryToSTable("dgesl___cil_tmp16", "Constant", & dgesl___cil_tmp16, & dgesl___cil_tmp16,
-                          1);
-        dgesl___cil_tmp17 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp17", "(+ dgesl_b 0)", & dgesl___cil_tmp17,
-                                     & dgesl___cil_tmp17, 1);
-        dgesl___cil_tmp18 = 1;
-        add_entryToSTable("dgesl___cil_tmp18", "Constant", & dgesl___cil_tmp18, & dgesl___cil_tmp18,
-                          1);
-        funcEntry("(int,ddot_r_n,variable,dgesl_k)#(int *,ddot_r_dx,array,dgesl___cil_tmp15)#(int,ddot_r_icx,variable,dgesl___cil_tmp16)#(int *,ddot_r_dy,array,dgesl___cil_tmp17)#(int,ddot_r_icy,variable,dgesl___cil_tmp18)",
-                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
-                  "ddot_r");
-        dgesl_t = ddot_r(dgesl_k, dgesl___cil_tmp15, dgesl___cil_tmp16, dgesl___cil_tmp17,
-                         dgesl___cil_tmp18);
-        funcExit();
-        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
-        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b152", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a153",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_k ++;
-        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                     1);
-      }
-      if (dgesl_k < dgesl_n) {
-        dgesl___cil_tmp15 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp15", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp15, & dgesl___cil_tmp15, 1);
-        dgesl___cil_tmp16 = 1;
-        add_entryToSTable("dgesl___cil_tmp16", "Constant", & dgesl___cil_tmp16, & dgesl___cil_tmp16,
-                          1);
-        dgesl___cil_tmp17 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp17", "(+ dgesl_b 0)", & dgesl___cil_tmp17,
-                                     & dgesl___cil_tmp17, 1);
-        dgesl___cil_tmp18 = 1;
-        add_entryToSTable("dgesl___cil_tmp18", "Constant", & dgesl___cil_tmp18, & dgesl___cil_tmp18,
-                          1);
-        funcEntry("(int,ddot_r_n,variable,dgesl_k)#(int *,ddot_r_dx,array,dgesl___cil_tmp15)#(int,ddot_r_icx,variable,dgesl___cil_tmp16)#(int *,ddot_r_dy,array,dgesl___cil_tmp17)#(int,ddot_r_icy,variable,dgesl___cil_tmp18)",
-                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
-                  "ddot_r");
-        dgesl_t = ddot_r(dgesl_k, dgesl___cil_tmp15, dgesl___cil_tmp16, dgesl___cil_tmp17,
-                         dgesl___cil_tmp18);
-        funcExit();
-        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
-        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b154", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a155",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_k ++;
-        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                     1);
-      }
-      }
-      if (dgesl_nm1 >= 1) {
-        dgesl_kb = 1;
-        add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
-        {
-        if (dgesl_kb < dgesl_nm1) {
-          dgesl_k = dgesl_n - (dgesl_kb + 1);
-          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                       & dgesl_k, 1);
-          dgesl___cil_tmp19 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp19", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp19, & dgesl___cil_tmp19, 1);
-          dgesl___cil_tmp20 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp20", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp20, & dgesl___cil_tmp20, 1);
-          dgesl___cil_tmp21 = 1;
-          add_entryToSTable("dgesl___cil_tmp21", "Constant", & dgesl___cil_tmp21,
-                            & dgesl___cil_tmp21, 1);
-          dgesl___cil_tmp22 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp22", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp22, & dgesl___cil_tmp22, 1);
-          dgesl___cil_tmp23 = 1;
-          add_entryToSTable("dgesl___cil_tmp23", "Constant", & dgesl___cil_tmp23,
-                            & dgesl___cil_tmp23, 1);
-          funcEntry("(int,ddot_r_n,variable,dgesl___cil_tmp19)#(int *,ddot_r_dx,array,dgesl___cil_tmp20)#(int,ddot_r_icx,variable,dgesl___cil_tmp21)#(int *,ddot_r_dy,array,dgesl___cil_tmp22)#(int,ddot_r_icy,variable,dgesl___cil_tmp23)",
-                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
-                    "ddot_r");
-          dgesl_tmp = ddot_r(dgesl___cil_tmp19, dgesl___cil_tmp20, dgesl___cil_tmp21,
-                             dgesl___cil_tmp22, dgesl___cil_tmp23);
-          funcExit();
-          add_entryToSTable("dgesl_tmp", ret_SymValue, ret_ConValue, & dgesl_tmp,
-                            1);
-          *(dgesl_b + dgesl_k) += dgesl_tmp;
-          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b156", dgesl_b + dgesl_k,
-                                 dgesl_b + dgesl_k, 1);
-          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp)",
-                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt157", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            dgesl_t = *(dgesl_b + dgesl_l);
-            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b158", dgesl_b + dgesl_l,
-                                   dgesl_b + dgesl_l, 1);
-            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                         & *(dgesl_b + dgesl_l), 1);
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b159", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_kb ++;
-          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                       1);
-        }
-        if (dgesl_kb < dgesl_nm1) {
-          dgesl_k = dgesl_n - (dgesl_kb + 1);
-          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                       & dgesl_k, 1);
-          dgesl___cil_tmp19 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp19", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp19, & dgesl___cil_tmp19, 1);
-          dgesl___cil_tmp20 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp20", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp20, & dgesl___cil_tmp20, 1);
-          dgesl___cil_tmp21 = 1;
-          add_entryToSTable("dgesl___cil_tmp21", "Constant", & dgesl___cil_tmp21,
-                            & dgesl___cil_tmp21, 1);
-          dgesl___cil_tmp22 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp22", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp22, & dgesl___cil_tmp22, 1);
-          dgesl___cil_tmp23 = 1;
-          add_entryToSTable("dgesl___cil_tmp23", "Constant", & dgesl___cil_tmp23,
-                            & dgesl___cil_tmp23, 1);
-          funcEntry("(int,ddot_r_n,variable,dgesl___cil_tmp19)#(int *,ddot_r_dx,array,dgesl___cil_tmp20)#(int,ddot_r_icx,variable,dgesl___cil_tmp21)#(int *,ddot_r_dy,array,dgesl___cil_tmp22)#(int,ddot_r_icy,variable,dgesl___cil_tmp23)",
-                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
-                    "ddot_r");
-          dgesl_tmp = ddot_r(dgesl___cil_tmp19, dgesl___cil_tmp20, dgesl___cil_tmp21,
-                             dgesl___cil_tmp22, dgesl___cil_tmp23);
-          funcExit();
-          add_entryToSTable("dgesl_tmp", ret_SymValue, ret_ConValue, & dgesl_tmp,
-                            1);
-          *(dgesl_b + dgesl_k) += dgesl_tmp;
-          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b160", dgesl_b + dgesl_k,
-                                 dgesl_b + dgesl_k, 1);
-          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp)",
-                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt161", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            dgesl_t = *(dgesl_b + dgesl_l);
-            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b162", dgesl_b + dgesl_l,
-                                   dgesl_b + dgesl_l, 1);
-            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                         & *(dgesl_b + dgesl_l), 1);
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b163", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_kb ++;
-          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                       1);
-        }
-        }
-      }
-    }
-  } else {
-    dgesl_nm1 = dgesl_n - 1;
-    handleAssignmentSymbolically("dgesl_nm1", "(- dgesl_n 1)", & dgesl_nm1, & dgesl_nm1,
-                                 1);
-    if (dgesl_job == 0) {
-      if (dgesl_nm1 >= 1) {
-        dgesl_k = 0;
-        add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
-        {
-        if (dgesl_k < dgesl_nm1) {
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt164", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          dgesl_t = *(dgesl_b + dgesl_l);
-          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b165", dgesl_b + dgesl_l,
-                                 dgesl_b + dgesl_l, 1);
-          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                       & *(dgesl_b + dgesl_l), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b166", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl___cil_tmp24 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp24", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp24, & dgesl___cil_tmp24, 1);
-          dgesl___cil_tmp25 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp25", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp25, & dgesl___cil_tmp25, 1);
-          dgesl___cil_tmp26 = 1;
-          add_entryToSTable("dgesl___cil_tmp26", "Constant", & dgesl___cil_tmp26,
-                            & dgesl___cil_tmp26, 1);
-          dgesl___cil_tmp27 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp27", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp27, & dgesl___cil_tmp27, 1);
-          dgesl___cil_tmp28 = 1;
-          add_entryToSTable("dgesl___cil_tmp28", "Constant", & dgesl___cil_tmp28,
-                            & dgesl___cil_tmp28, 1);
-          funcEntry("(int,daxpy_ur_n,variable,dgesl___cil_tmp24)#(int,daxpy_ur_da,variable,dgesl_t)#(int *,daxpy_ur_dx,array,dgesl___cil_tmp25)#(int,daxpy_ur_icx,variable,dgesl___cil_tmp26)#(int *,daxpy_ur_dy,array,dgesl___cil_tmp27)#(int,daxpy_ur_icy,variable,dgesl___cil_tmp28)",
-                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-          daxpy_ur(dgesl___cil_tmp24, dgesl_t, dgesl___cil_tmp25, dgesl___cil_tmp26,
-                   dgesl___cil_tmp27, dgesl___cil_tmp28);
-          funcExit();
-          dgesl_k ++;
-          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                       1);
-        }
-        if (dgesl_k < dgesl_nm1) {
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt167", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          dgesl_t = *(dgesl_b + dgesl_l);
-          addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-          add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b168", dgesl_b + dgesl_l,
-                                 dgesl_b + dgesl_l, 1);
-          handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                       & *(dgesl_b + dgesl_l), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b169", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl___cil_tmp24 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp24", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp24, & dgesl___cil_tmp24, 1);
-          dgesl___cil_tmp25 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp25", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp25, & dgesl___cil_tmp25, 1);
-          dgesl___cil_tmp26 = 1;
-          add_entryToSTable("dgesl___cil_tmp26", "Constant", & dgesl___cil_tmp26,
-                            & dgesl___cil_tmp26, 1);
-          dgesl___cil_tmp27 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp27", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp27, & dgesl___cil_tmp27, 1);
-          dgesl___cil_tmp28 = 1;
-          add_entryToSTable("dgesl___cil_tmp28", "Constant", & dgesl___cil_tmp28,
-                            & dgesl___cil_tmp28, 1);
-          funcEntry("(int,daxpy_ur_n,variable,dgesl___cil_tmp24)#(int,daxpy_ur_da,variable,dgesl_t)#(int *,daxpy_ur_dx,array,dgesl___cil_tmp25)#(int,daxpy_ur_icx,variable,dgesl___cil_tmp26)#(int *,daxpy_ur_dy,array,dgesl___cil_tmp27)#(int,daxpy_ur_icy,variable,dgesl___cil_tmp28)",
-                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-          daxpy_ur(dgesl___cil_tmp24, dgesl_t, dgesl___cil_tmp25, dgesl___cil_tmp26,
-                   dgesl___cil_tmp27, dgesl___cil_tmp28);
-          funcExit();
-          dgesl_k ++;
-          handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                       1);
-        }
-        }
-      }
-      dgesl_kb = 0;
-      add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
-      {
-      if (dgesl_kb < dgesl_n) {
-        dgesl_k = dgesl_n - (dgesl_kb + 1);
-        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                     & dgesl_k, 1);
-        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b170", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a171",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_t = - *(dgesl_b + dgesl_k);
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b172", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
-                                     & dgesl_t, 1);
-        dgesl___cil_tmp29 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp29", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp29, & dgesl___cil_tmp29, 1);
-        dgesl___cil_tmp30 = 1;
-        add_entryToSTable("dgesl___cil_tmp30", "Constant", & dgesl___cil_tmp30, & dgesl___cil_tmp30,
-                          1);
-        dgesl___cil_tmp31 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp31", "(+ dgesl_b 0)", & dgesl___cil_tmp31,
-                                     & dgesl___cil_tmp31, 1);
-        dgesl___cil_tmp32 = 1;
-        add_entryToSTable("dgesl___cil_tmp32", "Constant", & dgesl___cil_tmp32, & dgesl___cil_tmp32,
-                          1);
-        funcEntry("(int,daxpy_ur_n,variable,dgesl_k)#(int,daxpy_ur_da,variable,dgesl_t)#(int *,daxpy_ur_dx,array,dgesl___cil_tmp29)#(int,daxpy_ur_icx,variable,dgesl___cil_tmp30)#(int *,daxpy_ur_dy,array,dgesl___cil_tmp31)#(int,daxpy_ur_icy,variable,dgesl___cil_tmp32)",
-                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-        daxpy_ur(dgesl_k, dgesl_t, dgesl___cil_tmp29, dgesl___cil_tmp30, dgesl___cil_tmp31,
-                 dgesl___cil_tmp32);
-        funcExit();
-        dgesl_kb ++;
-        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                     1);
-      }
-      if (dgesl_kb < dgesl_n) {
-        dgesl_k = dgesl_n - (dgesl_kb + 1);
-        handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                     & dgesl_k, 1);
-        *(dgesl_b + dgesl_k) /= *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b173", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a174",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ *(dgesl_b + dgesl_k) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_t = - *(dgesl_b + dgesl_k);
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b175", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        handleAssignmentSymbolically("dgesl_t", "(- *(dgesl_b + dgesl_k))", & dgesl_t,
-                                     & dgesl_t, 1);
-        dgesl___cil_tmp29 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp29", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp29, & dgesl___cil_tmp29, 1);
-        dgesl___cil_tmp30 = 1;
-        add_entryToSTable("dgesl___cil_tmp30", "Constant", & dgesl___cil_tmp30, & dgesl___cil_tmp30,
-                          1);
-        dgesl___cil_tmp31 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp31", "(+ dgesl_b 0)", & dgesl___cil_tmp31,
-                                     & dgesl___cil_tmp31, 1);
-        dgesl___cil_tmp32 = 1;
-        add_entryToSTable("dgesl___cil_tmp32", "Constant", & dgesl___cil_tmp32, & dgesl___cil_tmp32,
-                          1);
-        funcEntry("(int,daxpy_ur_n,variable,dgesl_k)#(int,daxpy_ur_da,variable,dgesl_t)#(int *,daxpy_ur_dx,array,dgesl___cil_tmp29)#(int,daxpy_ur_icx,variable,dgesl___cil_tmp30)#(int *,daxpy_ur_dy,array,dgesl___cil_tmp31)#(int,daxpy_ur_icy,variable,dgesl___cil_tmp32)",
-                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
-        daxpy_ur(dgesl_k, dgesl_t, dgesl___cil_tmp29, dgesl___cil_tmp30, dgesl___cil_tmp31,
-                 dgesl___cil_tmp32);
-        funcExit();
-        dgesl_kb ++;
-        handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                     1);
-      }
-      }
-    } else {
-      dgesl_k = 0;
-      add_entryToSTable("dgesl_k", "Constant", & dgesl_k, & dgesl_k, 1);
-      {
-      if (dgesl_k < dgesl_n) {
-        dgesl___cil_tmp33 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp33", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp33, & dgesl___cil_tmp33, 1);
-        dgesl___cil_tmp34 = 1;
-        add_entryToSTable("dgesl___cil_tmp34", "Constant", & dgesl___cil_tmp34, & dgesl___cil_tmp34,
-                          1);
-        dgesl___cil_tmp35 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp35", "(+ dgesl_b 0)", & dgesl___cil_tmp35,
-                                     & dgesl___cil_tmp35, 1);
-        dgesl___cil_tmp36 = 1;
-        add_entryToSTable("dgesl___cil_tmp36", "Constant", & dgesl___cil_tmp36, & dgesl___cil_tmp36,
-                          1);
-        funcEntry("(int,ddot_ur_n,variable,dgesl_k)#(int *,ddot_ur_dx,array,dgesl___cil_tmp33)#(int,ddot_ur_icx,variable,dgesl___cil_tmp34)#(int *,ddot_ur_dy,array,dgesl___cil_tmp35)#(int,ddot_ur_icy,variable,dgesl___cil_tmp36)",
-                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
-                  "ddot_ur");
-        dgesl_t = ddot_ur(dgesl_k, dgesl___cil_tmp33, dgesl___cil_tmp34, dgesl___cil_tmp35,
-                          dgesl___cil_tmp36);
-        funcExit();
-        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
-        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b176", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a177",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_k ++;
-        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                     1);
-      }
-      if (dgesl_k < dgesl_n) {
-        dgesl___cil_tmp33 = dgesl_a + dgesl_lda * dgesl_k;
-        handleAssignmentSymbolically("dgesl___cil_tmp33", "(+ dgesl_a (* dgesl_lda dgesl_k))",
-                                     & dgesl___cil_tmp33, & dgesl___cil_tmp33, 1);
-        dgesl___cil_tmp34 = 1;
-        add_entryToSTable("dgesl___cil_tmp34", "Constant", & dgesl___cil_tmp34, & dgesl___cil_tmp34,
-                          1);
-        dgesl___cil_tmp35 = dgesl_b + 0;
-        handleAssignmentSymbolically("dgesl___cil_tmp35", "(+ dgesl_b 0)", & dgesl___cil_tmp35,
-                                     & dgesl___cil_tmp35, 1);
-        dgesl___cil_tmp36 = 1;
-        add_entryToSTable("dgesl___cil_tmp36", "Constant", & dgesl___cil_tmp36, & dgesl___cil_tmp36,
-                          1);
-        funcEntry("(int,ddot_ur_n,variable,dgesl_k)#(int *,ddot_ur_dx,array,dgesl___cil_tmp33)#(int,ddot_ur_icx,variable,dgesl___cil_tmp34)#(int *,ddot_ur_dy,array,dgesl___cil_tmp35)#(int,ddot_ur_icy,variable,dgesl___cil_tmp36)",
-                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
-                  "ddot_ur");
-        dgesl_t = ddot_ur(dgesl_k, dgesl___cil_tmp33, dgesl___cil_tmp34, dgesl___cil_tmp35,
-                          dgesl___cil_tmp36);
-        funcExit();
-        add_entryToSTable("dgesl_t", ret_SymValue, ret_ConValue, & dgesl_t, 1);
-        *(dgesl_b + dgesl_k) = (*(dgesl_b + dgesl_k) - dgesl_t) / *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k));
-        addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-        add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b178", dgesl_b + dgesl_k,
-                               dgesl_b + dgesl_k, 1);
-        addEntryToVariableTable("*(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k))", dgesl_lda * dgesl_k + dgesl_k);
-        add_entryToArraySTable("dgesl_a", dgesl_lda * dgesl_k + dgesl_k, "dgesl_a179",
-                               dgesl_a + (dgesl_lda * dgesl_k + dgesl_k), dgesl_a + (dgesl_lda * dgesl_k + dgesl_k),
-                               1);
-        handleArraySymbolically("dgesl_b", dgesl_k, "(/ (- *(dgesl_b + dgesl_k) dgesl_t) *(dgesl_a + (dgesl_lda * dgesl_k + dgesl_k)))",
-                                dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-        dgesl_k ++;
-        handleAssignmentSymbolically("dgesl_k", "(+ dgesl_k 1)", & dgesl_k, & dgesl_k,
-                                     1);
-      }
-      }
-      if (dgesl_nm1 >= 1) {
-        dgesl_kb = 1;
-        add_entryToSTable("dgesl_kb", "Constant", & dgesl_kb, & dgesl_kb, 1);
-        {
-        if (dgesl_kb < dgesl_nm1) {
-          dgesl_k = dgesl_n - (dgesl_kb + 1);
-          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                       & dgesl_k, 1);
-          dgesl___cil_tmp37 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp37", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp37, & dgesl___cil_tmp37, 1);
-          dgesl___cil_tmp38 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp38", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp38, & dgesl___cil_tmp38, 1);
-          dgesl___cil_tmp39 = 1;
-          add_entryToSTable("dgesl___cil_tmp39", "Constant", & dgesl___cil_tmp39,
-                            & dgesl___cil_tmp39, 1);
-          dgesl___cil_tmp40 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp40", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp40, & dgesl___cil_tmp40, 1);
-          dgesl___cil_tmp41 = 1;
-          add_entryToSTable("dgesl___cil_tmp41", "Constant", & dgesl___cil_tmp41,
-                            & dgesl___cil_tmp41, 1);
-          funcEntry("(int,ddot_ur_n,variable,dgesl___cil_tmp37)#(int *,ddot_ur_dx,array,dgesl___cil_tmp38)#(int,ddot_ur_icx,variable,dgesl___cil_tmp39)#(int *,ddot_ur_dy,array,dgesl___cil_tmp40)#(int,ddot_ur_icy,variable,dgesl___cil_tmp41)",
-                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
-                    "ddot_ur");
-          dgesl_tmp___0 = ddot_ur(dgesl___cil_tmp37, dgesl___cil_tmp38, dgesl___cil_tmp39,
-                                  dgesl___cil_tmp40, dgesl___cil_tmp41);
-          funcExit();
-          add_entryToSTable("dgesl_tmp___0", ret_SymValue, ret_ConValue, & dgesl_tmp___0,
-                            1);
-          *(dgesl_b + dgesl_k) += dgesl_tmp___0;
-          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b180", dgesl_b + dgesl_k,
-                                 dgesl_b + dgesl_k, 1);
-          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp___0)",
-                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt181", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            dgesl_t = *(dgesl_b + dgesl_l);
-            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b182", dgesl_b + dgesl_l,
-                                   dgesl_b + dgesl_l, 1);
-            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                         & *(dgesl_b + dgesl_l), 1);
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b183", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_kb ++;
-          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                       1);
-        }
-        if (dgesl_kb < dgesl_nm1) {
-          dgesl_k = dgesl_n - (dgesl_kb + 1);
-          handleAssignmentSymbolically("dgesl_k", "(- dgesl_n (+ dgesl_kb 1))", & dgesl_k,
-                                       & dgesl_k, 1);
-          dgesl___cil_tmp37 = dgesl_n - (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp37", "(- dgesl_n (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp37, & dgesl___cil_tmp37, 1);
-          dgesl___cil_tmp38 = dgesl_a + ((dgesl_lda * dgesl_k + dgesl_k) + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp38", "(+ dgesl_a (+ (+ (* dgesl_lda dgesl_k) dgesl_k) 1))",
-                                       & dgesl___cil_tmp38, & dgesl___cil_tmp38, 1);
-          dgesl___cil_tmp39 = 1;
-          add_entryToSTable("dgesl___cil_tmp39", "Constant", & dgesl___cil_tmp39,
-                            & dgesl___cil_tmp39, 1);
-          dgesl___cil_tmp40 = dgesl_b + (dgesl_k + 1);
-          handleAssignmentSymbolically("dgesl___cil_tmp40", "(+ dgesl_b (+ dgesl_k 1))",
-                                       & dgesl___cil_tmp40, & dgesl___cil_tmp40, 1);
-          dgesl___cil_tmp41 = 1;
-          add_entryToSTable("dgesl___cil_tmp41", "Constant", & dgesl___cil_tmp41,
-                            & dgesl___cil_tmp41, 1);
-          funcEntry("(int,ddot_ur_n,variable,dgesl___cil_tmp37)#(int *,ddot_ur_dx,array,dgesl___cil_tmp38)#(int,ddot_ur_icx,variable,dgesl___cil_tmp39)#(int *,ddot_ur_dy,array,dgesl___cil_tmp40)#(int,ddot_ur_icy,variable,dgesl___cil_tmp41)",
-                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
-                    "ddot_ur");
-          dgesl_tmp___0 = ddot_ur(dgesl___cil_tmp37, dgesl___cil_tmp38, dgesl___cil_tmp39,
-                                  dgesl___cil_tmp40, dgesl___cil_tmp41);
-          funcExit();
-          add_entryToSTable("dgesl_tmp___0", ret_SymValue, ret_ConValue, & dgesl_tmp___0,
-                            1);
-          *(dgesl_b + dgesl_k) += dgesl_tmp___0;
-          addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b184", dgesl_b + dgesl_k,
-                                 dgesl_b + dgesl_k, 1);
-          handleArraySymbolically("dgesl_b", dgesl_k, "(+ *(dgesl_b + dgesl_k) dgesl_tmp___0)",
-                                  dgesl_b + dgesl_k, dgesl_b + dgesl_k, 1);
-          dgesl_l = *(dgesl_ipvt + dgesl_k);
-          addEntryToVariableTable("*(dgesl_ipvt + dgesl_k)", dgesl_k);
-          add_entryToArraySTable("dgesl_ipvt", dgesl_k, "dgesl_ipvt185", dgesl_ipvt + dgesl_k,
-                                 dgesl_ipvt + dgesl_k, 1);
-          handleAssignmentSymbolically("dgesl_l", "*(dgesl_ipvt + dgesl_k)", & *(dgesl_ipvt + dgesl_k),
-                                       & *(dgesl_ipvt + dgesl_k), 1);
-          if (! (dgesl_l == dgesl_k)) {
-            dgesl_t = *(dgesl_b + dgesl_l);
-            addEntryToVariableTable("*(dgesl_b + dgesl_l)", dgesl_l);
-            add_entryToArraySTable("dgesl_b", dgesl_l, "dgesl_b186", dgesl_b + dgesl_l,
-                                   dgesl_b + dgesl_l, 1);
-            handleAssignmentSymbolically("dgesl_t", "*(dgesl_b + dgesl_l)", & *(dgesl_b + dgesl_l),
-                                         & *(dgesl_b + dgesl_l), 1);
-            *(dgesl_b + dgesl_l) = *(dgesl_b + dgesl_k);
-            addEntryToVariableTable("*(dgesl_b + dgesl_k)", dgesl_k);
-            add_entryToArraySTable("dgesl_b", dgesl_k, "dgesl_b187", dgesl_b + dgesl_k,
-                                   dgesl_b + dgesl_k, 1);
-            handleArraySymbolically("dgesl_b", dgesl_l, "*(dgesl_b + dgesl_k)", dgesl_b + dgesl_l,
-                                    dgesl_b + dgesl_l, 1);
-            *(dgesl_b + dgesl_k) = dgesl_t;
-            handleArraySymbolically("dgesl_b", dgesl_k, "dgesl_t", dgesl_b + dgesl_k,
-                                    dgesl_b + dgesl_k, 1);
-          }
-          dgesl_kb ++;
-          handleAssignmentSymbolically("dgesl_kb", "(+ dgesl_kb 1)", & dgesl_kb, & dgesl_kb,
-                                       1);
-        }
-        }
-      }
-    }
-  }
-  return;
-}
-}
 void createCDG(void) 
 { 
 
@@ -17559,55 +16898,160 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  setArray(1, "(<= n 0)");
+  setArray(1, "(>= roll 1)");
   addtoCDGnode(2, 1, 1);
-  addtoCDGnode(3, 1, 0);
-  setArray(3, "(= da 0)");
-  addtoCDGnode(27, 0, 1);
+  addtoCDGnode(42, 1, 0);
+  addtoCDGnode(3, 1, 1);
+  setArray(3, "(= job 0)");
   addtoCDGnode(4, 3, 1);
-  addtoCDGnode(5, 3, 0);
-  setArray(5, "(! (= icx 1))");
-  addtoCDGnode(27, 0, 1);
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(7, 5, 0);
-  setArray(7, "(! (= icy 1))");
+  setArray(4, "(>= nm1 1)");
+  addtoCDGnode(23, 3, 0);
+  addtoCDGnode(5, 4, 1);
+  addtoCDGnode(17, 3, 1);
+  addtoCDGnode(6, 4, 1);
+  addtoCDGnode(7, 4, 1);
+  setArray(7, "(< k nm1)");
   addtoCDGnode(8, 7, 1);
-  addtoCDGnode(8, 7, 1);
-  addtoCDGnode(20, 7, 0);
+  addtoCDGnode(12, 4, 1);
+  setArray(12, "(< k nm1)");
   addtoCDGnode(9, 7, 1);
-  setArray(9, "(< icx 0)");
+  setArray(9, "(! (= l k))");
   addtoCDGnode(10, 9, 1);
   addtoCDGnode(11, 7, 1);
-  setArray(11, "(< icy 0)");
   addtoCDGnode(11, 7, 1);
-  setArray(11, "(< icy 0)");
-  addtoCDGnode(12, 11, 1);
-  addtoCDGnode(13, 7, 1);
-  addtoCDGnode(13, 7, 1);
-  addtoCDGnode(14, 7, 1);
-  addtoCDGnode(15, 7, 1);
-  setArray(15, "(< i___0 n)");
-  addtoCDGnode(16, 15, 1);
-  addtoCDGnode(17, 7, 1);
-  setArray(17, "(< i___0 n)");
-  addtoCDGnode(17, 7, 1);
-  setArray(17, "(< i___0 n)");
-  addtoCDGnode(18, 17, 1);
-  addtoCDGnode(19, 7, 1);
-  addtoCDGnode(19, 7, 1);
-  addtoCDGnode(27, 0, 1);
-  addtoCDGnode(21, 7, 0);
-  addtoCDGnode(22, 7, 0);
-  setArray(22, "(< i___0 n)");
-  addtoCDGnode(23, 22, 1);
-  addtoCDGnode(24, 7, 0);
-  setArray(24, "(< i___0 n)");
-  addtoCDGnode(24, 7, 0);
-  setArray(24, "(< i___0 n)");
-  addtoCDGnode(25, 24, 1);
-  addtoCDGnode(26, 7, 0);
-  addtoCDGnode(26, 7, 0);
-  addtoCDGnode(27, 0, 1);
+  addtoCDGnode(12, 4, 1);
+  setArray(12, "(< k nm1)");
+  addtoCDGnode(13, 12, 1);
+  addtoCDGnode(17, 3, 1);
+  addtoCDGnode(14, 12, 1);
+  setArray(14, "(! (= l k))");
+  addtoCDGnode(15, 14, 1);
+  addtoCDGnode(16, 12, 1);
+  addtoCDGnode(16, 12, 1);
+  addtoCDGnode(17, 3, 1);
+  addtoCDGnode(18, 3, 1);
+  addtoCDGnode(19, 3, 1);
+  setArray(19, "(< kb n)");
+  addtoCDGnode(20, 19, 1);
+  addtoCDGnode(21, 3, 1);
+  setArray(21, "(< kb n)");
+  addtoCDGnode(21, 3, 1);
+  setArray(21, "(< kb n)");
+  addtoCDGnode(22, 21, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(24, 3, 0);
+  addtoCDGnode(25, 3, 0);
+  setArray(25, "(< k n)");
+  addtoCDGnode(26, 25, 1);
+  addtoCDGnode(27, 3, 0);
+  setArray(27, "(< k n)");
+  addtoCDGnode(27, 3, 0);
+  setArray(27, "(< k n)");
+  addtoCDGnode(28, 27, 1);
+  addtoCDGnode(29, 3, 0);
+  setArray(29, "(>= nm1 1)");
+  addtoCDGnode(29, 3, 0);
+  setArray(29, "(>= nm1 1)");
+  addtoCDGnode(30, 29, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(31, 29, 1);
+  addtoCDGnode(32, 29, 1);
+  setArray(32, "(< kb nm1)");
+  addtoCDGnode(33, 32, 1);
+  addtoCDGnode(37, 29, 1);
+  setArray(37, "(< kb nm1)");
+  addtoCDGnode(34, 32, 1);
+  setArray(34, "(! (= l k))");
+  addtoCDGnode(35, 34, 1);
+  addtoCDGnode(36, 32, 1);
+  addtoCDGnode(36, 32, 1);
+  addtoCDGnode(37, 29, 1);
+  setArray(37, "(< kb nm1)");
+  addtoCDGnode(38, 37, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(39, 37, 1);
+  setArray(39, "(! (= l k))");
+  addtoCDGnode(40, 39, 1);
+  addtoCDGnode(41, 37, 1);
+  addtoCDGnode(41, 37, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(43, 1, 0);
+  setArray(43, "(= job 0)");
+  addtoCDGnode(44, 43, 1);
+  setArray(44, "(>= nm1 1)");
+  addtoCDGnode(63, 43, 0);
+  addtoCDGnode(45, 44, 1);
+  addtoCDGnode(57, 43, 1);
+  addtoCDGnode(46, 44, 1);
+  addtoCDGnode(47, 44, 1);
+  setArray(47, "(< k nm1)");
+  addtoCDGnode(48, 47, 1);
+  addtoCDGnode(52, 44, 1);
+  setArray(52, "(< k nm1)");
+  addtoCDGnode(49, 47, 1);
+  setArray(49, "(! (= l k))");
+  addtoCDGnode(50, 49, 1);
+  addtoCDGnode(51, 47, 1);
+  addtoCDGnode(51, 47, 1);
+  addtoCDGnode(52, 44, 1);
+  setArray(52, "(< k nm1)");
+  addtoCDGnode(53, 52, 1);
+  addtoCDGnode(57, 43, 1);
+  addtoCDGnode(54, 52, 1);
+  setArray(54, "(! (= l k))");
+  addtoCDGnode(55, 54, 1);
+  addtoCDGnode(56, 52, 1);
+  addtoCDGnode(56, 52, 1);
+  addtoCDGnode(57, 43, 1);
+  addtoCDGnode(58, 43, 1);
+  addtoCDGnode(59, 43, 1);
+  setArray(59, "(< kb n)");
+  addtoCDGnode(60, 59, 1);
+  addtoCDGnode(61, 43, 1);
+  setArray(61, "(< kb n)");
+  addtoCDGnode(61, 43, 1);
+  setArray(61, "(< kb n)");
+  addtoCDGnode(62, 61, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(64, 43, 0);
+  addtoCDGnode(65, 43, 0);
+  setArray(65, "(< k n)");
+  addtoCDGnode(66, 65, 1);
+  addtoCDGnode(67, 43, 0);
+  setArray(67, "(< k n)");
+  addtoCDGnode(67, 43, 0);
+  setArray(67, "(< k n)");
+  addtoCDGnode(68, 67, 1);
+  addtoCDGnode(69, 43, 0);
+  setArray(69, "(>= nm1 1)");
+  addtoCDGnode(69, 43, 0);
+  setArray(69, "(>= nm1 1)");
+  addtoCDGnode(70, 69, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(71, 69, 1);
+  addtoCDGnode(72, 69, 1);
+  setArray(72, "(< kb nm1)");
+  addtoCDGnode(73, 72, 1);
+  addtoCDGnode(77, 69, 1);
+  setArray(77, "(< kb nm1)");
+  addtoCDGnode(74, 72, 1);
+  setArray(74, "(! (= l k))");
+  addtoCDGnode(75, 74, 1);
+  addtoCDGnode(76, 72, 1);
+  addtoCDGnode(76, 72, 1);
+  addtoCDGnode(77, 69, 1);
+  setArray(77, "(< kb nm1)");
+  addtoCDGnode(78, 77, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(79, 77, 1);
+  setArray(79, "(! (= l k))");
+  addtoCDGnode(80, 79, 1);
+  addtoCDGnode(81, 77, 1);
+  addtoCDGnode(81, 77, 1);
+  addtoCDGnode(82, 0, 1);
+  addtoCDGnode(83, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -17615,10 +17059,30 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(15, 15);
-  isCopyOf(17, 15);
-  isCopyOf(22, 22);
-  isCopyOf(24, 22);
+  isCopyOf(65, 65);
+  isCopyOf(67, 65);
+  isCopyOf(32, 32);
+  isCopyOf(37, 32);
+  isCopyOf(47, 47);
+  isCopyOf(52, 47);
+  isCopyOf(72, 72);
+  isCopyOf(77, 72);
+  isCopyOf(74, 74);
+  isCopyOf(79, 74);
+  isCopyOf(9, 9);
+  isCopyOf(14, 9);
+  isCopyOf(34, 34);
+  isCopyOf(39, 34);
+  isCopyOf(59, 59);
+  isCopyOf(61, 59);
+  isCopyOf(25, 25);
+  isCopyOf(27, 25);
+  isCopyOf(49, 49);
+  isCopyOf(54, 49);
+  isCopyOf(19, 19);
+  isCopyOf(21, 19);
+  isCopyOf(7, 7);
+  isCopyOf(12, 7);
 }
 }
 void createSidTable(void) 
@@ -17626,389 +17090,1445 @@ void createSidTable(void)
 
 
   {
-  add_condition(1, "(<= n 0)", "(not (<= n 0))", 0, 0);
-  add_condition(3, "(= da 0)", "(not (= da 0))", 0, 0);
-  add_condition(9, "(< icx 0)", "(not (< icx 0))", 0, 0);
-  add_condition(11, "(< icy 0)", "(not (< icy 0))", 0, 0);
-  add_condition(15, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
-  add_condition(17, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
-  add_condition(7, "(! (= icy 1))", "(not (! (= icy 1)))", 0, 0);
-  add_condition(5, "(! (= icx 1))", "(not (! (= icx 1)))", 0, 0);
-  add_condition(22, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
-  add_condition(24, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
+  add_condition(9, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(7, "(< k nm1)", "(not (< k nm1))", 0, 0);
+  add_condition(14, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(12, "(< k nm1)", "(not (< k nm1))", 0, 0);
+  add_condition(4, "(>= nm1 1)", "(not (>= nm1 1))", 0, 0);
+  add_condition(19, "(< kb n)", "(not (< kb n))", 0, 0);
+  add_condition(21, "(< kb n)", "(not (< kb n))", 0, 0);
+  add_condition(25, "(< k n)", "(not (< k n))", 0, 0);
+  add_condition(27, "(< k n)", "(not (< k n))", 0, 0);
+  add_condition(34, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(32, "(< kb nm1)", "(not (< kb nm1))", 0, 0);
+  add_condition(39, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(37, "(< kb nm1)", "(not (< kb nm1))", 0, 0);
+  add_condition(29, "(>= nm1 1)", "(not (>= nm1 1))", 0, 0);
+  add_condition(3, "(= job 0)", "(not (= job 0))", 0, 0);
+  add_condition(49, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(47, "(< k nm1)", "(not (< k nm1))", 0, 0);
+  add_condition(54, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(52, "(< k nm1)", "(not (< k nm1))", 0, 0);
+  add_condition(44, "(>= nm1 1)", "(not (>= nm1 1))", 0, 0);
+  add_condition(59, "(< kb n)", "(not (< kb n))", 0, 0);
+  add_condition(61, "(< kb n)", "(not (< kb n))", 0, 0);
+  add_condition(65, "(< k n)", "(not (< k n))", 0, 0);
+  add_condition(67, "(< k n)", "(not (< k n))", 0, 0);
+  add_condition(74, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(72, "(< kb nm1)", "(not (< kb nm1))", 0, 0);
+  add_condition(79, "(not (= l k))", "(= l k)", 0, 0);
+  add_condition(77, "(< kb nm1)", "(not (< kb nm1))", 0, 0);
+  add_condition(69, "(>= nm1 1)", "(not (>= nm1 1))", 0, 0);
+  add_condition(43, "(= job 0)", "(not (= job 0))", 0, 0);
+  add_condition(1, "(>= roll 1)", "(not (>= roll 1))", 0, 0);
 }
 }
 struct arguments {
    int *mempool ;
+   int *a ;
+   int lda ;
    int n ;
-   int da ;
-   int *dx ;
-   int icx ;
-   int *dy ;
-   int icy ;
+   int *ipvt ;
+   int *b ;
+   int job ;
+   int roll ;
 };
 struct arguments argvar ;
-void daxpy_r(int *global_mempool , int n , int da , int *dx , int icx , int *dy ,
-             int icy ) 
+void dgesl(int *global_mempool , int *a , int lda , int n , int *ipvt , int *b , int job ,
+           int roll ) 
 { 
-  int i___0 ;
-  int ix ;
-  int iy ;
+  int t ;
+  int k ;
+  int kb ;
+  int l ;
+  int nm1 ;
+  int tmp ;
+  int tmp___0 ;
+  int __cil_tmp15 ;
+  int *__cil_tmp16 ;
+  int __cil_tmp17 ;
+  int *__cil_tmp18 ;
+  int __cil_tmp19 ;
+  int *__cil_tmp20 ;
+  int __cil_tmp21 ;
+  int *__cil_tmp22 ;
+  int __cil_tmp23 ;
+  int *__cil_tmp24 ;
+  int __cil_tmp25 ;
+  int *__cil_tmp26 ;
+  int __cil_tmp27 ;
+  int __cil_tmp28 ;
+  int *__cil_tmp29 ;
+  int __cil_tmp30 ;
+  int *__cil_tmp31 ;
+  int __cil_tmp32 ;
+  int __cil_tmp33 ;
+  int *__cil_tmp34 ;
+  int __cil_tmp35 ;
+  int *__cil_tmp36 ;
+  int __cil_tmp37 ;
+  int *__cil_tmp38 ;
+  int __cil_tmp39 ;
+  int *__cil_tmp40 ;
+  int __cil_tmp41 ;
+  int *__cil_tmp42 ;
+  int __cil_tmp43 ;
+  int *__cil_tmp44 ;
+  int __cil_tmp45 ;
+  int __cil_tmp46 ;
+  int *__cil_tmp47 ;
+  int __cil_tmp48 ;
+  int *__cil_tmp49 ;
+  int __cil_tmp50 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp12 ;
-  char *__cil_tmp13 ;
+  int __cil_tmp53 ;
+  char *__cil_tmp54 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
   mempool = global_mempool;
-  __cil_tmp13 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp13", "Function", & __cil_tmp13, & __cil_tmp13, -1);
-  sprintf(__cil_tmp13, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-          mempool[0], mempool[1], mempool[2], mempool[3], mempool[4], n, da, dx[0],
-          dx[1], dx[2], dx[3], dx[4], icx, dy[0], dy[1], dy[2], dy[3], dy[4], icy);
-  printTestCase("linpack_daxpy_r_1435704041.tc", __cil_tmp13);
-  add_entryToSTable("icy", "s6", & icy, & icy, 1);
-  add_entryToArraySTable("dy", 0, "dy_0", dy, dy, 1);
-  add_entryToSTable("icx", "s4", & icx, & icx, 1);
-  add_entryToArraySTable("dx", 0, "dx_0", dx, dx, 1);
-  add_entryToSTable("da", "s2", & da, & da, 1);
-  add_entryToSTable("n", "s1", & n, & n, 1);
+  __cil_tmp54 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp54", "Function", & __cil_tmp54, & __cil_tmp54, -1);
+  sprintf(__cil_tmp54, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+          mempool[0], mempool[1], mempool[2], mempool[3], mempool[4], a[0], a[1],
+          a[2], a[3], a[4], lda, n, ipvt[0], ipvt[1], ipvt[2], ipvt[3], ipvt[4], b[0],
+          b[1], b[2], b[3], b[4], job, roll);
+  printTestCase("linpack_dgesl_1435704798.tc", __cil_tmp54);
+  add_entryToSTable("roll", "s7", & roll, & roll, 1);
+  add_entryToSTable("job", "s6", & job, & job, 1);
+  add_entryToArraySTable("b", 0, "b_0", b, b, 1);
+  add_entryToArraySTable("ipvt", 0, "ipvt_0", ipvt, ipvt, 1);
+  add_entryToSTable("n", "s3", & n, & n, 1);
+  add_entryToSTable("lda", "s2", & lda, & lda, 1);
+  add_entryToArraySTable("a", 0, "a_0", a, a, 1);
   add_entryToArraySTable("mempool", 0, "mempool_0", mempool, mempool, 1);
   {
-  exp_outcome = n <= 0;
-  handleAssignmentSymbolically("exp_outcome", "(<= n 0)", & exp_outcome, & exp_outcome,
+  exp_outcome = roll >= 1;
+  handleAssignmentSymbolically("exp_outcome", "(>= roll 1)", & exp_outcome, & exp_outcome,
                                1);
   overall_outcome = (int )getConditionalOutcome(1, exp_outcome);
   if (overall_outcome) {
     setBranchInfo(1, 1, 0);
-    setTrueExpr(1, "(<= n 0)");
-    setFalseExpr(1, "(not (<= n 0))");
-    addToTree(1, 1, "(<= n 0)", "(not (<= n 0))", 0, 1);
+    setTrueExpr(1, "(>= roll 1)");
+    setFalseExpr(1, "(not (>= roll 1))");
+    addToTree(1, 1, "(>= roll 1)", "(not (>= roll 1))", 0, 1);
     delete_allVariableTableEntry();
-    __cil_tmp12 = isNotQueueEmpty();
-    if (__cil_tmp12) {
-      enQueue();
-      directPathConditions();
-      delete_allSTableEntry();
-      delete_allStructTableEntry();
-      daxpy_r(mempool, n, da, dx, icx, dy, icy);
+    nm1 = n - 1;
+    handleAssignmentSymbolically("nm1", "(- n 1)", & nm1, & nm1, 1);
+    {
+    exp_outcome = job == 0;
+    handleAssignmentSymbolically("exp_outcome", "(= job 0)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(3, 1, 0);
+      setTrueExpr(3, "(= job 0)");
+      setFalseExpr(3, "(not (= job 0))");
+      addToTree(3, 2, "(= job 0)", "(not (= job 0))", 1, 1);
+      delete_allVariableTableEntry();
+      {
+      exp_outcome = nm1 >= 1;
+      handleAssignmentSymbolically("exp_outcome", "(>= nm1 1)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(4, 1, 0);
+        setTrueExpr(4, "(>= nm1 1)");
+        setFalseExpr(4, "(not (>= nm1 1))");
+        addToTree(4, 3, "(>= nm1 1)", "(not (>= nm1 1))", 3, 1);
+        delete_allVariableTableEntry();
+        k = 0;
+        add_entryToSTable("k", "Constant", & k, & k, 1);
+        {
+        {
+        exp_outcome = k < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< k nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(7, 1, 0);
+          setTrueExpr(7, "(< k nm1)");
+          setFalseExpr(7, "(not (< k nm1))");
+          addToTree(7, 4, "(< k nm1)", "(not (< k nm1))", 4, 1);
+          delete_allVariableTableEntry();
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt140", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          t = *(b + l);
+          addEntryToVariableTable("*(b + l)", l);
+          add_entryToArraySTable("b", l, "b141", b + l, b + l, 1);
+          handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l), 1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(9, 1, 0);
+            setTrueExpr(9, "(not (= l k))");
+            setFalseExpr(9, "(= l k)");
+            addToTree(9, 5, "(not (= l k))", "(= l k)", 7, 1);
+            delete_allVariableTableEntry();
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b142", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(9, 0, 1);
+            setTrueExpr(9, "(not (= l k))");
+            setFalseExpr(9, "(= l k)");
+            addToTree(9, 5, "(not (= l k))", "(= l k)", 7, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          __cil_tmp15 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp15", "(- n (+ k 1))", & __cil_tmp15,
+                                       & __cil_tmp15, 1);
+          __cil_tmp16 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp16", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp16, & __cil_tmp16, 1);
+          __cil_tmp17 = 1;
+          add_entryToSTable("__cil_tmp17", "Constant", & __cil_tmp17, & __cil_tmp17,
+                            1);
+          __cil_tmp18 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp18", "(+ b (+ k 1))", & __cil_tmp18,
+                                       & __cil_tmp18, 1);
+          __cil_tmp19 = 1;
+          add_entryToSTable("__cil_tmp19", "Constant", & __cil_tmp19, & __cil_tmp19,
+                            1);
+          funcEntry("(int,daxpy_r_n,variable,__cil_tmp15)#(int,daxpy_r_da,variable,t)#(int *,daxpy_r_dx,array,__cil_tmp16)#(int,daxpy_r_icx,variable,__cil_tmp17)#(int *,daxpy_r_dy,array,__cil_tmp18)#(int,daxpy_r_icy,variable,__cil_tmp19)",
+                    "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+          daxpy_r(__cil_tmp15, t, __cil_tmp16, __cil_tmp17, __cil_tmp18, __cil_tmp19);
+          funcExit();
+          k ++;
+          handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+        } else {
+          setBranchInfo(7, 0, 1);
+          setTrueExpr(7, "(< k nm1)");
+          setFalseExpr(7, "(not (< k nm1))");
+          addToTree(7, 4, "(< k nm1)", "(not (< k nm1))", 4, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        {
+        exp_outcome = k < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< k nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(12, 1, 0);
+          setTrueExpr(12, "(< k nm1)");
+          setFalseExpr(12, "(not (< k nm1))");
+          addToTree(12, 4, "(< k nm1)", "(not (< k nm1))", 4, 1);
+          delete_allVariableTableEntry();
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt143", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          t = *(b + l);
+          addEntryToVariableTable("*(b + l)", l);
+          add_entryToArraySTable("b", l, "b144", b + l, b + l, 1);
+          handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l), 1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(14, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(14, 1, 0);
+            setTrueExpr(14, "(not (= l k))");
+            setFalseExpr(14, "(= l k)");
+            addToTree(14, 5, "(not (= l k))", "(= l k)", 12, 1);
+            delete_allVariableTableEntry();
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b145", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(14, 0, 1);
+            setTrueExpr(14, "(not (= l k))");
+            setFalseExpr(14, "(= l k)");
+            addToTree(14, 5, "(not (= l k))", "(= l k)", 12, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          __cil_tmp15 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp15", "(- n (+ k 1))", & __cil_tmp15,
+                                       & __cil_tmp15, 1);
+          __cil_tmp16 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp16", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp16, & __cil_tmp16, 1);
+          __cil_tmp17 = 1;
+          add_entryToSTable("__cil_tmp17", "Constant", & __cil_tmp17, & __cil_tmp17,
+                            1);
+          __cil_tmp18 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp18", "(+ b (+ k 1))", & __cil_tmp18,
+                                       & __cil_tmp18, 1);
+          __cil_tmp19 = 1;
+          add_entryToSTable("__cil_tmp19", "Constant", & __cil_tmp19, & __cil_tmp19,
+                            1);
+          funcEntry("(int,daxpy_r_n,variable,__cil_tmp15)#(int,daxpy_r_da,variable,t)#(int *,daxpy_r_dx,array,__cil_tmp16)#(int,daxpy_r_icx,variable,__cil_tmp17)#(int *,daxpy_r_dy,array,__cil_tmp18)#(int,daxpy_r_icy,variable,__cil_tmp19)",
+                    "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+          daxpy_r(__cil_tmp15, t, __cil_tmp16, __cil_tmp17, __cil_tmp18, __cil_tmp19);
+          funcExit();
+          k ++;
+          handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+        } else {
+          setBranchInfo(12, 0, 1);
+          setTrueExpr(12, "(< k nm1)");
+          setFalseExpr(12, "(not (< k nm1))");
+          addToTree(12, 4, "(< k nm1)", "(not (< k nm1))", 4, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        }
+      } else {
+        setBranchInfo(4, 0, 1);
+        setTrueExpr(4, "(>= nm1 1)");
+        setFalseExpr(4, "(not (>= nm1 1))");
+        addToTree(4, 3, "(>= nm1 1)", "(not (>= nm1 1))", 3, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      kb = 0;
+      add_entryToSTable("kb", "Constant", & kb, & kb, 1);
+      {
+      {
+      exp_outcome = kb < n;
+      handleAssignmentSymbolically("exp_outcome", "(< kb n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(19, 1, 0);
+        setTrueExpr(19, "(< kb n)");
+        setFalseExpr(19, "(not (< kb n))");
+        addToTree(19, 3, "(< kb n)", "(not (< kb n))", 3, 1);
+        delete_allVariableTableEntry();
+        k = n - (kb + 1);
+        handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+        *(b + k) /= *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b146", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a147", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ *(b + k) *(a + (lda * k + k)))", b + k,
+                                b + k, 1);
+        t = - *(b + k);
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b148", b + k, b + k, 1);
+        handleAssignmentSymbolically("t", "(- *(b + k))", & t, & t, 1);
+        __cil_tmp20 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp20", "(+ a (* lda k))", & __cil_tmp20,
+                                     & __cil_tmp20, 1);
+        __cil_tmp21 = 1;
+        add_entryToSTable("__cil_tmp21", "Constant", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        __cil_tmp22 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp22", "(+ b 0)", & __cil_tmp22, & __cil_tmp22,
+                                     1);
+        __cil_tmp23 = 1;
+        add_entryToSTable("__cil_tmp23", "Constant", & __cil_tmp23, & __cil_tmp23,
+                          1);
+        funcEntry("(int,daxpy_r_n,variable,k)#(int,daxpy_r_da,variable,t)#(int *,daxpy_r_dx,array,__cil_tmp20)#(int,daxpy_r_icx,variable,__cil_tmp21)#(int *,daxpy_r_dy,array,__cil_tmp22)#(int,daxpy_r_icy,variable,__cil_tmp23)",
+                  "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+        daxpy_r(k, t, __cil_tmp20, __cil_tmp21, __cil_tmp22, __cil_tmp23);
+        funcExit();
+        kb ++;
+        handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+      } else {
+        setBranchInfo(19, 0, 1);
+        setTrueExpr(19, "(< kb n)");
+        setFalseExpr(19, "(not (< kb n))");
+        addToTree(19, 3, "(< kb n)", "(not (< kb n))", 3, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      {
+      exp_outcome = kb < n;
+      handleAssignmentSymbolically("exp_outcome", "(< kb n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(21, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(21, 1, 0);
+        setTrueExpr(21, "(< kb n)");
+        setFalseExpr(21, "(not (< kb n))");
+        addToTree(21, 3, "(< kb n)", "(not (< kb n))", 3, 1);
+        delete_allVariableTableEntry();
+        k = n - (kb + 1);
+        handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+        *(b + k) /= *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b149", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a150", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ *(b + k) *(a + (lda * k + k)))", b + k,
+                                b + k, 1);
+        t = - *(b + k);
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b151", b + k, b + k, 1);
+        handleAssignmentSymbolically("t", "(- *(b + k))", & t, & t, 1);
+        __cil_tmp20 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp20", "(+ a (* lda k))", & __cil_tmp20,
+                                     & __cil_tmp20, 1);
+        __cil_tmp21 = 1;
+        add_entryToSTable("__cil_tmp21", "Constant", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        __cil_tmp22 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp22", "(+ b 0)", & __cil_tmp22, & __cil_tmp22,
+                                     1);
+        __cil_tmp23 = 1;
+        add_entryToSTable("__cil_tmp23", "Constant", & __cil_tmp23, & __cil_tmp23,
+                          1);
+        funcEntry("(int,daxpy_r_n,variable,k)#(int,daxpy_r_da,variable,t)#(int *,daxpy_r_dx,array,__cil_tmp20)#(int,daxpy_r_icx,variable,__cil_tmp21)#(int *,daxpy_r_dy,array,__cil_tmp22)#(int,daxpy_r_icy,variable,__cil_tmp23)",
+                  "daxpy_r_i___0 daxpy_r_ix daxpy_r_iy", "daxpy_r");
+        daxpy_r(k, t, __cil_tmp20, __cil_tmp21, __cil_tmp22, __cil_tmp23);
+        funcExit();
+        kb ++;
+        handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+      } else {
+        setBranchInfo(21, 0, 1);
+        setTrueExpr(21, "(< kb n)");
+        setFalseExpr(21, "(not (< kb n))");
+        addToTree(21, 3, "(< kb n)", "(not (< kb n))", 3, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      }
     } else {
-      __cil_tmp12 = startCDG();
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      if (__cil_tmp12) {
-        __cil_tmp12 = getTestCases();
-        daxpy_r(mempool, n, da, dx, icx, dy, icy);
+      setBranchInfo(3, 0, 1);
+      setTrueExpr(3, "(= job 0)");
+      setFalseExpr(3, "(not (= job 0))");
+      addToTree(3, 2, "(= job 0)", "(not (= job 0))", 1, 0);
+      delete_allVariableTableEntry();
+      k = 0;
+      add_entryToSTable("k", "Constant", & k, & k, 1);
+      {
+      {
+      exp_outcome = k < n;
+      handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(25, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(25, 1, 0);
+        setTrueExpr(25, "(< k n)");
+        setFalseExpr(25, "(not (< k n))");
+        addToTree(25, 3, "(< k n)", "(not (< k n))", 3, 1);
+        delete_allVariableTableEntry();
+        __cil_tmp24 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp24", "(+ a (* lda k))", & __cil_tmp24,
+                                     & __cil_tmp24, 1);
+        __cil_tmp25 = 1;
+        add_entryToSTable("__cil_tmp25", "Constant", & __cil_tmp25, & __cil_tmp25,
+                          1);
+        __cil_tmp26 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp26", "(+ b 0)", & __cil_tmp26, & __cil_tmp26,
+                                     1);
+        __cil_tmp27 = 1;
+        add_entryToSTable("__cil_tmp27", "Constant", & __cil_tmp27, & __cil_tmp27,
+                          1);
+        funcEntry("(int,ddot_r_n,variable,k)#(int *,ddot_r_dx,array,__cil_tmp24)#(int,ddot_r_icx,variable,__cil_tmp25)#(int *,ddot_r_dy,array,__cil_tmp26)#(int,ddot_r_icy,variable,__cil_tmp27)",
+                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                  "ddot_r");
+        t = ddot_r(k, __cil_tmp24, __cil_tmp25, __cil_tmp26, __cil_tmp27);
+        funcExit();
+        add_entryToSTable("t", ret_SymValue, ret_ConValue, & t, 1);
+        *(b + k) = (*(b + k) - t) / *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b152", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a153", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ (- *(b + k) t) *(a + (lda * k + k)))",
+                                b + k, b + k, 1);
+        k ++;
+        handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+      } else {
+        setBranchInfo(25, 0, 1);
+        setTrueExpr(25, "(< k n)");
+        setFalseExpr(25, "(not (< k n))");
+        addToTree(25, 3, "(< k n)", "(not (< k n))", 3, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      {
+      exp_outcome = k < n;
+      handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(27, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(27, 1, 0);
+        setTrueExpr(27, "(< k n)");
+        setFalseExpr(27, "(not (< k n))");
+        addToTree(27, 3, "(< k n)", "(not (< k n))", 3, 1);
+        delete_allVariableTableEntry();
+        __cil_tmp24 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp24", "(+ a (* lda k))", & __cil_tmp24,
+                                     & __cil_tmp24, 1);
+        __cil_tmp25 = 1;
+        add_entryToSTable("__cil_tmp25", "Constant", & __cil_tmp25, & __cil_tmp25,
+                          1);
+        __cil_tmp26 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp26", "(+ b 0)", & __cil_tmp26, & __cil_tmp26,
+                                     1);
+        __cil_tmp27 = 1;
+        add_entryToSTable("__cil_tmp27", "Constant", & __cil_tmp27, & __cil_tmp27,
+                          1);
+        funcEntry("(int,ddot_r_n,variable,k)#(int *,ddot_r_dx,array,__cil_tmp24)#(int,ddot_r_icx,variable,__cil_tmp25)#(int *,ddot_r_dy,array,__cil_tmp26)#(int,ddot_r_icy,variable,__cil_tmp27)",
+                  "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                  "ddot_r");
+        t = ddot_r(k, __cil_tmp24, __cil_tmp25, __cil_tmp26, __cil_tmp27);
+        funcExit();
+        add_entryToSTable("t", ret_SymValue, ret_ConValue, & t, 1);
+        *(b + k) = (*(b + k) - t) / *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b154", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a155", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ (- *(b + k) t) *(a + (lda * k + k)))",
+                                b + k, b + k, 1);
+        k ++;
+        handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+      } else {
+        setBranchInfo(27, 0, 1);
+        setTrueExpr(27, "(< k n)");
+        setFalseExpr(27, "(not (< k n))");
+        addToTree(27, 3, "(< k n)", "(not (< k n))", 3, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      }
+      {
+      exp_outcome = nm1 >= 1;
+      handleAssignmentSymbolically("exp_outcome", "(>= nm1 1)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(29, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(29, 1, 0);
+        setTrueExpr(29, "(>= nm1 1)");
+        setFalseExpr(29, "(not (>= nm1 1))");
+        addToTree(29, 3, "(>= nm1 1)", "(not (>= nm1 1))", 3, 1);
+        delete_allVariableTableEntry();
+        kb = 1;
+        add_entryToSTable("kb", "Constant", & kb, & kb, 1);
+        {
+        {
+        exp_outcome = kb < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< kb nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(32, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(32, 1, 0);
+          setTrueExpr(32, "(< kb nm1)");
+          setFalseExpr(32, "(not (< kb nm1))");
+          addToTree(32, 4, "(< kb nm1)", "(not (< kb nm1))", 29, 1);
+          delete_allVariableTableEntry();
+          k = n - (kb + 1);
+          handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+          __cil_tmp28 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp28", "(- n (+ k 1))", & __cil_tmp28,
+                                       & __cil_tmp28, 1);
+          __cil_tmp29 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp29", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp29, & __cil_tmp29, 1);
+          __cil_tmp30 = 1;
+          add_entryToSTable("__cil_tmp30", "Constant", & __cil_tmp30, & __cil_tmp30,
+                            1);
+          __cil_tmp31 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp31", "(+ b (+ k 1))", & __cil_tmp31,
+                                       & __cil_tmp31, 1);
+          __cil_tmp32 = 1;
+          add_entryToSTable("__cil_tmp32", "Constant", & __cil_tmp32, & __cil_tmp32,
+                            1);
+          funcEntry("(int,ddot_r_n,variable,__cil_tmp28)#(int *,ddot_r_dx,array,__cil_tmp29)#(int,ddot_r_icx,variable,__cil_tmp30)#(int *,ddot_r_dy,array,__cil_tmp31)#(int,ddot_r_icy,variable,__cil_tmp32)",
+                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                    "ddot_r");
+          tmp = ddot_r(__cil_tmp28, __cil_tmp29, __cil_tmp30, __cil_tmp31, __cil_tmp32);
+          funcExit();
+          add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+          *(b + k) += tmp;
+          addEntryToVariableTable("*(b + k)", k);
+          add_entryToArraySTable("b", k, "b156", b + k, b + k, 1);
+          handleArraySymbolically("b", k, "(+ *(b + k) tmp)", b + k, b + k, 1);
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt157", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(34, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(34, 1, 0);
+            setTrueExpr(34, "(not (= l k))");
+            setFalseExpr(34, "(= l k)");
+            addToTree(34, 5, "(not (= l k))", "(= l k)", 32, 1);
+            delete_allVariableTableEntry();
+            t = *(b + l);
+            addEntryToVariableTable("*(b + l)", l);
+            add_entryToArraySTable("b", l, "b158", b + l, b + l, 1);
+            handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l),
+                                         1);
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b159", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(34, 0, 1);
+            setTrueExpr(34, "(not (= l k))");
+            setFalseExpr(34, "(= l k)");
+            addToTree(34, 5, "(not (= l k))", "(= l k)", 32, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          kb ++;
+          handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+        } else {
+          setBranchInfo(32, 0, 1);
+          setTrueExpr(32, "(< kb nm1)");
+          setFalseExpr(32, "(not (< kb nm1))");
+          addToTree(32, 4, "(< kb nm1)", "(not (< kb nm1))", 29, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        {
+        exp_outcome = kb < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< kb nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(37, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(37, 1, 0);
+          setTrueExpr(37, "(< kb nm1)");
+          setFalseExpr(37, "(not (< kb nm1))");
+          addToTree(37, 4, "(< kb nm1)", "(not (< kb nm1))", 29, 1);
+          delete_allVariableTableEntry();
+          k = n - (kb + 1);
+          handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+          __cil_tmp28 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp28", "(- n (+ k 1))", & __cil_tmp28,
+                                       & __cil_tmp28, 1);
+          __cil_tmp29 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp29", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp29, & __cil_tmp29, 1);
+          __cil_tmp30 = 1;
+          add_entryToSTable("__cil_tmp30", "Constant", & __cil_tmp30, & __cil_tmp30,
+                            1);
+          __cil_tmp31 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp31", "(+ b (+ k 1))", & __cil_tmp31,
+                                       & __cil_tmp31, 1);
+          __cil_tmp32 = 1;
+          add_entryToSTable("__cil_tmp32", "Constant", & __cil_tmp32, & __cil_tmp32,
+                            1);
+          funcEntry("(int,ddot_r_n,variable,__cil_tmp28)#(int *,ddot_r_dx,array,__cil_tmp29)#(int,ddot_r_icx,variable,__cil_tmp30)#(int *,ddot_r_dy,array,__cil_tmp31)#(int,ddot_r_icy,variable,__cil_tmp32)",
+                    "ddot_r_dtemp ddot_r_i___0 ddot_r_ix ddot_r_iy ddot_r___cil_tmp10",
+                    "ddot_r");
+          tmp = ddot_r(__cil_tmp28, __cil_tmp29, __cil_tmp30, __cil_tmp31, __cil_tmp32);
+          funcExit();
+          add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+          *(b + k) += tmp;
+          addEntryToVariableTable("*(b + k)", k);
+          add_entryToArraySTable("b", k, "b160", b + k, b + k, 1);
+          handleArraySymbolically("b", k, "(+ *(b + k) tmp)", b + k, b + k, 1);
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt161", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(39, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(39, 1, 0);
+            setTrueExpr(39, "(not (= l k))");
+            setFalseExpr(39, "(= l k)");
+            addToTree(39, 5, "(not (= l k))", "(= l k)", 37, 1);
+            delete_allVariableTableEntry();
+            t = *(b + l);
+            addEntryToVariableTable("*(b + l)", l);
+            add_entryToArraySTable("b", l, "b162", b + l, b + l, 1);
+            handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l),
+                                         1);
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b163", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(39, 0, 1);
+            setTrueExpr(39, "(not (= l k))");
+            setFalseExpr(39, "(= l k)");
+            addToTree(39, 5, "(not (= l k))", "(= l k)", 37, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          kb ++;
+          handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+        } else {
+          setBranchInfo(37, 0, 1);
+          setTrueExpr(37, "(< kb nm1)");
+          setFalseExpr(37, "(not (< kb nm1))");
+          addToTree(37, 4, "(< kb nm1)", "(not (< kb nm1))", 29, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        }
+      } else {
+        setBranchInfo(29, 0, 1);
+        setTrueExpr(29, "(>= nm1 1)");
+        setFalseExpr(29, "(not (>= nm1 1))");
+        addToTree(29, 3, "(>= nm1 1)", "(not (>= nm1 1))", 3, 0);
+        delete_allVariableTableEntry();
+      }
       }
     }
-    return;
+    }
   } else {
     setBranchInfo(1, 0, 1);
-    setTrueExpr(1, "(<= n 0)");
-    setFalseExpr(1, "(not (<= n 0))");
-    addToTree(1, 1, "(<= n 0)", "(not (<= n 0))", 0, 0);
+    setTrueExpr(1, "(>= roll 1)");
+    setFalseExpr(1, "(not (>= roll 1))");
+    addToTree(1, 1, "(>= roll 1)", "(not (>= roll 1))", 0, 0);
     delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = da == 0;
-  handleAssignmentSymbolically("exp_outcome", "(= da 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(= da 0)");
-    setFalseExpr(3, "(not (= da 0))");
-    addToTree(3, 1, "(= da 0)", "(not (= da 0))", 0, 1);
-    delete_allVariableTableEntry();
-    __cil_tmp12 = isNotQueueEmpty();
-    if (__cil_tmp12) {
-      enQueue();
-      directPathConditions();
-      delete_allSTableEntry();
-      delete_allStructTableEntry();
-      daxpy_r(mempool, n, da, dx, icx, dy, icy);
-    } else {
-      __cil_tmp12 = startCDG();
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-      if (__cil_tmp12) {
-        __cil_tmp12 = getTestCases();
-        daxpy_r(mempool, n, da, dx, icx, dy, icy);
-      }
-    }
-    return;
-  } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(= da 0)");
-    setFalseExpr(3, "(not (= da 0))");
-    addToTree(3, 1, "(= da 0)", "(not (= da 0))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = icx != 1;
-  handleAssignmentSymbolically("exp_outcome", "(! (= icx 1))", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(not (= icx 1))");
-    setFalseExpr(5, "(not (not (= icx 1)))");
-    addToTree(5, 1, "(not (= icx 1))", "(not (not (= icx 1)))", 0, 1);
-    delete_allVariableTableEntry();
-    goto _L;
-  } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(not (= icx 1))");
-    setFalseExpr(5, "(not (not (= icx 1)))");
-    addToTree(5, 1, "(not (= icx 1))", "(not (not (= icx 1)))", 0, 0);
-    delete_allVariableTableEntry();
+    nm1 = n - 1;
+    handleAssignmentSymbolically("nm1", "(- n 1)", & nm1, & nm1, 1);
     {
-    exp_outcome = icy != 1;
-    handleAssignmentSymbolically("exp_outcome", "(! (= icy 1))", & exp_outcome, & exp_outcome,
+    exp_outcome = job == 0;
+    handleAssignmentSymbolically("exp_outcome", "(= job 0)", & exp_outcome, & exp_outcome,
                                  1);
-    overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
+    overall_outcome = (int )getConditionalOutcome(43, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(7, 1, 0);
-      setTrueExpr(7, "(not (= icy 1))");
-      setFalseExpr(7, "(not (not (= icy 1)))");
-      addToTree(7, 2, "(not (= icy 1))", "(not (not (= icy 1)))", 5, 1);
+      setBranchInfo(43, 1, 0);
+      setTrueExpr(43, "(= job 0)");
+      setFalseExpr(43, "(not (= job 0))");
+      addToTree(43, 2, "(= job 0)", "(not (= job 0))", 1, 1);
       delete_allVariableTableEntry();
-      _L: /* CIL Label */ 
-      ix = 1;
-      add_entryToSTable("ix", "Constant", & ix, & ix, 1);
-      iy = 1;
-      add_entryToSTable("iy", "Constant", & iy, & iy, 1);
       {
-      exp_outcome = icx < 0;
-      handleAssignmentSymbolically("exp_outcome", "(< icx 0)", & exp_outcome, & exp_outcome,
+      exp_outcome = nm1 >= 1;
+      handleAssignmentSymbolically("exp_outcome", "(>= nm1 1)", & exp_outcome, & exp_outcome,
                                    1);
-      overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+      overall_outcome = (int )getConditionalOutcome(44, exp_outcome);
       if (overall_outcome) {
-        setBranchInfo(9, 1, 0);
-        setTrueExpr(9, "(< icx 0)");
-        setFalseExpr(9, "(not (< icx 0))");
-        addToTree(9, 3, "(< icx 0)", "(not (< icx 0))", 7, 1);
+        setBranchInfo(44, 1, 0);
+        setTrueExpr(44, "(>= nm1 1)");
+        setFalseExpr(44, "(not (>= nm1 1))");
+        addToTree(44, 3, "(>= nm1 1)", "(not (>= nm1 1))", 43, 1);
         delete_allVariableTableEntry();
-        ix = (- n + 1) * icx + 1;
-        handleAssignmentSymbolically("ix", "(+ (* (+ (- n) 1) icx) 1)", & ix, & ix,
+        k = 0;
+        add_entryToSTable("k", "Constant", & k, & k, 1);
+        {
+        {
+        exp_outcome = k < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< k nm1)", & exp_outcome, & exp_outcome,
                                      1);
-      } else {
-        setBranchInfo(9, 0, 1);
-        setTrueExpr(9, "(< icx 0)");
-        setFalseExpr(9, "(not (< icx 0))");
-        addToTree(9, 3, "(< icx 0)", "(not (< icx 0))", 7, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-      {
-      exp_outcome = icy < 0;
-      handleAssignmentSymbolically("exp_outcome", "(< icy 0)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(11, 1, 0);
-        setTrueExpr(11, "(< icy 0)");
-        setFalseExpr(11, "(not (< icy 0))");
-        addToTree(11, 3, "(< icy 0)", "(not (< icy 0))", 7, 1);
-        delete_allVariableTableEntry();
-        iy = (- n + 1) * icy + 1;
-        handleAssignmentSymbolically("iy", "(+ (* (+ (- n) 1) icy) 1)", & iy, & iy,
-                                     1);
-      } else {
-        setBranchInfo(11, 0, 1);
-        setTrueExpr(11, "(< icy 0)");
-        setFalseExpr(11, "(not (< icy 0))");
-        addToTree(11, 3, "(< icy 0)", "(not (< icy 0))", 7, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-      i___0 = 0;
-      add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
-      {
-      {
-      exp_outcome = i___0 < n;
-      handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(15, 1, 0);
-        setTrueExpr(15, "(< i___0 n)");
-        setFalseExpr(15, "(not (< i___0 n))");
-        addToTree(15, 3, "(< i___0 n)", "(not (< i___0 n))", 7, 1);
-        delete_allVariableTableEntry();
-        *(dy + iy) += da * *(dx + ix);
-        addEntryToVariableTable("*(dy + iy)", iy);
-        add_entryToArraySTable("dy", iy, "dy188", dy + iy, dy + iy, 1);
-        addEntryToVariableTable("*(dx + ix)", ix);
-        add_entryToArraySTable("dx", ix, "dx189", dx + ix, dx + ix, 1);
-        handleArraySymbolically("dy", iy, "(+ *(dy + iy) (* da *(dx + ix)))", dy + iy,
-                                dy + iy, 1);
-        ix += icx;
-        handleAssignmentSymbolically("ix", "(+ ix icx)", & ix, & ix, 1);
-        iy += icy;
-        handleAssignmentSymbolically("iy", "(+ iy icy)", & iy, & iy, 1);
-        i___0 ++;
-        handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-      } else {
-        setBranchInfo(15, 0, 1);
-        setTrueExpr(15, "(< i___0 n)");
-        setFalseExpr(15, "(not (< i___0 n))");
-        addToTree(15, 3, "(< i___0 n)", "(not (< i___0 n))", 7, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-      {
-      exp_outcome = i___0 < n;
-      handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(17, 1, 0);
-        setTrueExpr(17, "(< i___0 n)");
-        setFalseExpr(17, "(not (< i___0 n))");
-        addToTree(17, 3, "(< i___0 n)", "(not (< i___0 n))", 7, 1);
-        delete_allVariableTableEntry();
-        *(dy + iy) += da * *(dx + ix);
-        addEntryToVariableTable("*(dy + iy)", iy);
-        add_entryToArraySTable("dy", iy, "dy190", dy + iy, dy + iy, 1);
-        addEntryToVariableTable("*(dx + ix)", ix);
-        add_entryToArraySTable("dx", ix, "dx191", dx + ix, dx + ix, 1);
-        handleArraySymbolically("dy", iy, "(+ *(dy + iy) (* da *(dx + ix)))", dy + iy,
-                                dy + iy, 1);
-        ix += icx;
-        handleAssignmentSymbolically("ix", "(+ ix icx)", & ix, & ix, 1);
-        iy += icy;
-        handleAssignmentSymbolically("iy", "(+ iy icy)", & iy, & iy, 1);
-        i___0 ++;
-        handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-      } else {
-        setBranchInfo(17, 0, 1);
-        setTrueExpr(17, "(< i___0 n)");
-        setFalseExpr(17, "(not (< i___0 n))");
-        addToTree(17, 3, "(< i___0 n)", "(not (< i___0 n))", 7, 0);
-        delete_allVariableTableEntry();
-      }
-      }
-      }
-      __cil_tmp12 = isNotQueueEmpty();
-      if (__cil_tmp12) {
-        enQueue();
-        directPathConditions();
-        delete_allSTableEntry();
-        delete_allStructTableEntry();
-        daxpy_r(mempool, n, da, dx, icx, dy, icy);
-      } else {
-        __cil_tmp12 = startCDG();
-        add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12,
-                          1);
-        add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12,
-                          1);
-        add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12,
-                          1);
-        add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12,
-                          1);
-        if (__cil_tmp12) {
-          __cil_tmp12 = getTestCases();
-          daxpy_r(mempool, n, da, dx, icx, dy, icy);
+        overall_outcome = (int )getConditionalOutcome(47, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(47, 1, 0);
+          setTrueExpr(47, "(< k nm1)");
+          setFalseExpr(47, "(not (< k nm1))");
+          addToTree(47, 4, "(< k nm1)", "(not (< k nm1))", 44, 1);
+          delete_allVariableTableEntry();
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt164", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          t = *(b + l);
+          addEntryToVariableTable("*(b + l)", l);
+          add_entryToArraySTable("b", l, "b165", b + l, b + l, 1);
+          handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l), 1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(49, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(49, 1, 0);
+            setTrueExpr(49, "(not (= l k))");
+            setFalseExpr(49, "(= l k)");
+            addToTree(49, 5, "(not (= l k))", "(= l k)", 47, 1);
+            delete_allVariableTableEntry();
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b166", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(49, 0, 1);
+            setTrueExpr(49, "(not (= l k))");
+            setFalseExpr(49, "(= l k)");
+            addToTree(49, 5, "(not (= l k))", "(= l k)", 47, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          __cil_tmp33 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp33", "(- n (+ k 1))", & __cil_tmp33,
+                                       & __cil_tmp33, 1);
+          __cil_tmp34 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp34", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp34, & __cil_tmp34, 1);
+          __cil_tmp35 = 1;
+          add_entryToSTable("__cil_tmp35", "Constant", & __cil_tmp35, & __cil_tmp35,
+                            1);
+          __cil_tmp36 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp36", "(+ b (+ k 1))", & __cil_tmp36,
+                                       & __cil_tmp36, 1);
+          __cil_tmp37 = 1;
+          add_entryToSTable("__cil_tmp37", "Constant", & __cil_tmp37, & __cil_tmp37,
+                            1);
+          funcEntry("(int,daxpy_ur_n,variable,__cil_tmp33)#(int,daxpy_ur_da,variable,t)#(int *,daxpy_ur_dx,array,__cil_tmp34)#(int,daxpy_ur_icx,variable,__cil_tmp35)#(int *,daxpy_ur_dy,array,__cil_tmp36)#(int,daxpy_ur_icy,variable,__cil_tmp37)",
+                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+          daxpy_ur(__cil_tmp33, t, __cil_tmp34, __cil_tmp35, __cil_tmp36, __cil_tmp37);
+          funcExit();
+          k ++;
+          handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+        } else {
+          setBranchInfo(47, 0, 1);
+          setTrueExpr(47, "(< k nm1)");
+          setFalseExpr(47, "(not (< k nm1))");
+          addToTree(47, 4, "(< k nm1)", "(not (< k nm1))", 44, 0);
+          delete_allVariableTableEntry();
         }
+        }
+        {
+        exp_outcome = k < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< k nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(52, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(52, 1, 0);
+          setTrueExpr(52, "(< k nm1)");
+          setFalseExpr(52, "(not (< k nm1))");
+          addToTree(52, 4, "(< k nm1)", "(not (< k nm1))", 44, 1);
+          delete_allVariableTableEntry();
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt167", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          t = *(b + l);
+          addEntryToVariableTable("*(b + l)", l);
+          add_entryToArraySTable("b", l, "b168", b + l, b + l, 1);
+          handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l), 1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(54, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(54, 1, 0);
+            setTrueExpr(54, "(not (= l k))");
+            setFalseExpr(54, "(= l k)");
+            addToTree(54, 5, "(not (= l k))", "(= l k)", 52, 1);
+            delete_allVariableTableEntry();
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b169", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(54, 0, 1);
+            setTrueExpr(54, "(not (= l k))");
+            setFalseExpr(54, "(= l k)");
+            addToTree(54, 5, "(not (= l k))", "(= l k)", 52, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          __cil_tmp33 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp33", "(- n (+ k 1))", & __cil_tmp33,
+                                       & __cil_tmp33, 1);
+          __cil_tmp34 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp34", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp34, & __cil_tmp34, 1);
+          __cil_tmp35 = 1;
+          add_entryToSTable("__cil_tmp35", "Constant", & __cil_tmp35, & __cil_tmp35,
+                            1);
+          __cil_tmp36 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp36", "(+ b (+ k 1))", & __cil_tmp36,
+                                       & __cil_tmp36, 1);
+          __cil_tmp37 = 1;
+          add_entryToSTable("__cil_tmp37", "Constant", & __cil_tmp37, & __cil_tmp37,
+                            1);
+          funcEntry("(int,daxpy_ur_n,variable,__cil_tmp33)#(int,daxpy_ur_da,variable,t)#(int *,daxpy_ur_dx,array,__cil_tmp34)#(int,daxpy_ur_icx,variable,__cil_tmp35)#(int *,daxpy_ur_dy,array,__cil_tmp36)#(int,daxpy_ur_icy,variable,__cil_tmp37)",
+                    "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+          daxpy_ur(__cil_tmp33, t, __cil_tmp34, __cil_tmp35, __cil_tmp36, __cil_tmp37);
+          funcExit();
+          k ++;
+          handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+        } else {
+          setBranchInfo(52, 0, 1);
+          setTrueExpr(52, "(< k nm1)");
+          setFalseExpr(52, "(not (< k nm1))");
+          addToTree(52, 4, "(< k nm1)", "(not (< k nm1))", 44, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        }
+      } else {
+        setBranchInfo(44, 0, 1);
+        setTrueExpr(44, "(>= nm1 1)");
+        setFalseExpr(44, "(not (>= nm1 1))");
+        addToTree(44, 3, "(>= nm1 1)", "(not (>= nm1 1))", 43, 0);
+        delete_allVariableTableEntry();
       }
-      return;
+      }
+      kb = 0;
+      add_entryToSTable("kb", "Constant", & kb, & kb, 1);
+      {
+      {
+      exp_outcome = kb < n;
+      handleAssignmentSymbolically("exp_outcome", "(< kb n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(59, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(59, 1, 0);
+        setTrueExpr(59, "(< kb n)");
+        setFalseExpr(59, "(not (< kb n))");
+        addToTree(59, 3, "(< kb n)", "(not (< kb n))", 43, 1);
+        delete_allVariableTableEntry();
+        k = n - (kb + 1);
+        handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+        *(b + k) /= *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b170", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a171", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ *(b + k) *(a + (lda * k + k)))", b + k,
+                                b + k, 1);
+        t = - *(b + k);
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b172", b + k, b + k, 1);
+        handleAssignmentSymbolically("t", "(- *(b + k))", & t, & t, 1);
+        __cil_tmp38 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp38", "(+ a (* lda k))", & __cil_tmp38,
+                                     & __cil_tmp38, 1);
+        __cil_tmp39 = 1;
+        add_entryToSTable("__cil_tmp39", "Constant", & __cil_tmp39, & __cil_tmp39,
+                          1);
+        __cil_tmp40 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp40", "(+ b 0)", & __cil_tmp40, & __cil_tmp40,
+                                     1);
+        __cil_tmp41 = 1;
+        add_entryToSTable("__cil_tmp41", "Constant", & __cil_tmp41, & __cil_tmp41,
+                          1);
+        funcEntry("(int,daxpy_ur_n,variable,k)#(int,daxpy_ur_da,variable,t)#(int *,daxpy_ur_dx,array,__cil_tmp38)#(int,daxpy_ur_icx,variable,__cil_tmp39)#(int *,daxpy_ur_dy,array,__cil_tmp40)#(int,daxpy_ur_icy,variable,__cil_tmp41)",
+                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+        daxpy_ur(k, t, __cil_tmp38, __cil_tmp39, __cil_tmp40, __cil_tmp41);
+        funcExit();
+        kb ++;
+        handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+      } else {
+        setBranchInfo(59, 0, 1);
+        setTrueExpr(59, "(< kb n)");
+        setFalseExpr(59, "(not (< kb n))");
+        addToTree(59, 3, "(< kb n)", "(not (< kb n))", 43, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      {
+      exp_outcome = kb < n;
+      handleAssignmentSymbolically("exp_outcome", "(< kb n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(61, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(61, 1, 0);
+        setTrueExpr(61, "(< kb n)");
+        setFalseExpr(61, "(not (< kb n))");
+        addToTree(61, 3, "(< kb n)", "(not (< kb n))", 43, 1);
+        delete_allVariableTableEntry();
+        k = n - (kb + 1);
+        handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+        *(b + k) /= *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b173", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a174", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ *(b + k) *(a + (lda * k + k)))", b + k,
+                                b + k, 1);
+        t = - *(b + k);
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b175", b + k, b + k, 1);
+        handleAssignmentSymbolically("t", "(- *(b + k))", & t, & t, 1);
+        __cil_tmp38 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp38", "(+ a (* lda k))", & __cil_tmp38,
+                                     & __cil_tmp38, 1);
+        __cil_tmp39 = 1;
+        add_entryToSTable("__cil_tmp39", "Constant", & __cil_tmp39, & __cil_tmp39,
+                          1);
+        __cil_tmp40 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp40", "(+ b 0)", & __cil_tmp40, & __cil_tmp40,
+                                     1);
+        __cil_tmp41 = 1;
+        add_entryToSTable("__cil_tmp41", "Constant", & __cil_tmp41, & __cil_tmp41,
+                          1);
+        funcEntry("(int,daxpy_ur_n,variable,k)#(int,daxpy_ur_da,variable,t)#(int *,daxpy_ur_dx,array,__cil_tmp38)#(int,daxpy_ur_icx,variable,__cil_tmp39)#(int *,daxpy_ur_dy,array,__cil_tmp40)#(int,daxpy_ur_icy,variable,__cil_tmp41)",
+                  "daxpy_ur_i___0 daxpy_ur_ix daxpy_ur_iy daxpy_ur_m", "daxpy_ur");
+        daxpy_ur(k, t, __cil_tmp38, __cil_tmp39, __cil_tmp40, __cil_tmp41);
+        funcExit();
+        kb ++;
+        handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+      } else {
+        setBranchInfo(61, 0, 1);
+        setTrueExpr(61, "(< kb n)");
+        setFalseExpr(61, "(not (< kb n))");
+        addToTree(61, 3, "(< kb n)", "(not (< kb n))", 43, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      }
     } else {
-      setBranchInfo(7, 0, 1);
-      setTrueExpr(7, "(not (= icy 1))");
-      setFalseExpr(7, "(not (not (= icy 1)))");
-      addToTree(7, 2, "(not (= icy 1))", "(not (not (= icy 1)))", 5, 0);
+      setBranchInfo(43, 0, 1);
+      setTrueExpr(43, "(= job 0)");
+      setFalseExpr(43, "(not (= job 0))");
+      addToTree(43, 2, "(= job 0)", "(not (= job 0))", 1, 0);
       delete_allVariableTableEntry();
+      k = 0;
+      add_entryToSTable("k", "Constant", & k, & k, 1);
+      {
+      {
+      exp_outcome = k < n;
+      handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(65, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(65, 1, 0);
+        setTrueExpr(65, "(< k n)");
+        setFalseExpr(65, "(not (< k n))");
+        addToTree(65, 3, "(< k n)", "(not (< k n))", 43, 1);
+        delete_allVariableTableEntry();
+        __cil_tmp42 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp42", "(+ a (* lda k))", & __cil_tmp42,
+                                     & __cil_tmp42, 1);
+        __cil_tmp43 = 1;
+        add_entryToSTable("__cil_tmp43", "Constant", & __cil_tmp43, & __cil_tmp43,
+                          1);
+        __cil_tmp44 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp44", "(+ b 0)", & __cil_tmp44, & __cil_tmp44,
+                                     1);
+        __cil_tmp45 = 1;
+        add_entryToSTable("__cil_tmp45", "Constant", & __cil_tmp45, & __cil_tmp45,
+                          1);
+        funcEntry("(int,ddot_ur_n,variable,k)#(int *,ddot_ur_dx,array,__cil_tmp42)#(int,ddot_ur_icx,variable,__cil_tmp43)#(int *,ddot_ur_dy,array,__cil_tmp44)#(int,ddot_ur_icy,variable,__cil_tmp45)",
+                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                  "ddot_ur");
+        t = ddot_ur(k, __cil_tmp42, __cil_tmp43, __cil_tmp44, __cil_tmp45);
+        funcExit();
+        add_entryToSTable("t", ret_SymValue, ret_ConValue, & t, 1);
+        *(b + k) = (*(b + k) - t) / *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b176", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a177", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ (- *(b + k) t) *(a + (lda * k + k)))",
+                                b + k, b + k, 1);
+        k ++;
+        handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+      } else {
+        setBranchInfo(65, 0, 1);
+        setTrueExpr(65, "(< k n)");
+        setFalseExpr(65, "(not (< k n))");
+        addToTree(65, 3, "(< k n)", "(not (< k n))", 43, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      {
+      exp_outcome = k < n;
+      handleAssignmentSymbolically("exp_outcome", "(< k n)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(67, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(67, 1, 0);
+        setTrueExpr(67, "(< k n)");
+        setFalseExpr(67, "(not (< k n))");
+        addToTree(67, 3, "(< k n)", "(not (< k n))", 43, 1);
+        delete_allVariableTableEntry();
+        __cil_tmp42 = a + lda * k;
+        handleAssignmentSymbolically("__cil_tmp42", "(+ a (* lda k))", & __cil_tmp42,
+                                     & __cil_tmp42, 1);
+        __cil_tmp43 = 1;
+        add_entryToSTable("__cil_tmp43", "Constant", & __cil_tmp43, & __cil_tmp43,
+                          1);
+        __cil_tmp44 = b + 0;
+        handleAssignmentSymbolically("__cil_tmp44", "(+ b 0)", & __cil_tmp44, & __cil_tmp44,
+                                     1);
+        __cil_tmp45 = 1;
+        add_entryToSTable("__cil_tmp45", "Constant", & __cil_tmp45, & __cil_tmp45,
+                          1);
+        funcEntry("(int,ddot_ur_n,variable,k)#(int *,ddot_ur_dx,array,__cil_tmp42)#(int,ddot_ur_icx,variable,__cil_tmp43)#(int *,ddot_ur_dy,array,__cil_tmp44)#(int,ddot_ur_icy,variable,__cil_tmp45)",
+                  "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                  "ddot_ur");
+        t = ddot_ur(k, __cil_tmp42, __cil_tmp43, __cil_tmp44, __cil_tmp45);
+        funcExit();
+        add_entryToSTable("t", ret_SymValue, ret_ConValue, & t, 1);
+        *(b + k) = (*(b + k) - t) / *(a + (lda * k + k));
+        addEntryToVariableTable("*(b + k)", k);
+        add_entryToArraySTable("b", k, "b178", b + k, b + k, 1);
+        addEntryToVariableTable("*(a + (lda * k + k))", lda * k + k);
+        add_entryToArraySTable("a", lda * k + k, "a179", a + (lda * k + k), a + (lda * k + k),
+                               1);
+        handleArraySymbolically("b", k, "(/ (- *(b + k) t) *(a + (lda * k + k)))",
+                                b + k, b + k, 1);
+        k ++;
+        handleAssignmentSymbolically("k", "(+ k 1)", & k, & k, 1);
+      } else {
+        setBranchInfo(67, 0, 1);
+        setTrueExpr(67, "(< k n)");
+        setFalseExpr(67, "(not (< k n))");
+        addToTree(67, 3, "(< k n)", "(not (< k n))", 43, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      }
+      {
+      exp_outcome = nm1 >= 1;
+      handleAssignmentSymbolically("exp_outcome", "(>= nm1 1)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(69, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(69, 1, 0);
+        setTrueExpr(69, "(>= nm1 1)");
+        setFalseExpr(69, "(not (>= nm1 1))");
+        addToTree(69, 3, "(>= nm1 1)", "(not (>= nm1 1))", 43, 1);
+        delete_allVariableTableEntry();
+        kb = 1;
+        add_entryToSTable("kb", "Constant", & kb, & kb, 1);
+        {
+        {
+        exp_outcome = kb < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< kb nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(72, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(72, 1, 0);
+          setTrueExpr(72, "(< kb nm1)");
+          setFalseExpr(72, "(not (< kb nm1))");
+          addToTree(72, 4, "(< kb nm1)", "(not (< kb nm1))", 69, 1);
+          delete_allVariableTableEntry();
+          k = n - (kb + 1);
+          handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+          __cil_tmp46 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp46", "(- n (+ k 1))", & __cil_tmp46,
+                                       & __cil_tmp46, 1);
+          __cil_tmp47 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp47", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp47, & __cil_tmp47, 1);
+          __cil_tmp48 = 1;
+          add_entryToSTable("__cil_tmp48", "Constant", & __cil_tmp48, & __cil_tmp48,
+                            1);
+          __cil_tmp49 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp49", "(+ b (+ k 1))", & __cil_tmp49,
+                                       & __cil_tmp49, 1);
+          __cil_tmp50 = 1;
+          add_entryToSTable("__cil_tmp50", "Constant", & __cil_tmp50, & __cil_tmp50,
+                            1);
+          funcEntry("(int,ddot_ur_n,variable,__cil_tmp46)#(int *,ddot_ur_dx,array,__cil_tmp47)#(int,ddot_ur_icx,variable,__cil_tmp48)#(int *,ddot_ur_dy,array,__cil_tmp49)#(int,ddot_ur_icy,variable,__cil_tmp50)",
+                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                    "ddot_ur");
+          tmp___0 = ddot_ur(__cil_tmp46, __cil_tmp47, __cil_tmp48, __cil_tmp49, __cil_tmp50);
+          funcExit();
+          add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
+          *(b + k) += tmp___0;
+          addEntryToVariableTable("*(b + k)", k);
+          add_entryToArraySTable("b", k, "b180", b + k, b + k, 1);
+          handleArraySymbolically("b", k, "(+ *(b + k) tmp___0)", b + k, b + k, 1);
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt181", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(74, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(74, 1, 0);
+            setTrueExpr(74, "(not (= l k))");
+            setFalseExpr(74, "(= l k)");
+            addToTree(74, 5, "(not (= l k))", "(= l k)", 72, 1);
+            delete_allVariableTableEntry();
+            t = *(b + l);
+            addEntryToVariableTable("*(b + l)", l);
+            add_entryToArraySTable("b", l, "b182", b + l, b + l, 1);
+            handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l),
+                                         1);
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b183", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(74, 0, 1);
+            setTrueExpr(74, "(not (= l k))");
+            setFalseExpr(74, "(= l k)");
+            addToTree(74, 5, "(not (= l k))", "(= l k)", 72, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          kb ++;
+          handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+        } else {
+          setBranchInfo(72, 0, 1);
+          setTrueExpr(72, "(< kb nm1)");
+          setFalseExpr(72, "(not (< kb nm1))");
+          addToTree(72, 4, "(< kb nm1)", "(not (< kb nm1))", 69, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        {
+        exp_outcome = kb < nm1;
+        handleAssignmentSymbolically("exp_outcome", "(< kb nm1)", & exp_outcome, & exp_outcome,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(77, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(77, 1, 0);
+          setTrueExpr(77, "(< kb nm1)");
+          setFalseExpr(77, "(not (< kb nm1))");
+          addToTree(77, 4, "(< kb nm1)", "(not (< kb nm1))", 69, 1);
+          delete_allVariableTableEntry();
+          k = n - (kb + 1);
+          handleAssignmentSymbolically("k", "(- n (+ kb 1))", & k, & k, 1);
+          __cil_tmp46 = n - (k + 1);
+          handleAssignmentSymbolically("__cil_tmp46", "(- n (+ k 1))", & __cil_tmp46,
+                                       & __cil_tmp46, 1);
+          __cil_tmp47 = a + ((lda * k + k) + 1);
+          handleAssignmentSymbolically("__cil_tmp47", "(+ a (+ (+ (* lda k) k) 1))",
+                                       & __cil_tmp47, & __cil_tmp47, 1);
+          __cil_tmp48 = 1;
+          add_entryToSTable("__cil_tmp48", "Constant", & __cil_tmp48, & __cil_tmp48,
+                            1);
+          __cil_tmp49 = b + (k + 1);
+          handleAssignmentSymbolically("__cil_tmp49", "(+ b (+ k 1))", & __cil_tmp49,
+                                       & __cil_tmp49, 1);
+          __cil_tmp50 = 1;
+          add_entryToSTable("__cil_tmp50", "Constant", & __cil_tmp50, & __cil_tmp50,
+                            1);
+          funcEntry("(int,ddot_ur_n,variable,__cil_tmp46)#(int *,ddot_ur_dx,array,__cil_tmp47)#(int,ddot_ur_icx,variable,__cil_tmp48)#(int *,ddot_ur_dy,array,__cil_tmp49)#(int,ddot_ur_icy,variable,__cil_tmp50)",
+                    "ddot_ur_dtemp ddot_ur_i___0 ddot_ur_ix ddot_ur_iy ddot_ur_m ddot_ur___cil_tmp11",
+                    "ddot_ur");
+          tmp___0 = ddot_ur(__cil_tmp46, __cil_tmp47, __cil_tmp48, __cil_tmp49, __cil_tmp50);
+          funcExit();
+          add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
+          *(b + k) += tmp___0;
+          addEntryToVariableTable("*(b + k)", k);
+          add_entryToArraySTable("b", k, "b184", b + k, b + k, 1);
+          handleArraySymbolically("b", k, "(+ *(b + k) tmp___0)", b + k, b + k, 1);
+          l = *(ipvt + k);
+          addEntryToVariableTable("*(ipvt + k)", k);
+          add_entryToArraySTable("ipvt", k, "ipvt185", ipvt + k, ipvt + k, 1);
+          handleAssignmentSymbolically("l", "*(ipvt + k)", & *(ipvt + k), & *(ipvt + k),
+                                       1);
+          {
+          exp_outcome = ! (l == k);
+          handleAssignmentSymbolically("exp_outcome", "(! (= l k))", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(79, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(79, 1, 0);
+            setTrueExpr(79, "(not (= l k))");
+            setFalseExpr(79, "(= l k)");
+            addToTree(79, 5, "(not (= l k))", "(= l k)", 77, 1);
+            delete_allVariableTableEntry();
+            t = *(b + l);
+            addEntryToVariableTable("*(b + l)", l);
+            add_entryToArraySTable("b", l, "b186", b + l, b + l, 1);
+            handleAssignmentSymbolically("t", "*(b + l)", & *(b + l), & *(b + l),
+                                         1);
+            *(b + l) = *(b + k);
+            addEntryToVariableTable("*(b + k)", k);
+            add_entryToArraySTable("b", k, "b187", b + k, b + k, 1);
+            handleArraySymbolically("b", l, "*(b + k)", b + l, b + l, 1);
+            *(b + k) = t;
+            handleArraySymbolically("b", k, "t", b + k, b + k, 1);
+          } else {
+            setBranchInfo(79, 0, 1);
+            setTrueExpr(79, "(not (= l k))");
+            setFalseExpr(79, "(= l k)");
+            addToTree(79, 5, "(not (= l k))", "(= l k)", 77, 0);
+            delete_allVariableTableEntry();
+          }
+          }
+          kb ++;
+          handleAssignmentSymbolically("kb", "(+ kb 1)", & kb, & kb, 1);
+        } else {
+          setBranchInfo(77, 0, 1);
+          setTrueExpr(77, "(< kb nm1)");
+          setFalseExpr(77, "(not (< kb nm1))");
+          addToTree(77, 4, "(< kb nm1)", "(not (< kb nm1))", 69, 0);
+          delete_allVariableTableEntry();
+        }
+        }
+        }
+      } else {
+        setBranchInfo(69, 0, 1);
+        setTrueExpr(69, "(>= nm1 1)");
+        setFalseExpr(69, "(not (>= nm1 1))");
+        addToTree(69, 3, "(>= nm1 1)", "(not (>= nm1 1))", 43, 0);
+        delete_allVariableTableEntry();
+      }
+      }
     }
     }
   }
   }
-  i___0 = 0;
-  add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
-  {
-  {
-  exp_outcome = i___0 < n;
-  handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(22, 1, 0);
-    setTrueExpr(22, "(< i___0 n)");
-    setFalseExpr(22, "(not (< i___0 n))");
-    addToTree(22, 1, "(< i___0 n)", "(not (< i___0 n))", 0, 1);
-    delete_allVariableTableEntry();
-    *(dy + i___0) += da * *(dx + i___0);
-    addEntryToVariableTable("*(dy + i___0)", i___0);
-    add_entryToArraySTable("dy", i___0, "dy192", dy + i___0, dy + i___0, 1);
-    addEntryToVariableTable("*(dx + i___0)", i___0);
-    add_entryToArraySTable("dx", i___0, "dx193", dx + i___0, dx + i___0, 1);
-    handleArraySymbolically("dy", i___0, "(+ *(dy + i___0) (* da *(dx + i___0)))",
-                            dy + i___0, dy + i___0, 1);
-    i___0 ++;
-    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(22, 0, 1);
-    setTrueExpr(22, "(< i___0 n)");
-    setFalseExpr(22, "(not (< i___0 n))");
-    addToTree(22, 1, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = i___0 < n;
-  handleAssignmentSymbolically("exp_outcome", "(< i___0 n)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(24, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(24, 1, 0);
-    setTrueExpr(24, "(< i___0 n)");
-    setFalseExpr(24, "(not (< i___0 n))");
-    addToTree(24, 1, "(< i___0 n)", "(not (< i___0 n))", 0, 1);
-    delete_allVariableTableEntry();
-    *(dy + i___0) += da * *(dx + i___0);
-    addEntryToVariableTable("*(dy + i___0)", i___0);
-    add_entryToArraySTable("dy", i___0, "dy194", dy + i___0, dy + i___0, 1);
-    addEntryToVariableTable("*(dx + i___0)", i___0);
-    add_entryToArraySTable("dx", i___0, "dx195", dx + i___0, dx + i___0, 1);
-    handleArraySymbolically("dy", i___0, "(+ *(dy + i___0) (* da *(dx + i___0)))",
-                            dy + i___0, dy + i___0, 1);
-    i___0 ++;
-    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(24, 0, 1);
-    setTrueExpr(24, "(< i___0 n)");
-    setFalseExpr(24, "(not (< i___0 n))");
-    addToTree(24, 1, "(< i___0 n)", "(not (< i___0 n))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  __cil_tmp12 = isNotQueueEmpty();
-  if (__cil_tmp12) {
+  __cil_tmp53 = isNotQueueEmpty();
+  if (__cil_tmp53) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    daxpy_r(mempool, n, da, dx, icx, dy, icy);
+    dgesl(mempool, a, lda, n, ipvt, b, job, roll);
   } else {
-    __cil_tmp12 = startCDG();
-    add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-    add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-    add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-    add_entryToSTable("__cil_tmp12", "Function", & __cil_tmp12, & __cil_tmp12, 1);
-    if (__cil_tmp12) {
-      __cil_tmp12 = getTestCases();
-      daxpy_r(mempool, n, da, dx, icx, dy, icy);
+    __cil_tmp53 = startCDG();
+    add_entryToSTable("__cil_tmp53", "Function", & __cil_tmp53, & __cil_tmp53, 1);
+    if (__cil_tmp53) {
+      __cil_tmp53 = getTestCases();
+      dgesl(mempool, a, lda, n, ipvt, b, job, roll);
     }
+  }
+  return;
+}
+}
+void daxpy_r(int daxpy_r_n , int daxpy_r_da , int *daxpy_r_dx , int daxpy_r_icx ,
+             int *daxpy_r_dy , int daxpy_r_icy ) 
+{ 
+  int daxpy_r_i___0 ;
+  int daxpy_r_ix ;
+  int daxpy_r_iy ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (daxpy_r_n <= 0) {
+    return;
+  }
+  if (daxpy_r_da == 0) {
+    return;
+  }
+  if (daxpy_r_icx != 1) {
+    goto _L;
+  } else
+  if (daxpy_r_icy != 1) {
+    _L: /* CIL Label */ 
+    daxpy_r_ix = 1;
+    add_entryToSTable("daxpy_r_ix", "Constant", & daxpy_r_ix, & daxpy_r_ix, 1);
+    daxpy_r_iy = 1;
+    add_entryToSTable("daxpy_r_iy", "Constant", & daxpy_r_iy, & daxpy_r_iy, 1);
+    if (daxpy_r_icx < 0) {
+      daxpy_r_ix = (- daxpy_r_n + 1) * daxpy_r_icx + 1;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ (* (+ (- daxpy_r_n) 1) daxpy_r_icx) 1)",
+                                   & daxpy_r_ix, & daxpy_r_ix, 1);
+    }
+    if (daxpy_r_icy < 0) {
+      daxpy_r_iy = (- daxpy_r_n + 1) * daxpy_r_icy + 1;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ (* (+ (- daxpy_r_n) 1) daxpy_r_icy) 1)",
+                                   & daxpy_r_iy, & daxpy_r_iy, 1);
+    }
+    daxpy_r_i___0 = 0;
+    add_entryToSTable("daxpy_r_i___0", "Constant", & daxpy_r_i___0, & daxpy_r_i___0,
+                      1);
+    {
+    if (daxpy_r_i___0 < daxpy_r_n) {
+      *(daxpy_r_dy + daxpy_r_iy) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_ix);
+      addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_iy)", daxpy_r_iy);
+      add_entryToArraySTable("daxpy_r_dy", daxpy_r_iy, "daxpy_r_dy188", daxpy_r_dy + daxpy_r_iy,
+                             daxpy_r_dy + daxpy_r_iy, 1);
+      addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_ix)", daxpy_r_ix);
+      add_entryToArraySTable("daxpy_r_dx", daxpy_r_ix, "daxpy_r_dx189", daxpy_r_dx + daxpy_r_ix,
+                             daxpy_r_dx + daxpy_r_ix, 1);
+      handleArraySymbolically("daxpy_r_dy", daxpy_r_iy, "(+ *(daxpy_r_dy + daxpy_r_iy) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_ix)))",
+                              daxpy_r_dy + daxpy_r_iy, daxpy_r_dy + daxpy_r_iy, 1);
+      daxpy_r_ix += daxpy_r_icx;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ daxpy_r_ix daxpy_r_icx)", & daxpy_r_ix,
+                                   & daxpy_r_ix, 1);
+      daxpy_r_iy += daxpy_r_icy;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ daxpy_r_iy daxpy_r_icy)", & daxpy_r_iy,
+                                   & daxpy_r_iy, 1);
+      daxpy_r_i___0 ++;
+      handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                   & daxpy_r_i___0, 1);
+    }
+    if (daxpy_r_i___0 < daxpy_r_n) {
+      *(daxpy_r_dy + daxpy_r_iy) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_ix);
+      addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_iy)", daxpy_r_iy);
+      add_entryToArraySTable("daxpy_r_dy", daxpy_r_iy, "daxpy_r_dy190", daxpy_r_dy + daxpy_r_iy,
+                             daxpy_r_dy + daxpy_r_iy, 1);
+      addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_ix)", daxpy_r_ix);
+      add_entryToArraySTable("daxpy_r_dx", daxpy_r_ix, "daxpy_r_dx191", daxpy_r_dx + daxpy_r_ix,
+                             daxpy_r_dx + daxpy_r_ix, 1);
+      handleArraySymbolically("daxpy_r_dy", daxpy_r_iy, "(+ *(daxpy_r_dy + daxpy_r_iy) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_ix)))",
+                              daxpy_r_dy + daxpy_r_iy, daxpy_r_dy + daxpy_r_iy, 1);
+      daxpy_r_ix += daxpy_r_icx;
+      handleAssignmentSymbolically("daxpy_r_ix", "(+ daxpy_r_ix daxpy_r_icx)", & daxpy_r_ix,
+                                   & daxpy_r_ix, 1);
+      daxpy_r_iy += daxpy_r_icy;
+      handleAssignmentSymbolically("daxpy_r_iy", "(+ daxpy_r_iy daxpy_r_icy)", & daxpy_r_iy,
+                                   & daxpy_r_iy, 1);
+      daxpy_r_i___0 ++;
+      handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                   & daxpy_r_i___0, 1);
+    }
+    }
+    return;
+  }
+  daxpy_r_i___0 = 0;
+  add_entryToSTable("daxpy_r_i___0", "Constant", & daxpy_r_i___0, & daxpy_r_i___0,
+                    1);
+  {
+  if (daxpy_r_i___0 < daxpy_r_n) {
+    *(daxpy_r_dy + daxpy_r_i___0) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_i___0);
+    addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dy", daxpy_r_i___0, "daxpy_r_dy192", daxpy_r_dy + daxpy_r_i___0,
+                           daxpy_r_dy + daxpy_r_i___0, 1);
+    addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dx", daxpy_r_i___0, "daxpy_r_dx193", daxpy_r_dx + daxpy_r_i___0,
+                           daxpy_r_dx + daxpy_r_i___0, 1);
+    handleArraySymbolically("daxpy_r_dy", daxpy_r_i___0, "(+ *(daxpy_r_dy + daxpy_r_i___0) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_i___0)))",
+                            daxpy_r_dy + daxpy_r_i___0, daxpy_r_dy + daxpy_r_i___0,
+                            1);
+    daxpy_r_i___0 ++;
+    handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                 & daxpy_r_i___0, 1);
+  }
+  if (daxpy_r_i___0 < daxpy_r_n) {
+    *(daxpy_r_dy + daxpy_r_i___0) += daxpy_r_da * *(daxpy_r_dx + daxpy_r_i___0);
+    addEntryToVariableTable("*(daxpy_r_dy + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dy", daxpy_r_i___0, "daxpy_r_dy194", daxpy_r_dy + daxpy_r_i___0,
+                           daxpy_r_dy + daxpy_r_i___0, 1);
+    addEntryToVariableTable("*(daxpy_r_dx + daxpy_r_i___0)", daxpy_r_i___0);
+    add_entryToArraySTable("daxpy_r_dx", daxpy_r_i___0, "daxpy_r_dx195", daxpy_r_dx + daxpy_r_i___0,
+                           daxpy_r_dx + daxpy_r_i___0, 1);
+    handleArraySymbolically("daxpy_r_dy", daxpy_r_i___0, "(+ *(daxpy_r_dy + daxpy_r_i___0) (* daxpy_r_da *(daxpy_r_dx + daxpy_r_i___0)))",
+                            daxpy_r_dy + daxpy_r_i___0, daxpy_r_dy + daxpy_r_i___0,
+                            1);
+    daxpy_r_i___0 ++;
+    handleAssignmentSymbolically("daxpy_r_i___0", "(+ daxpy_r_i___0 1)", & daxpy_r_i___0,
+                                 & daxpy_r_i___0, 1);
+  }
   }
   return;
 }
@@ -19045,18 +19565,20 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  daxpy_r(argvar.mempool, argvar.n, argvar.da, argvar.dx, argvar.icx, argvar.dy, argvar.icy);
+  dgesl(argvar.mempool, argvar.a, argvar.lda, argvar.n, argvar.ipvt, argvar.b, argvar.job,
+        argvar.roll);
 }
 }
 void main(void) 
 { 
   int *mempool ;
+  int *a ;
+  int lda ;
   int n ;
-  int da ;
-  int *dx ;
-  int icx ;
-  int *dy ;
-  int icy ;
+  int *ipvt ;
+  int *b ;
+  int job ;
+  int roll ;
   int temp ;
   int __cil_tmp2 ;
   int __cil_tmp3 ;
@@ -19065,49 +19587,61 @@ void main(void)
   int __cil_tmp6 ;
   int __cil_tmp7 ;
   int __cil_tmp8 ;
+  int __cil_tmp9 ;
 
   {
   argvar.mempool = (int *)malloc(30 * sizeof(int ));
+  __cil_tmp9 = 0;
+  while (1) {
+    if (__cil_tmp9 >= 30) {
+      break;
+    } else {
+      temp = rand();
+      *(argvar.mempool + __cil_tmp9) = temp % 20;
+      __cil_tmp9 ++;
+    }
+  }
+  argvar.a = (int *)malloc(30 * sizeof(int ));
   __cil_tmp8 = 0;
   while (1) {
     if (__cil_tmp8 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.mempool + __cil_tmp8) = temp % 20;
+      *(argvar.a + __cil_tmp8) = temp % 20;
       __cil_tmp8 ++;
     }
   }
   __cil_tmp7 = rand();
-  argvar.n = __cil_tmp7 % 20;
+  argvar.lda = __cil_tmp7 % 20;
   __cil_tmp6 = rand();
-  argvar.da = __cil_tmp6 % 20;
-  argvar.dx = (int *)malloc(30 * sizeof(int ));
+  argvar.n = __cil_tmp6 % 20;
+  argvar.ipvt = (int *)malloc(30 * sizeof(int ));
   __cil_tmp5 = 0;
   while (1) {
     if (__cil_tmp5 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.dx + __cil_tmp5) = temp % 20;
+      *(argvar.ipvt + __cil_tmp5) = temp % 20;
       __cil_tmp5 ++;
     }
   }
-  __cil_tmp4 = rand();
-  argvar.icx = __cil_tmp4 % 20;
-  argvar.dy = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp3 = 0;
+  argvar.b = (int *)malloc(30 * sizeof(int ));
+  __cil_tmp4 = 0;
   while (1) {
-    if (__cil_tmp3 >= 30) {
+    if (__cil_tmp4 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.dy + __cil_tmp3) = temp % 20;
-      __cil_tmp3 ++;
+      *(argvar.b + __cil_tmp4) = temp % 20;
+      __cil_tmp4 ++;
     }
   }
+  __cil_tmp3 = rand();
+  argvar.job = __cil_tmp3 % 20;
   __cil_tmp2 = rand();
-  argvar.icy = __cil_tmp2 % 20;
+  argvar.roll = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

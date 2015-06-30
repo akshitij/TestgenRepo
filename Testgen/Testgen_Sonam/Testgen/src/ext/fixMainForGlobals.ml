@@ -24,7 +24,8 @@ let checkIfGlobal (f : file) (varName : string) =
 
 
 let setGlobalAssignment (fdec : fundec) (loc : location) (vl : varinfo) (vg : varinfo) : unit =
-  fdec.sbody.bstmts <-  (mkStmtOneInstr (Set((var vg), (v2e vl), loc))) :: fdec.sbody.bstmts
+  if (isArrayType vg.vtype) = false then
+    fdec.sbody.bstmts <-  (mkStmtOneInstr (Set((var vg), (v2e vl), loc))) :: fdec.sbody.bstmts
 
 
 let fixMainForGlobals (f: file) : unit =

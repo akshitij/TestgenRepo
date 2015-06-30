@@ -24,7 +24,8 @@ let checkIfGlobal (f : file) (varName : string) =
 
 
 let setGlobalAssignment (fdec : fundec) (loc : location) (vl : varinfo) (vg : varinfo) : unit =
-  fdec.sbody.bstmts <-  (mkStmtOneInstr (Set((var vg), (v2e vl), loc))) :: fdec.sbody.bstmts
+  if (isArrayType vg.vtype) = false then
+    fdec.sbody.bstmts <-  (mkStmtOneInstr (Set((var vg), (v2e vl), loc))) :: fdec.sbody.bstmts
 
 
 let fixMainForGlobals (f: file) : unit =
@@ -38,7 +39,7 @@ let fixMainForGlobals (f: file) : unit =
          List.iter (fun sf ->
          		if (checkIfGlobal f sf.vname) = true then
      			  let gcopy = copyVarinfo sf ("global_" ^ sf.vname) in begin
-			    setGlobalAssignment fd loc sf gcopy;
+			    setGlobalAssignment fd loc gcopy sf;
 			    vars := !vars @ [gcopy]
 			  end
      			else
