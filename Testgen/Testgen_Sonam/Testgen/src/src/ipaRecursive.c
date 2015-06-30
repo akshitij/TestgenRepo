@@ -34,6 +34,7 @@ typedef struct {
 
 vnameHash* vnames = NULL;
 int stackInitFlag = 0;
+int noInsertionInTables = 0;
 int stackInitFlag2 = 0;
 void *symStack = NULL; 
 void *didFuncEntryExecute = NULL;
@@ -244,6 +245,10 @@ void populateSTableWithLocals(char *localVarName){
 
 void funcEntry(char* args, char* locals, char* funcName) {
     
+    //to avoid entries in itables/ftables
+    noInsertionInTables = 1;
+    //...........................//
+     
     printf("funcEntry: %s \"%s\" \n", funcName, args);
     int size=0,localSize = 0;
     currentOccurence = getOccurence(funcName);
@@ -359,6 +364,10 @@ void funcEntry(char* args, char* locals, char* funcName) {
         printf("Recursive depth exceeded, nothing pushed, proceeding with concolic execution...\n");
         printf("Pushed \"%d\" in didFuncEntryExecute\n", 0);
     }
+    
+    //to avoid entries in itables/ftables
+    noInsertionInTables = 0;
+    //...........................//
 }
 
 

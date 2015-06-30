@@ -8429,7 +8429,7 @@ char *getNextToken(char const   *str , int *pos , int length )
         str ++;
         (*pos) ++;
         i___0 ++;
-        token_type = (enum TOKENTYPE )3;
+        token_type = (enum TOKENTYPE )4;
       }
       *(res + i___0) = (char )'\000';
       return (res);
@@ -10097,8 +10097,8 @@ void addToIntTable(char *sname , int *val )
         }
         break;
       }
-      s->value = val;
     }
+    s->value = val;
   } else
   if ((unsigned long )s == (unsigned long )((void *)0)) {
     tmp___14 = malloc(sizeof(struct intVartable ));
@@ -15835,10 +15835,11 @@ int main1(int global_a )
   char in[15] ;
 
   {
+  a = global_a;
   __cil_tmp6 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp6", "Function", & __cil_tmp6, & __cil_tmp6, -1);
   sprintf(__cil_tmp6, "\t%d\n", a);
-  printTestCase("globalVerifyFunc_main1_1435525396.tc", __cil_tmp6);
+  printTestCase("globalVerifyFunc_main1_1435700498.tc", __cil_tmp6);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("", "", "foo");
   foo();

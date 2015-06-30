@@ -526,7 +526,7 @@ let rec checkExp e =
                                           aindex := !aindex + 1
 
           | _ ->        let x = countRef e 0 in
-                           let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer x) in
+                           let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 0) in (*since pointers are used only as arrays so *p converts to p[0]
                              stmtlist := !stmtlist @ [ call]
 
        end
@@ -659,16 +659,9 @@ class pathSymbolVisitorClass (fdec : fundec) (sname: varinfo) (svoid: varinfo) (
                               |TPtr(TInt(_,_),_) -> 1
                               |TPtr(TFloat(_,_),_) -> 2
                               | _ -> -1 ) in 
-                (*let pre = mkArrayassignmentfxn lhs ind rhs e t in
-                  ChangeTo ([i] @ !stmtlist @ [pre]) *)
-                 match e with
-                 |Lval(_,_) ->
-		                 let lv = (Mem e, NoOffset) in
-                		 let pre = mkassignmentfxn (d_string "%a" d_lval lv) rhs e t in
-                		     ChangeTo ([i] @ !stmtlist @ [pre])
-		 |_ ->
-		 		 let pre = mkArrayassignmentfxn lhs ind rhs e t in
-	                             ChangeTo ([i] @ !stmtlist @ [pre])
+                let pre = mkArrayassignmentfxn lhs ind rhs e t in
+                  ChangeTo ([i] @ !stmtlist @ [pre])
+
       
 
 

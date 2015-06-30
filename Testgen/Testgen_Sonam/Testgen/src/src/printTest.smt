@@ -1,4 +1,4 @@
 (benchmark res
   :logic AUFLIA
-:extrafuns ((s12 Int)(s11 Int)(s10 Int)(s9 Int)(s8 Int)(s6 Int)(s5 Int)(s4 Int)(s3 Int)(s2 Int)(s1 Int)(s0 Int)(1 Int)(0 Int)(Positive_RA_Alt_Thresh20 Int))
+:extrafuns ((s6 Int)(dy_0 Int)(s4 Int)(dx_0 Int)(s2 Int)(s1 Int)(mempool_0 Int)(dy188 Int)(dx189 Int)(dy190 Int)(dx191 Int))
 )

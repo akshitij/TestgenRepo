@@ -203,9 +203,10 @@ void populateSTable(funcArg* a){
     if(a->structure == 1){
 	add_entryToSTable(key,"Constant",a->val,a->val,a->type);
 	printf("%s Constant\n", key);
+	add_vnameHash(a->vname, key);
     }
-    /*else{
-	if(a->structure == 2){
+    else{
+	if(a->structure == 0 || a->structure == 2){
 		char* sym;
 		void* val;
 		if(symStack == NULL || stackSize(symStack) == 0){
@@ -218,26 +219,17 @@ void populateSTable(funcArg* a){
 		}
 		add_entryToSTable(key,sym,val,val,a->type);
 		printf("%s %s %d\n", key, sym, *(int*)val);
+	        add_vnameHash(a->vname, key);
     	}
-	
-	
-	}*/
-	else{
-		char* sym;
-		void* val;
-		if(symStack == NULL || stackSize(symStack) == 0){
-		    sym = find_symVal(a->apname);
-		    val = find_conVal(a->apname);
-		}
-		else{
-		    sym = find_symVal(get_vnameHash(a->apname));
-		    val = find_conVal(get_vnameHash(a->apname));
-		}
-		add_entryToSTable(key,sym,val,val,a->type);
-		printf("%s %s %d\n", key, sym, *(int*)val);
+    	else{
+    		if(symStack == NULL || stackSize(symStack) == 0){
+    			add_vnameHash(a->vname, a->apname);		
+    		}
+    		else{
+    			add_vnameHash(a->vname, get_vnameHash(a->apname));
+    		}
     	}
-    //}
-    add_vnameHash(a->vname, key);
+    }
 }
 
 void populateSTableWithLocals(char *localVarName){

@@ -6,6 +6,7 @@ module H = Hashtbl
 
 let found = ref false
 let vars = ref []
+let v2e (v : varinfo) : exp = Lval(var v)
 
 let checkIfGlobal (f : file) (varName : string) =
   found := false;
@@ -22,6 +23,10 @@ let checkIfGlobal (f : file) (varName : string) =
   !found
 
 
+let setGlobalAssignment (fdec : fundec) (loc : location) (vl : varinfo) (vg : varinfo) : unit =
+  fdec.sbody.bstmts <-  (mkStmtOneInstr (Set((var vg), (v2e vl), loc))) :: fdec.sbody.bstmts
+
+
 let fixMainForGlobals (f: file) : unit =
   let funName = !Param.func in
   let doGlobal = function
@@ -32,9 +37,10 @@ let fixMainForGlobals (f: file) : unit =
          E.log "Running fixMainForGlobals on %s\n" funName;
          List.iter (fun sf ->
          		if (checkIfGlobal f sf.vname) = true then
-     			  let gcopy = copyVarinfo sf ("global_" ^ sf.vname) in
-			  vars := !vars @ [gcopy];
-     			  ()
+     			  let gcopy = copyVarinfo sf ("global_" ^ sf.vname) in begin
+			    setGlobalAssignment fd loc gcopy sf;
+			    vars := !vars @ [gcopy]
+			  end
      			else
      			  vars := !vars @ [sf]   
      		   )
