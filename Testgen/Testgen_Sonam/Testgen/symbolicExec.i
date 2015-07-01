@@ -3451,7 +3451,7 @@ void updateValBySymbolicName(char *sname, void *value) {
       else
        {
           if((*(int*)value) < 0)
-          { updateFloatValBySname(sname, (*(int *)value));}
+          { updateFloatValBySname(sname, (*(float *)value));}
          else
           updateFloatValBySname(sname, (*(float *)value));}
       return;
@@ -3477,7 +3477,7 @@ void updateValBySymbolicName(char *sname, void *value) {
    { if((*(int*)value) < 0)
           { updateFloatValBySname(sname, (*(int *)value));}
      else
-     updateFloatValBySname(sname, (*(int *)value));
+     updateFloatValBySname(sname, (*(float *)value));
    }
 }
 

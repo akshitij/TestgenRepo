@@ -71,7 +71,7 @@ class handleFuncArgVisitorClass (fdec : fundec) = object (self)
 	        if (List.length argExps) == (List.length argTypes) then begin
 	          List.iter2 (fun a b ->
 	              		    match a with
-	               		    |Lval (Var v, _) -> 
+	               		    |Lval (Var v, NoOffset) -> 
 	              		    		newArgs := !newArgs @ [a]
 	              		    | _ -> 
 	            		    		let tmp = (makeTempVar fdec b) in

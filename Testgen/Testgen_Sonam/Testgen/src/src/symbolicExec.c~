@@ -212,7 +212,7 @@ void updateValBySymbolicName(char *sname, void *value) {
       else
        { 
           if((*(int*)value) < 0)
-          { updateFloatValBySname(sname, (*(int *)value));}
+          { updateFloatValBySname(sname, (*(float *)value));}
          else
           updateFloatValBySname(sname, (*(float *)value));}
       return;
@@ -236,9 +236,9 @@ void updateValBySymbolicName(char *sname, void *value) {
   //setValue(sname, 1, value);
   if (!updateIntValBySname(sname, (*(int *)value)))
    {  if((*(int*)value) < 0)
-          { updateFloatValBySname(sname, (*(int *)value));}
+          { updateFloatValBySname(sname, (*(float *)value));}
      else
-     updateFloatValBySname(sname, (*(int *)value));
+     updateFloatValBySname(sname, (*(float *)value));
    }
 }
 
@@ -641,7 +641,7 @@ char *getPrepositionalFormula(char *expr) {
 
   strcat(result, "\0");
 //printf("Prep result = %s\n",result);
-  printf("getPrepositionalFormula = %s\n",result);
+  printf("PrepositionalFormula = %s\n",result);
   return result;
 }
 

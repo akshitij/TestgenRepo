@@ -15999,7 +15999,7 @@ int Non_Crossing_Biased_Climb(int global_Cur_Vertical_Sep , int global_High_Conf
           Positive_RA_Alt_Thresh[1], Positive_RA_Alt_Thresh[2], Positive_RA_Alt_Thresh[3],
           Positive_RA_Alt_Thresh[4], Up_Separation, Down_Separation, Other_RAC, Other_Capability,
           Climb_Inhibit);
-  printTestCase("tcas_Non_Crossing_Biased_Climb_1435705783.tc", __cil_tmp14);
+  printTestCase("tcas_Non_Crossing_Biased_Climb_1435749750.tc", __cil_tmp14);
   add_entryToSTable("Climb_Inhibit", "s12", & Climb_Inhibit, & Climb_Inhibit, 1);
   add_entryToSTable("Other_Capability", "s11", & Other_Capability, & Other_Capability,
                     1);
