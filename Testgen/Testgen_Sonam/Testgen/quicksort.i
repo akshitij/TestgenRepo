@@ -850,7 +850,6 @@ int partition(int arr[], int l, int h)
 {
   int x = arr[h];
   int i = (l - 1);
-  int *p,*q;
 
 printf("l=%d, h=%d\n",l,h);
 
@@ -859,15 +858,13 @@ printf("l=%d, h=%d\n",l,h);
       if (arr[j] <= x)
         {
           i++;
-   p = &arr[i];
-   q = &arr[j];
-          swap (p, q);
+
+          swap (&arr[i], &arr[j]);
         }
     }
 
-  p = &arr[i + 1];
-  q = &arr[h];
-  swap (p, q);
+
+  swap (&arr[i + 1], &arr[h]);
   return (i + 1);
 }
 

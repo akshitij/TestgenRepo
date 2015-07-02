@@ -15779,119 +15779,23 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-/* compiler builtin: 
-   void *__builtin_alloca(unsigned long  ) ;  */
-#pragma merger("0","./quicksort.i","-g,-g")
-void swap(int *swap_a , int *swap_b ) 
+#pragma merger("0","./crestExam1.i","-g,-g")
+extern int scanf(char const   * __restrict  __format  , ...)  __asm__("__isoc99_scanf")  ;
+int dbl(int dbl_x ) 
 { 
-  int swap_t ;
+  int dbl___cil_tmp2 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  swap_t = *swap_a;
-  addEntryToVariableTable("*swap_a", 0);
-  handleAssignmentSymbolically("swap_t", "*swap_a", & *swap_a, & *swap_a, 1);
-  *swap_a = *swap_b;
-  addEntryToVariableTable("*swap_b", 0);
-  handleArraySymbolically("swap_a", 0, "*swap_b", swap_a, swap_a, 1);
-  *swap_b = swap_t;
-  handleArraySymbolically("swap_b", 0, "swap_t", swap_b, swap_b, 1);
-  return;
-}
-}
-int partition(int *partition_arr , int partition_l , int partition_h ) 
-{ 
-  int partition_x ;
-  int partition_i___0 ;
-  int partition_j ;
-  int partition___cil_tmp7 ;
-  int *partition___cil_tmp8 ;
-  int *partition___cil_tmp9 ;
-  int *partition___cil_tmp10 ;
-  int *partition___cil_tmp11 ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
   {
-  partition_x = *(partition_arr + partition_h);
-  addEntryToVariableTable("*(partition_arr + partition_h)", partition_h);
-  add_entryToArraySTable("partition_arr", partition_h, "partition_arr10", partition_arr + partition_h,
-                         partition_arr + partition_h, 1);
-  handleAssignmentSymbolically("partition_x", "*(partition_arr + partition_h)", & *(partition_arr + partition_h),
-                               & *(partition_arr + partition_h), 1);
-  partition_i___0 = partition_l - 1;
-  handleAssignmentSymbolically("partition_i___0", "(- partition_l 1)", & partition_i___0,
-                               & partition_i___0, 1);
-  printf((char const   * __restrict  )"l=%d, h=%d\n", partition_l, partition_h);
-  partition_j = partition_l;
-  handleAssignmentSymbolically("partition_j", "partition_l", & partition_l, & partition_l,
-                               1);
+  dbl___cil_tmp2 = 2 * dbl_x;
+  handleAssignmentSymbolically("dbl___cil_tmp2", "(* 2 dbl_x)", & dbl___cil_tmp2,
+                               & dbl___cil_tmp2, 1);
   {
-  if (partition_j <= partition_h - 1) {
-    if (*(partition_arr + partition_j) <= partition_x) {
-      partition_i___0 ++;
-      handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
-                                   & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,pointer,partition___cil_tmp8)#(int *,swap_b,pointer,partition___cil_tmp9)",
-                "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
-      funcExit();
-    }
-    partition_j ++;
-    handleAssignmentSymbolically("partition_j", "(+ partition_j 1)", & partition_j,
-                                 & partition_j, 1);
-  }
-  if (partition_j <= partition_h - 1) {
-    if (*(partition_arr + partition_j) <= partition_x) {
-      partition_i___0 ++;
-      handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
-                                   & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,pointer,partition___cil_tmp8)#(int *,swap_b,pointer,partition___cil_tmp9)",
-                "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
-      funcExit();
-    }
-    partition_j ++;
-    handleAssignmentSymbolically("partition_j", "(+ partition_j 1)", & partition_j,
-                                 & partition_j, 1);
-  }
-  }
-  partition___cil_tmp10 = partition_arr + (partition_i___0 + 1);
-  handleAssignmentSymbolically("partition___cil_tmp10", "(+ partition_arr (+ partition_i___0 1))",
-                               & partition___cil_tmp10, & partition___cil_tmp10, 1);
-  partition___cil_tmp11 = partition_arr + partition_h;
-  handleAssignmentSymbolically("partition___cil_tmp11", "(+ partition_arr partition_h)",
-                               & partition___cil_tmp11, & partition___cil_tmp11, 1);
-  funcEntry("(int *,swap_a,pointer,partition___cil_tmp10)#(int *,swap_b,pointer,partition___cil_tmp11)",
-            "swap_t", "swap");
-  swap(partition___cil_tmp10, partition___cil_tmp11);
-  funcExit();
-  {
-  partition___cil_tmp7 = partition_i___0 + 1;
-  handleAssignmentSymbolically("partition___cil_tmp7", "(+ partition_i___0 1)", & partition___cil_tmp7,
-                               & partition___cil_tmp7, 1);
-  {
-  mapConcolicValues("partition___cil_tmp7", & partition___cil_tmp7);
-  return (partition___cil_tmp7);
+  mapConcolicValues("dbl___cil_tmp2", & dbl___cil_tmp2);
+  return (dbl___cil_tmp2);
   }
   }
 }
@@ -15904,50 +15808,15 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(>= top 0)");
-  addtoCDGnode(4, 3, 1);
-  setArray(4, "(> l 0)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(5, 4, 1);
-  setArray(5, "(> h l)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(7, 5, 1);
-  setArray(7, "(> (- p 1) l)");
-  addtoCDGnode(8, 7, 1);
-  addtoCDGnode(9, 5, 1);
-  setArray(9, "(< (+ p 1) h)");
-  addtoCDGnode(9, 5, 1);
-  setArray(9, "(< (+ p 1) h)");
-  addtoCDGnode(10, 9, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(12, 11, 1);
-  setArray(12, "(> l 0)");
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(13, 12, 1);
-  setArray(13, "(> h l)");
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(14, 13, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(15, 13, 1);
-  setArray(15, "(> (- p 1) l)");
-  addtoCDGnode(16, 15, 1);
-  addtoCDGnode(17, 13, 1);
-  setArray(17, "(< (+ p 1) h)");
-  addtoCDGnode(17, 13, 1);
-  setArray(17, "(< (+ p 1) h)");
-  addtoCDGnode(18, 17, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(20, 0, 1);
+  setArray(2, "(= (+ tmp 3) 9)");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(6, 2, 0);
+  addtoCDGnode(4, 2, 1);
+  addtoCDGnode(5, 2, 1);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(7, 2, 0);
+  addtoCDGnode(8, 2, 0);
+  addtoCDGnode(9, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15955,16 +15824,7 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(7, 7);
-  isCopyOf(15, 7);
-  isCopyOf(9, 9);
-  isCopyOf(17, 9);
-  isCopyOf(3, 3);
-  isCopyOf(11, 3);
-  isCopyOf(5, 5);
-  isCopyOf(13, 5);
-  isCopyOf(4, 4);
-  isCopyOf(12, 4);
+
 }
 }
 void createSidTable(void) 
@@ -15972,396 +15832,97 @@ void createSidTable(void)
 
 
   {
-  add_condition(7, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(9, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(5, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(4, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(3, "(>= top 0)", "(not (>= top 0))", 0, 0);
-  add_condition(15, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(17, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(13, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(12, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(11, "(>= top 0)", "(not (>= top 0))", 0, 0);
+  add_condition(2, "(= (+ tmp 3) 9)", "(not (= (+ tmp 3) 9))", 0, 0);
 }
 }
 struct arguments {
-   int *arr ;
-   int l ;
-   int h ;
+   int a ;
 };
 struct arguments argvar ;
-void quickSort(int *arr , int l , int h ) 
+int main1(int a ) 
 { 
-  int *stack ;
-  unsigned long __lengthofstack ;
-  void *tmp ;
-  int top ;
-  int tmp___0 ;
-  int tmp___1 ;
-  int p ;
-  int tmp___2 ;
+  int tmp ;
+  int __cil_tmp3 ;
+  int __cil_tmp4 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp14 ;
-  char *__cil_tmp15 ;
+  int __cil_tmp7 ;
+  char *__cil_tmp8 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp15 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp15", "Function", & __cil_tmp15, & __cil_tmp15, -1);
-  sprintf(__cil_tmp15, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", arr[0], arr[1], arr[2], arr[3],
-          arr[4], l, h);
-  printTestCase("quicksort_quickSort_1435830959.tc", __cil_tmp15);
-  add_entryToSTable("h", "s2", & h, & h, 1);
-  add_entryToSTable("l", "s1", & l, & l, 1);
-  add_entryToArraySTable("arr", 0, "arr_0", arr, arr, 1);
-  __lengthofstack = (unsigned long )((h - l) + 1);
-  handleAssignmentSymbolically("__lengthofstack", "(+ (- h l) 1)", & __lengthofstack,
-                               & __lengthofstack, 1);
-  tmp = __builtin_alloca(sizeof(*stack) * __lengthofstack);
-  add_entryToSTable("tmp", "Function", & tmp, & tmp, -1);
-  stack = (int *)tmp;
-  handleAssignmentSymbolically("stack", "tmp", & stack, & stack, 1);
-  top = -1;
-  add_entryToSTable("top", "Constant", & top, & top, 1);
-  top ++;
-  handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-  *(stack + top) = l;
-  handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-  top ++;
-  handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-  *(stack + top) = h;
-  handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
+  __cil_tmp8 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
+  sprintf(__cil_tmp8, "\t%d\n", a);
+  printTestCase("crestExam1_main1_1435831459.tc", __cil_tmp8);
+  add_entryToSTable("a", "s0", & a, & a, 1);
+  funcEntry("(int,dbl_x,variable,a)", "dbl___cil_tmp2", "dbl");
+  tmp = dbl(a);
+  funcExit();
+  add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
   {
-  {
-  exp_outcome = top >= 0;
-  handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
+  exp_outcome = tmp + 3 == 9;
+  handleAssignmentSymbolically("exp_outcome", "(= (+ tmp 3) 9)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(>= top 0)");
-    setFalseExpr(3, "(not (>= top 0))");
-    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
+    setBranchInfo(2, 1, 0);
+    setTrueExpr(2, "(= (+ tmp 3) 9)");
+    setFalseExpr(2, "(not (= (+ tmp 3) 9))");
+    addToTree(2, 1, "(= (+ tmp 3) 9)", "(not (= (+ tmp 3) 9))", 0, 1);
     delete_allVariableTableEntry();
     {
-    exp_outcome = l > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(4, 1, 0);
-      setTrueExpr(4, "(> l 0)");
-      setFalseExpr(4, "(not (> l 0))");
-      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = h > l;
-      handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(5, 1, 0);
-        setTrueExpr(5, "(> h l)");
-        setFalseExpr(5, "(not (> h l))");
-        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 1);
-        delete_allVariableTableEntry();
-        tmp___0 = top;
-        handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        h = *(stack + tmp___0);
-        addEntryToVariableTable("*(stack + tmp___0)", tmp___0);
-        add_entryToArraySTable("stack", tmp___0, "stack11", stack + tmp___0, stack + tmp___0,
-                               1);
-        handleAssignmentSymbolically("h", "*(stack + tmp___0)", & *(stack + tmp___0),
-                                     & *(stack + tmp___0), 1);
-        tmp___1 = top;
-        handleAssignmentSymbolically("tmp___1", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        l = *(stack + tmp___1);
-        addEntryToVariableTable("*(stack + tmp___1)", tmp___1);
-        add_entryToArraySTable("stack", tmp___1, "stack12", stack + tmp___1, stack + tmp___1,
-                               1);
-        handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
-                                     & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
-                  "partition");
-        tmp___2 = partition(arr, l, h);
-        funcExit();
-        add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-        p = tmp___2;
-        handleAssignmentSymbolically("p", "tmp___2", & tmp___2, & tmp___2, 1);
-        {
-        exp_outcome = p - 1 > l;
-        handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(7, 1, 0);
-          setTrueExpr(7, "(> (- p 1) l)");
-          setFalseExpr(7, "(not (> (- p 1) l))");
-          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = l;
-          handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p - 1;
-          handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
-                                  1);
-        } else {
-          setBranchInfo(7, 0, 1);
-          setTrueExpr(7, "(> (- p 1) l)");
-          setFalseExpr(7, "(not (> (- p 1) l))");
-          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 0);
-          delete_allVariableTableEntry();
-        }
-        }
-        {
-        exp_outcome = p + 1 < h;
-        handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(9, 1, 0);
-          setTrueExpr(9, "(< (+ p 1) h)");
-          setFalseExpr(9, "(not (< (+ p 1) h))");
-          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p + 1;
-          handleArraySymbolically("stack", top, "(+ p 1)", stack + top, stack + top,
-                                  1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = h;
-          handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
-        } else {
-          setBranchInfo(9, 0, 1);
-          setTrueExpr(9, "(< (+ p 1) h)");
-          setFalseExpr(9, "(not (< (+ p 1) h))");
-          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 0);
-          delete_allVariableTableEntry();
-        }
-        }
-      } else {
-        setBranchInfo(5, 0, 1);
-        setTrueExpr(5, "(> h l)");
-        setFalseExpr(5, "(not (> h l))");
-        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 0);
-        delete_allVariableTableEntry();
-      }
-      }
+    __cil_tmp3 = 0;
+    add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3, 1);
+    __cil_tmp7 = isNotQueueEmpty();
+    if (__cil_tmp7) {
+      enQueue();
+      directPathConditions();
+      delete_allSTableEntry();
+      delete_allStructTableEntry();
+      main1(a);
     } else {
-      setBranchInfo(4, 0, 1);
-      setTrueExpr(4, "(> l 0)");
-      setFalseExpr(4, "(not (> l 0))");
-      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 0);
-      delete_allVariableTableEntry();
+      __cil_tmp7 = startCDG();
+      add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
+      add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
+      if (__cil_tmp7) {
+        __cil_tmp7 = getTestCases();
+        main1(a);
+      }
     }
+    return (__cil_tmp3);
     }
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(>= top 0)");
-    setFalseExpr(3, "(not (>= top 0))");
-    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = top >= 0;
-  handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(11, 1, 0);
-    setTrueExpr(11, "(>= top 0)");
-    setFalseExpr(11, "(not (>= top 0))");
-    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
+    setBranchInfo(2, 0, 1);
+    setTrueExpr(2, "(= (+ tmp 3) 9)");
+    setFalseExpr(2, "(not (= (+ tmp 3) 9))");
+    addToTree(2, 1, "(= (+ tmp 3) 9)", "(not (= (+ tmp 3) 9))", 0, 0);
     delete_allVariableTableEntry();
     {
-    exp_outcome = l > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(12, 1, 0);
-      setTrueExpr(12, "(> l 0)");
-      setFalseExpr(12, "(not (> l 0))");
-      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 1);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = h > l;
-      handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(13, 1, 0);
-        setTrueExpr(13, "(> h l)");
-        setFalseExpr(13, "(not (> h l))");
-        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 1);
-        delete_allVariableTableEntry();
-        tmp___0 = top;
-        handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        h = *(stack + tmp___0);
-        addEntryToVariableTable("*(stack + tmp___0)", tmp___0);
-        add_entryToArraySTable("stack", tmp___0, "stack13", stack + tmp___0, stack + tmp___0,
-                               1);
-        handleAssignmentSymbolically("h", "*(stack + tmp___0)", & *(stack + tmp___0),
-                                     & *(stack + tmp___0), 1);
-        tmp___1 = top;
-        handleAssignmentSymbolically("tmp___1", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        l = *(stack + tmp___1);
-        addEntryToVariableTable("*(stack + tmp___1)", tmp___1);
-        add_entryToArraySTable("stack", tmp___1, "stack14", stack + tmp___1, stack + tmp___1,
-                               1);
-        handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
-                                     & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
-                  "partition");
-        tmp___2 = partition(arr, l, h);
-        funcExit();
-        add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-        p = tmp___2;
-        handleAssignmentSymbolically("p", "tmp___2", & tmp___2, & tmp___2, 1);
-        {
-        exp_outcome = p - 1 > l;
-        handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(15, 1, 0);
-          setTrueExpr(15, "(> (- p 1) l)");
-          setFalseExpr(15, "(not (> (- p 1) l))");
-          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = l;
-          handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p - 1;
-          handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
-                                  1);
-        } else {
-          setBranchInfo(15, 0, 1);
-          setTrueExpr(15, "(> (- p 1) l)");
-          setFalseExpr(15, "(not (> (- p 1) l))");
-          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 0);
-          delete_allVariableTableEntry();
-        }
-        }
-        {
-        exp_outcome = p + 1 < h;
-        handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(17, 1, 0);
-          setTrueExpr(17, "(< (+ p 1) h)");
-          setFalseExpr(17, "(not (< (+ p 1) h))");
-          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p + 1;
-          handleArraySymbolically("stack", top, "(+ p 1)", stack + top, stack + top,
-                                  1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = h;
-          handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
-        } else {
-          setBranchInfo(17, 0, 1);
-          setTrueExpr(17, "(< (+ p 1) h)");
-          setFalseExpr(17, "(not (< (+ p 1) h))");
-          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 0);
-          delete_allVariableTableEntry();
-        }
-        }
-      } else {
-        setBranchInfo(13, 0, 1);
-        setTrueExpr(13, "(> h l)");
-        setFalseExpr(13, "(not (> h l))");
-        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 0);
-        delete_allVariableTableEntry();
-      }
-      }
+    __cil_tmp4 = 1;
+    add_entryToSTable("__cil_tmp4", "Constant", & __cil_tmp4, & __cil_tmp4, 1);
+    __cil_tmp7 = isNotQueueEmpty();
+    if (__cil_tmp7) {
+      enQueue();
+      directPathConditions();
+      delete_allSTableEntry();
+      delete_allStructTableEntry();
+      main1(a);
     } else {
-      setBranchInfo(12, 0, 1);
-      setTrueExpr(12, "(> l 0)");
-      setFalseExpr(12, "(not (> l 0))");
-      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 0);
-      delete_allVariableTableEntry();
+      __cil_tmp7 = startCDG();
+      add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
+      add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
+      if (__cil_tmp7) {
+        __cil_tmp7 = getTestCases();
+        main1(a);
+      }
     }
-    }
-  } else {
-    setBranchInfo(11, 0, 1);
-    setTrueExpr(11, "(>= top 0)");
-    setFalseExpr(11, "(not (>= top 0))");
-    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  __cil_tmp14 = isNotQueueEmpty();
-  if (__cil_tmp14) {
-    enQueue();
-    directPathConditions();
-    delete_allSTableEntry();
-    delete_allStructTableEntry();
-    quickSort(arr, l, h);
-  } else {
-    __cil_tmp14 = startCDG();
-    add_entryToSTable("__cil_tmp14", "Function", & __cil_tmp14, & __cil_tmp14, 1);
-    if (__cil_tmp14) {
-      __cil_tmp14 = getTestCases();
-      quickSort(arr, l, h);
+    return (__cil_tmp4);
     }
   }
-  return;
-}
-}
-void printArr(int *printArr_arr , int printArr_n ) 
-{ 
-  int printArr_i___0 ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  printArr_i___0 = 0;
-  add_entryToSTable("printArr_i___0", "Constant", & printArr_i___0, & printArr_i___0,
-                    1);
-  {
-  if (printArr_i___0 < printArr_n) {
-    printf((char const   * __restrict  )"%d ", *(printArr_arr + printArr_i___0));
-    printArr_i___0 ++;
-    handleAssignmentSymbolically("printArr_i___0", "(+ printArr_i___0 1)", & printArr_i___0,
-                                 & printArr_i___0, 1);
   }
-  if (printArr_i___0 < printArr_n) {
-    printf((char const   * __restrict  )"%d ", *(printArr_arr + printArr_i___0));
-    printArr_i___0 ++;
-    handleAssignmentSymbolically("printArr_i___0", "(+ printArr_i___0 1)", & printArr_i___0,
-                                 & printArr_i___0, 1);
-  }
-  }
-  return;
 }
 }
 void getPrint(void) 
@@ -16378,35 +15939,18 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  quickSort(argvar.arr, argvar.l, argvar.h);
+  main1(argvar.a);
 }
 }
 void main(void) 
 { 
-  int *arr ;
-  int l ;
-  int h ;
+  int a ;
   int temp ;
   int __cil_tmp2 ;
-  int __cil_tmp3 ;
-  int __cil_tmp4 ;
 
   {
-  argvar.arr = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp4 = 0;
-  while (1) {
-    if (__cil_tmp4 >= 30) {
-      break;
-    } else {
-      temp = rand();
-      *(argvar.arr + __cil_tmp4) = temp % 20;
-      __cil_tmp4 ++;
-    }
-  }
-  __cil_tmp3 = rand();
-  argvar.l = __cil_tmp3 % 20;
   __cil_tmp2 = rand();
-  argvar.h = __cil_tmp2 % 20;
+  argvar.a = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

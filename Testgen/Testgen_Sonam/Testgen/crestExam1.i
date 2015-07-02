@@ -1,11 +1,10 @@
-#pragma merger("0","./quicksort.i","-g,-g")
-# 1 "quicksort.c"
+# 1 "crestExam1.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "quicksort.c"
-
+# 1 "crestExam1.c"
+# 12 "crestExam1.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -836,84 +835,19 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 3 "quicksort.c" 2
+# 13 "crestExam1.c" 2
 
-
-void swap ( int* a, int* b )
-{
-  int t = *a;
-  *a = *b;
-  *b = t;
+int dbl(int x) {
+  return 2*x;
 }
 
+int main(void) {
+  int a;
+  scanf("%d",&a);
 
-int partition(int arr[], int l, int h)
-{
-  int x = arr[h];
-  int i = (l - 1);
-
-printf("l=%d, h=%d\n",l,h);
-
-  for (int j = l; j <= h- 1; j++)
-    {
-      if (arr[j] <= x)
-        {
-          i++;
-
-          swap (&arr[i], &arr[j]);
-        }
-    }
-
-
-  swap (&arr[i + 1], &arr[h]);
-  return (i + 1);
-}
-
-
-void quickSort (int arr[], int l, int h)
-{
-
-  int stack[ h - l + 1 ];
-
-
-  int top = -1;
-
-
-  stack[ ++top ] = l;
-  stack[ ++top ] = h;
-
-
-  while ( top >= 0 && l>0 && h>l)
-    {
-
-      h = stack[ top-- ];
-      l = stack[ top-- ];
-
-
-   int p = partition( arr, l, h );
-
-
-
-      if ( p-1 > l )
-        {
-          stack[ ++top ] = l;
-          stack[ ++top ] = p - 1;
-        }
-
-
-
-      if ( p+1 < h )
-        {
-          stack[ ++top ] = p + 1;
-          stack[ ++top ] = h;
-        }
-    }
-}
-
-
-void printArr( int arr[], int n )
-{
-  int i;
-  for ( i = 0; i < n; ++i )
-    printf( "%d ", arr[i] );
+  if (dbl(a) + 3 == 9) {
+    return 0;
+  } else {
+    return 1;
+  }
 }

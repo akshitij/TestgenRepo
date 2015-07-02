@@ -15779,121 +15779,119 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-/* compiler builtin: 
-   void *__builtin_alloca(unsigned long  ) ;  */
-#pragma merger("0","./quicksort.i","-g,-g")
-void swap(int *swap_a , int *swap_b ) 
+#pragma merger("0","./tictactoe.i","-g,-g")
+extern int scanf(char const   * __restrict  __format  , ...)  __asm__("__isoc99_scanf")  ;
+int square[10]  ;
+int checkwin(int global_square[10] ) ;
+int main1(void) 
 { 
-  int swap_t ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
+  int player ;
+  int i___0 ;
+  int choice ;
+  int mark ;
 
   {
-  swap_t = *swap_a;
-  addEntryToVariableTable("*swap_a", 0);
-  handleAssignmentSymbolically("swap_t", "*swap_a", & *swap_a, & *swap_a, 1);
-  *swap_a = *swap_b;
-  addEntryToVariableTable("*swap_b", 0);
-  handleArraySymbolically("swap_a", 0, "*swap_b", swap_a, swap_a, 1);
-  *swap_b = swap_t;
-  handleArraySymbolically("swap_b", 0, "swap_t", swap_b, swap_b, 1);
-  return;
-}
-}
-int partition(int *partition_arr , int partition_l , int partition_h ) 
-{ 
-  int partition_x ;
-  int partition_i___0 ;
-  int partition_j ;
-  int partition___cil_tmp7 ;
-  int *partition___cil_tmp8 ;
-  int *partition___cil_tmp9 ;
-  int *partition___cil_tmp10 ;
-  int *partition___cil_tmp11 ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  partition_x = *(partition_arr + partition_h);
-  addEntryToVariableTable("*(partition_arr + partition_h)", partition_h);
-  add_entryToArraySTable("partition_arr", partition_h, "partition_arr10", partition_arr + partition_h,
-                         partition_arr + partition_h, 1);
-  handleAssignmentSymbolically("partition_x", "*(partition_arr + partition_h)", & *(partition_arr + partition_h),
-                               & *(partition_arr + partition_h), 1);
-  partition_i___0 = partition_l - 1;
-  handleAssignmentSymbolically("partition_i___0", "(- partition_l 1)", & partition_i___0,
-                               & partition_i___0, 1);
-  printf((char const   * __restrict  )"l=%d, h=%d\n", partition_l, partition_h);
-  partition_j = partition_l;
-  handleAssignmentSymbolically("partition_j", "partition_l", & partition_l, & partition_l,
-                               1);
-  {
-  if (partition_j <= partition_h - 1) {
-    if (*(partition_arr + partition_j) <= partition_x) {
-      partition_i___0 ++;
-      handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
-                                   & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,pointer,partition___cil_tmp8)#(int *,swap_b,pointer,partition___cil_tmp9)",
-                "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
-      funcExit();
+  player = 1;
+  i___0 = -1;
+  while (i___0 == -1) {
+    if (player % 2) {
+      player = 1;
+    } else {
+      player = 2;
     }
-    partition_j ++;
-    handleAssignmentSymbolically("partition_j", "(+ partition_j 1)", & partition_j,
-                                 & partition_j, 1);
-  }
-  if (partition_j <= partition_h - 1) {
-    if (*(partition_arr + partition_j) <= partition_x) {
-      partition_i___0 ++;
-      handleAssignmentSymbolically("partition_i___0", "(+ partition_i___0 1)", & partition_i___0,
-                                   & partition_i___0, 1);
-      partition___cil_tmp8 = partition_arr + partition_i___0;
-      handleAssignmentSymbolically("partition___cil_tmp8", "(+ partition_arr partition_i___0)",
-                                   & partition___cil_tmp8, & partition___cil_tmp8,
-                                   1);
-      partition___cil_tmp9 = partition_arr + partition_j;
-      handleAssignmentSymbolically("partition___cil_tmp9", "(+ partition_arr partition_j)",
-                                   & partition___cil_tmp9, & partition___cil_tmp9,
-                                   1);
-      funcEntry("(int *,swap_a,pointer,partition___cil_tmp8)#(int *,swap_b,pointer,partition___cil_tmp9)",
-                "swap_t", "swap");
-      swap(partition___cil_tmp8, partition___cil_tmp9);
-      funcExit();
+    printf((char const   * __restrict  )"Player %d, enter a number:  ", player);
+    scanf((char const   * __restrict  )"%d", & choice);
+    printf((char const   * __restrict  )"choice = %d, square[1]=%d, square[2]=%d",
+           choice, square[1], square[2]);
+    if (player == 1) {
+      mark = 1;
+    } else {
+      mark = 0;
     }
-    partition_j ++;
-    handleAssignmentSymbolically("partition_j", "(+ partition_j 1)", & partition_j,
-                                 & partition_j, 1);
+    if (choice == 1) {
+      if (square[1] == 1) {
+        square[1] = mark;
+      } else {
+        goto _L___6;
+      }
+    } else
+    _L___6: /* CIL Label */ 
+    if (choice == 2) {
+      if (square[2] == 2) {
+        square[2] = mark;
+      } else {
+        goto _L___5;
+      }
+    } else
+    _L___5: /* CIL Label */ 
+    if (choice == 3) {
+      if (square[3] == 3) {
+        square[3] = mark;
+      } else {
+        goto _L___4;
+      }
+    } else
+    _L___4: /* CIL Label */ 
+    if (choice == 4) {
+      if (square[4] == 4) {
+        square[4] = mark;
+      } else {
+        goto _L___3;
+      }
+    } else
+    _L___3: /* CIL Label */ 
+    if (choice == 5) {
+      if (square[5] == 5) {
+        square[5] = mark;
+      } else {
+        goto _L___2;
+      }
+    } else
+    _L___2: /* CIL Label */ 
+    if (choice == 6) {
+      if (square[6] == 6) {
+        square[6] = mark;
+      } else {
+        goto _L___1;
+      }
+    } else
+    _L___1: /* CIL Label */ 
+    if (choice == 7) {
+      if (square[7] == 7) {
+        square[7] = mark;
+      } else {
+        goto _L___0;
+      }
+    } else
+    _L___0: /* CIL Label */ 
+    if (choice == 8) {
+      if (square[8] == 8) {
+        square[8] = mark;
+      } else {
+        goto _L;
+      }
+    } else
+    _L: /* CIL Label */ 
+    if (choice == 9) {
+      if (square[9] == 9) {
+        square[9] = mark;
+      } else {
+        printf((char const   * __restrict  )"Invalid move \n");
+        player --;
+      }
+    } else {
+      printf((char const   * __restrict  )"Invalid move \n");
+      player --;
+    }
+    player ++;
   }
+  if (i___0 == 1) {
+    player --;
+    printf((char const   * __restrict  )"==> Player %d wins\n", player);
+  } else {
+    printf((char const   * __restrict  )"==>Game draw\n");
   }
-  partition___cil_tmp10 = partition_arr + (partition_i___0 + 1);
-  handleAssignmentSymbolically("partition___cil_tmp10", "(+ partition_arr (+ partition_i___0 1))",
-                               & partition___cil_tmp10, & partition___cil_tmp10, 1);
-  partition___cil_tmp11 = partition_arr + partition_h;
-  handleAssignmentSymbolically("partition___cil_tmp11", "(+ partition_arr partition_h)",
-                               & partition___cil_tmp11, & partition___cil_tmp11, 1);
-  funcEntry("(int *,swap_a,pointer,partition___cil_tmp10)#(int *,swap_b,pointer,partition___cil_tmp11)",
-            "swap_t", "swap");
-  swap(partition___cil_tmp10, partition___cil_tmp11);
-  funcExit();
-  {
-  partition___cil_tmp7 = partition_i___0 + 1;
-  handleAssignmentSymbolically("partition___cil_tmp7", "(+ partition_i___0 1)", & partition___cil_tmp7,
-                               & partition___cil_tmp7, 1);
-  {
-  mapConcolicValues("partition___cil_tmp7", & partition___cil_tmp7);
-  return (partition___cil_tmp7);
-  }
-  }
+  return (0);
 }
 }
 void createCDG(void) 
@@ -15903,51 +15901,151 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(>= top 0)");
-  addtoCDGnode(4, 3, 1);
-  setArray(4, "(> l 0)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(5, 4, 1);
-  setArray(5, "(> h l)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(7, 5, 1);
-  setArray(7, "(> (- p 1) l)");
+  setArray(1, "(= square_1 square_2)");
+  addtoCDGnode(2, 1, 1);
+  setArray(2, "(= square_2 square_3)");
+  addtoCDGnode(7, 1, 0);
+  setArray(7, "(= square_4 square_5)");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(6, 2, 0);
+  addtoCDGnode(4, 2, 1);
+  addtoCDGnode(5, 2, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(7, 2, 0);
+  setArray(7, "(= square_4 square_5)");
   addtoCDGnode(8, 7, 1);
-  addtoCDGnode(9, 5, 1);
-  setArray(9, "(< (+ p 1) h)");
-  addtoCDGnode(9, 5, 1);
-  setArray(9, "(< (+ p 1) h)");
-  addtoCDGnode(10, 9, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(>= top 0)");
-  addtoCDGnode(12, 11, 1);
-  setArray(12, "(> l 0)");
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(13, 12, 1);
-  setArray(13, "(> h l)");
-  addtoCDGnode(19, 0, 1);
+  setArray(8, "(= square_5 square_6)");
+  addtoCDGnode(13, 7, 0);
+  setArray(13, "(= square_7 square_8)");
+  addtoCDGnode(9, 8, 1);
+  addtoCDGnode(12, 8, 0);
+  addtoCDGnode(10, 8, 1);
+  addtoCDGnode(11, 8, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(13, 8, 0);
+  setArray(13, "(= square_7 square_8)");
   addtoCDGnode(14, 13, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(15, 13, 1);
-  setArray(15, "(> (- p 1) l)");
-  addtoCDGnode(16, 15, 1);
-  addtoCDGnode(17, 13, 1);
-  setArray(17, "(< (+ p 1) h)");
-  addtoCDGnode(17, 13, 1);
-  setArray(17, "(< (+ p 1) h)");
-  addtoCDGnode(18, 17, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(20, 0, 1);
+  setArray(14, "(= square_8 square_9)");
+  addtoCDGnode(19, 13, 0);
+  setArray(19, "(= square_1 square_4)");
+  addtoCDGnode(15, 14, 1);
+  addtoCDGnode(18, 14, 0);
+  addtoCDGnode(16, 14, 1);
+  addtoCDGnode(17, 14, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(19, 14, 0);
+  setArray(19, "(= square_1 square_4)");
+  addtoCDGnode(20, 19, 1);
+  setArray(20, "(= square_4 square_7)");
+  addtoCDGnode(25, 19, 0);
+  setArray(25, "(= square_2 square_5)");
+  addtoCDGnode(21, 20, 1);
+  addtoCDGnode(24, 20, 0);
+  addtoCDGnode(22, 20, 1);
+  addtoCDGnode(23, 20, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(25, 20, 0);
+  setArray(25, "(= square_2 square_5)");
+  addtoCDGnode(26, 25, 1);
+  setArray(26, "(= square_5 square_8)");
+  addtoCDGnode(31, 25, 0);
+  setArray(31, "(= square_3 square_6)");
+  addtoCDGnode(27, 26, 1);
+  addtoCDGnode(30, 26, 0);
+  addtoCDGnode(28, 26, 1);
+  addtoCDGnode(29, 26, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(31, 26, 0);
+  setArray(31, "(= square_3 square_6)");
+  addtoCDGnode(32, 31, 1);
+  setArray(32, "(= square_6 square_9)");
+  addtoCDGnode(37, 31, 0);
+  setArray(37, "(= square_1 square_5)");
+  addtoCDGnode(33, 32, 1);
+  addtoCDGnode(36, 32, 0);
+  addtoCDGnode(34, 32, 1);
+  addtoCDGnode(35, 32, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(37, 32, 0);
+  setArray(37, "(= square_1 square_5)");
+  addtoCDGnode(38, 37, 1);
+  setArray(38, "(= square_5 square_9)");
+  addtoCDGnode(43, 37, 0);
+  setArray(43, "(= square_3 square_5)");
+  addtoCDGnode(39, 38, 1);
+  addtoCDGnode(42, 38, 0);
+  addtoCDGnode(40, 38, 1);
+  addtoCDGnode(41, 38, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(43, 38, 0);
+  setArray(43, "(= square_3 square_5)");
+  addtoCDGnode(44, 43, 1);
+  setArray(44, "(= square_5 square_7)");
+  addtoCDGnode(49, 43, 0);
+  setArray(49, "(! (= square_1 1))");
+  addtoCDGnode(45, 44, 1);
+  addtoCDGnode(48, 44, 0);
+  addtoCDGnode(46, 44, 1);
+  addtoCDGnode(47, 44, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(49, 44, 0);
+  setArray(49, "(! (= square_1 1))");
+  addtoCDGnode(50, 49, 1);
+  setArray(50, "(! (= square_2 2))");
+  addtoCDGnode(85, 49, 0);
+  addtoCDGnode(51, 50, 1);
+  setArray(51, "(! (= square_3 3))");
+  addtoCDGnode(82, 50, 0);
+  addtoCDGnode(52, 51, 1);
+  setArray(52, "(! (= square_4 4))");
+  addtoCDGnode(79, 51, 0);
+  addtoCDGnode(53, 52, 1);
+  setArray(53, "(! (= square_5 5))");
+  addtoCDGnode(76, 52, 0);
+  addtoCDGnode(54, 53, 1);
+  setArray(54, "(! (= square_6 6))");
+  addtoCDGnode(73, 53, 0);
+  addtoCDGnode(55, 54, 1);
+  setArray(55, "(! (= square_7 7))");
+  addtoCDGnode(70, 54, 0);
+  addtoCDGnode(56, 55, 1);
+  setArray(56, "(! (= square_8 8))");
+  addtoCDGnode(67, 55, 0);
+  addtoCDGnode(57, 56, 1);
+  setArray(57, "(! (= square_9 9))");
+  addtoCDGnode(64, 56, 0);
+  addtoCDGnode(58, 57, 1);
+  addtoCDGnode(61, 57, 0);
+  addtoCDGnode(59, 57, 1);
+  addtoCDGnode(60, 57, 1);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(62, 57, 0);
+  addtoCDGnode(63, 57, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(65, 56, 0);
+  addtoCDGnode(66, 56, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(68, 55, 0);
+  addtoCDGnode(69, 55, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(71, 54, 0);
+  addtoCDGnode(72, 54, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(74, 53, 0);
+  addtoCDGnode(75, 53, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(77, 52, 0);
+  addtoCDGnode(78, 52, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(80, 51, 0);
+  addtoCDGnode(81, 51, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(83, 50, 0);
+  addtoCDGnode(84, 50, 0);
+  addtoCDGnode(88, 0, 1);
+  addtoCDGnode(86, 49, 0);
+  addtoCDGnode(87, 49, 0);
+  addtoCDGnode(88, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15955,16 +16053,7 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(7, 7);
-  isCopyOf(15, 7);
-  isCopyOf(9, 9);
-  isCopyOf(17, 9);
-  isCopyOf(3, 3);
-  isCopyOf(11, 3);
-  isCopyOf(5, 5);
-  isCopyOf(13, 5);
-  isCopyOf(4, 4);
-  isCopyOf(12, 4);
+
 }
 }
 void createSidTable(void) 
@@ -15972,396 +16061,2030 @@ void createSidTable(void)
 
 
   {
-  add_condition(7, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(9, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(5, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(4, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(3, "(>= top 0)", "(not (>= top 0))", 0, 0);
-  add_condition(15, "(> (- p 1) l)", "(not (> (- p 1) l))", 0, 0);
-  add_condition(17, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 0, 0);
-  add_condition(13, "(> h l)", "(not (> h l))", 0, 0);
-  add_condition(12, "(> l 0)", "(not (> l 0))", 0, 0);
-  add_condition(11, "(>= top 0)", "(not (>= top 0))", 0, 0);
+  add_condition(2, "(= square[2] square[3])", "(not (= square[2] square[3]))", 0,
+                0);
+  add_condition(8, "(= square[5] square[6])", "(not (= square[5] square[6]))", 0,
+                0);
+  add_condition(14, "(= square[8] square[9])", "(not (= square[8] square[9]))", 0,
+                0);
+  add_condition(20, "(= square[4] square[7])", "(not (= square[4] square[7]))", 0,
+                0);
+  add_condition(26, "(= square[5] square[8])", "(not (= square[5] square[8]))", 0,
+                0);
+  add_condition(32, "(= square[6] square[9])", "(not (= square[6] square[9]))", 0,
+                0);
+  add_condition(38, "(= square[5] square[9])", "(not (= square[5] square[9]))", 0,
+                0);
+  add_condition(44, "(= square[5] square[7])", "(not (= square[5] square[7]))", 0,
+                0);
+  add_condition(57, "(not (= square[9] 9))", "(= square[9] 9)", 0, 0);
+  add_condition(56, "(not (= square[8] 8))", "(= square[8] 8)", 0, 0);
+  add_condition(55, "(not (= square[7] 7))", "(= square[7] 7)", 0, 0);
+  add_condition(54, "(not (= square[6] 6))", "(= square[6] 6)", 0, 0);
+  add_condition(53, "(not (= square[5] 5))", "(= square[5] 5)", 0, 0);
+  add_condition(52, "(not (= square[4] 4))", "(= square[4] 4)", 0, 0);
+  add_condition(51, "(not (= square[3] 3))", "(= square[3] 3)", 0, 0);
+  add_condition(50, "(not (= square[2] 2))", "(= square[2] 2)", 0, 0);
+  add_condition(49, "(not (= square[1] 1))", "(= square[1] 1)", 0, 0);
+  add_condition(43, "(= square[3] square[5])", "(not (= square[3] square[5]))", 0,
+                0);
+  add_condition(37, "(= square[1] square[5])", "(not (= square[1] square[5]))", 0,
+                0);
+  add_condition(31, "(= square[3] square[6])", "(not (= square[3] square[6]))", 0,
+                0);
+  add_condition(25, "(= square[2] square[5])", "(not (= square[2] square[5]))", 0,
+                0);
+  add_condition(19, "(= square[1] square[4])", "(not (= square[1] square[4]))", 0,
+                0);
+  add_condition(13, "(= square[7] square[8])", "(not (= square[7] square[8]))", 0,
+                0);
+  add_condition(7, "(= square[4] square[5])", "(not (= square[4] square[5]))", 0,
+                0);
+  add_condition(1, "(= square[1] square[2])", "(not (= square[1] square[2]))", 0,
+                0);
 }
 }
 struct arguments {
-   int *arr ;
-   int l ;
-   int h ;
+   int square[10] ;
 };
 struct arguments argvar ;
-void quickSort(int *arr , int l , int h ) 
+int checkwin(int global_square[10] ) 
 { 
-  int *stack ;
-  unsigned long __lengthofstack ;
-  void *tmp ;
-  int top ;
-  int tmp___0 ;
-  int tmp___1 ;
-  int p ;
-  int tmp___2 ;
+  int __cil_tmp1 ;
+  int __cil_tmp2 ;
+  int __cil_tmp3 ;
+  int __cil_tmp4 ;
+  int __cil_tmp5 ;
+  int __cil_tmp6 ;
+  int __cil_tmp7 ;
+  int __cil_tmp8 ;
+  int __cil_tmp9 ;
+  int __cil_tmp10 ;
+  int __cil_tmp11 ;
+  int __cil_tmp12 ;
+  int __cil_tmp13 ;
+  int __cil_tmp14 ;
+  int __cil_tmp15 ;
+  int __cil_tmp16 ;
+  int __cil_tmp17 ;
+  int __cil_tmp18 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp14 ;
-  char *__cil_tmp15 ;
+  int __cil_tmp21 ;
+  char *__cil_tmp22 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp15 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp15", "Function", & __cil_tmp15, & __cil_tmp15, -1);
-  sprintf(__cil_tmp15, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n", arr[0], arr[1], arr[2], arr[3],
-          arr[4], l, h);
-  printTestCase("quicksort_quickSort_1435830959.tc", __cil_tmp15);
-  add_entryToSTable("h", "s2", & h, & h, 1);
-  add_entryToSTable("l", "s1", & l, & l, 1);
-  add_entryToArraySTable("arr", 0, "arr_0", arr, arr, 1);
-  __lengthofstack = (unsigned long )((h - l) + 1);
-  handleAssignmentSymbolically("__lengthofstack", "(+ (- h l) 1)", & __lengthofstack,
-                               & __lengthofstack, 1);
-  tmp = __builtin_alloca(sizeof(*stack) * __lengthofstack);
-  add_entryToSTable("tmp", "Function", & tmp, & tmp, -1);
-  stack = (int *)tmp;
-  handleAssignmentSymbolically("stack", "tmp", & stack, & stack, 1);
-  top = -1;
-  add_entryToSTable("top", "Constant", & top, & top, 1);
-  top ++;
-  handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-  *(stack + top) = l;
-  handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-  top ++;
-  handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-  *(stack + top) = h;
-  handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
+  __cil_tmp22 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp22", "Function", & __cil_tmp22, & __cil_tmp22, -1);
+  sprintf(__cil_tmp22, "\t%d\t%d\t%d\t%d\t%d\n", square[0], square[1], square[2],
+          square[3], square[4]);
+  printTestCase("tictactoe_checkwin_1435830703.tc", __cil_tmp22);
   {
-  {
-  exp_outcome = top >= 0;
-  handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  exp_outcome = square[1] == square[2];
+  addEntryToVariableTable("square[1]", 1);
+  add_entryToArraySTable("square", 1, "square20", & square[1], & square[1], 1);
+  addEntryToVariableTable("square[2]", 2);
+  add_entryToArraySTable("square", 2, "square21", & square[2], & square[2], 1);
+  handleAssignmentSymbolically("exp_outcome", "(= square[1] square[2])", & exp_outcome,
+                               & exp_outcome, 1);
+  overall_outcome = (int )getConditionalOutcome(1, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(>= top 0)");
-    setFalseExpr(3, "(not (>= top 0))");
-    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
+    addEntryToVariableTable("square[1]", 1);
+    add_entryToArraySTable("square", 1, "square139", & square[1], & square[1], 1);
+    addEntryToVariableTable("square[2]", 2);
+    add_entryToArraySTable("square", 2, "square140", & square[2], & square[2], 1);
+    setBranchInfo(1, 1, 0);
+    setTrueExpr(1, "(= square[1] square[2])");
+    setFalseExpr(1, "(not (= square[1] square[2]))");
+    addToTree(1, 1, "(= square[1] square[2])", "(not (= square[1] square[2]))", 0,
+              1);
     delete_allVariableTableEntry();
     {
-    exp_outcome = l > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
+    exp_outcome = square[2] == square[3];
+    addEntryToVariableTable("square[2]", 2);
+    add_entryToArraySTable("square", 2, "square22", & square[2], & square[2], 1);
+    addEntryToVariableTable("square[3]", 3);
+    add_entryToArraySTable("square", 3, "square23", & square[3], & square[3], 1);
+    handleAssignmentSymbolically("exp_outcome", "(= square[2] square[3])", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(4, 1, 0);
-      setTrueExpr(4, "(> l 0)");
-      setFalseExpr(4, "(not (> l 0))");
-      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 1);
+      addEntryToVariableTable("square[2]", 2);
+      add_entryToArraySTable("square", 2, "square10", & square[2], & square[2], 1);
+      addEntryToVariableTable("square[3]", 3);
+      add_entryToArraySTable("square", 3, "square11", & square[3], & square[3], 1);
+      setBranchInfo(2, 1, 0);
+      setTrueExpr(2, "(= square[2] square[3])");
+      setFalseExpr(2, "(not (= square[2] square[3]))");
+      addToTree(2, 2, "(= square[2] square[3])", "(not (= square[2] square[3]))",
+                1, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = h > l;
-      handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(5, 1, 0);
-        setTrueExpr(5, "(> h l)");
-        setFalseExpr(5, "(not (> h l))");
-        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 1);
-        delete_allVariableTableEntry();
-        tmp___0 = top;
-        handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        h = *(stack + tmp___0);
-        addEntryToVariableTable("*(stack + tmp___0)", tmp___0);
-        add_entryToArraySTable("stack", tmp___0, "stack11", stack + tmp___0, stack + tmp___0,
-                               1);
-        handleAssignmentSymbolically("h", "*(stack + tmp___0)", & *(stack + tmp___0),
-                                     & *(stack + tmp___0), 1);
-        tmp___1 = top;
-        handleAssignmentSymbolically("tmp___1", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        l = *(stack + tmp___1);
-        addEntryToVariableTable("*(stack + tmp___1)", tmp___1);
-        add_entryToArraySTable("stack", tmp___1, "stack12", stack + tmp___1, stack + tmp___1,
-                               1);
-        handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
-                                     & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
-                  "partition");
-        tmp___2 = partition(arr, l, h);
-        funcExit();
-        add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-        p = tmp___2;
-        handleAssignmentSymbolically("p", "tmp___2", & tmp___2, & tmp___2, 1);
-        {
-        exp_outcome = p - 1 > l;
-        handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(7, 1, 0);
-          setTrueExpr(7, "(> (- p 1) l)");
-          setFalseExpr(7, "(not (> (- p 1) l))");
-          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = l;
-          handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p - 1;
-          handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
-                                  1);
-        } else {
-          setBranchInfo(7, 0, 1);
-          setTrueExpr(7, "(> (- p 1) l)");
-          setFalseExpr(7, "(not (> (- p 1) l))");
-          addToTree(7, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 5, 0);
-          delete_allVariableTableEntry();
-        }
-        }
-        {
-        exp_outcome = p + 1 < h;
-        handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(9, 1, 0);
-          setTrueExpr(9, "(< (+ p 1) h)");
-          setFalseExpr(9, "(not (< (+ p 1) h))");
-          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p + 1;
-          handleArraySymbolically("stack", top, "(+ p 1)", stack + top, stack + top,
-                                  1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = h;
-          handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
-        } else {
-          setBranchInfo(9, 0, 1);
-          setTrueExpr(9, "(< (+ p 1) h)");
-          setFalseExpr(9, "(not (< (+ p 1) h))");
-          addToTree(9, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 5, 0);
-          delete_allVariableTableEntry();
-        }
-        }
+      __cil_tmp1 = 1;
+      add_entryToSTable("__cil_tmp1", "Constant", & __cil_tmp1, & __cil_tmp1, 1);
+      __cil_tmp21 = isNotQueueEmpty();
+      if (__cil_tmp21) {
+        enQueue();
+        directPathConditions();
+        delete_allSTableEntry();
+        delete_allStructTableEntry();
+        checkwin(square);
       } else {
-        setBranchInfo(5, 0, 1);
-        setTrueExpr(5, "(> h l)");
-        setFalseExpr(5, "(not (> h l))");
-        addToTree(5, 3, "(> h l)", "(not (> h l))", 4, 0);
-        delete_allVariableTableEntry();
+        __cil_tmp21 = startCDG();
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                          1);
+        if (__cil_tmp21) {
+          __cil_tmp21 = getTestCases();
+          checkwin(square);
+        }
       }
+      return (__cil_tmp1);
       }
     } else {
-      setBranchInfo(4, 0, 1);
-      setTrueExpr(4, "(> l 0)");
-      setFalseExpr(4, "(not (> l 0))");
-      addToTree(4, 2, "(> l 0)", "(not (> l 0))", 3, 0);
+      addEntryToVariableTable("square[2]", 2);
+      add_entryToArraySTable("square", 2, "square10", & square[2], & square[2], 1);
+      addEntryToVariableTable("square[3]", 3);
+      add_entryToArraySTable("square", 3, "square11", & square[3], & square[3], 1);
+      setBranchInfo(2, 0, 1);
+      setTrueExpr(2, "(= square[2] square[3])");
+      setFalseExpr(2, "(not (= square[2] square[3]))");
+      addToTree(2, 2, "(= square[2] square[3])", "(not (= square[2] square[3]))",
+                1, 0);
       delete_allVariableTableEntry();
+      goto _L___6;
     }
     }
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(>= top 0)");
-    setFalseExpr(3, "(not (>= top 0))");
-    addToTree(3, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
+    addEntryToVariableTable("square[1]", 1);
+    add_entryToArraySTable("square", 1, "square139", & square[1], & square[1], 1);
+    addEntryToVariableTable("square[2]", 2);
+    add_entryToArraySTable("square", 2, "square140", & square[2], & square[2], 1);
+    setBranchInfo(1, 0, 1);
+    setTrueExpr(1, "(= square[1] square[2])");
+    setFalseExpr(1, "(not (= square[1] square[2]))");
+    addToTree(1, 1, "(= square[1] square[2])", "(not (= square[1] square[2]))", 0,
+              0);
     delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = top >= 0;
-  handleAssignmentSymbolically("exp_outcome", "(>= top 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(11, 1, 0);
-    setTrueExpr(11, "(>= top 0)");
-    setFalseExpr(11, "(not (>= top 0))");
-    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 1);
-    delete_allVariableTableEntry();
+    _L___6: /* CIL Label */ 
     {
-    exp_outcome = l > 0;
-    handleAssignmentSymbolically("exp_outcome", "(> l 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
+    exp_outcome = square[4] == square[5];
+    addEntryToVariableTable("square[4]", 4);
+    add_entryToArraySTable("square", 4, "square24", & square[4], & square[4], 1);
+    addEntryToVariableTable("square[5]", 5);
+    add_entryToArraySTable("square", 5, "square25", & square[5], & square[5], 1);
+    handleAssignmentSymbolically("exp_outcome", "(= square[4] square[5])", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(7, exp_outcome);
     if (overall_outcome) {
-      setBranchInfo(12, 1, 0);
-      setTrueExpr(12, "(> l 0)");
-      setFalseExpr(12, "(not (> l 0))");
-      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 1);
+      addEntryToVariableTable("square[4]", 4);
+      add_entryToArraySTable("square", 4, "square137", & square[4], & square[4], 1);
+      addEntryToVariableTable("square[5]", 5);
+      add_entryToArraySTable("square", 5, "square138", & square[5], & square[5], 1);
+      setBranchInfo(7, 1, 0);
+      setTrueExpr(7, "(= square[4] square[5])");
+      setFalseExpr(7, "(not (= square[4] square[5]))");
+      addToTree(7, 2, "(= square[4] square[5])", "(not (= square[4] square[5]))",
+                1, 1);
       delete_allVariableTableEntry();
       {
-      exp_outcome = h > l;
-      handleAssignmentSymbolically("exp_outcome", "(> h l)", & exp_outcome, & exp_outcome,
-                                   1);
+      exp_outcome = square[5] == square[6];
+      addEntryToVariableTable("square[5]", 5);
+      add_entryToArraySTable("square", 5, "square26", & square[5], & square[5], 1);
+      addEntryToVariableTable("square[6]", 6);
+      add_entryToArraySTable("square", 6, "square27", & square[6], & square[6], 1);
+      handleAssignmentSymbolically("exp_outcome", "(= square[5] square[6])", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
+      if (overall_outcome) {
+        addEntryToVariableTable("square[5]", 5);
+        add_entryToArraySTable("square", 5, "square12", & square[5], & square[5],
+                               1);
+        addEntryToVariableTable("square[6]", 6);
+        add_entryToArraySTable("square", 6, "square13", & square[6], & square[6],
+                               1);
+        setBranchInfo(8, 1, 0);
+        setTrueExpr(8, "(= square[5] square[6])");
+        setFalseExpr(8, "(not (= square[5] square[6]))");
+        addToTree(8, 3, "(= square[5] square[6])", "(not (= square[5] square[6]))",
+                  7, 1);
+        delete_allVariableTableEntry();
+        {
+        __cil_tmp2 = 1;
+        add_entryToSTable("__cil_tmp2", "Constant", & __cil_tmp2, & __cil_tmp2, 1);
+        __cil_tmp21 = isNotQueueEmpty();
+        if (__cil_tmp21) {
+          enQueue();
+          directPathConditions();
+          delete_allSTableEntry();
+          delete_allStructTableEntry();
+          checkwin(square);
+        } else {
+          __cil_tmp21 = startCDG();
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                            1);
+          if (__cil_tmp21) {
+            __cil_tmp21 = getTestCases();
+            checkwin(square);
+          }
+        }
+        return (__cil_tmp2);
+        }
+      } else {
+        addEntryToVariableTable("square[5]", 5);
+        add_entryToArraySTable("square", 5, "square12", & square[5], & square[5],
+                               1);
+        addEntryToVariableTable("square[6]", 6);
+        add_entryToArraySTable("square", 6, "square13", & square[6], & square[6],
+                               1);
+        setBranchInfo(8, 0, 1);
+        setTrueExpr(8, "(= square[5] square[6])");
+        setFalseExpr(8, "(not (= square[5] square[6]))");
+        addToTree(8, 3, "(= square[5] square[6])", "(not (= square[5] square[6]))",
+                  7, 0);
+        delete_allVariableTableEntry();
+        goto _L___5;
+      }
+      }
+    } else {
+      addEntryToVariableTable("square[4]", 4);
+      add_entryToArraySTable("square", 4, "square137", & square[4], & square[4], 1);
+      addEntryToVariableTable("square[5]", 5);
+      add_entryToArraySTable("square", 5, "square138", & square[5], & square[5], 1);
+      setBranchInfo(7, 0, 1);
+      setTrueExpr(7, "(= square[4] square[5])");
+      setFalseExpr(7, "(not (= square[4] square[5]))");
+      addToTree(7, 2, "(= square[4] square[5])", "(not (= square[4] square[5]))",
+                1, 0);
+      delete_allVariableTableEntry();
+      _L___5: /* CIL Label */ 
+      {
+      exp_outcome = square[7] == square[8];
+      addEntryToVariableTable("square[7]", 7);
+      add_entryToArraySTable("square", 7, "square28", & square[7], & square[7], 1);
+      addEntryToVariableTable("square[8]", 8);
+      add_entryToArraySTable("square", 8, "square29", & square[8], & square[8], 1);
+      handleAssignmentSymbolically("exp_outcome", "(= square[7] square[8])", & exp_outcome,
+                                   & exp_outcome, 1);
       overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
       if (overall_outcome) {
+        addEntryToVariableTable("square[7]", 7);
+        add_entryToArraySTable("square", 7, "square135", & square[7], & square[7],
+                               1);
+        addEntryToVariableTable("square[8]", 8);
+        add_entryToArraySTable("square", 8, "square136", & square[8], & square[8],
+                               1);
         setBranchInfo(13, 1, 0);
-        setTrueExpr(13, "(> h l)");
-        setFalseExpr(13, "(not (> h l))");
-        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 1);
+        setTrueExpr(13, "(= square[7] square[8])");
+        setFalseExpr(13, "(not (= square[7] square[8]))");
+        addToTree(13, 3, "(= square[7] square[8])", "(not (= square[7] square[8]))",
+                  7, 1);
         delete_allVariableTableEntry();
-        tmp___0 = top;
-        handleAssignmentSymbolically("tmp___0", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        h = *(stack + tmp___0);
-        addEntryToVariableTable("*(stack + tmp___0)", tmp___0);
-        add_entryToArraySTable("stack", tmp___0, "stack13", stack + tmp___0, stack + tmp___0,
-                               1);
-        handleAssignmentSymbolically("h", "*(stack + tmp___0)", & *(stack + tmp___0),
-                                     & *(stack + tmp___0), 1);
-        tmp___1 = top;
-        handleAssignmentSymbolically("tmp___1", "top", & top, & top, 1);
-        top --;
-        handleAssignmentSymbolically("top", "(- top 1)", & top, & top, 1);
-        l = *(stack + tmp___1);
-        addEntryToVariableTable("*(stack + tmp___1)", tmp___1);
-        add_entryToArraySTable("stack", tmp___1, "stack14", stack + tmp___1, stack + tmp___1,
-                               1);
-        handleAssignmentSymbolically("l", "*(stack + tmp___1)", & *(stack + tmp___1),
-                                     & *(stack + tmp___1), 1);
-        funcEntry("(int *,partition_arr,array,arr)#(int,partition_l,variable,l)#(int,partition_h,variable,h)",
-                  "partition_x partition_i___0 partition_j partition___cil_tmp7 partition___cil_tmp8 partition___cil_tmp9 partition___cil_tmp10 partition___cil_tmp11",
-                  "partition");
-        tmp___2 = partition(arr, l, h);
-        funcExit();
-        add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-        p = tmp___2;
-        handleAssignmentSymbolically("p", "tmp___2", & tmp___2, & tmp___2, 1);
         {
-        exp_outcome = p - 1 > l;
-        handleAssignmentSymbolically("exp_outcome", "(> (- p 1) l)", & exp_outcome,
+        exp_outcome = square[8] == square[9];
+        addEntryToVariableTable("square[8]", 8);
+        add_entryToArraySTable("square", 8, "square210", & square[8], & square[8],
+                               1);
+        addEntryToVariableTable("square[9]", 9);
+        add_entryToArraySTable("square", 9, "square211", & square[9], & square[9],
+                               1);
+        handleAssignmentSymbolically("exp_outcome", "(= square[8] square[9])", & exp_outcome,
                                      & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
+        overall_outcome = (int )getConditionalOutcome(14, exp_outcome);
         if (overall_outcome) {
-          setBranchInfo(15, 1, 0);
-          setTrueExpr(15, "(> (- p 1) l)");
-          setFalseExpr(15, "(not (> (- p 1) l))");
-          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 1);
+          addEntryToVariableTable("square[8]", 8);
+          add_entryToArraySTable("square", 8, "square14", & square[8], & square[8],
+                                 1);
+          addEntryToVariableTable("square[9]", 9);
+          add_entryToArraySTable("square", 9, "square15", & square[9], & square[9],
+                                 1);
+          setBranchInfo(14, 1, 0);
+          setTrueExpr(14, "(= square[8] square[9])");
+          setFalseExpr(14, "(not (= square[8] square[9]))");
+          addToTree(14, 4, "(= square[8] square[9])", "(not (= square[8] square[9]))",
+                    13, 1);
           delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = l;
-          handleArraySymbolically("stack", top, "l", stack + top, stack + top, 1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p - 1;
-          handleArraySymbolically("stack", top, "(- p 1)", stack + top, stack + top,
-                                  1);
+          {
+          __cil_tmp3 = 1;
+          add_entryToSTable("__cil_tmp3", "Constant", & __cil_tmp3, & __cil_tmp3,
+                            1);
+          __cil_tmp21 = isNotQueueEmpty();
+          if (__cil_tmp21) {
+            enQueue();
+            directPathConditions();
+            delete_allSTableEntry();
+            delete_allStructTableEntry();
+            checkwin(square);
+          } else {
+            __cil_tmp21 = startCDG();
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                              1);
+            if (__cil_tmp21) {
+              __cil_tmp21 = getTestCases();
+              checkwin(square);
+            }
+          }
+          return (__cil_tmp3);
+          }
         } else {
-          setBranchInfo(15, 0, 1);
-          setTrueExpr(15, "(> (- p 1) l)");
-          setFalseExpr(15, "(not (> (- p 1) l))");
-          addToTree(15, 4, "(> (- p 1) l)", "(not (> (- p 1) l))", 13, 0);
+          addEntryToVariableTable("square[8]", 8);
+          add_entryToArraySTable("square", 8, "square14", & square[8], & square[8],
+                                 1);
+          addEntryToVariableTable("square[9]", 9);
+          add_entryToArraySTable("square", 9, "square15", & square[9], & square[9],
+                                 1);
+          setBranchInfo(14, 0, 1);
+          setTrueExpr(14, "(= square[8] square[9])");
+          setFalseExpr(14, "(not (= square[8] square[9]))");
+          addToTree(14, 4, "(= square[8] square[9])", "(not (= square[8] square[9]))",
+                    13, 0);
           delete_allVariableTableEntry();
-        }
-        }
-        {
-        exp_outcome = p + 1 < h;
-        handleAssignmentSymbolically("exp_outcome", "(< (+ p 1) h)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(17, 1, 0);
-          setTrueExpr(17, "(< (+ p 1) h)");
-          setFalseExpr(17, "(not (< (+ p 1) h))");
-          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 1);
-          delete_allVariableTableEntry();
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = p + 1;
-          handleArraySymbolically("stack", top, "(+ p 1)", stack + top, stack + top,
-                                  1);
-          top ++;
-          handleAssignmentSymbolically("top", "(+ top 1)", & top, & top, 1);
-          *(stack + top) = h;
-          handleArraySymbolically("stack", top, "h", stack + top, stack + top, 1);
-        } else {
-          setBranchInfo(17, 0, 1);
-          setTrueExpr(17, "(< (+ p 1) h)");
-          setFalseExpr(17, "(not (< (+ p 1) h))");
-          addToTree(17, 4, "(< (+ p 1) h)", "(not (< (+ p 1) h))", 13, 0);
-          delete_allVariableTableEntry();
+          goto _L___4;
         }
         }
       } else {
+        addEntryToVariableTable("square[7]", 7);
+        add_entryToArraySTable("square", 7, "square135", & square[7], & square[7],
+                               1);
+        addEntryToVariableTable("square[8]", 8);
+        add_entryToArraySTable("square", 8, "square136", & square[8], & square[8],
+                               1);
         setBranchInfo(13, 0, 1);
-        setTrueExpr(13, "(> h l)");
-        setFalseExpr(13, "(not (> h l))");
-        addToTree(13, 3, "(> h l)", "(not (> h l))", 12, 0);
+        setTrueExpr(13, "(= square[7] square[8])");
+        setFalseExpr(13, "(not (= square[7] square[8]))");
+        addToTree(13, 3, "(= square[7] square[8])", "(not (= square[7] square[8]))",
+                  7, 0);
         delete_allVariableTableEntry();
+        _L___4: /* CIL Label */ 
+        {
+        exp_outcome = square[1] == square[4];
+        addEntryToVariableTable("square[1]", 1);
+        add_entryToArraySTable("square", 1, "square212", & square[1], & square[1],
+                               1);
+        addEntryToVariableTable("square[4]", 4);
+        add_entryToArraySTable("square", 4, "square213", & square[4], & square[4],
+                               1);
+        handleAssignmentSymbolically("exp_outcome", "(= square[1] square[4])", & exp_outcome,
+                                     & exp_outcome, 1);
+        overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
+        if (overall_outcome) {
+          addEntryToVariableTable("square[1]", 1);
+          add_entryToArraySTable("square", 1, "square133", & square[1], & square[1],
+                                 1);
+          addEntryToVariableTable("square[4]", 4);
+          add_entryToArraySTable("square", 4, "square134", & square[4], & square[4],
+                                 1);
+          setBranchInfo(19, 1, 0);
+          setTrueExpr(19, "(= square[1] square[4])");
+          setFalseExpr(19, "(not (= square[1] square[4]))");
+          addToTree(19, 4, "(= square[1] square[4])", "(not (= square[1] square[4]))",
+                    13, 1);
+          delete_allVariableTableEntry();
+          {
+          exp_outcome = square[4] == square[7];
+          addEntryToVariableTable("square[4]", 4);
+          add_entryToArraySTable("square", 4, "square214", & square[4], & square[4],
+                                 1);
+          addEntryToVariableTable("square[7]", 7);
+          add_entryToArraySTable("square", 7, "square215", & square[7], & square[7],
+                                 1);
+          handleAssignmentSymbolically("exp_outcome", "(= square[4] square[7])", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(20, exp_outcome);
+          if (overall_outcome) {
+            addEntryToVariableTable("square[4]", 4);
+            add_entryToArraySTable("square", 4, "square16", & square[4], & square[4],
+                                   1);
+            addEntryToVariableTable("square[7]", 7);
+            add_entryToArraySTable("square", 7, "square17", & square[7], & square[7],
+                                   1);
+            setBranchInfo(20, 1, 0);
+            setTrueExpr(20, "(= square[4] square[7])");
+            setFalseExpr(20, "(not (= square[4] square[7]))");
+            addToTree(20, 5, "(= square[4] square[7])", "(not (= square[4] square[7]))",
+                      19, 1);
+            delete_allVariableTableEntry();
+            {
+            __cil_tmp4 = 1;
+            add_entryToSTable("__cil_tmp4", "Constant", & __cil_tmp4, & __cil_tmp4,
+                              1);
+            __cil_tmp21 = isNotQueueEmpty();
+            if (__cil_tmp21) {
+              enQueue();
+              directPathConditions();
+              delete_allSTableEntry();
+              delete_allStructTableEntry();
+              checkwin(square);
+            } else {
+              __cil_tmp21 = startCDG();
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                1);
+              if (__cil_tmp21) {
+                __cil_tmp21 = getTestCases();
+                checkwin(square);
+              }
+            }
+            return (__cil_tmp4);
+            }
+          } else {
+            addEntryToVariableTable("square[4]", 4);
+            add_entryToArraySTable("square", 4, "square16", & square[4], & square[4],
+                                   1);
+            addEntryToVariableTable("square[7]", 7);
+            add_entryToArraySTable("square", 7, "square17", & square[7], & square[7],
+                                   1);
+            setBranchInfo(20, 0, 1);
+            setTrueExpr(20, "(= square[4] square[7])");
+            setFalseExpr(20, "(not (= square[4] square[7]))");
+            addToTree(20, 5, "(= square[4] square[7])", "(not (= square[4] square[7]))",
+                      19, 0);
+            delete_allVariableTableEntry();
+            goto _L___3;
+          }
+          }
+        } else {
+          addEntryToVariableTable("square[1]", 1);
+          add_entryToArraySTable("square", 1, "square133", & square[1], & square[1],
+                                 1);
+          addEntryToVariableTable("square[4]", 4);
+          add_entryToArraySTable("square", 4, "square134", & square[4], & square[4],
+                                 1);
+          setBranchInfo(19, 0, 1);
+          setTrueExpr(19, "(= square[1] square[4])");
+          setFalseExpr(19, "(not (= square[1] square[4]))");
+          addToTree(19, 4, "(= square[1] square[4])", "(not (= square[1] square[4]))",
+                    13, 0);
+          delete_allVariableTableEntry();
+          _L___3: /* CIL Label */ 
+          {
+          exp_outcome = square[2] == square[5];
+          addEntryToVariableTable("square[2]", 2);
+          add_entryToArraySTable("square", 2, "square216", & square[2], & square[2],
+                                 1);
+          addEntryToVariableTable("square[5]", 5);
+          add_entryToArraySTable("square", 5, "square217", & square[5], & square[5],
+                                 1);
+          handleAssignmentSymbolically("exp_outcome", "(= square[2] square[5])", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(25, exp_outcome);
+          if (overall_outcome) {
+            addEntryToVariableTable("square[2]", 2);
+            add_entryToArraySTable("square", 2, "square131", & square[2], & square[2],
+                                   1);
+            addEntryToVariableTable("square[5]", 5);
+            add_entryToArraySTable("square", 5, "square132", & square[5], & square[5],
+                                   1);
+            setBranchInfo(25, 1, 0);
+            setTrueExpr(25, "(= square[2] square[5])");
+            setFalseExpr(25, "(not (= square[2] square[5]))");
+            addToTree(25, 5, "(= square[2] square[5])", "(not (= square[2] square[5]))",
+                      19, 1);
+            delete_allVariableTableEntry();
+            {
+            exp_outcome = square[5] == square[8];
+            addEntryToVariableTable("square[5]", 5);
+            add_entryToArraySTable("square", 5, "square218", & square[5], & square[5],
+                                   1);
+            addEntryToVariableTable("square[8]", 8);
+            add_entryToArraySTable("square", 8, "square219", & square[8], & square[8],
+                                   1);
+            handleAssignmentSymbolically("exp_outcome", "(= square[5] square[8])",
+                                         & exp_outcome, & exp_outcome, 1);
+            overall_outcome = (int )getConditionalOutcome(26, exp_outcome);
+            if (overall_outcome) {
+              addEntryToVariableTable("square[5]", 5);
+              add_entryToArraySTable("square", 5, "square18", & square[5], & square[5],
+                                     1);
+              addEntryToVariableTable("square[8]", 8);
+              add_entryToArraySTable("square", 8, "square19", & square[8], & square[8],
+                                     1);
+              setBranchInfo(26, 1, 0);
+              setTrueExpr(26, "(= square[5] square[8])");
+              setFalseExpr(26, "(not (= square[5] square[8]))");
+              addToTree(26, 6, "(= square[5] square[8])", "(not (= square[5] square[8]))",
+                        25, 1);
+              delete_allVariableTableEntry();
+              {
+              __cil_tmp5 = 1;
+              add_entryToSTable("__cil_tmp5", "Constant", & __cil_tmp5, & __cil_tmp5,
+                                1);
+              __cil_tmp21 = isNotQueueEmpty();
+              if (__cil_tmp21) {
+                enQueue();
+                directPathConditions();
+                delete_allSTableEntry();
+                delete_allStructTableEntry();
+                checkwin(square);
+              } else {
+                __cil_tmp21 = startCDG();
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                  1);
+                if (__cil_tmp21) {
+                  __cil_tmp21 = getTestCases();
+                  checkwin(square);
+                }
+              }
+              return (__cil_tmp5);
+              }
+            } else {
+              addEntryToVariableTable("square[5]", 5);
+              add_entryToArraySTable("square", 5, "square18", & square[5], & square[5],
+                                     1);
+              addEntryToVariableTable("square[8]", 8);
+              add_entryToArraySTable("square", 8, "square19", & square[8], & square[8],
+                                     1);
+              setBranchInfo(26, 0, 1);
+              setTrueExpr(26, "(= square[5] square[8])");
+              setFalseExpr(26, "(not (= square[5] square[8]))");
+              addToTree(26, 6, "(= square[5] square[8])", "(not (= square[5] square[8]))",
+                        25, 0);
+              delete_allVariableTableEntry();
+              goto _L___2;
+            }
+            }
+          } else {
+            addEntryToVariableTable("square[2]", 2);
+            add_entryToArraySTable("square", 2, "square131", & square[2], & square[2],
+                                   1);
+            addEntryToVariableTable("square[5]", 5);
+            add_entryToArraySTable("square", 5, "square132", & square[5], & square[5],
+                                   1);
+            setBranchInfo(25, 0, 1);
+            setTrueExpr(25, "(= square[2] square[5])");
+            setFalseExpr(25, "(not (= square[2] square[5]))");
+            addToTree(25, 5, "(= square[2] square[5])", "(not (= square[2] square[5]))",
+                      19, 0);
+            delete_allVariableTableEntry();
+            _L___2: /* CIL Label */ 
+            {
+            exp_outcome = square[3] == square[6];
+            addEntryToVariableTable("square[3]", 3);
+            add_entryToArraySTable("square", 3, "square220", & square[3], & square[3],
+                                   1);
+            addEntryToVariableTable("square[6]", 6);
+            add_entryToArraySTable("square", 6, "square221", & square[6], & square[6],
+                                   1);
+            handleAssignmentSymbolically("exp_outcome", "(= square[3] square[6])",
+                                         & exp_outcome, & exp_outcome, 1);
+            overall_outcome = (int )getConditionalOutcome(31, exp_outcome);
+            if (overall_outcome) {
+              addEntryToVariableTable("square[3]", 3);
+              add_entryToArraySTable("square", 3, "square129", & square[3], & square[3],
+                                     1);
+              addEntryToVariableTable("square[6]", 6);
+              add_entryToArraySTable("square", 6, "square130", & square[6], & square[6],
+                                     1);
+              setBranchInfo(31, 1, 0);
+              setTrueExpr(31, "(= square[3] square[6])");
+              setFalseExpr(31, "(not (= square[3] square[6]))");
+              addToTree(31, 6, "(= square[3] square[6])", "(not (= square[3] square[6]))",
+                        25, 1);
+              delete_allVariableTableEntry();
+              {
+              exp_outcome = square[6] == square[9];
+              addEntryToVariableTable("square[6]", 6);
+              add_entryToArraySTable("square", 6, "square222", & square[6], & square[6],
+                                     1);
+              addEntryToVariableTable("square[9]", 9);
+              add_entryToArraySTable("square", 9, "square223", & square[9], & square[9],
+                                     1);
+              handleAssignmentSymbolically("exp_outcome", "(= square[6] square[9])",
+                                           & exp_outcome, & exp_outcome, 1);
+              overall_outcome = (int )getConditionalOutcome(32, exp_outcome);
+              if (overall_outcome) {
+                addEntryToVariableTable("square[6]", 6);
+                add_entryToArraySTable("square", 6, "square110", & square[6], & square[6],
+                                       1);
+                addEntryToVariableTable("square[9]", 9);
+                add_entryToArraySTable("square", 9, "square111", & square[9], & square[9],
+                                       1);
+                setBranchInfo(32, 1, 0);
+                setTrueExpr(32, "(= square[6] square[9])");
+                setFalseExpr(32, "(not (= square[6] square[9]))");
+                addToTree(32, 7, "(= square[6] square[9])", "(not (= square[6] square[9]))",
+                          31, 1);
+                delete_allVariableTableEntry();
+                {
+                __cil_tmp6 = 1;
+                add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6,
+                                  1);
+                __cil_tmp21 = isNotQueueEmpty();
+                if (__cil_tmp21) {
+                  enQueue();
+                  directPathConditions();
+                  delete_allSTableEntry();
+                  delete_allStructTableEntry();
+                  checkwin(square);
+                } else {
+                  __cil_tmp21 = startCDG();
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                    1);
+                  if (__cil_tmp21) {
+                    __cil_tmp21 = getTestCases();
+                    checkwin(square);
+                  }
+                }
+                return (__cil_tmp6);
+                }
+              } else {
+                addEntryToVariableTable("square[6]", 6);
+                add_entryToArraySTable("square", 6, "square110", & square[6], & square[6],
+                                       1);
+                addEntryToVariableTable("square[9]", 9);
+                add_entryToArraySTable("square", 9, "square111", & square[9], & square[9],
+                                       1);
+                setBranchInfo(32, 0, 1);
+                setTrueExpr(32, "(= square[6] square[9])");
+                setFalseExpr(32, "(not (= square[6] square[9]))");
+                addToTree(32, 7, "(= square[6] square[9])", "(not (= square[6] square[9]))",
+                          31, 0);
+                delete_allVariableTableEntry();
+                goto _L___1;
+              }
+              }
+            } else {
+              addEntryToVariableTable("square[3]", 3);
+              add_entryToArraySTable("square", 3, "square129", & square[3], & square[3],
+                                     1);
+              addEntryToVariableTable("square[6]", 6);
+              add_entryToArraySTable("square", 6, "square130", & square[6], & square[6],
+                                     1);
+              setBranchInfo(31, 0, 1);
+              setTrueExpr(31, "(= square[3] square[6])");
+              setFalseExpr(31, "(not (= square[3] square[6]))");
+              addToTree(31, 6, "(= square[3] square[6])", "(not (= square[3] square[6]))",
+                        25, 0);
+              delete_allVariableTableEntry();
+              _L___1: /* CIL Label */ 
+              {
+              exp_outcome = square[1] == square[5];
+              addEntryToVariableTable("square[1]", 1);
+              add_entryToArraySTable("square", 1, "square224", & square[1], & square[1],
+                                     1);
+              addEntryToVariableTable("square[5]", 5);
+              add_entryToArraySTable("square", 5, "square225", & square[5], & square[5],
+                                     1);
+              handleAssignmentSymbolically("exp_outcome", "(= square[1] square[5])",
+                                           & exp_outcome, & exp_outcome, 1);
+              overall_outcome = (int )getConditionalOutcome(37, exp_outcome);
+              if (overall_outcome) {
+                addEntryToVariableTable("square[1]", 1);
+                add_entryToArraySTable("square", 1, "square127", & square[1], & square[1],
+                                       1);
+                addEntryToVariableTable("square[5]", 5);
+                add_entryToArraySTable("square", 5, "square128", & square[5], & square[5],
+                                       1);
+                setBranchInfo(37, 1, 0);
+                setTrueExpr(37, "(= square[1] square[5])");
+                setFalseExpr(37, "(not (= square[1] square[5]))");
+                addToTree(37, 7, "(= square[1] square[5])", "(not (= square[1] square[5]))",
+                          31, 1);
+                delete_allVariableTableEntry();
+                {
+                exp_outcome = square[5] == square[9];
+                addEntryToVariableTable("square[5]", 5);
+                add_entryToArraySTable("square", 5, "square226", & square[5], & square[5],
+                                       1);
+                addEntryToVariableTable("square[9]", 9);
+                add_entryToArraySTable("square", 9, "square227", & square[9], & square[9],
+                                       1);
+                handleAssignmentSymbolically("exp_outcome", "(= square[5] square[9])",
+                                             & exp_outcome, & exp_outcome, 1);
+                overall_outcome = (int )getConditionalOutcome(38, exp_outcome);
+                if (overall_outcome) {
+                  addEntryToVariableTable("square[5]", 5);
+                  add_entryToArraySTable("square", 5, "square112", & square[5], & square[5],
+                                         1);
+                  addEntryToVariableTable("square[9]", 9);
+                  add_entryToArraySTable("square", 9, "square113", & square[9], & square[9],
+                                         1);
+                  setBranchInfo(38, 1, 0);
+                  setTrueExpr(38, "(= square[5] square[9])");
+                  setFalseExpr(38, "(not (= square[5] square[9]))");
+                  addToTree(38, 8, "(= square[5] square[9])", "(not (= square[5] square[9]))",
+                            37, 1);
+                  delete_allVariableTableEntry();
+                  {
+                  __cil_tmp7 = 1;
+                  add_entryToSTable("__cil_tmp7", "Constant", & __cil_tmp7, & __cil_tmp7,
+                                    1);
+                  __cil_tmp21 = isNotQueueEmpty();
+                  if (__cil_tmp21) {
+                    enQueue();
+                    directPathConditions();
+                    delete_allSTableEntry();
+                    delete_allStructTableEntry();
+                    checkwin(square);
+                  } else {
+                    __cil_tmp21 = startCDG();
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21, & __cil_tmp21,
+                                      1);
+                    if (__cil_tmp21) {
+                      __cil_tmp21 = getTestCases();
+                      checkwin(square);
+                    }
+                  }
+                  return (__cil_tmp7);
+                  }
+                } else {
+                  addEntryToVariableTable("square[5]", 5);
+                  add_entryToArraySTable("square", 5, "square112", & square[5], & square[5],
+                                         1);
+                  addEntryToVariableTable("square[9]", 9);
+                  add_entryToArraySTable("square", 9, "square113", & square[9], & square[9],
+                                         1);
+                  setBranchInfo(38, 0, 1);
+                  setTrueExpr(38, "(= square[5] square[9])");
+                  setFalseExpr(38, "(not (= square[5] square[9]))");
+                  addToTree(38, 8, "(= square[5] square[9])", "(not (= square[5] square[9]))",
+                            37, 0);
+                  delete_allVariableTableEntry();
+                  goto _L___0;
+                }
+                }
+              } else {
+                addEntryToVariableTable("square[1]", 1);
+                add_entryToArraySTable("square", 1, "square127", & square[1], & square[1],
+                                       1);
+                addEntryToVariableTable("square[5]", 5);
+                add_entryToArraySTable("square", 5, "square128", & square[5], & square[5],
+                                       1);
+                setBranchInfo(37, 0, 1);
+                setTrueExpr(37, "(= square[1] square[5])");
+                setFalseExpr(37, "(not (= square[1] square[5]))");
+                addToTree(37, 7, "(= square[1] square[5])", "(not (= square[1] square[5]))",
+                          31, 0);
+                delete_allVariableTableEntry();
+                _L___0: /* CIL Label */ 
+                {
+                exp_outcome = square[3] == square[5];
+                addEntryToVariableTable("square[3]", 3);
+                add_entryToArraySTable("square", 3, "square228", & square[3], & square[3],
+                                       1);
+                addEntryToVariableTable("square[5]", 5);
+                add_entryToArraySTable("square", 5, "square229", & square[5], & square[5],
+                                       1);
+                handleAssignmentSymbolically("exp_outcome", "(= square[3] square[5])",
+                                             & exp_outcome, & exp_outcome, 1);
+                overall_outcome = (int )getConditionalOutcome(43, exp_outcome);
+                if (overall_outcome) {
+                  addEntryToVariableTable("square[3]", 3);
+                  add_entryToArraySTable("square", 3, "square125", & square[3], & square[3],
+                                         1);
+                  addEntryToVariableTable("square[5]", 5);
+                  add_entryToArraySTable("square", 5, "square126", & square[5], & square[5],
+                                         1);
+                  setBranchInfo(43, 1, 0);
+                  setTrueExpr(43, "(= square[3] square[5])");
+                  setFalseExpr(43, "(not (= square[3] square[5]))");
+                  addToTree(43, 8, "(= square[3] square[5])", "(not (= square[3] square[5]))",
+                            37, 1);
+                  delete_allVariableTableEntry();
+                  {
+                  exp_outcome = square[5] == square[7];
+                  addEntryToVariableTable("square[5]", 5);
+                  add_entryToArraySTable("square", 5, "square230", & square[5], & square[5],
+                                         1);
+                  addEntryToVariableTable("square[7]", 7);
+                  add_entryToArraySTable("square", 7, "square231", & square[7], & square[7],
+                                         1);
+                  handleAssignmentSymbolically("exp_outcome", "(= square[5] square[7])",
+                                               & exp_outcome, & exp_outcome, 1);
+                  overall_outcome = (int )getConditionalOutcome(44, exp_outcome);
+                  if (overall_outcome) {
+                    addEntryToVariableTable("square[5]", 5);
+                    add_entryToArraySTable("square", 5, "square114", & square[5],
+                                           & square[5], 1);
+                    addEntryToVariableTable("square[7]", 7);
+                    add_entryToArraySTable("square", 7, "square115", & square[7],
+                                           & square[7], 1);
+                    setBranchInfo(44, 1, 0);
+                    setTrueExpr(44, "(= square[5] square[7])");
+                    setFalseExpr(44, "(not (= square[5] square[7]))");
+                    addToTree(44, 9, "(= square[5] square[7])", "(not (= square[5] square[7]))",
+                              43, 1);
+                    delete_allVariableTableEntry();
+                    {
+                    __cil_tmp8 = 1;
+                    add_entryToSTable("__cil_tmp8", "Constant", & __cil_tmp8, & __cil_tmp8,
+                                      1);
+                    __cil_tmp21 = isNotQueueEmpty();
+                    if (__cil_tmp21) {
+                      enQueue();
+                      directPathConditions();
+                      delete_allSTableEntry();
+                      delete_allStructTableEntry();
+                      checkwin(square);
+                    } else {
+                      __cil_tmp21 = startCDG();
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      if (__cil_tmp21) {
+                        __cil_tmp21 = getTestCases();
+                        checkwin(square);
+                      }
+                    }
+                    return (__cil_tmp8);
+                    }
+                  } else {
+                    addEntryToVariableTable("square[5]", 5);
+                    add_entryToArraySTable("square", 5, "square114", & square[5],
+                                           & square[5], 1);
+                    addEntryToVariableTable("square[7]", 7);
+                    add_entryToArraySTable("square", 7, "square115", & square[7],
+                                           & square[7], 1);
+                    setBranchInfo(44, 0, 1);
+                    setTrueExpr(44, "(= square[5] square[7])");
+                    setFalseExpr(44, "(not (= square[5] square[7]))");
+                    addToTree(44, 9, "(= square[5] square[7])", "(not (= square[5] square[7]))",
+                              43, 0);
+                    delete_allVariableTableEntry();
+                    goto _L;
+                  }
+                  }
+                } else {
+                  addEntryToVariableTable("square[3]", 3);
+                  add_entryToArraySTable("square", 3, "square125", & square[3], & square[3],
+                                         1);
+                  addEntryToVariableTable("square[5]", 5);
+                  add_entryToArraySTable("square", 5, "square126", & square[5], & square[5],
+                                         1);
+                  setBranchInfo(43, 0, 1);
+                  setTrueExpr(43, "(= square[3] square[5])");
+                  setFalseExpr(43, "(not (= square[3] square[5]))");
+                  addToTree(43, 8, "(= square[3] square[5])", "(not (= square[3] square[5]))",
+                            37, 0);
+                  delete_allVariableTableEntry();
+                  _L: /* CIL Label */ 
+                  {
+                  exp_outcome = ! (square[1] == 1);
+                  addEntryToVariableTable("square[1]", 1);
+                  add_entryToArraySTable("square", 1, "square232", & square[1], & square[1],
+                                         1);
+                  handleAssignmentSymbolically("exp_outcome", "(! (= square[1] 1))",
+                                               & exp_outcome, & exp_outcome, 1);
+                  overall_outcome = (int )getConditionalOutcome(49, exp_outcome);
+                  if (overall_outcome) {
+                    addEntryToVariableTable("square[1]", 1);
+                    add_entryToArraySTable("square", 1, "square124", & square[1],
+                                           & square[1], 1);
+                    setBranchInfo(49, 1, 0);
+                    setTrueExpr(49, "(not (= square[1] 1))");
+                    setFalseExpr(49, "(= square[1] 1)");
+                    addToTree(49, 9, "(not (= square[1] 1))", "(= square[1] 1)", 43,
+                              1);
+                    delete_allVariableTableEntry();
+                    {
+                    exp_outcome = ! (square[2] == 2);
+                    addEntryToVariableTable("square[2]", 2);
+                    add_entryToArraySTable("square", 2, "square233", & square[2],
+                                           & square[2], 1);
+                    handleAssignmentSymbolically("exp_outcome", "(! (= square[2] 2))",
+                                                 & exp_outcome, & exp_outcome, 1);
+                    overall_outcome = (int )getConditionalOutcome(50, exp_outcome);
+                    if (overall_outcome) {
+                      addEntryToVariableTable("square[2]", 2);
+                      add_entryToArraySTable("square", 2, "square123", & square[2],
+                                             & square[2], 1);
+                      setBranchInfo(50, 1, 0);
+                      setTrueExpr(50, "(not (= square[2] 2))");
+                      setFalseExpr(50, "(= square[2] 2)");
+                      addToTree(50, 10, "(not (= square[2] 2))", "(= square[2] 2)",
+                                49, 1);
+                      delete_allVariableTableEntry();
+                      {
+                      exp_outcome = ! (square[3] == 3);
+                      addEntryToVariableTable("square[3]", 3);
+                      add_entryToArraySTable("square", 3, "square234", & square[3],
+                                             & square[3], 1);
+                      handleAssignmentSymbolically("exp_outcome", "(! (= square[3] 3))",
+                                                   & exp_outcome, & exp_outcome, 1);
+                      overall_outcome = (int )getConditionalOutcome(51, exp_outcome);
+                      if (overall_outcome) {
+                        addEntryToVariableTable("square[3]", 3);
+                        add_entryToArraySTable("square", 3, "square122", & square[3],
+                                               & square[3], 1);
+                        setBranchInfo(51, 1, 0);
+                        setTrueExpr(51, "(not (= square[3] 3))");
+                        setFalseExpr(51, "(= square[3] 3)");
+                        addToTree(51, 11, "(not (= square[3] 3))", "(= square[3] 3)",
+                                  50, 1);
+                        delete_allVariableTableEntry();
+                        {
+                        exp_outcome = ! (square[4] == 4);
+                        addEntryToVariableTable("square[4]", 4);
+                        add_entryToArraySTable("square", 4, "square235", & square[4],
+                                               & square[4], 1);
+                        handleAssignmentSymbolically("exp_outcome", "(! (= square[4] 4))",
+                                                     & exp_outcome, & exp_outcome,
+                                                     1);
+                        overall_outcome = (int )getConditionalOutcome(52, exp_outcome);
+                        if (overall_outcome) {
+                          addEntryToVariableTable("square[4]", 4);
+                          add_entryToArraySTable("square", 4, "square121", & square[4],
+                                                 & square[4], 1);
+                          setBranchInfo(52, 1, 0);
+                          setTrueExpr(52, "(not (= square[4] 4))");
+                          setFalseExpr(52, "(= square[4] 4)");
+                          addToTree(52, 12, "(not (= square[4] 4))", "(= square[4] 4)",
+                                    51, 1);
+                          delete_allVariableTableEntry();
+                          {
+                          exp_outcome = ! (square[5] == 5);
+                          addEntryToVariableTable("square[5]", 5);
+                          add_entryToArraySTable("square", 5, "square236", & square[5],
+                                                 & square[5], 1);
+                          handleAssignmentSymbolically("exp_outcome", "(! (= square[5] 5))",
+                                                       & exp_outcome, & exp_outcome,
+                                                       1);
+                          overall_outcome = (int )getConditionalOutcome(53, exp_outcome);
+                          if (overall_outcome) {
+                            addEntryToVariableTable("square[5]", 5);
+                            add_entryToArraySTable("square", 5, "square120", & square[5],
+                                                   & square[5], 1);
+                            setBranchInfo(53, 1, 0);
+                            setTrueExpr(53, "(not (= square[5] 5))");
+                            setFalseExpr(53, "(= square[5] 5)");
+                            addToTree(53, 13, "(not (= square[5] 5))", "(= square[5] 5)",
+                                      52, 1);
+                            delete_allVariableTableEntry();
+                            {
+                            exp_outcome = ! (square[6] == 6);
+                            addEntryToVariableTable("square[6]", 6);
+                            add_entryToArraySTable("square", 6, "square237", & square[6],
+                                                   & square[6], 1);
+                            handleAssignmentSymbolically("exp_outcome", "(! (= square[6] 6))",
+                                                         & exp_outcome, & exp_outcome,
+                                                         1);
+                            overall_outcome = (int )getConditionalOutcome(54, exp_outcome);
+                            if (overall_outcome) {
+                              addEntryToVariableTable("square[6]", 6);
+                              add_entryToArraySTable("square", 6, "square119", & square[6],
+                                                     & square[6], 1);
+                              setBranchInfo(54, 1, 0);
+                              setTrueExpr(54, "(not (= square[6] 6))");
+                              setFalseExpr(54, "(= square[6] 6)");
+                              addToTree(54, 14, "(not (= square[6] 6))", "(= square[6] 6)",
+                                        53, 1);
+                              delete_allVariableTableEntry();
+                              {
+                              exp_outcome = ! (square[7] == 7);
+                              addEntryToVariableTable("square[7]", 7);
+                              add_entryToArraySTable("square", 7, "square238", & square[7],
+                                                     & square[7], 1);
+                              handleAssignmentSymbolically("exp_outcome", "(! (= square[7] 7))",
+                                                           & exp_outcome, & exp_outcome,
+                                                           1);
+                              overall_outcome = (int )getConditionalOutcome(55, exp_outcome);
+                              if (overall_outcome) {
+                                addEntryToVariableTable("square[7]", 7);
+                                add_entryToArraySTable("square", 7, "square118", & square[7],
+                                                       & square[7], 1);
+                                setBranchInfo(55, 1, 0);
+                                setTrueExpr(55, "(not (= square[7] 7))");
+                                setFalseExpr(55, "(= square[7] 7)");
+                                addToTree(55, 15, "(not (= square[7] 7))", "(= square[7] 7)",
+                                          54, 1);
+                                delete_allVariableTableEntry();
+                                {
+                                exp_outcome = ! (square[8] == 8);
+                                addEntryToVariableTable("square[8]", 8);
+                                add_entryToArraySTable("square", 8, "square239", & square[8],
+                                                       & square[8], 1);
+                                handleAssignmentSymbolically("exp_outcome", "(! (= square[8] 8))",
+                                                             & exp_outcome, & exp_outcome,
+                                                             1);
+                                overall_outcome = (int )getConditionalOutcome(56,
+                                                                              exp_outcome);
+                                if (overall_outcome) {
+                                  addEntryToVariableTable("square[8]", 8);
+                                  add_entryToArraySTable("square", 8, "square117",
+                                                         & square[8], & square[8],
+                                                         1);
+                                  setBranchInfo(56, 1, 0);
+                                  setTrueExpr(56, "(not (= square[8] 8))");
+                                  setFalseExpr(56, "(= square[8] 8)");
+                                  addToTree(56, 16, "(not (= square[8] 8))", "(= square[8] 8)",
+                                            55, 1);
+                                  delete_allVariableTableEntry();
+                                  {
+                                  exp_outcome = ! (square[9] == 9);
+                                  addEntryToVariableTable("square[9]", 9);
+                                  add_entryToArraySTable("square", 9, "square240",
+                                                         & square[9], & square[9],
+                                                         1);
+                                  handleAssignmentSymbolically("exp_outcome", "(! (= square[9] 9))",
+                                                               & exp_outcome, & exp_outcome,
+                                                               1);
+                                  overall_outcome = (int )getConditionalOutcome(57,
+                                                                                exp_outcome);
+                                  if (overall_outcome) {
+                                    addEntryToVariableTable("square[9]", 9);
+                                    add_entryToArraySTable("square", 9, "square116",
+                                                           & square[9], & square[9],
+                                                           1);
+                                    setBranchInfo(57, 1, 0);
+                                    setTrueExpr(57, "(not (= square[9] 9))");
+                                    setFalseExpr(57, "(= square[9] 9)");
+                                    addToTree(57, 17, "(not (= square[9] 9))", "(= square[9] 9)",
+                                              56, 1);
+                                    delete_allVariableTableEntry();
+                                    {
+                                    __cil_tmp9 = 0;
+                                    add_entryToSTable("__cil_tmp9", "Constant", & __cil_tmp9,
+                                                      & __cil_tmp9, 1);
+                                    __cil_tmp21 = isNotQueueEmpty();
+                                    if (__cil_tmp21) {
+                                      enQueue();
+                                      directPathConditions();
+                                      delete_allSTableEntry();
+                                      delete_allStructTableEntry();
+                                      checkwin(square);
+                                    } else {
+                                      __cil_tmp21 = startCDG();
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      if (__cil_tmp21) {
+                                        __cil_tmp21 = getTestCases();
+                                        checkwin(square);
+                                      }
+                                    }
+                                    return (__cil_tmp9);
+                                    }
+                                  } else {
+                                    addEntryToVariableTable("square[9]", 9);
+                                    add_entryToArraySTable("square", 9, "square116",
+                                                           & square[9], & square[9],
+                                                           1);
+                                    setBranchInfo(57, 0, 1);
+                                    setTrueExpr(57, "(not (= square[9] 9))");
+                                    setFalseExpr(57, "(= square[9] 9)");
+                                    addToTree(57, 17, "(not (= square[9] 9))", "(= square[9] 9)",
+                                              56, 0);
+                                    delete_allVariableTableEntry();
+                                    {
+                                    __cil_tmp10 = -1;
+                                    add_entryToSTable("__cil_tmp10", "Constant", & __cil_tmp10,
+                                                      & __cil_tmp10, 1);
+                                    __cil_tmp21 = isNotQueueEmpty();
+                                    if (__cil_tmp21) {
+                                      enQueue();
+                                      directPathConditions();
+                                      delete_allSTableEntry();
+                                      delete_allStructTableEntry();
+                                      checkwin(square);
+                                    } else {
+                                      __cil_tmp21 = startCDG();
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      add_entryToSTable("__cil_tmp21", "Function",
+                                                        & __cil_tmp21, & __cil_tmp21,
+                                                        1);
+                                      if (__cil_tmp21) {
+                                        __cil_tmp21 = getTestCases();
+                                        checkwin(square);
+                                      }
+                                    }
+                                    return (__cil_tmp10);
+                                    }
+                                  }
+                                  }
+                                } else {
+                                  addEntryToVariableTable("square[8]", 8);
+                                  add_entryToArraySTable("square", 8, "square117",
+                                                         & square[8], & square[8],
+                                                         1);
+                                  setBranchInfo(56, 0, 1);
+                                  setTrueExpr(56, "(not (= square[8] 8))");
+                                  setFalseExpr(56, "(= square[8] 8)");
+                                  addToTree(56, 16, "(not (= square[8] 8))", "(= square[8] 8)",
+                                            55, 0);
+                                  delete_allVariableTableEntry();
+                                  {
+                                  __cil_tmp11 = -1;
+                                  add_entryToSTable("__cil_tmp11", "Constant", & __cil_tmp11,
+                                                    & __cil_tmp11, 1);
+                                  __cil_tmp21 = isNotQueueEmpty();
+                                  if (__cil_tmp21) {
+                                    enQueue();
+                                    directPathConditions();
+                                    delete_allSTableEntry();
+                                    delete_allStructTableEntry();
+                                    checkwin(square);
+                                  } else {
+                                    __cil_tmp21 = startCDG();
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                      & __cil_tmp21, 1);
+                                    if (__cil_tmp21) {
+                                      __cil_tmp21 = getTestCases();
+                                      checkwin(square);
+                                    }
+                                  }
+                                  return (__cil_tmp11);
+                                  }
+                                }
+                                }
+                              } else {
+                                addEntryToVariableTable("square[7]", 7);
+                                add_entryToArraySTable("square", 7, "square118", & square[7],
+                                                       & square[7], 1);
+                                setBranchInfo(55, 0, 1);
+                                setTrueExpr(55, "(not (= square[7] 7))");
+                                setFalseExpr(55, "(= square[7] 7)");
+                                addToTree(55, 15, "(not (= square[7] 7))", "(= square[7] 7)",
+                                          54, 0);
+                                delete_allVariableTableEntry();
+                                {
+                                __cil_tmp12 = -1;
+                                add_entryToSTable("__cil_tmp12", "Constant", & __cil_tmp12,
+                                                  & __cil_tmp12, 1);
+                                __cil_tmp21 = isNotQueueEmpty();
+                                if (__cil_tmp21) {
+                                  enQueue();
+                                  directPathConditions();
+                                  delete_allSTableEntry();
+                                  delete_allStructTableEntry();
+                                  checkwin(square);
+                                } else {
+                                  __cil_tmp21 = startCDG();
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                    & __cil_tmp21, 1);
+                                  if (__cil_tmp21) {
+                                    __cil_tmp21 = getTestCases();
+                                    checkwin(square);
+                                  }
+                                }
+                                return (__cil_tmp12);
+                                }
+                              }
+                              }
+                            } else {
+                              addEntryToVariableTable("square[6]", 6);
+                              add_entryToArraySTable("square", 6, "square119", & square[6],
+                                                     & square[6], 1);
+                              setBranchInfo(54, 0, 1);
+                              setTrueExpr(54, "(not (= square[6] 6))");
+                              setFalseExpr(54, "(= square[6] 6)");
+                              addToTree(54, 14, "(not (= square[6] 6))", "(= square[6] 6)",
+                                        53, 0);
+                              delete_allVariableTableEntry();
+                              {
+                              __cil_tmp13 = -1;
+                              add_entryToSTable("__cil_tmp13", "Constant", & __cil_tmp13,
+                                                & __cil_tmp13, 1);
+                              __cil_tmp21 = isNotQueueEmpty();
+                              if (__cil_tmp21) {
+                                enQueue();
+                                directPathConditions();
+                                delete_allSTableEntry();
+                                delete_allStructTableEntry();
+                                checkwin(square);
+                              } else {
+                                __cil_tmp21 = startCDG();
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                  & __cil_tmp21, 1);
+                                if (__cil_tmp21) {
+                                  __cil_tmp21 = getTestCases();
+                                  checkwin(square);
+                                }
+                              }
+                              return (__cil_tmp13);
+                              }
+                            }
+                            }
+                          } else {
+                            addEntryToVariableTable("square[5]", 5);
+                            add_entryToArraySTable("square", 5, "square120", & square[5],
+                                                   & square[5], 1);
+                            setBranchInfo(53, 0, 1);
+                            setTrueExpr(53, "(not (= square[5] 5))");
+                            setFalseExpr(53, "(= square[5] 5)");
+                            addToTree(53, 13, "(not (= square[5] 5))", "(= square[5] 5)",
+                                      52, 0);
+                            delete_allVariableTableEntry();
+                            {
+                            __cil_tmp14 = -1;
+                            add_entryToSTable("__cil_tmp14", "Constant", & __cil_tmp14,
+                                              & __cil_tmp14, 1);
+                            __cil_tmp21 = isNotQueueEmpty();
+                            if (__cil_tmp21) {
+                              enQueue();
+                              directPathConditions();
+                              delete_allSTableEntry();
+                              delete_allStructTableEntry();
+                              checkwin(square);
+                            } else {
+                              __cil_tmp21 = startCDG();
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                                & __cil_tmp21, 1);
+                              if (__cil_tmp21) {
+                                __cil_tmp21 = getTestCases();
+                                checkwin(square);
+                              }
+                            }
+                            return (__cil_tmp14);
+                            }
+                          }
+                          }
+                        } else {
+                          addEntryToVariableTable("square[4]", 4);
+                          add_entryToArraySTable("square", 4, "square121", & square[4],
+                                                 & square[4], 1);
+                          setBranchInfo(52, 0, 1);
+                          setTrueExpr(52, "(not (= square[4] 4))");
+                          setFalseExpr(52, "(= square[4] 4)");
+                          addToTree(52, 12, "(not (= square[4] 4))", "(= square[4] 4)",
+                                    51, 0);
+                          delete_allVariableTableEntry();
+                          {
+                          __cil_tmp15 = -1;
+                          add_entryToSTable("__cil_tmp15", "Constant", & __cil_tmp15,
+                                            & __cil_tmp15, 1);
+                          __cil_tmp21 = isNotQueueEmpty();
+                          if (__cil_tmp21) {
+                            enQueue();
+                            directPathConditions();
+                            delete_allSTableEntry();
+                            delete_allStructTableEntry();
+                            checkwin(square);
+                          } else {
+                            __cil_tmp21 = startCDG();
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                              & __cil_tmp21, 1);
+                            if (__cil_tmp21) {
+                              __cil_tmp21 = getTestCases();
+                              checkwin(square);
+                            }
+                          }
+                          return (__cil_tmp15);
+                          }
+                        }
+                        }
+                      } else {
+                        addEntryToVariableTable("square[3]", 3);
+                        add_entryToArraySTable("square", 3, "square122", & square[3],
+                                               & square[3], 1);
+                        setBranchInfo(51, 0, 1);
+                        setTrueExpr(51, "(not (= square[3] 3))");
+                        setFalseExpr(51, "(= square[3] 3)");
+                        addToTree(51, 11, "(not (= square[3] 3))", "(= square[3] 3)",
+                                  50, 0);
+                        delete_allVariableTableEntry();
+                        {
+                        __cil_tmp16 = -1;
+                        add_entryToSTable("__cil_tmp16", "Constant", & __cil_tmp16,
+                                          & __cil_tmp16, 1);
+                        __cil_tmp21 = isNotQueueEmpty();
+                        if (__cil_tmp21) {
+                          enQueue();
+                          directPathConditions();
+                          delete_allSTableEntry();
+                          delete_allStructTableEntry();
+                          checkwin(square);
+                        } else {
+                          __cil_tmp21 = startCDG();
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                            & __cil_tmp21, 1);
+                          if (__cil_tmp21) {
+                            __cil_tmp21 = getTestCases();
+                            checkwin(square);
+                          }
+                        }
+                        return (__cil_tmp16);
+                        }
+                      }
+                      }
+                    } else {
+                      addEntryToVariableTable("square[2]", 2);
+                      add_entryToArraySTable("square", 2, "square123", & square[2],
+                                             & square[2], 1);
+                      setBranchInfo(50, 0, 1);
+                      setTrueExpr(50, "(not (= square[2] 2))");
+                      setFalseExpr(50, "(= square[2] 2)");
+                      addToTree(50, 10, "(not (= square[2] 2))", "(= square[2] 2)",
+                                49, 0);
+                      delete_allVariableTableEntry();
+                      {
+                      __cil_tmp17 = -1;
+                      add_entryToSTable("__cil_tmp17", "Constant", & __cil_tmp17,
+                                        & __cil_tmp17, 1);
+                      __cil_tmp21 = isNotQueueEmpty();
+                      if (__cil_tmp21) {
+                        enQueue();
+                        directPathConditions();
+                        delete_allSTableEntry();
+                        delete_allStructTableEntry();
+                        checkwin(square);
+                      } else {
+                        __cil_tmp21 = startCDG();
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                          & __cil_tmp21, 1);
+                        if (__cil_tmp21) {
+                          __cil_tmp21 = getTestCases();
+                          checkwin(square);
+                        }
+                      }
+                      return (__cil_tmp17);
+                      }
+                    }
+                    }
+                  } else {
+                    addEntryToVariableTable("square[1]", 1);
+                    add_entryToArraySTable("square", 1, "square124", & square[1],
+                                           & square[1], 1);
+                    setBranchInfo(49, 0, 1);
+                    setTrueExpr(49, "(not (= square[1] 1))");
+                    setFalseExpr(49, "(= square[1] 1)");
+                    addToTree(49, 9, "(not (= square[1] 1))", "(= square[1] 1)", 43,
+                              0);
+                    delete_allVariableTableEntry();
+                    {
+                    __cil_tmp18 = -1;
+                    add_entryToSTable("__cil_tmp18", "Constant", & __cil_tmp18, & __cil_tmp18,
+                                      1);
+                    __cil_tmp21 = isNotQueueEmpty();
+                    if (__cil_tmp21) {
+                      enQueue();
+                      directPathConditions();
+                      delete_allSTableEntry();
+                      delete_allStructTableEntry();
+                      checkwin(square);
+                    } else {
+                      __cil_tmp21 = startCDG();
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      add_entryToSTable("__cil_tmp21", "Function", & __cil_tmp21,
+                                        & __cil_tmp21, 1);
+                      if (__cil_tmp21) {
+                        __cil_tmp21 = getTestCases();
+                        checkwin(square);
+                      }
+                    }
+                    return (__cil_tmp18);
+                    }
+                  }
+                  }
+                }
+                }
+              }
+              }
+            }
+            }
+          }
+          }
+        }
+        }
       }
       }
-    } else {
-      setBranchInfo(12, 0, 1);
-      setTrueExpr(12, "(> l 0)");
-      setFalseExpr(12, "(not (> l 0))");
-      addToTree(12, 2, "(> l 0)", "(not (> l 0))", 11, 0);
-      delete_allVariableTableEntry();
     }
     }
-  } else {
-    setBranchInfo(11, 0, 1);
-    setTrueExpr(11, "(>= top 0)");
-    setFalseExpr(11, "(not (>= top 0))");
-    addToTree(11, 1, "(>= top 0)", "(not (>= top 0))", 0, 0);
-    delete_allVariableTableEntry();
   }
   }
-  }
-  __cil_tmp14 = isNotQueueEmpty();
-  if (__cil_tmp14) {
-    enQueue();
-    directPathConditions();
-    delete_allSTableEntry();
-    delete_allStructTableEntry();
-    quickSort(arr, l, h);
-  } else {
-    __cil_tmp14 = startCDG();
-    add_entryToSTable("__cil_tmp14", "Function", & __cil_tmp14, & __cil_tmp14, 1);
-    if (__cil_tmp14) {
-      __cil_tmp14 = getTestCases();
-      quickSort(arr, l, h);
-    }
-  }
-  return;
-}
-}
-void printArr(int *printArr_arr , int printArr_n ) 
-{ 
-  int printArr_i___0 ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  printArr_i___0 = 0;
-  add_entryToSTable("printArr_i___0", "Constant", & printArr_i___0, & printArr_i___0,
-                    1);
-  {
-  if (printArr_i___0 < printArr_n) {
-    printf((char const   * __restrict  )"%d ", *(printArr_arr + printArr_i___0));
-    printArr_i___0 ++;
-    handleAssignmentSymbolically("printArr_i___0", "(+ printArr_i___0 1)", & printArr_i___0,
-                                 & printArr_i___0, 1);
-  }
-  if (printArr_i___0 < printArr_n) {
-    printf((char const   * __restrict  )"%d ", *(printArr_arr + printArr_i___0));
-    printArr_i___0 ++;
-    handleAssignmentSymbolically("printArr_i___0", "(+ printArr_i___0 1)", & printArr_i___0,
-                                 & printArr_i___0, 1);
-  }
-  }
-  return;
 }
 }
 void getPrint(void) 
@@ -16378,35 +18101,27 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  quickSort(argvar.arr, argvar.l, argvar.h);
+  checkwin(argvar.square);
 }
 }
 void main(void) 
 { 
-  int *arr ;
-  int l ;
-  int h ;
+  int square[10] ;
   int temp ;
   int __cil_tmp2 ;
   int __cil_tmp3 ;
-  int __cil_tmp4 ;
 
   {
-  argvar.arr = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp4 = 0;
+  __cil_tmp3 = 0;
   while (1) {
-    if (__cil_tmp4 >= 30) {
+    if (__cil_tmp3 >= 10) {
       break;
     } else {
-      temp = rand();
-      *(argvar.arr + __cil_tmp4) = temp % 20;
-      __cil_tmp4 ++;
+      __cil_tmp2 = rand();
+      argvar.square[__cil_tmp3] = __cil_tmp2 % 20;
+      __cil_tmp3 ++;
     }
   }
-  __cil_tmp3 = rand();
-  argvar.l = __cil_tmp3 % 20;
-  __cil_tmp2 = rand();
-  argvar.h = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

@@ -1,11 +1,11 @@
-#pragma merger("0","./quicksort.i","-g,-g")
-# 1 "quicksort.c"
+#pragma merger("0","./crestExam2.i","-g,-g")
+# 1 "crestExam2.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "quicksort.c"
-
+# 1 "crestExam2.c"
+# 12 "crestExam2.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -836,84 +836,68 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 3 "quicksort.c" 2
+# 13 "crestExam2.c" 2
 
+void f(int);
+void g(int);
+void h(int);
 
-void swap ( int* a, int* b )
-{
-  int t = *a;
-  *a = *b;
-  *b = t;
+void f(int a) {
+  if (a > 13) {
+    printf("greater than 13\n");
+  } else {
+    printf("not greater than 13\n");
+  }
 }
 
+void g(int a) {
+  h(a);
 
-int partition(int arr[], int l, int h)
-{
-  int x = arr[h];
-  int i = (l - 1);
+  if (a == 7) {
+    printf("7\n");
+  } else {
+    printf("not 7\n");
+  }
 
-printf("l=%d, h=%d\n",l,h);
-
-  for (int j = l; j <= h- 1; j++)
-    {
-      if (arr[j] <= x)
-        {
-          i++;
-
-          swap (&arr[i], &arr[j]);
-        }
-    }
-
-
-  swap (&arr[i + 1], &arr[h]);
-  return (i + 1);
+  i1(a);
 }
 
-
-void quickSort (int arr[], int l, int h)
-{
-
-  int stack[ h - l + 1 ];
-
-
-  int top = -1;
-
-
-  stack[ ++top ] = l;
-  stack[ ++top ] = h;
-
-
-  while ( top >= 0 && l>0 && h>l)
-    {
-
-      h = stack[ top-- ];
-      l = stack[ top-- ];
-
-
-   int p = partition( arr, l, h );
-
-
-
-      if ( p-1 > l )
-        {
-          stack[ ++top ] = l;
-          stack[ ++top ] = p - 1;
-        }
-
-
-
-      if ( p+1 < h )
-        {
-          stack[ ++top ] = p + 1;
-          stack[ ++top ] = h;
-        }
-    }
+void h(int a) {
+  if (a == -4) {
+    printf("-4\n");
+  } else {
+    printf("not -4\n");
+  }
 }
 
+void i1(int a) {
+  if (a == 100) {
+    printf("100\n");
+  } else {
+    printf("not 100\n");
+  }
+}
 
-void printArr( int arr[], int n )
-{
-  int i;
-  for ( i = 0; i < n; ++i )
-    printf( "%d ", arr[i] );
+int main(void) {
+  int a;
+  scanf("%d",&a);
+
+
+  if (a == 19) {
+    printf("19\n");
+  } else {
+    printf("not 19\n");
+  }
+
+  f(a);
+
+  g(a);
+
+  if (a != 1) {
+    printf("not 1\n");
+  } else {
+    printf("1\n");
+  }
+
+  return 0;
 }
