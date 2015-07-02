@@ -7063,7 +7063,7 @@ void updateValBySymbolicName(char *sname , void *value )
         updateIntValBySname(sname, *((int *)value));
       } else
       if (*((int *)value) < 0) {
-        updateFloatValBySname(sname, (float )*((int *)value));
+        updateFloatValBySname(sname, *((float *)value));
       } else {
         updateFloatValBySname(sname, *((float *)value));
       }
@@ -7090,7 +7090,7 @@ void updateValBySymbolicName(char *sname , void *value )
     if (*((int *)value) < 0) {
       updateFloatValBySname(sname, (float )*((int *)value));
     } else {
-      updateFloatValBySname(sname, (float )*((int *)value));
+      updateFloatValBySname(sname, *((float *)value));
     }
   }
   return;
@@ -15869,7 +15869,7 @@ int main1(int a )
   __cil_tmp7 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, -1);
   sprintf(__cil_tmp7, "\t%d\n", a);
-  printTestCase("sixTimesFunc_main1_1435703851.tc", __cil_tmp7);
+  printTestCase("sixTimesFunc_main1_1435842548.tc", __cil_tmp7);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(int,mult_y,variable,a)", "", "mult");
   a = mult(a);

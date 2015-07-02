@@ -7069,7 +7069,7 @@ void updateValBySymbolicName(char *sname , void *value )
         updateIntValBySname(sname, *((int *)value));
       } else
       if (*((int *)value) < 0) {
-        updateFloatValBySname(sname, (float )*((int *)value));
+        updateFloatValBySname(sname, *((float *)value));
       } else {
         updateFloatValBySname(sname, *((float *)value));
       }
@@ -7096,7 +7096,7 @@ void updateValBySymbolicName(char *sname , void *value )
     if (*((int *)value) < 0) {
       updateFloatValBySname(sname, (float )*((int *)value));
     } else {
-      updateFloatValBySname(sname, (float )*((int *)value));
+      updateFloatValBySname(sname, *((float *)value));
     }
   }
   return;
@@ -16075,7 +16075,7 @@ static double noise(int global_p[512] , int global_permutation[256] , double x ,
   sprintf(__cil_tmp63, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%f\t%f\t%f\n", p[0],
           p[1], p[2], p[3], p[4], permutation[0], permutation[1], permutation[2],
           permutation[3], permutation[4], x, y, z);
-  printTestCase("perlin_noise_1435770397.tc", __cil_tmp63);
+  printTestCase("perlin_noise_1435867944.tc", __cil_tmp63);
   add_entryToSTable("z", "s4", & z, & z, 2);
   add_entryToSTable("y", "s3", & y, & y, 2);
   add_entryToSTable("x", "s2", & x, & x, 2);

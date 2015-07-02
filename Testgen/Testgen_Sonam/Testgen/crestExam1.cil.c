@@ -15856,7 +15856,7 @@ int main1(int a )
   __cil_tmp8 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\n", a);
-  printTestCase("crestExam1_main1_1435831459.tc", __cil_tmp8);
+  printTestCase("crestExam1_main1_1435865171.tc", __cil_tmp8);
   add_entryToSTable("a", "s0", & a, & a, 1);
   funcEntry("(int,dbl_x,variable,a)", "dbl___cil_tmp2", "dbl");
   tmp = dbl(a);

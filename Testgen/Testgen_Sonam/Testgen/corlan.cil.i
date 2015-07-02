@@ -7069,7 +7069,7 @@ void updateValBySymbolicName(char *sname , void *value )
         updateIntValBySname(sname, *((int *)value));
       } else
       if (*((int *)value) < 0) {
-        updateFloatValBySname(sname, (float )*((int *)value));
+        updateFloatValBySname(sname, *((float *)value));
       } else {
         updateFloatValBySname(sname, *((float *)value));
       }
@@ -7096,7 +7096,7 @@ void updateValBySymbolicName(char *sname , void *value )
     if (*((int *)value) < 0) {
       updateFloatValBySname(sname, (float )*((int *)value));
     } else {
-      updateFloatValBySname(sname, (float )*((int *)value));
+      updateFloatValBySname(sname, *((float *)value));
     }
   }
   return;
@@ -15925,7 +15925,7 @@ int main1(int n , float x )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, -1);
   sprintf(__cil_tmp10, "\t%d\t%f\n", n, x);
-  printTestCase("corlan_main1_1435760916.tc", __cil_tmp10);
+  printTestCase("corlan_main1_1435867347.tc", __cil_tmp10);
   add_entryToSTable("x", "s1", & x, & x, 2);
   add_entryToSTable("n", "s0", & n, & n, 1);
   pu = (float )0.0;

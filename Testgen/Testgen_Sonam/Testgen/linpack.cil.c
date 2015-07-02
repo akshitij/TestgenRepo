@@ -7063,7 +7063,7 @@ void updateValBySymbolicName(char *sname , void *value )
         updateIntValBySname(sname, *((int *)value));
       } else
       if (*((int *)value) < 0) {
-        updateFloatValBySname(sname, (float )*((int *)value));
+        updateFloatValBySname(sname, *((float *)value));
       } else {
         updateFloatValBySname(sname, *((float *)value));
       }
@@ -7090,7 +7090,7 @@ void updateValBySymbolicName(char *sname , void *value )
     if (*((int *)value) < 0) {
       updateFloatValBySname(sname, (float )*((int *)value));
     } else {
-      updateFloatValBySname(sname, (float )*((int *)value));
+      updateFloatValBySname(sname, *((float *)value));
     }
   }
   return;
@@ -17196,7 +17196,7 @@ void dgesl(int *global_mempool , int *a , int lda , int n , int *ipvt , int *b ,
           mempool[0], mempool[1], mempool[2], mempool[3], mempool[4], a[0], a[1],
           a[2], a[3], a[4], lda, n, ipvt[0], ipvt[1], ipvt[2], ipvt[3], ipvt[4], b[0],
           b[1], b[2], b[3], b[4], job, roll);
-  printTestCase("linpack_dgesl_1435704798.tc", __cil_tmp54);
+  printTestCase("linpack_dgesl_1435874949.tc", __cil_tmp54);
   add_entryToSTable("roll", "s7", & roll, & roll, 1);
   add_entryToSTable("job", "s6", & job, & job, 1);
   add_entryToArraySTable("b", 0, "b_0", b, b, 1);

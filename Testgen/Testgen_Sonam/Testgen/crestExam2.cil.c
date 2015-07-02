@@ -15799,7 +15799,7 @@ void f(int f_a )
   return;
 }
 }
-void i1(int a ) ;
+void i1(int i1_a ) ;
 void g(int g_a ) 
 { 
   char *symName ;
@@ -15815,7 +15815,9 @@ void g(int g_a )
   } else {
     printf((char const   * __restrict  )"not 7\n");
   }
-
+  funcEntry("(int,i1_a,variable,g_a)", "", "i1");
+  i1(g_a);
+  funcExit();
   return;
 }
 }
@@ -15834,6 +15836,21 @@ void h(int h_a )
   return;
 }
 }
+void i1(int i1_a ) 
+{ 
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  if (i1_a == 100) {
+    printf((char const   * __restrict  )"100\n");
+  } else {
+    printf((char const   * __restrict  )"not 100\n");
+  }
+  return;
+}
+}
 void createCDG(void) 
 { 
 
@@ -15841,12 +15858,21 @@ void createCDG(void)
   {
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
-  setArray(1, "(= a 100)");
-  addtoCDGnode(2, 1, 1);
-  addtoCDGnode(3, 1, 0);
-  addtoCDGnode(4, 0, 1);
-  addtoCDGnode(4, 0, 1);
+  addtoCDGnode(2, 0, 1);
+  setArray(2, "(= a 19)");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(4, 2, 0);
   addtoCDGnode(5, 0, 1);
+  addtoCDGnode(5, 0, 1);
+  addtoCDGnode(6, 0, 1);
+  setArray(6, "(! (= a 1))");
+  addtoCDGnode(7, 6, 1);
+  addtoCDGnode(8, 6, 0);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(9, 0, 1);
+  addtoCDGnode(10, 0, 1);
+  addtoCDGnode(11, 0, 1);
+  addtoCDGnode(12, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15862,87 +15888,100 @@ void createSidTable(void)
 
 
   {
-  add_condition(1, "(= a 100)", "(not (= a 100))", 0, 0);
+  add_condition(2, "(= a 19)", "(not (= a 19))", 0, 0);
+  add_condition(6, "(! (= a 1))", "(not (! (= a 1)))", 0, 0);
 }
 }
 struct arguments {
    int a ;
 };
 struct arguments argvar ;
-void i1(int a ) 
+int main1(int a ) 
 { 
+  int __cil_tmp2 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp4 ;
-  char *__cil_tmp5 ;
+  int __cil_tmp5 ;
+  char *__cil_tmp6 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp5 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
-  sprintf(__cil_tmp5, "\t%d\n", a);
-  printTestCase("crestExam2_i1_1435832533.tc", __cil_tmp5);
+  __cil_tmp6 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp6", "Function", & __cil_tmp6, & __cil_tmp6, -1);
+  sprintf(__cil_tmp6, "\t%d\n", a);
+  printTestCase("crestExam2_main1_1435865476.tc", __cil_tmp6);
   add_entryToSTable("a", "s0", & a, & a, 1);
+
   {
-  exp_outcome = a == 100;
-  handleAssignmentSymbolically("exp_outcome", "(= a 100)", & exp_outcome, & exp_outcome,
+  exp_outcome = a == 19;
+  handleAssignmentSymbolically("exp_outcome", "(= a 19)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(1, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(1, 1, 0);
-    setTrueExpr(1, "(= a 100)");
-    setFalseExpr(1, "(not (= a 100))");
-    addToTree(1, 1, "(= a 100)", "(not (= a 100))", 0, 1);
+    setBranchInfo(2, 1, 0);
+    setTrueExpr(2, "(= a 19)");
+    setFalseExpr(2, "(not (= a 19))");
+    addToTree(2, 1, "(= a 19)", "(not (= a 19))", 0, 1);
     delete_allVariableTableEntry();
-    printf((char const   * __restrict  )"100\n");
+    printf((char const   * __restrict  )"19\n");
   } else {
-    setBranchInfo(1, 0, 1);
-    setTrueExpr(1, "(= a 100)");
-    setFalseExpr(1, "(not (= a 100))");
-    addToTree(1, 1, "(= a 100)", "(not (= a 100))", 0, 0);
+    setBranchInfo(2, 0, 1);
+    setTrueExpr(2, "(= a 19)");
+    setFalseExpr(2, "(not (= a 19))");
+    addToTree(2, 1, "(= a 19)", "(not (= a 19))", 0, 0);
     delete_allVariableTableEntry();
-    printf((char const   * __restrict  )"not 100\n");
+    printf((char const   * __restrict  )"not 19\n");
   }
   }
-  __cil_tmp4 = isNotQueueEmpty();
-  if (__cil_tmp4) {
+  funcEntry("(int,f_a,variable,a)", "", "f");
+  f(a);
+  funcExit();
+  funcEntry("(int,g_a,variable,a)", "", "g");
+  g(a);
+  funcExit();
+  {
+  exp_outcome = a != 1;
+  handleAssignmentSymbolically("exp_outcome", "(! (= a 1))", & exp_outcome, & exp_outcome,
+                               1);
+  overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(6, 1, 0);
+    setTrueExpr(6, "(not (= a 1))");
+    setFalseExpr(6, "(not (not (= a 1)))");
+    addToTree(6, 1, "(not (= a 1))", "(not (not (= a 1)))", 0, 1);
+    delete_allVariableTableEntry();
+    printf((char const   * __restrict  )"not 1\n");
+  } else {
+    setBranchInfo(6, 0, 1);
+    setTrueExpr(6, "(not (= a 1))");
+    setFalseExpr(6, "(not (not (= a 1)))");
+    addToTree(6, 1, "(not (= a 1))", "(not (not (= a 1)))", 0, 0);
+    delete_allVariableTableEntry();
+    printf((char const   * __restrict  )"1\n");
+  }
+  }
+  {
+  __cil_tmp2 = 0;
+  add_entryToSTable("__cil_tmp2", "Constant", & __cil_tmp2, & __cil_tmp2, 1);
+  __cil_tmp5 = isNotQueueEmpty();
+  if (__cil_tmp5) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    i1(a);
+    main1(a);
   } else {
-    __cil_tmp4 = startCDG();
-    add_entryToSTable("__cil_tmp4", "Function", & __cil_tmp4, & __cil_tmp4, 1);
-    if (__cil_tmp4) {
-      __cil_tmp4 = getTestCases();
-      i1(a);
+    __cil_tmp5 = startCDG();
+    add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, 1);
+    if (__cil_tmp5) {
+      __cil_tmp5 = getTestCases();
+      main1(a);
     }
   }
-  return;
-}
-}
-int main1(void) 
-{ 
-  int a ;
-
-  {
-  scanf((char const   * __restrict  )"%d", & a);
-  if (a == 19) {
-    printf((char const   * __restrict  )"19\n");
-  } else {
-    printf((char const   * __restrict  )"not 19\n");
+  return (__cil_tmp2);
   }
-  f(a);
-  g(a);
-  if (a != 1) {
-    printf((char const   * __restrict  )"not 1\n");
-  } else {
-    printf((char const   * __restrict  )"1\n");
-  }
-  return (0);
 }
 }
 void getPrint(void) 
@@ -15959,7 +15998,7 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  i1(argvar.a);
+  main1(argvar.a);
 }
 }
 void main(void) 

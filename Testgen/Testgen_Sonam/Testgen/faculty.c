@@ -14,12 +14,12 @@ int fac (int n)
 int main (void)
 {
   int i;
+  scanf("%d",&i);
   int s = 0;
-  volatile int n;
-  scanf("%d",&n);
- // n = 5;
+  int n;
 
-  for (i = 0;  i <= n; i++)
+  n = 5;
+  for (i = fac(i);  i <= n; i++)
       s += fac (i);
 
   return (s);

@@ -1,9 +1,9 @@
-# 1 "./heapSort.cil.c"
+# 1 "./primemod.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./heapSort.cil.c"
+# 1 "./primemod.cil.c"
 
 
 
@@ -15785,9 +15785,53 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./heapSort.i","-g,-g")
-void heapify(int *heapify_a , int heapify_n ) ;
-void adjust(int *adjust_a , int adjust_n ) ;
+#pragma merger("0","./primemod.i","-g,-g")
+int _divides(int _divides_n , int _divides_m ) ;
+int even(int even_n ) ;
+int prime(int n ) ;
+void swap(int *swap_a , int *swap_b ) ;
+int _divides(int _divides_n , int _divides_m )
+{
+  int _divides___cil_tmp3 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  {
+  _divides___cil_tmp3 = _divides_m % _divides_n == 0;
+  handleAssignmentSymbolically("_divides___cil_tmp3", "(= (% _divides_m _divides_n) 0)",
+                               & _divides___cil_tmp3, & _divides___cil_tmp3, 1);
+  {
+  mapConcolicValues("_divides___cil_tmp3", & _divides___cil_tmp3);
+  return (_divides___cil_tmp3);
+  }
+  }
+}
+}
+int even(int even_n )
+{
+  int even_tmp ;
+  int even___cil_tmp3 ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  even___cil_tmp3 = 2;
+  add_entryToSTable("even___cil_tmp3", "Constant", & even___cil_tmp3, & even___cil_tmp3,
+                    1);
+  funcEntry("(int,_divides_n,variable,even___cil_tmp3)#(int,_divides_m,variable,even_n)",
+            "_divides___cil_tmp3", "_divides");
+  even_tmp = _divides(even___cil_tmp3, even_n);
+  funcExit();
+  add_entryToSTable("even_tmp", ret_SymValue, ret_ConValue, & even_tmp, 1);
+  {
+  mapConcolicValues("even_tmp", & even_tmp);
+  return (even_tmp);
+  }
+}
+}
 void createCDG(void)
 {
 
@@ -15796,17 +15840,39 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(> i___0 0)");
-  addtoCDGnode(4, 3, 1);
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(> i___0 0)");
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(> i___0 0)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(8, 0, 1);
+  setArray(2, "tmp___0");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(4, 2, 0);
+  addtoCDGnode(23, 2, 1);
+  addtoCDGnode(5, 2, 0);
+  addtoCDGnode(6, 2, 0);
+  setArray(6, "(<= (* i___0 i___0) n)");
+  addtoCDGnode(7, 6, 1);
+  addtoCDGnode(13, 6, 0);
+  setArray(13, "(<= (* i___0 i___0) n)");
+  addtoCDGnode(8, 6, 1);
+  setArray(8, "tmp");
+  addtoCDGnode(9, 8, 1);
+  addtoCDGnode(12, 8, 0);
+  addtoCDGnode(10, 8, 1);
+  addtoCDGnode(11, 8, 1);
+  addtoCDGnode(24, 0, 1);
+  addtoCDGnode(13, 8, 0);
+  setArray(13, "(<= (* i___0 i___0) n)");
+  addtoCDGnode(14, 13, 1);
+  addtoCDGnode(20, 13, 0);
+  addtoCDGnode(15, 13, 1);
+  setArray(15, "tmp");
+  addtoCDGnode(16, 15, 1);
+  addtoCDGnode(19, 15, 0);
+  addtoCDGnode(17, 15, 1);
+  addtoCDGnode(18, 15, 1);
+  addtoCDGnode(24, 0, 1);
+  addtoCDGnode(20, 15, 0);
+  addtoCDGnode(21, 15, 0);
+  addtoCDGnode(22, 15, 0);
+  addtoCDGnode(24, 0, 1);
+  addtoCDGnode(24, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15814,8 +15880,10 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(3, 3);
-  isCopyOf(5, 3);
+  isCopyOf(8, 8);
+  isCopyOf(15, 8);
+  isCopyOf(6, 6);
+  isCopyOf(13, 6);
 }
 }
 void createSidTable(void)
@@ -15823,342 +15891,300 @@ void createSidTable(void)
 
 
   {
-  add_condition(3, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
-  add_condition(5, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(8, "tmp", "(not tmp)", 0, 0);
+  add_condition(6, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
+  add_condition(15, "tmp", "(not tmp)", 0, 0);
+  add_condition(13, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 0, 0);
+  add_condition(2, "tmp___0", "(not tmp___0)", 0, 0);
 }
 }
 struct arguments {
-   int *a ;
    int n ;
 };
 struct arguments argvar ;
-void heapSort(int *a , int n )
+int prime(int n )
 {
   int i___0 ;
-  int t ;
+  int ret ;
+  int tmp ;
+  int tmp___0 ;
+  int __cil_tmp6 ;
+  int __cil_tmp7 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp7 ;
-  char *__cil_tmp8 ;
+  int __cil_tmp10 ;
+  char *__cil_tmp11 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp8 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
-  sprintf(__cil_tmp8, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
-          n);
-  printTestCase("heapSort_heapSort_1435864836.tc", __cil_tmp8);
-  add_entryToSTable("n", "s1", & n, & n, 1);
-  add_entryToArraySTable("a", 0, "a_0", a, a, 1);
-  funcEntry("(int *,heapify_a,array,a)#(int,heapify_n,variable,n)", "heapify_k heapify_i___0 heapify_j heapify_item",
-            "heapify");
-  heapify(a, n);
+  __cil_tmp11 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp11", "Function", & __cil_tmp11, & __cil_tmp11, -1);
+  sprintf(__cil_tmp11, "\t%d\n", n);
+  printTestCase("primemod_prime_1435863462.tc", __cil_tmp11);
+  add_entryToSTable("n", "s0", & n, & n, 1);
+  funcEntry("(int,even_n,variable,n)", "even_tmp even___cil_tmp3", "even");
+  tmp___0 = even(n);
   funcExit();
-  i___0 = n - 1;
-  handleAssignmentSymbolically("i___0", "(- n 1)", & i___0, & i___0, 1);
+  add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
   {
-  {
-  exp_outcome = i___0 > 0;
-  handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  exp_outcome = tmp___0;
+  handleAssignmentSymbolically("exp_outcome", "tmp___0", & tmp___0, & tmp___0, 1);
+  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(> i___0 0)");
-    setFalseExpr(3, "(not (> i___0 0))");
-    addToTree(3, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 1);
+    setBranchInfo(2, 1, 0);
+    setTrueExpr(2, "tmp___0");
+    setFalseExpr(2, "(not tmp___0)");
+    addToTree(2, 1, "tmp___0", "(not tmp___0)", 0, 1);
     delete_allVariableTableEntry();
-    t = *(a + 0);
-    addEntryToVariableTable("*(a + 0)", 0);
-    add_entryToArraySTable("a", 0, "a10", a + 0, a + 0, 1);
-    handleAssignmentSymbolically("t", "*(a + 0)", & *(a + 0), & *(a + 0), 1);
-    *(a + 0) = *(a + i___0);
-    addEntryToVariableTable("*(a + i___0)", i___0);
-    add_entryToArraySTable("a", i___0, "a11", a + i___0, a + i___0, 1);
-    handleArraySymbolically("a", 0, "*(a + i___0)", a + 0, a + 0, 1);
-    *(a + i___0) = t;
-    handleArraySymbolically("a", i___0, "t", a + i___0, a + i___0, 1);
-    funcEntry("(int *,adjust_a,array,a)#(int,adjust_n,variable,i___0)", "adjust_i___0 adjust_j adjust_item",
-              "adjust");
-    adjust(a, i___0);
-    funcExit();
-    i___0 --;
-    handleAssignmentSymbolically("i___0", "(- i___0 1)", & i___0, & i___0, 1);
+    ret = n == 2;
+    handleAssignmentSymbolically("ret", "(= n 2)", & ret, & ret, 1);
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(> i___0 0)");
-    setFalseExpr(3, "(not (> i___0 0))");
-    addToTree(3, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+    setBranchInfo(2, 0, 1);
+    setTrueExpr(2, "tmp___0");
+    setFalseExpr(2, "(not tmp___0)");
+    addToTree(2, 1, "tmp___0", "(not tmp___0)", 0, 0);
     delete_allVariableTableEntry();
+    i___0 = 3;
+    add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
+    {
+    {
+    exp_outcome = i___0 * i___0 <= n;
+    handleAssignmentSymbolically("exp_outcome", "(<= (* i___0 i___0) n)", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(6, 1, 0);
+      setTrueExpr(6, "(<= (* i___0 i___0) n)");
+      setFalseExpr(6, "(not (<= (* i___0 i___0) n))");
+      addToTree(6, 2, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 2,
+                1);
+      delete_allVariableTableEntry();
+      funcEntry("(int,_divides_n,variable,i___0)#(int,_divides_m,variable,n)", "_divides___cil_tmp3",
+                "_divides");
+      tmp = _divides(i___0, n);
+      funcExit();
+      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+      {
+      exp_outcome = tmp;
+      handleAssignmentSymbolically("exp_outcome", "tmp", & tmp, & tmp, 1);
+      overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(8, 1, 0);
+        setTrueExpr(8, "tmp");
+        setFalseExpr(8, "(not tmp)");
+        addToTree(8, 3, "tmp", "(not tmp)", 6, 1);
+        delete_allVariableTableEntry();
+        {
+        __cil_tmp6 = 0;
+        add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6, 1);
+        __cil_tmp10 = isNotQueueEmpty();
+        if (__cil_tmp10) {
+          enQueue();
+          directPathConditions();
+          delete_allSTableEntry();
+          delete_allStructTableEntry();
+          prime(n);
+        } else {
+          __cil_tmp10 = startCDG();
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          if (__cil_tmp10) {
+            __cil_tmp10 = getTestCases();
+            prime(n);
+          }
+        }
+        return (__cil_tmp6);
+        }
+      } else {
+        setBranchInfo(8, 0, 1);
+        setTrueExpr(8, "tmp");
+        setFalseExpr(8, "(not tmp)");
+        addToTree(8, 3, "tmp", "(not tmp)", 6, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      i___0 += 2;
+      handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(6, 0, 1);
+      setTrueExpr(6, "(<= (* i___0 i___0) n)");
+      setFalseExpr(6, "(not (<= (* i___0 i___0) n))");
+      addToTree(6, 2, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 2,
+                0);
+      delete_allVariableTableEntry();
+    }
+    }
+    {
+    exp_outcome = i___0 * i___0 <= n;
+    handleAssignmentSymbolically("exp_outcome", "(<= (* i___0 i___0) n)", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(13, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(13, 1, 0);
+      setTrueExpr(13, "(<= (* i___0 i___0) n)");
+      setFalseExpr(13, "(not (<= (* i___0 i___0) n))");
+      addToTree(13, 2, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 2,
+                1);
+      delete_allVariableTableEntry();
+      funcEntry("(int,_divides_n,variable,i___0)#(int,_divides_m,variable,n)", "_divides___cil_tmp3",
+                "_divides");
+      tmp = _divides(i___0, n);
+      funcExit();
+      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
+      {
+      exp_outcome = tmp;
+      handleAssignmentSymbolically("exp_outcome", "tmp", & tmp, & tmp, 1);
+      overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(15, 1, 0);
+        setTrueExpr(15, "tmp");
+        setFalseExpr(15, "(not tmp)");
+        addToTree(15, 3, "tmp", "(not tmp)", 13, 1);
+        delete_allVariableTableEntry();
+        {
+        __cil_tmp6 = 0;
+        add_entryToSTable("__cil_tmp6", "Constant", & __cil_tmp6, & __cil_tmp6, 1);
+        __cil_tmp10 = isNotQueueEmpty();
+        if (__cil_tmp10) {
+          enQueue();
+          directPathConditions();
+          delete_allSTableEntry();
+          delete_allStructTableEntry();
+          prime(n);
+        } else {
+          __cil_tmp10 = startCDG();
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10,
+                            1);
+          if (__cil_tmp10) {
+            __cil_tmp10 = getTestCases();
+            prime(n);
+          }
+        }
+        return (__cil_tmp6);
+        }
+      } else {
+        setBranchInfo(15, 0, 1);
+        setTrueExpr(15, "tmp");
+        setFalseExpr(15, "(not tmp)");
+        addToTree(15, 3, "tmp", "(not tmp)", 13, 0);
+        delete_allVariableTableEntry();
+      }
+      }
+      i___0 += 2;
+      handleAssignmentSymbolically("i___0", "(+ i___0 2)", & i___0, & i___0, 1);
+    } else {
+      setBranchInfo(13, 0, 1);
+      setTrueExpr(13, "(<= (* i___0 i___0) n)");
+      setFalseExpr(13, "(not (<= (* i___0 i___0) n))");
+      addToTree(13, 2, "(<= (* i___0 i___0) n)", "(not (<= (* i___0 i___0) n))", 2,
+                0);
+      delete_allVariableTableEntry();
+    }
+    }
+    }
+    {
+    __cil_tmp7 = n > 1;
+    handleAssignmentSymbolically("__cil_tmp7", "(> n 1)", & __cil_tmp7, & __cil_tmp7,
+                                 1);
+    __cil_tmp10 = isNotQueueEmpty();
+    if (__cil_tmp10) {
+      enQueue();
+      directPathConditions();
+      delete_allSTableEntry();
+      delete_allStructTableEntry();
+      prime(n);
+    } else {
+      __cil_tmp10 = startCDG();
+      add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+      add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+      add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+      add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+      if (__cil_tmp10) {
+        __cil_tmp10 = getTestCases();
+        prime(n);
+      }
+    }
+    return (__cil_tmp7);
+    }
   }
   }
-  {
-  exp_outcome = i___0 > 0;
-  handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(> i___0 0)");
-    setFalseExpr(5, "(not (> i___0 0))");
-    addToTree(5, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 1);
-    delete_allVariableTableEntry();
-    t = *(a + 0);
-    addEntryToVariableTable("*(a + 0)", 0);
-    add_entryToArraySTable("a", 0, "a12", a + 0, a + 0, 1);
-    handleAssignmentSymbolically("t", "*(a + 0)", & *(a + 0), & *(a + 0), 1);
-    *(a + 0) = *(a + i___0);
-    addEntryToVariableTable("*(a + i___0)", i___0);
-    add_entryToArraySTable("a", i___0, "a13", a + i___0, a + i___0, 1);
-    handleArraySymbolically("a", 0, "*(a + i___0)", a + 0, a + 0, 1);
-    *(a + i___0) = t;
-    handleArraySymbolically("a", i___0, "t", a + i___0, a + i___0, 1);
-    funcEntry("(int *,adjust_a,array,a)#(int,adjust_n,variable,i___0)", "adjust_i___0 adjust_j adjust_item",
-              "adjust");
-    adjust(a, i___0);
-    funcExit();
-    i___0 --;
-    handleAssignmentSymbolically("i___0", "(- i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(> i___0 0)");
-    setFalseExpr(5, "(not (> i___0 0))");
-    addToTree(5, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  __cil_tmp7 = isNotQueueEmpty();
-  if (__cil_tmp7) {
+  __cil_tmp10 = isNotQueueEmpty();
+  if (__cil_tmp10) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    heapSort(a, n);
+    prime(n);
   } else {
-    __cil_tmp7 = startCDG();
-    add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
-    if (__cil_tmp7) {
-      __cil_tmp7 = getTestCases();
-      heapSort(a, n);
+    __cil_tmp10 = startCDG();
+    add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+    add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+    add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+    add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, 1);
+    if (__cil_tmp10) {
+      __cil_tmp10 = getTestCases();
+      prime(n);
     }
   }
-  return;
+  return (ret);
 }
 }
-void heapify(int *heapify_a , int heapify_n )
+void swap(int *swap_a , int *swap_b )
 {
-  int heapify_k ;
-  int heapify_i___0 ;
-  int heapify_j ;
-  int heapify_item ;
+  int swap_tmp ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  heapify_k = 1;
-  add_entryToSTable("heapify_k", "Constant", & heapify_k, & heapify_k, 1);
-  {
-  if (heapify_k < heapify_n) {
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a14", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
-                                 1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a15", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a16", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
-  }
-  if (heapify_k < heapify_n) {
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a17", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
-                                 1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a18", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a19", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
-  }
-  }
+  swap_tmp = *swap_a;
+  addEntryToVariableTable("*swap_a", 0);
+  handleAssignmentSymbolically("swap_tmp", "*swap_a", & *swap_a, & *swap_a, 1);
+  *swap_a = *swap_b;
+  addEntryToVariableTable("*swap_b", 0);
+  handleArraySymbolically("swap_a", 0, "*swap_b", swap_a, swap_a, 1);
+  *swap_b = swap_tmp;
+  handleArraySymbolically("swap_b", 0, "swap_tmp", swap_b, swap_b, 1);
   return;
 }
 }
-void adjust(int *adjust_a , int adjust_n )
+int main1(void)
 {
-  int adjust_i___0 ;
-  int adjust_j ;
-  int adjust_item ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
+  int x ;
+  int y ;
+  int tmp ;
+  int tmp___0 ;
+  int tmp___1 ;
 
   {
-  adjust_j = 0;
-  add_entryToSTable("adjust_j", "Constant", & adjust_j, & adjust_j, 1);
-  adjust_item = *(adjust_a + adjust_j);
-  addEntryToVariableTable("*(adjust_a + adjust_j)", adjust_j);
-  add_entryToArraySTable("adjust_a", adjust_j, "adjust_a110", adjust_a + adjust_j,
-                         adjust_a + adjust_j, 1);
-  handleAssignmentSymbolically("adjust_item", "*(adjust_a + adjust_j)", & *(adjust_a + adjust_j),
-                               & *(adjust_a + adjust_j), 1);
-  adjust_i___0 = 2 * adjust_j + 1;
-  handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                               & adjust_i___0, 1);
-  {
-  if (adjust_i___0 <= adjust_n - 1) {
-    if (adjust_i___0 + 1 <= adjust_n - 1) {
-      if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
-        adjust_i___0 ++;
-        handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
-                                     & adjust_i___0, 1);
-      }
-    }
-    if (adjust_item < *(adjust_a + adjust_i___0)) {
-      *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
-      addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
-      add_entryToArraySTable("adjust_a", adjust_i___0, "adjust_a111", adjust_a + adjust_i___0,
-                             adjust_a + adjust_i___0, 1);
-      handleArraySymbolically("adjust_a", adjust_j, "*(adjust_a + adjust_i___0)",
-                              adjust_a + adjust_j, adjust_a + adjust_j, 1);
-      adjust_j = adjust_i___0;
-      handleAssignmentSymbolically("adjust_j", "adjust_i___0", & adjust_i___0, & adjust_i___0,
-                                   1);
-      adjust_i___0 = 2 * adjust_j + 1;
-      handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                                   & adjust_i___0, 1);
+  x = 21649;
+  y = 513239;
+  swap(& x, & y);
+  if (tmp) {
+
+    if (tmp___0) {
+      tmp___1 = 0;
     } else {
-      adjust_i___0 = adjust_n;
-      handleAssignmentSymbolically("adjust_i___0", "adjust_n", & adjust_n, & adjust_n,
-                                   1);
+      tmp___1 = 1;
     }
+  } else {
+    tmp___1 = 1;
   }
-  if (adjust_i___0 <= adjust_n - 1) {
-    if (adjust_i___0 + 1 <= adjust_n - 1) {
-      if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
-        adjust_i___0 ++;
-        handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
-                                     & adjust_i___0, 1);
-      }
-    }
-    if (adjust_item < *(adjust_a + adjust_i___0)) {
-      *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
-      addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
-      add_entryToArraySTable("adjust_a", adjust_i___0, "adjust_a112", adjust_a + adjust_i___0,
-                             adjust_a + adjust_i___0, 1);
-      handleArraySymbolically("adjust_a", adjust_j, "*(adjust_a + adjust_i___0)",
-                              adjust_a + adjust_j, adjust_a + adjust_j, 1);
-      adjust_j = adjust_i___0;
-      handleAssignmentSymbolically("adjust_j", "adjust_i___0", & adjust_i___0, & adjust_i___0,
-                                   1);
-      adjust_i___0 = 2 * adjust_j + 1;
-      handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                                   & adjust_i___0, 1);
-    } else {
-      adjust_i___0 = adjust_n;
-      handleAssignmentSymbolically("adjust_i___0", "adjust_n", & adjust_n, & adjust_n,
-                                   1);
-    }
-  }
-  }
-  *(adjust_a + adjust_j) = adjust_item;
-  handleArraySymbolically("adjust_a", adjust_j, "adjust_item", adjust_a + adjust_j,
-                          adjust_a + adjust_j, 1);
-  return;
+  return (tmp___1);
 }
 }
 void getPrint(void)
@@ -16175,29 +16201,16 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  heapSort(argvar.a, argvar.n);
+  prime(argvar.n);
 }
 }
 void main(void)
 {
-  int *a ;
   int n ;
   int temp ;
   int __cil_tmp2 ;
-  int __cil_tmp3 ;
 
   {
-  argvar.a = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp3 = 0;
-  while (1) {
-    if (__cil_tmp3 >= 30) {
-      break;
-    } else {
-      temp = rand();
-      *(argvar.a + __cil_tmp3) = temp % 20;
-      __cil_tmp3 ++;
-    }
-  }
   __cil_tmp2 = rand();
   argvar.n = __cil_tmp2 % 20;
   initSID();

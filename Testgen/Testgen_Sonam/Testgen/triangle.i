@@ -1,10 +1,9 @@
-# 1 "mutualRec.c"
+# 1 "triangle.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "mutualRec.c"
-# 13 "mutualRec.c"
+# 1 "triangle.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -835,78 +834,70 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 14 "mutualRec.c" 2
-int fib(int i)
+# 2 "triangle.c" 2
 
+int main()
 {
+  int side1,side2,side3;
 
-  if(i==0)
-
-    return 1;
-
-  if(i==1)
-
-    return 1;
-
-  return fib(i-1) + fib(i-2);
-
-}
+  scanf("%d%d%d",&side1,&side2,&side3);
 
 
-
-
-
-int anka(int);
-
-
-
-int kalle(int i)
-
-{
-
-  if(i<=0)
-
-    return 0;
-
+  if(side1<0 || side2<0 || side3<0)
+    printf("Illegal arguments !! \n");
   else
+    {
+      int triang = 0;
+      if(side1 == side2)
+        triang = triang+1;
 
-    return anka(i-1);
+      else
+        printf("not equal side1 and side2 \n");
 
-}
+      if(side2 == side3)
+        triang = triang+2;
+      else
+        printf("not equal side2 and side3 \n");
 
+      if(side1 == side3)
+        triang = triang+3;
+      else
+        printf("not equal side1 and side3 \n");
 
+      printf("side1=%d, side2=%d, side3=%d, triang = %d\n", side1,side2,side3,triang);
 
-int anka(int i)
+      if(triang == 0)
+        {
+          if((side1 + side2 < side3) || (side2 + side3 < side1) || (side1 + side2 < side3))
+            printf("Illegal arguments !! \n");
+          else
+            printf("Scalene triangle \n");
+        }
+      else
+        {
+          if(triang > 3)
+            printf("Equilateral triangle \n");
+          else
+            {
+              if(triang==1 && side1+side2>side3)
+                printf("Isosceles triangle \n");
+              else
+                {
+                  if(triang==2 && side2+side3>side1)
+                    printf("Isosceles triangle \n");
+                  else
+                    {
+                      if(triang==3 && side1 + side3 > side2)
+                        printf("Isosceles triangle \n");
+                      else
+                        printf("ILLegal !!! \n");
+                    }
+                }
 
-{
+            }
+        }
 
-  if(i<=0)
+    }
 
-    return 1;
-
-  else
-
-    return kalle(i-1);
-
-}
-
-
-
-
-
-
-void main(void)
-
-{
-
-  int In;
-  scanf("%d",&In);
-  int res = fib(In);
-  if(res>10){
-   printf("For In = %d res = %d\n",In,res);
-  }
-  else{
-   printf("For In = %d res = %d\n",In,res);
-  }
-
+  return 0;
 }

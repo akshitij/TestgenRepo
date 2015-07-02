@@ -5,7 +5,7 @@
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
 # 1 "mutualRec.c"
-# 9 "mutualRec.c"
+# 13 "mutualRec.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
@@ -836,7 +836,7 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 943 "/usr/include/stdio.h" 3 4
 
-# 10 "mutualRec.c" 2
+# 14 "mutualRec.c" 2
 int fib(int i)
 
 {
@@ -871,39 +871,43 @@ int kalle(int i)
 
   else
 
-    return i + anka(i-1);
+    return anka(i-1);
 
 }
 
 
 
-int anka(int j)
+int anka(int i)
 
 {
 
-  if(j<=0)
+  if(i<=0)
 
     return 1;
 
   else
 
-    return j + kalle(j-1);
+    return kalle(i-1);
 
 }
 
 
 
-int main()
+
+
+
+void main(void)
 
 {
 
+  int In;
+  scanf("%d",&In);
+  int res = fib(In);
+  if(res>10){
+   printf("For In = %d res = %d\n",In,res);
+  }
+  else{
+   printf("For In = %d res = %d\n",In,res);
+  }
 
-  int in2;
-  scanf("%d",&in2);
-  in2 = anka(in2);
-  if(in2 > 15)
-    printf("%d\n",in2);
-  else
-    printf("%d\n",-1);
-  return 0;
 }

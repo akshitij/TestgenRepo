@@ -1,9 +1,9 @@
-# 1 "./heapSort.cil.c"
+# 1 "./triangle.cil.c"
 # 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "./heapSort.cil.c"
+# 1 "./triangle.cil.c"
 
 
 
@@ -15785,9 +15785,8 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./heapSort.i","-g,-g")
-void heapify(int *heapify_a , int heapify_n ) ;
-void adjust(int *adjust_a , int adjust_n ) ;
+#pragma merger("0","./triangle.i","-g,-g")
+extern int scanf(char const * __restrict __format , ...) __asm__("__isoc99_scanf") ;
 void createCDG(void)
 {
 
@@ -15796,17 +15795,87 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  addtoCDGnode(3, 0, 1);
-  setArray(3, "(> i___0 0)");
-  addtoCDGnode(4, 3, 1);
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(> i___0 0)");
-  addtoCDGnode(5, 0, 1);
-  setArray(5, "(> i___0 0)");
-  addtoCDGnode(6, 5, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(7, 0, 1);
-  addtoCDGnode(8, 0, 1);
+  setArray(2, "(< side1 0)");
+  addtoCDGnode(3, 2, 1);
+  addtoCDGnode(4, 2, 0);
+  setArray(4, "(< side2 0)");
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(5, 4, 1);
+  addtoCDGnode(6, 4, 0);
+  setArray(6, "(< side3 0)");
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(7, 6, 1);
+  addtoCDGnode(8, 6, 0);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(9, 6, 0);
+  setArray(9, "(= side1 side2)");
+  addtoCDGnode(10, 9, 1);
+  addtoCDGnode(11, 9, 0);
+  addtoCDGnode(12, 6, 0);
+  setArray(12, "(= side2 side3)");
+  addtoCDGnode(12, 6, 0);
+  setArray(12, "(= side2 side3)");
+  addtoCDGnode(13, 12, 1);
+  addtoCDGnode(14, 12, 0);
+  addtoCDGnode(15, 6, 0);
+  setArray(15, "(= side1 side3)");
+  addtoCDGnode(15, 6, 0);
+  setArray(15, "(= side1 side3)");
+  addtoCDGnode(16, 15, 1);
+  addtoCDGnode(17, 15, 0);
+  addtoCDGnode(18, 6, 0);
+  addtoCDGnode(18, 6, 0);
+  addtoCDGnode(19, 6, 0);
+  setArray(19, "(= triang 0)");
+  addtoCDGnode(20, 19, 1);
+  setArray(20, "(< (+ side1 side2) side3)");
+  addtoCDGnode(27, 19, 0);
+  setArray(27, "(> triang 3)");
+  addtoCDGnode(21, 20, 1);
+  addtoCDGnode(22, 20, 0);
+  setArray(22, "(< (+ side2 side3) side1)");
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(23, 22, 1);
+  addtoCDGnode(24, 22, 0);
+  setArray(24, "(< (+ side1 side2) side3)");
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(25, 24, 1);
+  addtoCDGnode(26, 24, 0);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(28, 27, 1);
+  addtoCDGnode(29, 27, 0);
+  setArray(29, "(= triang 1)");
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(30, 29, 1);
+  setArray(30, "(> (+ side1 side2) side3)");
+  addtoCDGnode(33, 29, 0);
+  setArray(33, "(= triang 2)");
+  addtoCDGnode(31, 30, 1);
+  addtoCDGnode(32, 30, 0);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(33, 30, 0);
+  setArray(33, "(= triang 2)");
+  addtoCDGnode(34, 33, 1);
+  setArray(34, "(> (+ side2 side3) side1)");
+  addtoCDGnode(37, 33, 0);
+  setArray(37, "(= triang 3)");
+  addtoCDGnode(35, 34, 1);
+  addtoCDGnode(36, 34, 0);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(37, 34, 0);
+  setArray(37, "(= triang 3)");
+  addtoCDGnode(38, 37, 1);
+  setArray(38, "(> (+ side1 side3) side2)");
+  addtoCDGnode(41, 37, 0);
+  addtoCDGnode(39, 38, 1);
+  addtoCDGnode(40, 38, 0);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(42, 0, 1);
+  addtoCDGnode(43, 0, 1);
+  addtoCDGnode(44, 0, 1);
+  addtoCDGnode(45, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15814,8 +15883,7 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(3, 3);
-  isCopyOf(5, 3);
+
 }
 }
 void createSidTable(void)
@@ -15823,342 +15891,446 @@ void createSidTable(void)
 
 
   {
-  add_condition(3, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
-  add_condition(5, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+  add_condition(9, "(= side1 side2)", "(not (= side1 side2))", 0, 0);
+  add_condition(12, "(= side2 side3)", "(not (= side2 side3))", 0, 0);
+  add_condition(15, "(= side1 side3)", "(not (= side1 side3))", 0, 0);
+  add_condition(24, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                0, 0);
+  add_condition(22, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
+                0, 0);
+  add_condition(20, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                0, 0);
+  add_condition(30, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
+                0, 0);
+  add_condition(34, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
+                0, 0);
+  add_condition(38, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
+                0, 0);
+  add_condition(37, "(= triang 3)", "(not (= triang 3))", 0, 0);
+  add_condition(33, "(= triang 2)", "(not (= triang 2))", 0, 0);
+  add_condition(29, "(= triang 1)", "(not (= triang 1))", 0, 0);
+  add_condition(27, "(> triang 3)", "(not (> triang 3))", 0, 0);
+  add_condition(19, "(= triang 0)", "(not (= triang 0))", 0, 0);
+  add_condition(6, "(< side3 0)", "(not (< side3 0))", 0, 0);
+  add_condition(4, "(< side2 0)", "(not (< side2 0))", 0, 0);
+  add_condition(2, "(< side1 0)", "(not (< side1 0))", 0, 0);
 }
 }
 struct arguments {
-   int *a ;
-   int n ;
+   int side1 ;
+   int side2 ;
+   int side3 ;
 };
 struct arguments argvar ;
-void heapSort(int *a , int n )
+int main1(int side1 , int side2 , int side3 )
 {
-  int i___0 ;
-  int t ;
+  int triang ;
+  int __cil_tmp5 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp7 ;
-  char *__cil_tmp8 ;
+  int __cil_tmp8 ;
+  char *__cil_tmp9 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp8 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
-  sprintf(__cil_tmp8, "\t%d\t%d\t%d\t%d\t%d\t%d\n", a[0], a[1], a[2], a[3], a[4],
-          n);
-  printTestCase("heapSort_heapSort_1435864836.tc", __cil_tmp8);
-  add_entryToSTable("n", "s1", & n, & n, 1);
-  add_entryToArraySTable("a", 0, "a_0", a, a, 1);
-  funcEntry("(int *,heapify_a,array,a)#(int,heapify_n,variable,n)", "heapify_k heapify_i___0 heapify_j heapify_item",
-            "heapify");
-  heapify(a, n);
-  funcExit();
-  i___0 = n - 1;
-  handleAssignmentSymbolically("i___0", "(- n 1)", & i___0, & i___0, 1);
+  __cil_tmp9 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp9", "Function", & __cil_tmp9, & __cil_tmp9, -1);
+  sprintf(__cil_tmp9, "\t%d\t%d\t%d\n", side1, side2, side3);
+  printTestCase("triangle_main1_1435875532.tc", __cil_tmp9);
+  add_entryToSTable("side3", "s2", & side3, & side3, 1);
+  add_entryToSTable("side2", "s1", & side2, & side2, 1);
+  add_entryToSTable("side1", "s0", & side1, & side1, 1);
+
   {
-  {
-  exp_outcome = i___0 > 0;
-  handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
+  exp_outcome = side1 < 0;
+  handleAssignmentSymbolically("exp_outcome", "(< side1 0)", & exp_outcome, & exp_outcome,
                                1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
   if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(> i___0 0)");
-    setFalseExpr(3, "(not (> i___0 0))");
-    addToTree(3, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 1);
+    setBranchInfo(2, 1, 0);
+    setTrueExpr(2, "(< side1 0)");
+    setFalseExpr(2, "(not (< side1 0))");
+    addToTree(2, 1, "(< side1 0)", "(not (< side1 0))", 0, 1);
     delete_allVariableTableEntry();
-    t = *(a + 0);
-    addEntryToVariableTable("*(a + 0)", 0);
-    add_entryToArraySTable("a", 0, "a10", a + 0, a + 0, 1);
-    handleAssignmentSymbolically("t", "*(a + 0)", & *(a + 0), & *(a + 0), 1);
-    *(a + 0) = *(a + i___0);
-    addEntryToVariableTable("*(a + i___0)", i___0);
-    add_entryToArraySTable("a", i___0, "a11", a + i___0, a + i___0, 1);
-    handleArraySymbolically("a", 0, "*(a + i___0)", a + 0, a + 0, 1);
-    *(a + i___0) = t;
-    handleArraySymbolically("a", i___0, "t", a + i___0, a + i___0, 1);
-    funcEntry("(int *,adjust_a,array,a)#(int,adjust_n,variable,i___0)", "adjust_i___0 adjust_j adjust_item",
-              "adjust");
-    adjust(a, i___0);
-    funcExit();
-    i___0 --;
-    handleAssignmentSymbolically("i___0", "(- i___0 1)", & i___0, & i___0, 1);
+    printf((char const * __restrict )"Illegal arguments !! \n");
   } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(> i___0 0)");
-    setFalseExpr(3, "(not (> i___0 0))");
-    addToTree(3, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
+    setBranchInfo(2, 0, 1);
+    setTrueExpr(2, "(< side1 0)");
+    setFalseExpr(2, "(not (< side1 0))");
+    addToTree(2, 1, "(< side1 0)", "(not (< side1 0))", 0, 0);
     delete_allVariableTableEntry();
+    {
+    exp_outcome = side2 < 0;
+    handleAssignmentSymbolically("exp_outcome", "(< side2 0)", & exp_outcome, & exp_outcome,
+                                 1);
+    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(4, 1, 0);
+      setTrueExpr(4, "(< side2 0)");
+      setFalseExpr(4, "(not (< side2 0))");
+      addToTree(4, 2, "(< side2 0)", "(not (< side2 0))", 2, 1);
+      delete_allVariableTableEntry();
+      printf((char const * __restrict )"Illegal arguments !! \n");
+    } else {
+      setBranchInfo(4, 0, 1);
+      setTrueExpr(4, "(< side2 0)");
+      setFalseExpr(4, "(not (< side2 0))");
+      addToTree(4, 2, "(< side2 0)", "(not (< side2 0))", 2, 0);
+      delete_allVariableTableEntry();
+      {
+      exp_outcome = side3 < 0;
+      handleAssignmentSymbolically("exp_outcome", "(< side3 0)", & exp_outcome, & exp_outcome,
+                                   1);
+      overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(6, 1, 0);
+        setTrueExpr(6, "(< side3 0)");
+        setFalseExpr(6, "(not (< side3 0))");
+        addToTree(6, 3, "(< side3 0)", "(not (< side3 0))", 4, 1);
+        delete_allVariableTableEntry();
+        printf((char const * __restrict )"Illegal arguments !! \n");
+      } else {
+        setBranchInfo(6, 0, 1);
+        setTrueExpr(6, "(< side3 0)");
+        setFalseExpr(6, "(not (< side3 0))");
+        addToTree(6, 3, "(< side3 0)", "(not (< side3 0))", 4, 0);
+        delete_allVariableTableEntry();
+        triang = 0;
+        add_entryToSTable("triang", "Constant", & triang, & triang, 1);
+        {
+        exp_outcome = side1 == side2;
+        handleAssignmentSymbolically("exp_outcome", "(= side1 side2)", & exp_outcome,
+                                     & exp_outcome, 1);
+        overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(9, 1, 0);
+          setTrueExpr(9, "(= side1 side2)");
+          setFalseExpr(9, "(not (= side1 side2))");
+          addToTree(9, 4, "(= side1 side2)", "(not (= side1 side2))", 6, 1);
+          delete_allVariableTableEntry();
+          triang ++;
+          handleAssignmentSymbolically("triang", "(+ triang 1)", & triang, & triang,
+                                       1);
+        } else {
+          setBranchInfo(9, 0, 1);
+          setTrueExpr(9, "(= side1 side2)");
+          setFalseExpr(9, "(not (= side1 side2))");
+          addToTree(9, 4, "(= side1 side2)", "(not (= side1 side2))", 6, 0);
+          delete_allVariableTableEntry();
+          printf((char const * __restrict )"not equal side1 and side2 \n");
+        }
+        }
+        {
+        exp_outcome = side2 == side3;
+        handleAssignmentSymbolically("exp_outcome", "(= side2 side3)", & exp_outcome,
+                                     & exp_outcome, 1);
+        overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(12, 1, 0);
+          setTrueExpr(12, "(= side2 side3)");
+          setFalseExpr(12, "(not (= side2 side3))");
+          addToTree(12, 4, "(= side2 side3)", "(not (= side2 side3))", 6, 1);
+          delete_allVariableTableEntry();
+          triang += 2;
+          handleAssignmentSymbolically("triang", "(+ triang 2)", & triang, & triang,
+                                       1);
+        } else {
+          setBranchInfo(12, 0, 1);
+          setTrueExpr(12, "(= side2 side3)");
+          setFalseExpr(12, "(not (= side2 side3))");
+          addToTree(12, 4, "(= side2 side3)", "(not (= side2 side3))", 6, 0);
+          delete_allVariableTableEntry();
+          printf((char const * __restrict )"not equal side2 and side3 \n");
+        }
+        }
+        {
+        exp_outcome = side1 == side3;
+        handleAssignmentSymbolically("exp_outcome", "(= side1 side3)", & exp_outcome,
+                                     & exp_outcome, 1);
+        overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(15, 1, 0);
+          setTrueExpr(15, "(= side1 side3)");
+          setFalseExpr(15, "(not (= side1 side3))");
+          addToTree(15, 4, "(= side1 side3)", "(not (= side1 side3))", 6, 1);
+          delete_allVariableTableEntry();
+          triang += 3;
+          handleAssignmentSymbolically("triang", "(+ triang 3)", & triang, & triang,
+                                       1);
+        } else {
+          setBranchInfo(15, 0, 1);
+          setTrueExpr(15, "(= side1 side3)");
+          setFalseExpr(15, "(not (= side1 side3))");
+          addToTree(15, 4, "(= side1 side3)", "(not (= side1 side3))", 6, 0);
+          delete_allVariableTableEntry();
+          printf((char const * __restrict )"not equal side1 and side3 \n");
+        }
+        }
+        printf((char const * __restrict )"side1=%d, side2=%d, side3=%d, triang = %d\n",
+               side1, side2, side3, triang);
+        {
+        exp_outcome = triang == 0;
+        handleAssignmentSymbolically("exp_outcome", "(= triang 0)", & exp_outcome,
+                                     & exp_outcome, 1);
+        overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(19, 1, 0);
+          setTrueExpr(19, "(= triang 0)");
+          setFalseExpr(19, "(not (= triang 0))");
+          addToTree(19, 4, "(= triang 0)", "(not (= triang 0))", 6, 1);
+          delete_allVariableTableEntry();
+          {
+          exp_outcome = side1 + side2 < side3;
+          handleAssignmentSymbolically("exp_outcome", "(< (+ side1 side2) side3)",
+                                       & exp_outcome, & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(20, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(20, 1, 0);
+            setTrueExpr(20, "(< (+ side1 side2) side3)");
+            setFalseExpr(20, "(not (< (+ side1 side2) side3))");
+            addToTree(20, 5, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                      19, 1);
+            delete_allVariableTableEntry();
+            printf((char const * __restrict )"Illegal arguments !! \n");
+          } else {
+            setBranchInfo(20, 0, 1);
+            setTrueExpr(20, "(< (+ side1 side2) side3)");
+            setFalseExpr(20, "(not (< (+ side1 side2) side3))");
+            addToTree(20, 5, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                      19, 0);
+            delete_allVariableTableEntry();
+            {
+            exp_outcome = side2 + side3 < side1;
+            handleAssignmentSymbolically("exp_outcome", "(< (+ side2 side3) side1)",
+                                         & exp_outcome, & exp_outcome, 1);
+            overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
+            if (overall_outcome) {
+              setBranchInfo(22, 1, 0);
+              setTrueExpr(22, "(< (+ side2 side3) side1)");
+              setFalseExpr(22, "(not (< (+ side2 side3) side1))");
+              addToTree(22, 6, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
+                        20, 1);
+              delete_allVariableTableEntry();
+              printf((char const * __restrict )"Illegal arguments !! \n");
+            } else {
+              setBranchInfo(22, 0, 1);
+              setTrueExpr(22, "(< (+ side2 side3) side1)");
+              setFalseExpr(22, "(not (< (+ side2 side3) side1))");
+              addToTree(22, 6, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
+                        20, 0);
+              delete_allVariableTableEntry();
+              {
+              exp_outcome = side1 + side2 < side3;
+              handleAssignmentSymbolically("exp_outcome", "(< (+ side1 side2) side3)",
+                                           & exp_outcome, & exp_outcome, 1);
+              overall_outcome = (int )getConditionalOutcome(24, exp_outcome);
+              if (overall_outcome) {
+                setBranchInfo(24, 1, 0);
+                setTrueExpr(24, "(< (+ side1 side2) side3)");
+                setFalseExpr(24, "(not (< (+ side1 side2) side3))");
+                addToTree(24, 7, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                          22, 1);
+                delete_allVariableTableEntry();
+                printf((char const * __restrict )"Illegal arguments !! \n");
+              } else {
+                setBranchInfo(24, 0, 1);
+                setTrueExpr(24, "(< (+ side1 side2) side3)");
+                setFalseExpr(24, "(not (< (+ side1 side2) side3))");
+                addToTree(24, 7, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
+                          22, 0);
+                delete_allVariableTableEntry();
+                printf((char const * __restrict )"Scalene triangle \n");
+              }
+              }
+            }
+            }
+          }
+          }
+        } else {
+          setBranchInfo(19, 0, 1);
+          setTrueExpr(19, "(= triang 0)");
+          setFalseExpr(19, "(not (= triang 0))");
+          addToTree(19, 4, "(= triang 0)", "(not (= triang 0))", 6, 0);
+          delete_allVariableTableEntry();
+          {
+          exp_outcome = triang > 3;
+          handleAssignmentSymbolically("exp_outcome", "(> triang 3)", & exp_outcome,
+                                       & exp_outcome, 1);
+          overall_outcome = (int )getConditionalOutcome(27, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(27, 1, 0);
+            setTrueExpr(27, "(> triang 3)");
+            setFalseExpr(27, "(not (> triang 3))");
+            addToTree(27, 5, "(> triang 3)", "(not (> triang 3))", 19, 1);
+            delete_allVariableTableEntry();
+            printf((char const * __restrict )"Equilateral triangle \n");
+          } else {
+            setBranchInfo(27, 0, 1);
+            setTrueExpr(27, "(> triang 3)");
+            setFalseExpr(27, "(not (> triang 3))");
+            addToTree(27, 5, "(> triang 3)", "(not (> triang 3))", 19, 0);
+            delete_allVariableTableEntry();
+            {
+            exp_outcome = triang == 1;
+            handleAssignmentSymbolically("exp_outcome", "(= triang 1)", & exp_outcome,
+                                         & exp_outcome, 1);
+            overall_outcome = (int )getConditionalOutcome(29, exp_outcome);
+            if (overall_outcome) {
+              setBranchInfo(29, 1, 0);
+              setTrueExpr(29, "(= triang 1)");
+              setFalseExpr(29, "(not (= triang 1))");
+              addToTree(29, 6, "(= triang 1)", "(not (= triang 1))", 27, 1);
+              delete_allVariableTableEntry();
+              {
+              exp_outcome = side1 + side2 > side3;
+              handleAssignmentSymbolically("exp_outcome", "(> (+ side1 side2) side3)",
+                                           & exp_outcome, & exp_outcome, 1);
+              overall_outcome = (int )getConditionalOutcome(30, exp_outcome);
+              if (overall_outcome) {
+                setBranchInfo(30, 1, 0);
+                setTrueExpr(30, "(> (+ side1 side2) side3)");
+                setFalseExpr(30, "(not (> (+ side1 side2) side3))");
+                addToTree(30, 7, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
+                          29, 1);
+                delete_allVariableTableEntry();
+                printf((char const * __restrict )"Isosceles triangle \n");
+              } else {
+                setBranchInfo(30, 0, 1);
+                setTrueExpr(30, "(> (+ side1 side2) side3)");
+                setFalseExpr(30, "(not (> (+ side1 side2) side3))");
+                addToTree(30, 7, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
+                          29, 0);
+                delete_allVariableTableEntry();
+                goto _L___0;
+              }
+              }
+            } else {
+              setBranchInfo(29, 0, 1);
+              setTrueExpr(29, "(= triang 1)");
+              setFalseExpr(29, "(not (= triang 1))");
+              addToTree(29, 6, "(= triang 1)", "(not (= triang 1))", 27, 0);
+              delete_allVariableTableEntry();
+              _L___0:
+              {
+              exp_outcome = triang == 2;
+              handleAssignmentSymbolically("exp_outcome", "(= triang 2)", & exp_outcome,
+                                           & exp_outcome, 1);
+              overall_outcome = (int )getConditionalOutcome(33, exp_outcome);
+              if (overall_outcome) {
+                setBranchInfo(33, 1, 0);
+                setTrueExpr(33, "(= triang 2)");
+                setFalseExpr(33, "(not (= triang 2))");
+                addToTree(33, 7, "(= triang 2)", "(not (= triang 2))", 29, 1);
+                delete_allVariableTableEntry();
+                {
+                exp_outcome = side2 + side3 > side1;
+                handleAssignmentSymbolically("exp_outcome", "(> (+ side2 side3) side1)",
+                                             & exp_outcome, & exp_outcome, 1);
+                overall_outcome = (int )getConditionalOutcome(34, exp_outcome);
+                if (overall_outcome) {
+                  setBranchInfo(34, 1, 0);
+                  setTrueExpr(34, "(> (+ side2 side3) side1)");
+                  setFalseExpr(34, "(not (> (+ side2 side3) side1))");
+                  addToTree(34, 8, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
+                            33, 1);
+                  delete_allVariableTableEntry();
+                  printf((char const * __restrict )"Isosceles triangle \n");
+                } else {
+                  setBranchInfo(34, 0, 1);
+                  setTrueExpr(34, "(> (+ side2 side3) side1)");
+                  setFalseExpr(34, "(not (> (+ side2 side3) side1))");
+                  addToTree(34, 8, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
+                            33, 0);
+                  delete_allVariableTableEntry();
+                  goto _L;
+                }
+                }
+              } else {
+                setBranchInfo(33, 0, 1);
+                setTrueExpr(33, "(= triang 2)");
+                setFalseExpr(33, "(not (= triang 2))");
+                addToTree(33, 7, "(= triang 2)", "(not (= triang 2))", 29, 0);
+                delete_allVariableTableEntry();
+                _L:
+                {
+                exp_outcome = triang == 3;
+                handleAssignmentSymbolically("exp_outcome", "(= triang 3)", & exp_outcome,
+                                             & exp_outcome, 1);
+                overall_outcome = (int )getConditionalOutcome(37, exp_outcome);
+                if (overall_outcome) {
+                  setBranchInfo(37, 1, 0);
+                  setTrueExpr(37, "(= triang 3)");
+                  setFalseExpr(37, "(not (= triang 3))");
+                  addToTree(37, 8, "(= triang 3)", "(not (= triang 3))", 33, 1);
+                  delete_allVariableTableEntry();
+                  {
+                  exp_outcome = side1 + side3 > side2;
+                  handleAssignmentSymbolically("exp_outcome", "(> (+ side1 side3) side2)",
+                                               & exp_outcome, & exp_outcome, 1);
+                  overall_outcome = (int )getConditionalOutcome(38, exp_outcome);
+                  if (overall_outcome) {
+                    setBranchInfo(38, 1, 0);
+                    setTrueExpr(38, "(> (+ side1 side3) side2)");
+                    setFalseExpr(38, "(not (> (+ side1 side3) side2))");
+                    addToTree(38, 9, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
+                              37, 1);
+                    delete_allVariableTableEntry();
+                    printf((char const * __restrict )"Isosceles triangle \n");
+                  } else {
+                    setBranchInfo(38, 0, 1);
+                    setTrueExpr(38, "(> (+ side1 side3) side2)");
+                    setFalseExpr(38, "(not (> (+ side1 side3) side2))");
+                    addToTree(38, 9, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
+                              37, 0);
+                    delete_allVariableTableEntry();
+                    printf((char const * __restrict )"ILLegal !!! \n");
+                  }
+                  }
+                } else {
+                  setBranchInfo(37, 0, 1);
+                  setTrueExpr(37, "(= triang 3)");
+                  setFalseExpr(37, "(not (= triang 3))");
+                  addToTree(37, 8, "(= triang 3)", "(not (= triang 3))", 33, 0);
+                  delete_allVariableTableEntry();
+                  printf((char const * __restrict )"ILLegal !!! \n");
+                }
+                }
+              }
+              }
+            }
+            }
+          }
+          }
+        }
+        }
+      }
+      }
+    }
+    }
   }
   }
   {
-  exp_outcome = i___0 > 0;
-  handleAssignmentSymbolically("exp_outcome", "(> i___0 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(5, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(5, 1, 0);
-    setTrueExpr(5, "(> i___0 0)");
-    setFalseExpr(5, "(not (> i___0 0))");
-    addToTree(5, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 1);
-    delete_allVariableTableEntry();
-    t = *(a + 0);
-    addEntryToVariableTable("*(a + 0)", 0);
-    add_entryToArraySTable("a", 0, "a12", a + 0, a + 0, 1);
-    handleAssignmentSymbolically("t", "*(a + 0)", & *(a + 0), & *(a + 0), 1);
-    *(a + 0) = *(a + i___0);
-    addEntryToVariableTable("*(a + i___0)", i___0);
-    add_entryToArraySTable("a", i___0, "a13", a + i___0, a + i___0, 1);
-    handleArraySymbolically("a", 0, "*(a + i___0)", a + 0, a + 0, 1);
-    *(a + i___0) = t;
-    handleArraySymbolically("a", i___0, "t", a + i___0, a + i___0, 1);
-    funcEntry("(int *,adjust_a,array,a)#(int,adjust_n,variable,i___0)", "adjust_i___0 adjust_j adjust_item",
-              "adjust");
-    adjust(a, i___0);
-    funcExit();
-    i___0 --;
-    handleAssignmentSymbolically("i___0", "(- i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(5, 0, 1);
-    setTrueExpr(5, "(> i___0 0)");
-    setFalseExpr(5, "(not (> i___0 0))");
-    addToTree(5, 1, "(> i___0 0)", "(not (> i___0 0))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
-  __cil_tmp7 = isNotQueueEmpty();
-  if (__cil_tmp7) {
+  __cil_tmp5 = 0;
+  add_entryToSTable("__cil_tmp5", "Constant", & __cil_tmp5, & __cil_tmp5, 1);
+  __cil_tmp8 = isNotQueueEmpty();
+  if (__cil_tmp8) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    heapSort(a, n);
+    main1(side1, side2, side3);
   } else {
-    __cil_tmp7 = startCDG();
-    add_entryToSTable("__cil_tmp7", "Function", & __cil_tmp7, & __cil_tmp7, 1);
-    if (__cil_tmp7) {
-      __cil_tmp7 = getTestCases();
-      heapSort(a, n);
+    __cil_tmp8 = startCDG();
+    add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, 1);
+    if (__cil_tmp8) {
+      __cil_tmp8 = getTestCases();
+      main1(side1, side2, side3);
     }
   }
-  return;
-}
-}
-void heapify(int *heapify_a , int heapify_n )
-{
-  int heapify_k ;
-  int heapify_i___0 ;
-  int heapify_j ;
-  int heapify_item ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  heapify_k = 1;
-  add_entryToSTable("heapify_k", "Constant", & heapify_k, & heapify_k, 1);
-  {
-  if (heapify_k < heapify_n) {
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a14", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
-                                 1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a15", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a16", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
+  return (__cil_tmp5);
   }
-  if (heapify_k < heapify_n) {
-    heapify_item = *(heapify_a + heapify_k);
-    addEntryToVariableTable("*(heapify_a + heapify_k)", heapify_k);
-    add_entryToArraySTable("heapify_a", heapify_k, "heapify_a17", heapify_a + heapify_k,
-                           heapify_a + heapify_k, 1);
-    handleAssignmentSymbolically("heapify_item", "*(heapify_a + heapify_k)", & *(heapify_a + heapify_k),
-                                 & *(heapify_a + heapify_k), 1);
-    heapify_i___0 = heapify_k;
-    handleAssignmentSymbolically("heapify_i___0", "heapify_k", & heapify_k, & heapify_k,
-                                 1);
-    heapify_j = (heapify_i___0 - 1) / 2;
-    handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                 & heapify_j, 1);
-    {
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a18", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    if (heapify_i___0 > 0) {
-      if (heapify_item > *(heapify_a + heapify_j)) {
-        *(heapify_a + heapify_i___0) = *(heapify_a + heapify_j);
-        addEntryToVariableTable("*(heapify_a + heapify_j)", heapify_j);
-        add_entryToArraySTable("heapify_a", heapify_j, "heapify_a19", heapify_a + heapify_j,
-                               heapify_a + heapify_j, 1);
-        handleArraySymbolically("heapify_a", heapify_i___0, "*(heapify_a + heapify_j)",
-                                heapify_a + heapify_i___0, heapify_a + heapify_i___0,
-                                1);
-        heapify_i___0 = heapify_j;
-        handleAssignmentSymbolically("heapify_i___0", "heapify_j", & heapify_j, & heapify_j,
-                                     1);
-        heapify_j = (heapify_i___0 - 1) / 2;
-        handleAssignmentSymbolically("heapify_j", "(/ (- heapify_i___0 1) 2)", & heapify_j,
-                                     & heapify_j, 1);
-      }
-    }
-    }
-    *(heapify_a + heapify_i___0) = heapify_item;
-    handleArraySymbolically("heapify_a", heapify_i___0, "heapify_item", heapify_a + heapify_i___0,
-                            heapify_a + heapify_i___0, 1);
-    heapify_k ++;
-    handleAssignmentSymbolically("heapify_k", "(+ heapify_k 1)", & heapify_k, & heapify_k,
-                                 1);
-  }
-  }
-  return;
-}
-}
-void adjust(int *adjust_a , int adjust_n )
-{
-  int adjust_i___0 ;
-  int adjust_j ;
-  int adjust_item ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  adjust_j = 0;
-  add_entryToSTable("adjust_j", "Constant", & adjust_j, & adjust_j, 1);
-  adjust_item = *(adjust_a + adjust_j);
-  addEntryToVariableTable("*(adjust_a + adjust_j)", adjust_j);
-  add_entryToArraySTable("adjust_a", adjust_j, "adjust_a110", adjust_a + adjust_j,
-                         adjust_a + adjust_j, 1);
-  handleAssignmentSymbolically("adjust_item", "*(adjust_a + adjust_j)", & *(adjust_a + adjust_j),
-                               & *(adjust_a + adjust_j), 1);
-  adjust_i___0 = 2 * adjust_j + 1;
-  handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                               & adjust_i___0, 1);
-  {
-  if (adjust_i___0 <= adjust_n - 1) {
-    if (adjust_i___0 + 1 <= adjust_n - 1) {
-      if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
-        adjust_i___0 ++;
-        handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
-                                     & adjust_i___0, 1);
-      }
-    }
-    if (adjust_item < *(adjust_a + adjust_i___0)) {
-      *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
-      addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
-      add_entryToArraySTable("adjust_a", adjust_i___0, "adjust_a111", adjust_a + adjust_i___0,
-                             adjust_a + adjust_i___0, 1);
-      handleArraySymbolically("adjust_a", adjust_j, "*(adjust_a + adjust_i___0)",
-                              adjust_a + adjust_j, adjust_a + adjust_j, 1);
-      adjust_j = adjust_i___0;
-      handleAssignmentSymbolically("adjust_j", "adjust_i___0", & adjust_i___0, & adjust_i___0,
-                                   1);
-      adjust_i___0 = 2 * adjust_j + 1;
-      handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                                   & adjust_i___0, 1);
-    } else {
-      adjust_i___0 = adjust_n;
-      handleAssignmentSymbolically("adjust_i___0", "adjust_n", & adjust_n, & adjust_n,
-                                   1);
-    }
-  }
-  if (adjust_i___0 <= adjust_n - 1) {
-    if (adjust_i___0 + 1 <= adjust_n - 1) {
-      if (*(adjust_a + adjust_i___0) < *(adjust_a + (adjust_i___0 + 1))) {
-        adjust_i___0 ++;
-        handleAssignmentSymbolically("adjust_i___0", "(+ adjust_i___0 1)", & adjust_i___0,
-                                     & adjust_i___0, 1);
-      }
-    }
-    if (adjust_item < *(adjust_a + adjust_i___0)) {
-      *(adjust_a + adjust_j) = *(adjust_a + adjust_i___0);
-      addEntryToVariableTable("*(adjust_a + adjust_i___0)", adjust_i___0);
-      add_entryToArraySTable("adjust_a", adjust_i___0, "adjust_a112", adjust_a + adjust_i___0,
-                             adjust_a + adjust_i___0, 1);
-      handleArraySymbolically("adjust_a", adjust_j, "*(adjust_a + adjust_i___0)",
-                              adjust_a + adjust_j, adjust_a + adjust_j, 1);
-      adjust_j = adjust_i___0;
-      handleAssignmentSymbolically("adjust_j", "adjust_i___0", & adjust_i___0, & adjust_i___0,
-                                   1);
-      adjust_i___0 = 2 * adjust_j + 1;
-      handleAssignmentSymbolically("adjust_i___0", "(+ (* 2 adjust_j) 1)", & adjust_i___0,
-                                   & adjust_i___0, 1);
-    } else {
-      adjust_i___0 = adjust_n;
-      handleAssignmentSymbolically("adjust_i___0", "adjust_n", & adjust_n, & adjust_n,
-                                   1);
-    }
-  }
-  }
-  *(adjust_a + adjust_j) = adjust_item;
-  handleArraySymbolically("adjust_a", adjust_j, "adjust_item", adjust_a + adjust_j,
-                          adjust_a + adjust_j, 1);
-  return;
 }
 }
 void getPrint(void)
@@ -16175,31 +16347,26 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  heapSort(argvar.a, argvar.n);
+  main1(argvar.side1, argvar.side2, argvar.side3);
 }
 }
 void main(void)
 {
-  int *a ;
-  int n ;
+  int side1 ;
+  int side2 ;
+  int side3 ;
   int temp ;
   int __cil_tmp2 ;
   int __cil_tmp3 ;
+  int __cil_tmp4 ;
 
   {
-  argvar.a = (int *)malloc(30 * sizeof(int ));
-  __cil_tmp3 = 0;
-  while (1) {
-    if (__cil_tmp3 >= 30) {
-      break;
-    } else {
-      temp = rand();
-      *(argvar.a + __cil_tmp3) = temp % 20;
-      __cil_tmp3 ++;
-    }
-  }
+  __cil_tmp4 = rand();
+  argvar.side1 = __cil_tmp4 % 20;
+  __cil_tmp3 = rand();
+  argvar.side2 = __cil_tmp3 % 20;
   __cil_tmp2 = rand();
-  argvar.n = __cil_tmp2 % 20;
+  argvar.side3 = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();

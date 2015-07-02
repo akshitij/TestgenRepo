@@ -27,10 +27,10 @@ int prime (int n) {
   else{    
     for (i = 3; i * i <= n; i += 2) { 
         if (_divides (i, n)) /* ai: loop here min 0 max 357 end; */
-            ret = 0;
+            return 0;
     }
+    return (n > 1);
   }
-  ret = (n > 1);
   return ret;
 }
 
