@@ -15883,7 +15883,7 @@ int main1(int i___0 )
   __cil_tmp8 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, -1);
   sprintf(__cil_tmp8, "\t%d\n", i___0);
-  printTestCase("faculty_main1_1435877157.tc", __cil_tmp8);
+  printTestCase("faculty_main1_1435904402.tc", __cil_tmp8);
   add_entryToSTable("i___0", "s0", & i___0, & i___0, 1);
   s = 0;
   add_entryToSTable("s", "Constant", & s, & s, 1);
