@@ -183,7 +183,7 @@
 \textbf{\Large{CERTIFICATE}}
 \end{center}
 \vspace*{3\baselineskip}
-This is to certify that the work contained in this thesis entitled \textbf{\textit{"Inter-procedural analysis of Concolic Execution"}}, by \textbf{Ashwini Kshitij (Roll No. 10327165)}, has been carried out under my supervision and this work has not been submitted elsewhere for a degree.\\
+This is to certify that the work contained in this thesis entitled \textbf{\textit{"Inter-procedural analysis on Concolic Execution"}}, by \textbf{Ashwini Kshitij (Roll No. 10327165)}, has been carried out under my supervision and this work has not been submitted elsewhere for a degree.\\
 \\[4\baselineskip]
 
   \small
@@ -514,7 +514,7 @@ This module accomplishes two tasks. It modifies the call site by simplifying the
 \end{lstlisting}
 
 
-We can see in \textit{figure 3.1} the call sites and return statements have been transformed such that in further stages we only have to deal with variables and literals. We will not have to deal with complicated expressions. To create new local temporary variable we use CIL API. It ensures to generate unique variable names to avoid any ambiguity.
+We can see in \textit{Listing 3.1} the call sites and return statements have been transformed such that in further stages we only have to deal with variables and literals. We will not have to deal with complicated expressions. To create new local temporary variable we use CIL API. It ensures to generate unique variable names to avoid any ambiguity.
 This phase will have no effect on function calls with no arguments or functions which don't return any value (void).
 \newpage
 
@@ -778,7 +778,7 @@ K' = f'(V,P,O_{\tiny{P}})
 \end{equation}
 
 where O$_{\tiny{P}}$ is the occurence of P in function call stack.
-\textit{Figure 3.9} shows the version handling of multiple instances of same functions in the symbol table. When another instance of function is pushed in the stack (recursively), no value in the symbol table is overwritten. Similarly, when a function instance is popped from the stack, the concolic values of previous version should be accessed.
+\textit{Figure 3.8} shows the version handling of multiple instances of same functions in the symbol table. When another instance of function is pushed in the stack (recursively), no value in the symbol table is overwritten. Similarly, when a function instance is popped from the stack, the concolic values of previous version should be accessed.
 
 \subsection{Variable Hash-Map}
 The issue that arises with this approach is that we cannot rename variables in conjunction with their versions (like we did in \textit{Section 3.2.2} using static analysis). This is because the versions are created dynamically at runtime when function call stack is manipulated. Therefore we create a hashmap \textit{M} that maps the variable name to key in the symbol table.  
