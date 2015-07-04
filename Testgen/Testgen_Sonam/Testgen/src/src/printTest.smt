@@ -1,4 +1,5 @@
 (benchmark res
   :logic AUFLIA
-:extrafuns ((s0 Int))
-)
+:extrafuns ((s3 Int)(s4 Real))
+  :assumption (= s4 0)
+ ) 
