@@ -294,7 +294,7 @@ All practical programs involve procedure calls. The symbolic execution is relati
 %%----------------------------------------------PROBLEM STATEMENT
 
 \section{Problem Statement}
-This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is reset to "start state" instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the precision of test case generation. 
+This thesis aims to provide a method that can capture the transformation of the symbolic state of the inputs when the program goes through a function call. Our implementation uses inbuilt concolic execution engine for the purpose. But the engine cannot handle a procedure call. At the call site, the symbolic value is set to concrete value instead of modifying it as per the operations performed on it by the callee function. Merging our approach with this concolic engine will increase the precision of test case generation. 
 
 \begin{figure}[htbp]
 \centering
@@ -302,11 +302,11 @@ This thesis aims to provide a method that can capture the transformation of the 
 \caption{Basic Module}
 \end{figure}
 
-\textit{Figure 1.1} shown above gives a high-level idea of what our implementation does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. The symbolic state of the input variables is set to default as the program does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
+\textit{Figure 1.1} shown above gives a high-level idea of what our implementation does. We are given a C program with a concolic execution engine integrated with it. Problem arises with execution when it comes across a procedure call instruction. Concrete return value of function is used instead of symbolic return value as the program does not have the ability to follow through symbolic execution from caller to callee and then back to the caller.
 
-We aim at solving this problem by instrumenting the call site. For such purposes in our approach we have used a tool called CIL. We first set up an environment before commencing the callee procedure execution (in this case \textit{foo}). The operations for such tasks is carried out by \textit{funcEntry} function which is instrumented just before \textit{foo} is called. \textit{funcEntry} handles the mapping of symbolic and concolic values of actual parameters to formal parameters, the creation of symbolic stack (later explained in \textit{Chapter 3}).
+We aim at solving this problem by instrumenting the call site. For such purposes in our approach we have used a tool called CIL. We first set up an environment before commencing the callee procedure execution (in this case \textit{foo}). The operations for such tasks is carried out by \textit{funcEntry} function which is instrumented just before \textit{foo} is called. \textit{funcEntry} handles the mapping of symbolic and concolic values of actual parameters to formal parameters, the creation of variable stack (later explained in \textit{Chapter 3}).
 
-Similarly we instrument \textit{funcExit} function just after \textit{foo} call. The task of \textit{funcExit} is to map the symbolic state of "return variable" to appropriate variable at the call site (if any) and clear the symbolic values that were generated during call and execution of \textit{foo}. It also manages the symbolic stack appropriately. The implementation of \textit{funcEntry} and \textit{funcExit} is done in C language and is defined in included C modules.
+Similarly we instrument \textit{funcExit} function just after \textit{foo} call. The task of \textit{funcExit} is to map the symbolic state of "return variable" to appropriate variable at the call site (if any) and clear the symbolic values that were generated during call and execution of \textit{foo}. It also manages the variable stack appropriately. The implementation of \textit{funcEntry} and \textit{funcExit} is done in C language and is defined in included C modules.
 
 This approach ensures that symbolic execution is carried through correctly to and from the callee. The modified state of symbolic variables is in accordance with operations of concerned callee function (in our case \textit{foo}). This improves the accuracy and correctness of the test suite generation in our tool.  
 
