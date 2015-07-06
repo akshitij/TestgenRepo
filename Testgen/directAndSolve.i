@@ -2872,11 +2872,14 @@ void directPathConditions() {
   char *snames;
 
 
+  if (!countTotalConditions())
+  {percent = 100;
+   orgPercent =100 ;}
+  else
+  {percent = (countCoveredConditions() * 100)/(2 * countTotalConditions());
 
-  percent = (countCoveredConditions() * 100)/(2 * countTotalConditions());
 
-
-  orgPercent = (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
+  orgPercent = (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());}
   printf("COVERAGE = %f....\n",orgPercent);
 
   FILE *coveragefile = fopen("src/src/coverage.txt","ab+");
@@ -2905,7 +2908,7 @@ void directPathConditions() {
 
       else if(execution_flag==1 && previousRunCoverage==percent)
         countNoNewConditionAttempts++;
-# 250 "src/src/directAndSolve.c"
+# 253 "src/src/directAndSolve.c"
       previousRunCoverage=percent;
 
     }

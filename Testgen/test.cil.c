@@ -15800,8 +15800,7 @@ void stackPeek(Stack *s , void *element )
 }
 }
 #pragma merger("0","./ipaRecursive.i","-g,-g")
-#pragma merger("0","./triangle.i","-g,-g")
-extern int scanf(char const   * __restrict  __format  , ...)  __asm__("__isoc99_scanf")  ;
+#pragma merger("0","./test.i","-g,-g")
 void createCDG(void) 
 { 
 
@@ -15810,87 +15809,9 @@ void createCDG(void)
   addtoCDGnode(0, 0, 0);
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
-  setArray(2, "(< side1 0)");
-  addtoCDGnode(3, 2, 1);
-  addtoCDGnode(4, 2, 0);
-  setArray(4, "(< side2 0)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(5, 4, 1);
-  addtoCDGnode(6, 4, 0);
-  setArray(6, "(< side3 0)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(8, 6, 0);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(9, 6, 0);
-  setArray(9, "(= side1 side2)");
-  addtoCDGnode(10, 9, 1);
-  addtoCDGnode(11, 9, 0);
-  addtoCDGnode(12, 6, 0);
-  setArray(12, "(= side2 side3)");
-  addtoCDGnode(12, 6, 0);
-  setArray(12, "(= side2 side3)");
-  addtoCDGnode(13, 12, 1);
-  addtoCDGnode(14, 12, 0);
-  addtoCDGnode(15, 6, 0);
-  setArray(15, "(= side1 side3)");
-  addtoCDGnode(15, 6, 0);
-  setArray(15, "(= side1 side3)");
-  addtoCDGnode(16, 15, 1);
-  addtoCDGnode(17, 15, 0);
-  addtoCDGnode(18, 6, 0);
-  addtoCDGnode(18, 6, 0);
-  addtoCDGnode(19, 6, 0);
-  setArray(19, "(= triang 0)");
-  addtoCDGnode(20, 19, 1);
-  setArray(20, "(< (+ side1 side2) side3)");
-  addtoCDGnode(27, 19, 0);
-  setArray(27, "(> triang 3)");
-  addtoCDGnode(21, 20, 1);
-  addtoCDGnode(22, 20, 0);
-  setArray(22, "(< (+ side2 side3) side1)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(23, 22, 1);
-  addtoCDGnode(24, 22, 0);
-  setArray(24, "(< (+ side1 side2) side3)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(25, 24, 1);
-  addtoCDGnode(26, 24, 0);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(28, 27, 1);
-  addtoCDGnode(29, 27, 0);
-  setArray(29, "(= triang 1)");
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(30, 29, 1);
-  setArray(30, "(> (+ side1 side2) side3)");
-  addtoCDGnode(33, 29, 0);
-  setArray(33, "(= triang 2)");
-  addtoCDGnode(31, 30, 1);
-  addtoCDGnode(32, 30, 0);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(33, 30, 0);
-  setArray(33, "(= triang 2)");
-  addtoCDGnode(34, 33, 1);
-  setArray(34, "(> (+ side2 side3) side1)");
-  addtoCDGnode(37, 33, 0);
-  setArray(37, "(= triang 3)");
-  addtoCDGnode(35, 34, 1);
-  addtoCDGnode(36, 34, 0);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(37, 34, 0);
-  setArray(37, "(= triang 3)");
-  addtoCDGnode(38, 37, 1);
-  setArray(38, "(> (+ side1 side3) side2)");
-  addtoCDGnode(41, 37, 0);
-  addtoCDGnode(39, 38, 1);
-  addtoCDGnode(40, 38, 0);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(42, 0, 1);
-  addtoCDGnode(43, 0, 1);
-  addtoCDGnode(44, 0, 1);
-  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(3, 0, 1);
+  addtoCDGnode(4, 0, 1);
+  addtoCDGnode(5, 0, 1);
 }
 }
 void isCopyOfHolder(void) 
@@ -15906,445 +15827,49 @@ void createSidTable(void)
 
 
   {
-  add_condition(9, "(= side1 side2)", "(not (= side1 side2))", 0, 0);
-  add_condition(12, "(= side2 side3)", "(not (= side2 side3))", 0, 0);
-  add_condition(15, "(= side1 side3)", "(not (= side1 side3))", 0, 0);
-  add_condition(24, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                0, 0);
-  add_condition(22, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
-                0, 0);
-  add_condition(20, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                0, 0);
-  add_condition(30, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
-                0, 0);
-  add_condition(34, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
-                0, 0);
-  add_condition(38, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
-                0, 0);
-  add_condition(37, "(= triang 3)", "(not (= triang 3))", 0, 0);
-  add_condition(33, "(= triang 2)", "(not (= triang 2))", 0, 0);
-  add_condition(29, "(= triang 1)", "(not (= triang 1))", 0, 0);
-  add_condition(27, "(> triang 3)", "(not (> triang 3))", 0, 0);
-  add_condition(19, "(= triang 0)", "(not (= triang 0))", 0, 0);
-  add_condition(6, "(< side3 0)", "(not (< side3 0))", 0, 0);
-  add_condition(4, "(< side2 0)", "(not (< side2 0))", 0, 0);
-  add_condition(2, "(< side1 0)", "(not (< side1 0))", 0, 0);
+
 }
 }
 struct arguments {
-   int side1 ;
-   int side2 ;
-   int side3 ;
+
 };
 struct arguments argvar ;
-int main1(int side1 , int side2 , int side3 ) 
+int main1(void) 
 { 
-  int triang ;
-  int __cil_tmp5 ;
+  int __cil_tmp1 ;
   int exp_outcome ;
   int overall_outcome ;
-  int __cil_tmp8 ;
-  char *__cil_tmp9 ;
+  int __cil_tmp4 ;
+  char *__cil_tmp5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  __cil_tmp9 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp9", "Function", & __cil_tmp9, & __cil_tmp9, -1);
-  sprintf(__cil_tmp9, "\t%d\t%d\t%d\n", side1, side2, side3);
-  printTestCase("triangle_main1_1436150302.tc", __cil_tmp9);
-  add_entryToSTable("side3", "s2", & side3, & side3, 1);
-  add_entryToSTable("side2", "s1", & side2, & side2, 1);
-  add_entryToSTable("side1", "s0", & side1, & side1, 1);
-
+  __cil_tmp5 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp5", "Function", & __cil_tmp5, & __cil_tmp5, -1);
+  sprintf(__cil_tmp5, "\n");
+  printTestCase("test_main1_1436150413.tc", __cil_tmp5);
+  printf((char const   * __restrict  )"Hello world\n");
   {
-  exp_outcome = side1 < 0;
-  handleAssignmentSymbolically("exp_outcome", "(< side1 0)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(2, 1, 0);
-    setTrueExpr(2, "(< side1 0)");
-    setFalseExpr(2, "(not (< side1 0))");
-    addToTree(2, 1, "(< side1 0)", "(not (< side1 0))", 0, 1);
-    delete_allVariableTableEntry();
-    printf((char const   * __restrict  )"Illegal arguments !! \n");
-  } else {
-    setBranchInfo(2, 0, 1);
-    setTrueExpr(2, "(< side1 0)");
-    setFalseExpr(2, "(not (< side1 0))");
-    addToTree(2, 1, "(< side1 0)", "(not (< side1 0))", 0, 0);
-    delete_allVariableTableEntry();
-    {
-    exp_outcome = side2 < 0;
-    handleAssignmentSymbolically("exp_outcome", "(< side2 0)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(4, 1, 0);
-      setTrueExpr(4, "(< side2 0)");
-      setFalseExpr(4, "(not (< side2 0))");
-      addToTree(4, 2, "(< side2 0)", "(not (< side2 0))", 2, 1);
-      delete_allVariableTableEntry();
-      printf((char const   * __restrict  )"Illegal arguments !! \n");
-    } else {
-      setBranchInfo(4, 0, 1);
-      setTrueExpr(4, "(< side2 0)");
-      setFalseExpr(4, "(not (< side2 0))");
-      addToTree(4, 2, "(< side2 0)", "(not (< side2 0))", 2, 0);
-      delete_allVariableTableEntry();
-      {
-      exp_outcome = side3 < 0;
-      handleAssignmentSymbolically("exp_outcome", "(< side3 0)", & exp_outcome, & exp_outcome,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(6, 1, 0);
-        setTrueExpr(6, "(< side3 0)");
-        setFalseExpr(6, "(not (< side3 0))");
-        addToTree(6, 3, "(< side3 0)", "(not (< side3 0))", 4, 1);
-        delete_allVariableTableEntry();
-        printf((char const   * __restrict  )"Illegal arguments !! \n");
-      } else {
-        setBranchInfo(6, 0, 1);
-        setTrueExpr(6, "(< side3 0)");
-        setFalseExpr(6, "(not (< side3 0))");
-        addToTree(6, 3, "(< side3 0)", "(not (< side3 0))", 4, 0);
-        delete_allVariableTableEntry();
-        triang = 0;
-        add_entryToSTable("triang", "Constant", & triang, & triang, 1);
-        {
-        exp_outcome = side1 == side2;
-        handleAssignmentSymbolically("exp_outcome", "(= side1 side2)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(9, 1, 0);
-          setTrueExpr(9, "(= side1 side2)");
-          setFalseExpr(9, "(not (= side1 side2))");
-          addToTree(9, 4, "(= side1 side2)", "(not (= side1 side2))", 6, 1);
-          delete_allVariableTableEntry();
-          triang ++;
-          handleAssignmentSymbolically("triang", "(+ triang 1)", & triang, & triang,
-                                       1);
-        } else {
-          setBranchInfo(9, 0, 1);
-          setTrueExpr(9, "(= side1 side2)");
-          setFalseExpr(9, "(not (= side1 side2))");
-          addToTree(9, 4, "(= side1 side2)", "(not (= side1 side2))", 6, 0);
-          delete_allVariableTableEntry();
-          printf((char const   * __restrict  )"not equal side1 and side2 \n");
-        }
-        }
-        {
-        exp_outcome = side2 == side3;
-        handleAssignmentSymbolically("exp_outcome", "(= side2 side3)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(12, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(12, 1, 0);
-          setTrueExpr(12, "(= side2 side3)");
-          setFalseExpr(12, "(not (= side2 side3))");
-          addToTree(12, 4, "(= side2 side3)", "(not (= side2 side3))", 6, 1);
-          delete_allVariableTableEntry();
-          triang += 2;
-          handleAssignmentSymbolically("triang", "(+ triang 2)", & triang, & triang,
-                                       1);
-        } else {
-          setBranchInfo(12, 0, 1);
-          setTrueExpr(12, "(= side2 side3)");
-          setFalseExpr(12, "(not (= side2 side3))");
-          addToTree(12, 4, "(= side2 side3)", "(not (= side2 side3))", 6, 0);
-          delete_allVariableTableEntry();
-          printf((char const   * __restrict  )"not equal side2 and side3 \n");
-        }
-        }
-        {
-        exp_outcome = side1 == side3;
-        handleAssignmentSymbolically("exp_outcome", "(= side1 side3)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(15, 1, 0);
-          setTrueExpr(15, "(= side1 side3)");
-          setFalseExpr(15, "(not (= side1 side3))");
-          addToTree(15, 4, "(= side1 side3)", "(not (= side1 side3))", 6, 1);
-          delete_allVariableTableEntry();
-          triang += 3;
-          handleAssignmentSymbolically("triang", "(+ triang 3)", & triang, & triang,
-                                       1);
-        } else {
-          setBranchInfo(15, 0, 1);
-          setTrueExpr(15, "(= side1 side3)");
-          setFalseExpr(15, "(not (= side1 side3))");
-          addToTree(15, 4, "(= side1 side3)", "(not (= side1 side3))", 6, 0);
-          delete_allVariableTableEntry();
-          printf((char const   * __restrict  )"not equal side1 and side3 \n");
-        }
-        }
-        printf((char const   * __restrict  )"side1=%d, side2=%d, side3=%d, triang = %d\n",
-               side1, side2, side3, triang);
-        {
-        exp_outcome = triang == 0;
-        handleAssignmentSymbolically("exp_outcome", "(= triang 0)", & exp_outcome,
-                                     & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(19, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(19, 1, 0);
-          setTrueExpr(19, "(= triang 0)");
-          setFalseExpr(19, "(not (= triang 0))");
-          addToTree(19, 4, "(= triang 0)", "(not (= triang 0))", 6, 1);
-          delete_allVariableTableEntry();
-          {
-          exp_outcome = side1 + side2 < side3;
-          handleAssignmentSymbolically("exp_outcome", "(< (+ side1 side2) side3)",
-                                       & exp_outcome, & exp_outcome, 1);
-          overall_outcome = (int )getConditionalOutcome(20, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(20, 1, 0);
-            setTrueExpr(20, "(< (+ side1 side2) side3)");
-            setFalseExpr(20, "(not (< (+ side1 side2) side3))");
-            addToTree(20, 5, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                      19, 1);
-            delete_allVariableTableEntry();
-            printf((char const   * __restrict  )"Illegal arguments !! \n");
-          } else {
-            setBranchInfo(20, 0, 1);
-            setTrueExpr(20, "(< (+ side1 side2) side3)");
-            setFalseExpr(20, "(not (< (+ side1 side2) side3))");
-            addToTree(20, 5, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                      19, 0);
-            delete_allVariableTableEntry();
-            {
-            exp_outcome = side2 + side3 < side1;
-            handleAssignmentSymbolically("exp_outcome", "(< (+ side2 side3) side1)",
-                                         & exp_outcome, & exp_outcome, 1);
-            overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
-            if (overall_outcome) {
-              setBranchInfo(22, 1, 0);
-              setTrueExpr(22, "(< (+ side2 side3) side1)");
-              setFalseExpr(22, "(not (< (+ side2 side3) side1))");
-              addToTree(22, 6, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
-                        20, 1);
-              delete_allVariableTableEntry();
-              printf((char const   * __restrict  )"Illegal arguments !! \n");
-            } else {
-              setBranchInfo(22, 0, 1);
-              setTrueExpr(22, "(< (+ side2 side3) side1)");
-              setFalseExpr(22, "(not (< (+ side2 side3) side1))");
-              addToTree(22, 6, "(< (+ side2 side3) side1)", "(not (< (+ side2 side3) side1))",
-                        20, 0);
-              delete_allVariableTableEntry();
-              {
-              exp_outcome = side1 + side2 < side3;
-              handleAssignmentSymbolically("exp_outcome", "(< (+ side1 side2) side3)",
-                                           & exp_outcome, & exp_outcome, 1);
-              overall_outcome = (int )getConditionalOutcome(24, exp_outcome);
-              if (overall_outcome) {
-                setBranchInfo(24, 1, 0);
-                setTrueExpr(24, "(< (+ side1 side2) side3)");
-                setFalseExpr(24, "(not (< (+ side1 side2) side3))");
-                addToTree(24, 7, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                          22, 1);
-                delete_allVariableTableEntry();
-                printf((char const   * __restrict  )"Illegal arguments !! \n");
-              } else {
-                setBranchInfo(24, 0, 1);
-                setTrueExpr(24, "(< (+ side1 side2) side3)");
-                setFalseExpr(24, "(not (< (+ side1 side2) side3))");
-                addToTree(24, 7, "(< (+ side1 side2) side3)", "(not (< (+ side1 side2) side3))",
-                          22, 0);
-                delete_allVariableTableEntry();
-                printf((char const   * __restrict  )"Scalene triangle \n");
-              }
-              }
-            }
-            }
-          }
-          }
-        } else {
-          setBranchInfo(19, 0, 1);
-          setTrueExpr(19, "(= triang 0)");
-          setFalseExpr(19, "(not (= triang 0))");
-          addToTree(19, 4, "(= triang 0)", "(not (= triang 0))", 6, 0);
-          delete_allVariableTableEntry();
-          {
-          exp_outcome = triang > 3;
-          handleAssignmentSymbolically("exp_outcome", "(> triang 3)", & exp_outcome,
-                                       & exp_outcome, 1);
-          overall_outcome = (int )getConditionalOutcome(27, exp_outcome);
-          if (overall_outcome) {
-            setBranchInfo(27, 1, 0);
-            setTrueExpr(27, "(> triang 3)");
-            setFalseExpr(27, "(not (> triang 3))");
-            addToTree(27, 5, "(> triang 3)", "(not (> triang 3))", 19, 1);
-            delete_allVariableTableEntry();
-            printf((char const   * __restrict  )"Equilateral triangle \n");
-          } else {
-            setBranchInfo(27, 0, 1);
-            setTrueExpr(27, "(> triang 3)");
-            setFalseExpr(27, "(not (> triang 3))");
-            addToTree(27, 5, "(> triang 3)", "(not (> triang 3))", 19, 0);
-            delete_allVariableTableEntry();
-            {
-            exp_outcome = triang == 1;
-            handleAssignmentSymbolically("exp_outcome", "(= triang 1)", & exp_outcome,
-                                         & exp_outcome, 1);
-            overall_outcome = (int )getConditionalOutcome(29, exp_outcome);
-            if (overall_outcome) {
-              setBranchInfo(29, 1, 0);
-              setTrueExpr(29, "(= triang 1)");
-              setFalseExpr(29, "(not (= triang 1))");
-              addToTree(29, 6, "(= triang 1)", "(not (= triang 1))", 27, 1);
-              delete_allVariableTableEntry();
-              {
-              exp_outcome = side1 + side2 > side3;
-              handleAssignmentSymbolically("exp_outcome", "(> (+ side1 side2) side3)",
-                                           & exp_outcome, & exp_outcome, 1);
-              overall_outcome = (int )getConditionalOutcome(30, exp_outcome);
-              if (overall_outcome) {
-                setBranchInfo(30, 1, 0);
-                setTrueExpr(30, "(> (+ side1 side2) side3)");
-                setFalseExpr(30, "(not (> (+ side1 side2) side3))");
-                addToTree(30, 7, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
-                          29, 1);
-                delete_allVariableTableEntry();
-                printf((char const   * __restrict  )"Isosceles triangle \n");
-              } else {
-                setBranchInfo(30, 0, 1);
-                setTrueExpr(30, "(> (+ side1 side2) side3)");
-                setFalseExpr(30, "(not (> (+ side1 side2) side3))");
-                addToTree(30, 7, "(> (+ side1 side2) side3)", "(not (> (+ side1 side2) side3))",
-                          29, 0);
-                delete_allVariableTableEntry();
-                goto _L___0;
-              }
-              }
-            } else {
-              setBranchInfo(29, 0, 1);
-              setTrueExpr(29, "(= triang 1)");
-              setFalseExpr(29, "(not (= triang 1))");
-              addToTree(29, 6, "(= triang 1)", "(not (= triang 1))", 27, 0);
-              delete_allVariableTableEntry();
-              _L___0: /* CIL Label */ 
-              {
-              exp_outcome = triang == 2;
-              handleAssignmentSymbolically("exp_outcome", "(= triang 2)", & exp_outcome,
-                                           & exp_outcome, 1);
-              overall_outcome = (int )getConditionalOutcome(33, exp_outcome);
-              if (overall_outcome) {
-                setBranchInfo(33, 1, 0);
-                setTrueExpr(33, "(= triang 2)");
-                setFalseExpr(33, "(not (= triang 2))");
-                addToTree(33, 7, "(= triang 2)", "(not (= triang 2))", 29, 1);
-                delete_allVariableTableEntry();
-                {
-                exp_outcome = side2 + side3 > side1;
-                handleAssignmentSymbolically("exp_outcome", "(> (+ side2 side3) side1)",
-                                             & exp_outcome, & exp_outcome, 1);
-                overall_outcome = (int )getConditionalOutcome(34, exp_outcome);
-                if (overall_outcome) {
-                  setBranchInfo(34, 1, 0);
-                  setTrueExpr(34, "(> (+ side2 side3) side1)");
-                  setFalseExpr(34, "(not (> (+ side2 side3) side1))");
-                  addToTree(34, 8, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
-                            33, 1);
-                  delete_allVariableTableEntry();
-                  printf((char const   * __restrict  )"Isosceles triangle \n");
-                } else {
-                  setBranchInfo(34, 0, 1);
-                  setTrueExpr(34, "(> (+ side2 side3) side1)");
-                  setFalseExpr(34, "(not (> (+ side2 side3) side1))");
-                  addToTree(34, 8, "(> (+ side2 side3) side1)", "(not (> (+ side2 side3) side1))",
-                            33, 0);
-                  delete_allVariableTableEntry();
-                  goto _L;
-                }
-                }
-              } else {
-                setBranchInfo(33, 0, 1);
-                setTrueExpr(33, "(= triang 2)");
-                setFalseExpr(33, "(not (= triang 2))");
-                addToTree(33, 7, "(= triang 2)", "(not (= triang 2))", 29, 0);
-                delete_allVariableTableEntry();
-                _L: /* CIL Label */ 
-                {
-                exp_outcome = triang == 3;
-                handleAssignmentSymbolically("exp_outcome", "(= triang 3)", & exp_outcome,
-                                             & exp_outcome, 1);
-                overall_outcome = (int )getConditionalOutcome(37, exp_outcome);
-                if (overall_outcome) {
-                  setBranchInfo(37, 1, 0);
-                  setTrueExpr(37, "(= triang 3)");
-                  setFalseExpr(37, "(not (= triang 3))");
-                  addToTree(37, 8, "(= triang 3)", "(not (= triang 3))", 33, 1);
-                  delete_allVariableTableEntry();
-                  {
-                  exp_outcome = side1 + side3 > side2;
-                  handleAssignmentSymbolically("exp_outcome", "(> (+ side1 side3) side2)",
-                                               & exp_outcome, & exp_outcome, 1);
-                  overall_outcome = (int )getConditionalOutcome(38, exp_outcome);
-                  if (overall_outcome) {
-                    setBranchInfo(38, 1, 0);
-                    setTrueExpr(38, "(> (+ side1 side3) side2)");
-                    setFalseExpr(38, "(not (> (+ side1 side3) side2))");
-                    addToTree(38, 9, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
-                              37, 1);
-                    delete_allVariableTableEntry();
-                    printf((char const   * __restrict  )"Isosceles triangle \n");
-                  } else {
-                    setBranchInfo(38, 0, 1);
-                    setTrueExpr(38, "(> (+ side1 side3) side2)");
-                    setFalseExpr(38, "(not (> (+ side1 side3) side2))");
-                    addToTree(38, 9, "(> (+ side1 side3) side2)", "(not (> (+ side1 side3) side2))",
-                              37, 0);
-                    delete_allVariableTableEntry();
-                    printf((char const   * __restrict  )"ILLegal !!! \n");
-                  }
-                  }
-                } else {
-                  setBranchInfo(37, 0, 1);
-                  setTrueExpr(37, "(= triang 3)");
-                  setFalseExpr(37, "(not (= triang 3))");
-                  addToTree(37, 8, "(= triang 3)", "(not (= triang 3))", 33, 0);
-                  delete_allVariableTableEntry();
-                  printf((char const   * __restrict  )"ILLegal !!! \n");
-                }
-                }
-              }
-              }
-            }
-            }
-          }
-          }
-        }
-        }
-      }
-      }
-    }
-    }
-  }
-  }
-  {
-  __cil_tmp5 = 0;
-  add_entryToSTable("__cil_tmp5", "Constant", & __cil_tmp5, & __cil_tmp5, 1);
-  __cil_tmp8 = isNotQueueEmpty();
-  if (__cil_tmp8) {
+  __cil_tmp1 = 0;
+  add_entryToSTable("__cil_tmp1", "Constant", & __cil_tmp1, & __cil_tmp1, 1);
+  __cil_tmp4 = isNotQueueEmpty();
+  if (__cil_tmp4) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    main1(side1, side2, side3);
+    main1();
   } else {
-    __cil_tmp8 = startCDG();
-    add_entryToSTable("__cil_tmp8", "Function", & __cil_tmp8, & __cil_tmp8, 1);
-    if (__cil_tmp8) {
-      __cil_tmp8 = getTestCases();
-      main1(side1, side2, side3);
+    __cil_tmp4 = startCDG();
+    add_entryToSTable("__cil_tmp4", "Function", & __cil_tmp4, & __cil_tmp4, 1);
+    if (__cil_tmp4) {
+      __cil_tmp4 = getTestCases();
+      main1();
     }
   }
-  return (__cil_tmp5);
+  return (__cil_tmp1);
   }
 }
 }
@@ -16362,26 +15887,14 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  main1(argvar.side1, argvar.side2, argvar.side3);
+  main1();
 }
 }
 void main(void) 
 { 
-  int side1 ;
-  int side2 ;
-  int side3 ;
   int temp ;
-  int __cil_tmp2 ;
-  int __cil_tmp3 ;
-  int __cil_tmp4 ;
 
   {
-  __cil_tmp4 = rand();
-  argvar.side1 = __cil_tmp4 % 20;
-  __cil_tmp3 = rand();
-  argvar.side2 = __cil_tmp3 % 20;
-  __cil_tmp2 = rand();
-  argvar.side3 = __cil_tmp2 % 20;
   initSID();
   isCopyOfHolder();
   createCDG();
