@@ -12,13 +12,21 @@ static int toInt(void* addr) {
 
 void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void* address, int type) {
     struct arraySym_table *s, r;
+    
+    char* vname_occ = get_vnameHash(aname);
+    if(vname_occ != NULL){
+        aname = vname_occ;
+    }
+    
+    
+    
     int size;
 
    // strcpy(r.key.arrayName, aname);
    // r.key.index = index;
 
    // HASH_FIND(hh, arraySTable, &r.key, sizeof(struct arrayKey), s); 
-   // printf("aname=%s, index=%d, sname=%s\n",aname,index,sname);
+   printf("addEntryToArraySTable :: aname=%s, index=%d, sname=%s\n",aname,index,sname);
 
     for(s=arraySTable; s != NULL; s=(struct arraySym_table*)(s->hh.next)) 
     {
@@ -40,6 +48,43 @@ void add_entryToArraySTable(char *aname, int index, char *sname, void* val, void
   
 
        strcpy(s->sname,sname);}
+
+
+  //printf("aname=%s, index=%d, sname=%s\n",s->key.arrayName,s->key.index,s->sname);
+   if(type == 1)
+  { size = sizeof(int);  addToIntTable(sname, (int *)val);}
+  else
+  { size = sizeof(float);   addToFloatTable(sname, (float *)val); }
+  
+  s->cval = malloc(size);
+  memcpy(s->cval, val, size);
+  s->address = toInt(address); 
+  s->type = type;
+
+}
+
+
+void add_entryToArraySTable2(char *aname, int index, char *sname, void* val, void* address, int type) {
+    struct arraySym_table *s, r;
+    int size;
+
+    for(s=arraySTable; s != NULL; s=(struct arraySym_table*)(s->hh.next)) 
+    {
+        if(strcmp(s->key.arrayName, aname)==0 && s->key.index==index)
+        { 
+          strcpy(s->sname,sname);
+          break;
+        }
+    }
+
+     if(s == NULL)
+     { 
+       s = (struct arraySym_table *)malloc(sizeof(struct arraySym_table));
+       strcpy(s->key.arrayName, aname);
+       s->key.index = index;
+       HASH_ADD(hh, arraySTable, key, sizeof(struct arrayKey), s);
+       strcpy(s->sname,sname);
+     }
 
 
   //printf("aname=%s, index=%d, sname=%s\n",s->key.arrayName,s->key.index,s->sname);
@@ -104,7 +149,7 @@ void deleteArrayTable()
 
 void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *address, int type) {
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp;
+  char *token, *result, *symName, *temp, *arrName, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -128,6 +173,7 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
     case POINTER:
       parameter = findParameter(token);
+      temp = (char *)getPointerName(token);
       j = 0;
 
       while (j < (2 * parameter + 1)) {
@@ -160,7 +206,14 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrName = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrName);
+      if(vname_occ == NULL){
+        symName = findArrayRecord(arrName, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -176,11 +229,46 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
           strcat(result, symName);
         }
       }
-
+      /*
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            value = (*(int *)findValBySymbolicName(symName));
+            sprintf(buff, "%d", value);
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
+      */
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
+      vname_occ = get_vnameHash(token);
+      if(vname_occ == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vname_occ);
+      }
 
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -206,8 +294,17 @@ void handleArraySymbolically(char *lhs, int index, char *rhs, void *val, void *a
   strcat(result, "\0");
 
   //printf("result=%s\n",result);
-
-  add_entryToArraySTable(lhs, index, result, val, address, type) ;
+  char *new_lhs = get_vnameHash(lhs);
+  if(new_lhs == NULL){
+       printf("add_entryToArraySTable2(%s,%d,%s)\n",lhs,index,result);
+       add_entryToArraySTable2(lhs, index, result, val, address, type) ;
+  }
+  else{
+       printf("add_entryToArraySTable2(%s,%d,%s)\n",new_lhs,index,result);     
+       add_entryToArraySTable2(new_lhs, index, result, val, address, type) ;
+  }
+  
+  add_entryToArraySTable2(lhs, index, result, val, address, type) ;
   delete_allVariableTableEntry();
 }
 

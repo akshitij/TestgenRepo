@@ -103,7 +103,7 @@ CILLY_LIBRARY_MODULES = pretty inthash errormsg alpha trace stats util clist \
 	      dataslicing sfi expcompare\
               cfg liveness reachingdefs deadcodeelim availexps \
               availexpslv predabst\
-	test param modifyVars testgenStub tutcil insertTestDriver loopUnroll extractStruct makeCDG sidTable sym level_struct vartype varUpdated helperpathsym pathSymbol handleUnseenNodes insertReturnHolders instMapConcolic entryExit handleExit \
+	test param handleCalls insertTestDriver handleExp modifyVars loopUnroll extractStruct makeCDG loopUnrollOthers sidTable sym level_struct vartype varUpdated helperpathsym pathSymbol handleUnseenNodes insertReturnHolders instMapConcolic entryExit fixMainForGlobals\
               testcil\
 	      $(CILLY_FEATURES) \
 	      ciloptions feature_config

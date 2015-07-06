@@ -1,5 +1,5 @@
 # 1 "loopTest.c"
-# 1 "/home/akshitij/Desktop/thesis/Testgen//"
+# 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
@@ -836,42 +836,19 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 # 2 "loopTest.c" 2
 int foo(int x){
- printf("x = %d\n",x);
- int y;
- y = 10 * x;
-
-
-
-
- y = (y>100) ? 99:y;
+ int y,i=0;
+ for(i=0;i<x;i++){
+  y = y + i;
+ }
  return y;
 }
-
-
 
 int main(){
  int i,j,k;
  scanf("%d",&i);
-
-
-
- if(i <= 2){
-
-
-
-
-
-
-
-  j=3;
- }
- else
-
  k = i*10;
- if(k>100){
-  j=4;
+ for(;k<100;k=k+10){
+  j=j+i;
  }
- else
-  j=9;
  return 0;
 }

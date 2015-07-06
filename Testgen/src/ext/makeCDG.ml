@@ -304,6 +304,7 @@ let insertIsCopyOfHolder c f funName=
   let fn = emptyFunction "isCopyOfHolder"
   in
   fn.sbody <- isCopyOfCallList c;
+
   f.globals <- List.concat (
     List.map (fun g -> match g with
     | GFun(fdec, _) when fdec.svar.vname = funName ->

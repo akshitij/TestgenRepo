@@ -134,11 +134,11 @@ let rec constructStmts (v: stmt) =
                ) v.labels
      in
      s.labels <- x;
-     (*if not marked then
+     if not marked then
        begin 
          s.labels <- s.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
          v.labels <- v.labels@[Label("dummyLabel_" ^ string_of_int !dummyLabelCnt, l, false)];
-       end;*)
+       end;
      dummyLabelCnt := !dummyLabelCnt + 1;
      Hashtbl.add labelMapping v.labels s;
      s
@@ -370,21 +370,10 @@ let insertIsCopyOfHolder c f funName=
     ) f.globals);
   ()
   
-  
-let resetGlobalValues () : unit = 
-  loopConditions := [];
-  newblk := [];
-  newStmt := [];
-  unrolledStmts := [];
-  arrayInput := 0;
-  opr := 0 ;
-  qnty := 0;
-  ()
-  
-  
 (* Go through every loop of the said function in the file and unroll it *)
-let loopUnroll (f: file) (funName:string) : unit =
-  (*let funName = !Param.func in*)
+let loopUnroll (f: file) : unit =
+  let funName = !Param.func
+  in
   count := 2;  
   let doGlobal = function
     | GFun (fdec, loc) ->
@@ -402,22 +391,12 @@ let loopUnroll (f: file) (funName:string) : unit =
     | _ -> ()
   in
   Stats.time "loopUnroll" (iterGlobals f) doGlobal
-  
-let iterLoopUnroll  (f: file) : unit =
-  List.iter (fun f -> E.log "Param_func : %s\n" f)  !Param.func_list;
-  List.iter (
-           fun funcName ->
-           if funcName <> "main" then begin
-             loopUnroll f funcName ;
-             resetGlobalValues ();
-             end
-         ) !Param.func_list
              
 let feature : featureDescr = {
   fd_name = "loopUnroll";
   fd_enabled = ref false;
   fd_description = "";
   fd_extraopt = [];
-  fd_doit = iterLoopUnroll;
+  fd_doit = loopUnroll;
   fd_post_check = true
 } 

@@ -433,7 +433,7 @@ Copyright (C) 2012 Free Software Foundation, Inc.
 This config.status script is free software; the Free Software Foundation
 gives unlimited permission to copy, distribute and modify it."
 
-ac_pwd='/home/akshitij/Desktop/thesis/Testgen'
+ac_pwd='/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen'
 srcdir='.'
 INSTALL='/usr/bin/install -c'
 test -n "$AWK" || AWK=awk
@@ -627,10 +627,13 @@ S["CIL_VERSION_MAJOR"]="1"
 S["DEFAULT_CIL_MODE"]="GNUCC"
 S["DEFAULT_COMPILER"]="_GNUCC"
 S["HAS_MSVC"]="no"
-S["CILHOME"]="/home/akshitij/Desktop/thesis/Testgen"
+S["CILHOME"]="/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen"
 S["FLEXLINK"]=""
 S["MINGW"]=""
 S["ARCHOS"]="x86_LINUX"
+S["has_yices_solver"]=""
+S["has_z3_solver"]="yes"
+S["has_cvc3_solver"]="no"
 S["EMUL"]=""
 S["LIBOBJS"]=""
 S["EGREP"]="/bin/grep -E"
@@ -767,6 +770,7 @@ D["HAVE_SOCKET"]=" 1"
 D["HAVE___SYSV_SIGNAL"]=" 1"
 D["TYPE_SIZE_T"]=" \"unsigned long\""
 D["TYPE_WCHAR_T"]=" \"int\""
+D["HAVE_Z3_SOLVER"]=" 1"
   for (key in D) D_is_set[key] = 1
   FS = ""
 }

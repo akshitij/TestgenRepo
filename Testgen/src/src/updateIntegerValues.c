@@ -1,6 +1,7 @@
 #include "updateIntegerValues.h"
 #include "directAndSolve.h"
 #include "arrayAndPointersSymbolicExec.h"
+#include "ipaRecursive.c"
 
 struct intVartable *itable = NULL;
 struct floatVartable *ftable = NULL;
@@ -29,9 +30,10 @@ else
     s->sname = (char *)malloc(sizeof(char) * (strlen(sname) + 1));
     strcpy(s->sname, sname);
     HASH_ADD_STR(itable, sname, s);
-  
- }
   s->value = val;
+ }
+  if(noInsertionInTables == 0)
+    s->value = val;
 
  }
 
@@ -49,8 +51,10 @@ void addToFloatTable(char *sname, float *val) {
     s->sname = (char *)malloc(sizeof(char) * (strlen(sname) + 1));
     strcpy(s->sname, sname);
     HASH_ADD_STR(ftable, sname, s);
-  }
   s->value = val;
+  }
+  if(noInsertionInTables == 0)
+    s->value = val;
 //printf("Added to float table: %s \n", sname);
 }
 

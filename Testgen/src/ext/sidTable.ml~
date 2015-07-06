@@ -107,7 +107,6 @@ class sidTableVisitorClass (fdec : fundec) = object
     end 
 end
 
-
 let sidTable (f: file) : unit =
   let funName =  !Param.func
   in
@@ -132,7 +131,8 @@ let sidTable (f: file) : unit =
                                  
                       ) f.globals
                   );
-  fd.sbody  <- mkBlock !stmtlist
+  fd.sbody  <- mkBlock !stmtlist;
+  E.log "SIDTable complete\n"
 
 let feature : featureDescr = {
   fd_name = "sidTable";

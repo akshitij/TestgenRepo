@@ -498,6 +498,74 @@ rm -f obj/$ARCHOS/feature_config.ml
 rm -f obj/.depend/feature_config.d
 AC_MSG_RESULT([done])
 
+# required major/minor. 
+# required major/minor
+
+reqMaj1=4
+reqMin1=3
+knownMaj1=4
+knownMin1=3
+
+
+
+
+AC_CHECK_PROG([has_cvc3_solver], [cvc3], [yes], [no])
+
+echo 'cvc3 : after' $has_cvc3_solver
+
+AC_CHECK_PROG([has_z3_solver], [z3], [yes], [no])
+echo 'z3 : after' $has_z3_solver
+
+	if test ${has_z3_solver} = "yes"; then
+            ver=`z3 -version | grep version | sed 's/^.*version //'`
+            #diagnostic "ver is $ver"
+             # major: anything before the .
+             major=`echo $ver | sed 's/\..*$//'`
+            #diagnostic "major is $major"
+            # minor: numbers after the .
+            # (the outer level of bracket-quotation protects the inner brackets)
+            [minor=`echo $ver | sed 's/^[^.]*\.\([0-9][0-9]*\).*$/\1/'`]
+            #diagnostic "minor is $minor"
+
+		   if test $major -gt $reqMaj1 -o $major -ge $reqMaj1 -a $minor -ge $reqMin1; then
+	    		AC_MSG_RESULT([version is $ver, ok])
+
+		    # sm: added this test when we found that CCured needed to be changed
+		    # a little when 4.3.1 came out (it had previously worked with 4.3.1)
+		    if test "$major" -gt $knownMaj1 -o "$major" -ge $knownMaj1 -a "$minor" -gt $knownMi1n; then
+		      AC_MSG_WARN([Your Z3 version is $ver, but the latest version this program
+				   is known to work with is $knownMaj1.$knownMin1.  If you have
+				   trouble compiling, please try using an earlier version
+				   or see if there is a later version of this program.])
+		 fi
+		 else
+		 AC_MSG_ERROR([
+		      I found Z3 version $ver; this program requires at least $reqMaj1.$reqMin1.
+		      Please download a newer Z3 distribution.
+		      
+		    ])
+		  fi
+
+	    AC_DEFINE([HAVE_Z3_SOLVER],[1])
+	else
+	    AC_DEFINE([HAVE_Z3_SOLVER],[0],[Defined to 1 if Z3 is installed])
+            #AC_MSG_ERROR([Z3 SMT solver not found])
+            AC_CHECK_PROG([has_yices_solver], [yices], [yes], [no])
+            echo 'yices : after' $has_yices_solver
+             if test ${has_yices_solver} = "yes"; then
+             echo 'yices found'
+           else
+
+            AC_CHECK_PROG([has_cvc3_solver], [cvc3], [yes], [no])
+            echo 'cvc3 : after' $has_cvc3_solver               
+             if test ${has_cvc3_solver} = "yes"; then
+             echo 'cvc3 found'
+              
+            else
+              AC_MSG_ERROR([Z3 or YICES or CVC3 Neither of the one found])
+             fi
+          fi
+	fi
 
 #
 # CIL features

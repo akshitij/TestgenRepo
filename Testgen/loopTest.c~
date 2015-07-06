@@ -19,16 +19,17 @@ int main(){
 	/*for(;i<8;){
 		i = i+2;
 	}*/
-	/*if(i <= 2){
+	if(i <= 2){
 		//i = i/2;
-		if(i>0){
+		/*if(i>0){
 			j=2;
 		}
 		else{
 			j=3;
-		}
+		}*/
+		j=3;
 	}
-	else*/
+	else
 	//i = foo(i);
 	k = i*10;
 	if(k>100){

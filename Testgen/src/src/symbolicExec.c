@@ -8,6 +8,7 @@
 #include "directAndSolve.h"
 #include "flatds.h"
 #include "queue.h"
+#include "ipaRecursive.c"
 
 #define MAX_INT 2147483647
 
@@ -49,7 +50,7 @@ struct field_values *addNewFields(char *sname, void *val, void *address, int typ
   return t;
 }
 
-void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
+void createEmptyEntryInSTable(char *vname) {
   struct sym_table *s;
 
   HASH_FIND_STR(stable, vname, s);
@@ -61,8 +62,33 @@ void add_entryToSTable(char *vname, char *sname, void *val, void *address, int t
 
 
 }
+  //s->fval = addNewFields(sname, val, address, type);
+}
+
+void add_entryToSTable(char *vname, char *sname, void *val, void *address, int type) {
+  if(getExecutionFlag() == 1){
+  struct sym_table *s;
+  
+  char* hash_vn = get_vnameHash(vname);
+  if(hash_vn != NULL){
+    HASH_FIND_STR(stable, hash_vn, s);
+  }
+  else{
+    HASH_FIND_STR(stable, vname, s);
+  }
+  
+  //HASH_FIND_STR(stable, vname, s);
+  if (s == NULL) {
+    s = (struct sym_table *)malloc(sizeof(struct sym_table));
+    s->vname = (char *)calloc((strlen(vname) + 1), sizeof(char));
+    strcpy(s->vname, vname);
+    HASH_ADD_STR(stable, vname, s);
+
+
+  }
   s->fval = addNewFields(sname, val, address, type);
   // printf("Added: %s for %s in symbol table\n", s->vname, sname);
+  }
 }
 
 void addEntryToVariableTable(char *vname, int parameter) {
@@ -86,6 +112,10 @@ void addEntryToVariableTable(char *vname, int parameter) {
 int findParameter(char *key) {
   struct variable_table *s;
   HASH_FIND_STR(varTable, key, s);
+  if(s==NULL){
+    printf("pointer parameter entry not found....check addEntryToVariableTable statement\n");
+    return 1; //denoting *ptr
+  }
   return s->parameter;
 }
 
@@ -111,8 +141,16 @@ char *find_symVal(char *key) {
 
 void *find_conVal(char *key) {
   struct field_values *fv;
-
-  fv = find_fieldValue(key);
+  
+  char* hash_vn = get_vnameHash(key);
+  if(hash_vn != NULL){
+    fv = find_fieldValue(hash_vn);
+  }
+  else{
+    fv = find_fieldValue(key);
+  }
+  
+  //fv = find_fieldValue(key);
   return fv->cval;
 }
 
@@ -166,6 +204,7 @@ void updateValBySymbolicName(char *sname, void *value) {
 //printf("sname = %s, value = %d\n", sname ,(*(int*)value));
 
   for (s = stable; s != NULL; s = (struct sym_table *)(s->hh.next)) {
+    printf("var = %s, sname = %s, value = %d\n",s->vname, find_symVal(s->vname) ,(*(int*)s->fval->cval));
     if (strcmp(find_symVal(s->vname), sname) == 0) {
       memcpy(s->fval->cval, value, size);
       if (s->fval->type == 1)
@@ -173,7 +212,7 @@ void updateValBySymbolicName(char *sname, void *value) {
       else
        { 
           if((*(int*)value) < 0)
-          { updateFloatValBySname(sname, (*(int *)value));}
+          { updateFloatValBySname(sname, (*(float *)value));}
          else
           updateFloatValBySname(sname, (*(float *)value));}
       return;
@@ -260,8 +299,9 @@ char *getAllSymbolicNamesinAPath(char *rhs) {
 }
 
 void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address, int type) {
+  if(getExecutionFlag() == 1){
   int i = 0, len, parameter, j, value;
-  char *token, *result, *symName, *temp;
+  char *token, *result, *symName, *temp, *arrName, *vname_occ;
   char buff[15];
 
   result = (char *)calloc(2, sizeof(char));
@@ -283,10 +323,20 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
     case POINTER:
       parameter = findParameter(token);
+      temp = getPointerName(token);
       j = 0;
 
       while (j < (2 * parameter + 1)) {
-        symName = find_symVal(temp);
+        //symName = find_symVal(temp);
+        
+        vname_occ = get_vnameHash(temp);
+        if(vname_occ == NULL){
+          symName = find_symVal(temp);
+        }
+        else{
+          symName = find_symVal(vname_occ);
+        }
+        
         if (symName == NULL)
           symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
 
@@ -315,7 +365,14 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
 
       parameter = findParameter(token);
       //printf("parameter found for array: %d\n", parameter);
-      symName = findArrayRecord((char *)getArrayName(token), parameter);
+      arrName = (char *)getArrayName(token);
+      vname_occ = get_vnameHash(arrName);
+      if(vname_occ == NULL){
+        symName = findArrayRecord(arrName, parameter);
+      }
+      else{
+        symName = findArrayRecord(vname_occ, parameter);
+      }
       //printf("symName=%s\n",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
@@ -331,15 +388,51 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
           strcat(result, symName);
         }
       }
-
+      /*
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
+      */
       break;
 
     case VARIABLE:
-      symName = find_symVal(token);
-
+      vname_occ = get_vnameHash(token);
+      if(vname_occ == NULL){
+        symName = find_symVal(token);
+      }
+      else{
+        symName = find_symVal(vname_occ);
+      }
+      //printf("%s ",symName);
       if (symName != NULL) {
         if (strcmp(symName, "Constant") == 0) {
-          sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          //This will return same value for all Constant variables ....see example constantFunc.c
+          //sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+          sprintf(buff, "%d", (*(int *)find_conVal(token)));
           result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
           strcat(result, buff);
         } else if (strcmp(symName, "Function") == 0) {
@@ -359,11 +452,52 @@ void handleAssignmentSymbolically(char *lhs, char *rhs, void *val, void *address
   }
 
   strcat(result, "\0");
+  
+  int j2 = 0, k, len2 = strlen(lhs);
+  char* temp2;
+  char *symName2;
+  char new_lhs[100];
+  strcpy(new_lhs,lhs);
+  char *token2 = getNextToken(lhs, &j2, len2);
+  if(token2 != NULL){
+    switch (token_type) {
+      case POINTER: //pointer as variable "*p" as "p"
+        parameter = findParameter(token2); //entry is for "*p" not "p"
+        temp2 = getPointerName(token2);
+        k = 0;
+        while (k < (2 * parameter)) {
+          //symName = find_symVal(temp);
+        
+          vname_occ = get_vnameHash(temp2);
+          if(vname_occ == NULL){
+            symName2 = find_symVal(temp2);
+          }
+          else{
+            symName2 = find_symVal(vname_occ);
+          }
+        
+          if (symName2 == NULL)
+            symName2 = findArrayRecord((char *)getArrayName(temp2), findParameter(temp2));
+          temp2 = symName2;
+          k++;
+        }
+        strcpy(new_lhs,symName2);
+        break;
+    }
+  }  
 
   //printf("result=%s\n",result);
-
-  add_entryToSTable(lhs, result, val, address, type);
+  char* lhs_vn = get_vnameHash(new_lhs);
+  if (lhs_vn != NULL){
+  	printf("add_entryToSTable(%s,%s)\n",lhs_vn,result);
+  	add_entryToSTable(lhs_vn, result, val, address, type);
+  }
+  else{
+  	printf("add_entryToSTable(%s,%s)\n",new_lhs,result);
+  	add_entryToSTable(new_lhs, result, val, address, type);
+  }
   delete_allVariableTableEntry();
+  }
 }
 
 char *getPrepositionalFormula(char *expr) {
@@ -444,7 +578,35 @@ char *getPrepositionalFormula(char *expr) {
           strcat(result, symName);
         }
       }
-
+      /*
+      else{
+        //parameter = findParameter(token);
+        parameter = 1;
+        temp = (char *)getPointerName(token);
+        j = 0;
+        while (j < (2 * parameter + 1)) {
+          symName = find_symVal(temp);
+          if (symName == NULL)
+            symName = findArrayRecord((char *)getArrayName(temp), findParameter(temp));
+          temp = symName;
+          j++;
+        }
+        if (symName != NULL) {
+          if (strcmp(symName, "Constant") == 0) {
+            sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+            result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+            strcat(result, buff);
+          }else if (strcmp(symName, "Function") == 0) {
+              sprintf(buff, "%d", (*(int *)findValBySymbolicName(symName)));
+              result = realloc(result, (strlen(result) + strlen(buff) + 1) * sizeof(char));
+              strcat(result, buff);
+            } else {
+                result = realloc(result, (strlen(result) + strlen(symName) + 1) * sizeof(char));
+                strcat(result, symName);
+          }
+        }
+      }
+      */
       break;
 
     case VARIABLE:
@@ -479,7 +641,7 @@ char *getPrepositionalFormula(char *expr) {
 
   strcat(result, "\0");
 //printf("Prep result = %s\n",result);
-
+  printf("PrepositionalFormula = %s\n",result);
   return result;
 }
 

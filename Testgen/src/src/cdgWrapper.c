@@ -450,11 +450,9 @@ int getTestCases() {
 
    currPath = newSATPath;
 
-   /*percent = (countCoveredConditions() * 100) / (2 * countTotalConditions());*/
+   percent = (countCoveredConditions() * 100) / (2 * countTotalConditions());
    /*printf("\nCOVERAGE = %f....\n", percent);*/
-   if (countOrgTotalConditions() == 0) 
-   orgPercent =100 ;
-   else
+
    orgPercent =  (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
    printf("COVERAGE = %f....\n",orgPercent); 
   
@@ -495,9 +493,7 @@ if(savePath != NULL)
 
       percent = (countCoveredConditions() * 100) / (2 * countTotalConditions());
       /*printf("\nCOVERAGE = %f....\n", percent);*/
-      if (countOrgTotalConditions() == 0)
-      orgPercent =100 ;
-      else
+
       orgPercent =  (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
       printf("COVERAGE = %f....\n",orgPercent); 
       

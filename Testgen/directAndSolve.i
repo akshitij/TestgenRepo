@@ -1,5 +1,5 @@
 # 1 "src/src/directAndSolve.c"
-# 1 "/home/akshitij/Desktop/thesis/Testgen//"
+# 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
@@ -2848,7 +2848,7 @@ int getOutputFromConstraintSolver()
       if (negative)
  value = value * -1;
 
-
+      printf("save=%s, token=%s value=%d\n",save,token,value);
       updateValBySymbolicName(save, &value);
       break;
 
@@ -2873,13 +2873,11 @@ void directPathConditions() {
 
 
 
+  percent = (countCoveredConditions() * 100)/(2 * countTotalConditions());
 
 
-  if (countOrgTotalConditions() == 0)
-  orgPercent = 100 ;
-  else
   orgPercent = (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
-  printf("COVERAGE = %f....(%d*100/2*%d)\n",orgPercent,countOrgCoveredConditions(),countOrgTotalConditions());
+  printf("COVERAGE = %f....\n",orgPercent);
 
   FILE *coveragefile = fopen("src/src/coverage.txt","ab+");
   fprintf(coveragefile, "%.1f\n", orgPercent);
@@ -2907,7 +2905,7 @@ void directPathConditions() {
 
       else if(execution_flag==1 && previousRunCoverage==percent)
         countNoNewConditionAttempts++;
-# 252 "src/src/directAndSolve.c"
+# 250 "src/src/directAndSolve.c"
       previousRunCoverage=percent;
 
     }
@@ -3055,6 +3053,7 @@ void directPathConditions() {
 
     getPrint();
     writeProgramSVariables();
+    printf("Path Condition : %s\n",(newPathCondition != ((void *)0) ? newPathCondition:"null"));
     writeConditionsToFile(newPathCondition);
 
     if (!getOutputFromConstraintSolver()) {

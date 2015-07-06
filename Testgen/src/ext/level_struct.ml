@@ -242,7 +242,7 @@ let rec checkExp e =
           aindex := !aindex + 1
 
        | _ ->      
-          let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 0)
+          let call = mkVariableTablefxn (d_string "%a" d_exp e) (integer 0) (* for *p entry in variable table*)
           in
           let call1 = mkArrayStableEntryfxn (d_string "%a" d_exp e1) (integer 0) ((d_string "%a" d_exp e1) ^ "1" ^ (d_string "%d" !aindex)) e1 1
           in
@@ -455,7 +455,8 @@ let level_struct (f:file) : unit =
                let level_structVisitor = new level_structVisitor exp_outcome overall_outcome in
                ignore (visitCilFunction level_structVisitor fd)
                       
-             | _ -> ()) f.globals
+             | _ -> ()) f.globals;
+  E.log "levelStruct complete\n"
             
 let feature : featureDescr = {
   fd_name = "level_struct";

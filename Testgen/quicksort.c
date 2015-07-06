@@ -1,6 +1,6 @@
 // An iterative implementation of quick sort
 #include <stdio.h>
- #include <stdlib.h>
+ 
 // A utility function to swap two elements
 void swap ( int* a, int* b )
 {
@@ -14,7 +14,7 @@ int partition(int arr[], int l, int h)
 {
   int x = arr[h];
   int i = (l - 1);
- exit (0);
+ 
 printf("l=%d, h=%d\n",l,h);
 
   for (int j = l; j <= h- 1; j++)
@@ -35,7 +35,6 @@ printf("l=%d, h=%d\n",l,h);
 /* A[] --> Array to be sorted, l  --> Starting index, h  --> Ending index */
 void quickSort (int arr[], int l, int h)
 {
-
   // Create an auxiliary stack
   int stack[ h - l + 1 ];
  
@@ -48,7 +47,7 @@ void quickSort (int arr[], int l, int h)
  
   // Keep popping from stack while is not empty
   while ( top >= 0 && l>0 && h>l)
-    { 
+    {
       // Pop h and l
       h = stack[ top-- ];
       l = stack[ top-- ];
@@ -59,7 +58,7 @@ void quickSort (int arr[], int l, int h)
       // If there are elements on left side of pivot, then push left
       // side to stack
       if ( p-1 > l )
-        { exit(0);
+        {
           stack[ ++top ] = l;
           stack[ ++top ] = p - 1;
         }

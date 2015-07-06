@@ -10,7 +10,7 @@ open Trace
 module E = Errormsg
 module H = Hashtbl
 
-let helperFiles = ["src/src/utils.c"; "src/src/sidTable.c"; "src/src/sidTable.h"; "src/src/directAndSolve.c"; "src/src/directAndSolve.h"; "src/src/symbolicExec.c"; "src/src/symbolicExec.h"; "src/src/queue.c"; "src/src/queue.h"; "src/src/levelTree.c"; "src/src/levelTree.h"; "src/src/stringTokenize.c"; "src/src/stringTokenize.h"; "src/src/arrayAndPointersSymbolicExec.c"; "src/src/arrayAndPointersSymbolicExec.h"; "src/src/updateIntegerValues.c"; "src/src/updateIntegerValues.h"; "src/src/flatds.c"; "src/src/flatds.h"; "src/src/cdg.c"; "src/src/cdg.h"; "src/src/cdgWrapper.c"; "src/src/ipNonRec.c" ; "src/src/stack.c"; "src/src/stack.h"]
+let helperFiles = ["src/src/utils.c"; "src/src/sidTable.c"; "src/src/sidTable.h"; "src/src/directAndSolve.c"; "src/src/directAndSolve.h"; "src/src/symbolicExec.c"; "src/src/symbolicExec.h"; "src/src/queue.c"; "src/src/queue.h"; "src/src/levelTree.c"; "src/src/levelTree.h"; "src/src/stringTokenize.c"; "src/src/stringTokenize.h"; "src/src/arrayAndPointersSymbolicExec.c"; "src/src/arrayAndPointersSymbolicExec.h"; "src/src/updateIntegerValues.c"; "src/src/updateIntegerValues.h"; "src/src/flatds.c"; "src/src/flatds.h"; "src/src/cdg.c"; "src/src/cdg.h"; "src/src/cdgWrapper.c"; "src/src/ipaRecursive.c" ; "src/src/stack.c"; "src/src/stack.h"]
 
 let cnt_vars = ref 0
 
@@ -543,6 +543,7 @@ let rec getStmts v stmts =
 
 let vartype (f: file) : unit =
   (* Creates blank structure named "arguments" *)
+  E.log "Function Input: %s\n" !Param.func;
   let res = mkCompInfo true "arguments" (fun _ -> []) []
   in
   let funName = !Param.func
@@ -558,7 +559,9 @@ let vartype (f: file) : unit =
     | GFun (fdec, loc)  ->
        if (fdec.svar.vname = funName) then
          begin
+           E.log "Function encountered: %s\n" fdec.svar.vname;
            funcn := [fdec.svar];
+           E.log "length of funcn: %d\n" (List.length !funcn);
            formals := List.map (fun v -> v2e v) fdec.sformals;
            save_local := fdec.slocals;
 
@@ -616,7 +619,7 @@ let vartype (f: file) : unit =
                              fdec.sbody.bstmts <- (mkStmtOneInstr pre) :: fdec.sbody.bstmts)
                       !replce
                       !vars;
-
+	   E.log "length of funcn: %d\n" (List.length !funcn);
            let x =  (List.map (fun a ->  v2e a) fdec.sformals) in
            let x1 = (List.map (fun a -> Lval(Var a,NoOffset) ) fdec.sformals) in
            let call = Call (None, Lval (Var (List.hd !funcn), NoOffset), x  , locUnknown) in 
@@ -648,7 +651,7 @@ let vartype (f: file) : unit =
 
        if (fdec.svar.vname = "main") then  (* instrumenting body of test driver *)
          begin
-           
+           E.log "Function encountered: %s\n" fdec.svar.vname;
            fdec.slocals <- !vars; 
            
            (* creating random function for each variable *)
@@ -696,6 +699,7 @@ let vartype (f: file) : unit =
 
        if fdec.svar.vname="getValues" then 
          begin
+           E.log "Function encountered: %s\n" fdec.svar.vname;
            let temp =  makeLocalVar fdec "temp" voidPtrType in   
            List.iter (fun a -> match a.ftype with
                                |TPtr(_,_) -> ()
@@ -713,6 +717,8 @@ let vartype (f: file) : unit =
 
        if fdec.svar.vname = "runForCDGPath" then
          begin
+           E.log "Function encountered: %s\n" fdec.svar.vname;
+           E.log "length of 2nd funcn: %d\n" (List.length !funcn);
            let x =  (List.map (fun a ->   let p: varinfo = makevinfo res in (Lval ((Var p), Field(a,NoOffset)) )) !filist) in
            let call = Call (None, Lval (Var (List.hd !funcn), NoOffset), x  , locUnknown) in 
            fdec.sbody.bstmts <- [mkStmtOneInstr call]
@@ -722,6 +728,8 @@ let vartype (f: file) : unit =
        
        if fdec.svar.vname = "callInstrumentedFun" then
          begin
+           E.log "Function encountered: %s\n" fdec.svar.vname;
+           E.log "length of 3rd funcn: %d\n" (List.length !funcn);
            let x =  (List.map (fun a ->   let p: varinfo = makevinfo res in (Lval ((Var p), Field(a,NoOffset)) )) !filist) in
            let call = Call (None, Lval (Var (List.hd !funcn), NoOffset), x  , locUnknown) in 
            let pre = mkenqueuefxn () in
@@ -733,7 +741,7 @@ let vartype (f: file) : unit =
   in    
   
   Stats.time "vartype" (iterGlobals f) doGlobal;
-  
+  E.log "Vartype Complete\n";
   if !addProto1 then
     begin
       let p = makevinfo res in

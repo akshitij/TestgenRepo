@@ -2,10 +2,7 @@
 int main(){
 	int a,b;
 	scanf("%d",&a);
-	//a should be positive
-	int n;
-	n = 3*a;
-	a=n;
+	a = 3 * a;
 	if(a == 45){
 		b = 1;
 	}

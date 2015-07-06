@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+ 
 int main()
 {
   int array[100], n, c, d, swap;
@@ -8,7 +8,7 @@ int main()
   scanf("%d", &n);
  
   printf("Enter %d integers\n", n);
- exit(0) ;
+ 
   for (c = 0; c < n; c++)
     scanf("%d", &array[c]);
  

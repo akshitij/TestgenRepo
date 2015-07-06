@@ -106,13 +106,14 @@ let features : C.featureDescr list =
     Liveness.feature;
     (* Our features *)
     Param.feature;
-    ModifyVars.feature;
-    TestgenStub.feature;
-    Tutcil.feature;
+    HandleCalls.feature;
     InsertTestDriver.feature;
+    HandleExp.feature;
+    ModifyVars.feature;
     LoopUnroll.feature;
     ExtractStruct.feature;
     MakeCDG.feature;
+    LoopUnrollOthers.feature;
     SidTable.feature;
     Sym.feature;
     Level_struct.feature;
@@ -124,7 +125,7 @@ let features : C.featureDescr list =
     InstMapConcolic.feature;
     InsertReturnHolders.feature;
     EntryExit.feature;
-    HandleExit.feature;
+    FixMainForGlobals.feature;
     (* Test features *)
     Test.feature;
   ] 

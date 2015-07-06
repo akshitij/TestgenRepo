@@ -27,7 +27,7 @@ let mkFunTyp (rt : typ) (args : (string * typ) list) : typ =
   
 let initInstFunctions (f : file) : unit =
   let focf : string -> typ -> varinfo = findOrCreateFunc f in
-  let instf_type = mkFunTyp voidType ["retVarName",charPtrType] in
+  let instf_type = mkFunTyp voidType ["retVarName",charPtrType; "concValue",voidPtrType ] in
   instfuns.mapConcolicValues_instFun <- focf mapConcolicValues_instFun_str instf_type
  
 let makeInstrStmts (func : varinfo) (argsList : exp list) (loc : location)
@@ -40,10 +40,11 @@ class mapConcValVisitorClass (fdec : fundec) = object (self)
   method vstmt (s : stmt) = begin
       match s.skind with
       
-      |Return (Some e,loc) ->
-        let instrumentMapConcolicValues = makeInstrStmts instfuns.mapConcolicValues_instFun [constS2e (Pretty.sprint max_int (d_exp () e))] loc in
+      |Return (Some (Lval(lv)),loc) ->
+       
+        let instrumentMapConcolicValues = makeInstrStmts instfuns.mapConcolicValues_instFun [constS2e (Pretty.sprint max_int (d_lval () lv)); (mkAddrOf lv)] loc in
         let oneInstStmt = mkStmtOneInstr instrumentMapConcolicValues in
-        s.skind <- Block ( mkBlock [oneInstStmt; mkStmt (Return(Some e,loc))] ) ;
+        s.skind <- Block ( mkBlock [oneInstStmt; mkStmt (Return(Some (Lval(lv)),loc))] ) ;
         ChangeTo (s)
         
       |_  -> DoChildren  
@@ -59,7 +60,7 @@ let instMapConcolic (f : file) : unit =
 	     match g with
 	     |GFun (fd, loc) ->
 	       if (List.mem fd.svar.vname !Param.func_list) then begin
-	          if fd.svar.vname <> "main1" then 
+	          if fd.svar.vname <> !Param.func then 
 	          (*E.log "Running mapConcVal on: %s\n" fd.svar.vname;*)
 	          let mapConcValVisitor = new mapConcValVisitorClass fd in
        		  ignore (visitCilFunction mapConcValVisitor fd)

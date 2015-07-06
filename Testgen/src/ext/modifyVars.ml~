@@ -5,24 +5,23 @@ module S = String
 module L = List
 module E = Errormsg
 
-let programFlagVi : varinfo list ref = ref []
-
 let changeFormals (fd : fundec) : unit =
-  if fd.svar.vname <> "main" then begin
+  if (fd.svar.vname <> "main" && fd.svar.vname <> !Param.func) then begin
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
      fd.sformals;
      setFormals fd fd.sformals;
      List.iter (fun sf ->
      		sf.vname <- fd.svar.vname ^ "_" ^ sf.vname )
-     fd.slocals
+     fd.slocals;
+  E.log "local variables in %s : " fd.svar.vname;   
+  List.iter (fun f -> E.log "%s " f.vname) fd.slocals;
+  E.log "\n";   
   end
      
 
 let modifyVars (f : file) : unit =
-  (*programFlagVi := !programFlagVi @ [makeGlobalVar "programFlag" intType];
-  f.globals <- GVar(List.nth !programFlagVi 0, {init=None}, locUnknown) :: f.globals;*)
-  List.iter (fun g ->
+   List.iter (fun g ->
 	     match g with
 	     |GFun (fd, loc) ->
 	       if (List.mem fd.svar.vname !Param.func_list) then begin

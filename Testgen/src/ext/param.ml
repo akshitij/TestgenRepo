@@ -1,7 +1,7 @@
 open Cil
 open Pretty
 open Unix
-open Printf
+
 module E = Errormsg
 
 let unrollcount = ref 2
@@ -9,7 +9,47 @@ let func = ref ""
 let tcFile = ref "tc.csv"
 let filename = ref "random"  
 let func_list = ref []
-let file = "functions.txt"
+
+let deleteSTable = ref "delete_allSTableEntry"
+let makeDelSTableFunction () : varinfo = 
+  let v = makeGlobalVar !deleteSTable 
+                        (TFun(voidType, Some [],
+                              true, [])) in
+  v
+
+let printf: varinfo option ref = ref None
+let printFunctionName = ref "printf"
+let makePrintfFunction () : varinfo = 
+  match !printf with 
+    Some v -> v
+  | None -> begin 
+            let v = makeGlobalVar !printFunctionName 
+                                  (TFun(voidType, Some [("format", charPtrType, [])],
+                                        true, [])) in
+            printf := Some v;
+            v
+  end
+
+let mkPrint (format: string) (args: exp list) : instr = 
+  let p: varinfo = makePrintfFunction () in 
+  Call(None, Lval(var p), (mkString format) :: args, !currentLoc)
+
+(* prototype for custom Printf function *)
+let printfFun: fundec =
+  let fdec = emptyFunction "printf" in
+  fdec.svar.vtype <-
+     TFun(intType, Some [ ("format", charPtrType, [])], true, []);
+  fdec
+
+let doPrintf format args =
+  mkStmtOneInstr (
+    Call(
+      None,
+      Lval(var printfFun.svar),
+      (Const(CStr format)) :: args,
+      locUnknown
+    )
+  )
 
 let print_params () =
   E.log "#############\n";
@@ -37,13 +77,7 @@ let get_func_list (f: file) =
     | GFun(fn, _) -> fn.svar.vname
     | _ -> ""
   ) functions 
-  
-let printfuncinFile () =
-  
-  let oc = open_out file in    
-  List.iter(fun f -> fprintf oc "%s\n" f;
-  )!func_list;
-  close_out oc    
+   
 
 let get_func () =
   let index = ref 0 in 
@@ -59,10 +93,13 @@ let get_func () =
       E.log "\nEnter the function number to test : ";
       let n = read_int() in
       func := (List.nth !func_list n);
-      if !func = "main" then
+      E.log "You have entered %s\n" !func;
+      if !func = "main" then begin
         func_list := !func_list @ ["main1"];
-        func := "main1";
-    end
+        func := "main1"
+      end
+    end;
+    E.log "You have entered %s\n" !func
 
 
 
@@ -75,7 +112,6 @@ let init (f: file) =
     
 let do_param (f: file) =
   init f;
-  printfuncinFile();
   get_unrollcount();
   get_func();
   getTCFile();

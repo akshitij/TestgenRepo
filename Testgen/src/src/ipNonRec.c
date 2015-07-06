@@ -173,29 +173,31 @@ void funcEntry(char* format, char* args, char* funcName) {
 	printf("funcEntry: %s \"%s\" \n", funcName, args);
 	int size=0;
 	varNames = (char**) malloc(10 * sizeof(char*));
-	char s[] = " ";
-	char *token;
-	char *copy = strdup(args);
-	char* tmp = copy;
-	int count = 1;
-	while (*tmp != '\0') {
-		if (*tmp++ == ' ')
-			count++;
+	if(strcmp(args,"") != 0){ //handle functions with no arguments
+		char s[] = " ";
+		char *token;
+		char *copy = strdup(args);
+		char* tmp = copy;
+		int count = 1;
+		while (*tmp != '\0') {
+			if (*tmp++ == ' ')
+				count++;
+		}
+		char** tokens = (char**) malloc(sizeof(char*) * count);
+		token = strtok(copy, s);
+		int i = 0;
+		while (token != NULL) {
+			*(tokens + i) = token;
+			token = strtok(NULL, s);
+			i++;
+		}
+		for (i = 0; i < count; i++) {
+			funcArg *a = getArgument(*(tokens + i), funcName);
+			varNames[size++] = a->vname;
+			populateSTable(a);
+		}
+		free(copy);
 	}
-	char** tokens = (char**) malloc(sizeof(char*) * count);
-	token = strtok(copy, s);
-	int i = 0;
-	while (token != NULL) {
-		*(tokens + i) = token;
-		token = strtok(NULL, s);
-		i++;
-	}
-	for (i = 0; i < count; i++) {
-		funcArg *a = getArgument(*(tokens + i), funcName);
-		varNames[size++] = a->vname;
-		populateSTable(a);
-	}
-
 	funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
 	fv->vars = varNames;
 	fv->noOfVars = size;
@@ -211,7 +213,6 @@ void funcEntry(char* format, char* args, char* funcName) {
 	}
 	size=0;
     	i=0;
-	free(copy);
 	printf("Stack depth %d\n", stackSize(symStack));
 }
 
@@ -221,9 +222,9 @@ void symAssignFunctionReturn(char* varname){
 	add_entryToSTable(varname,ret_SymValue,ret_ConValue,ret_ConValue,1);
 }
 
-void funcExit(char* AssignLval){
-    printf("AssignLval: \"%s\" \n",AssignLval);
-    symAssignFunctionReturn(AssignLval);
+void funcExit(){
+    //printf("AssignLval: \"%s\" \n",AssignLval);
+    //symAssignFunctionReturn(AssignLval);
     funcVars* fv = (funcVars*) malloc (sizeof(funcVars));
     stackPop(symStack, (&fv));
     int j;

@@ -7,7 +7,6 @@ int foo(int n){
 int main(){
 	int a,b;
 	scanf("%d",&a);
-	//a should be positive
 	a = foo(a);
 	if(a == 45){
 		b = 1;

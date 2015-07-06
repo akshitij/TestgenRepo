@@ -1,1 +1,1 @@
-perl /home/akshitij/Desktop/thesis/Testgen/bin/patcher %*
+perl /home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen/bin/patcher %*

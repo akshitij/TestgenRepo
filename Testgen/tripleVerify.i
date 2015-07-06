@@ -1,5 +1,5 @@
 # 1 "tripleVerify.c"
-# 1 "/home/akshitij/Desktop/thesis/Testgen//"
+# 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
@@ -838,10 +838,7 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 int main(){
  int a,b;
  scanf("%d",&a);
-
- int n;
- n = 3*a;
- a=n;
+ a = 3 * a;
  if(a == 45){
   b = 1;
  }

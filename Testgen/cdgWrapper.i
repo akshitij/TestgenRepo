@@ -1,5 +1,5 @@
 # 1 "src/src/cdgWrapper.c"
-# 1 "/home/akshitij/Desktop/thesis/Testgen//"
+# 1 "/home/akshitij/Desktop/thesis/Testgen/Testgen_Sonam/Testgen//"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
@@ -3212,11 +3212,9 @@ int getTestCases() {
 
    currPath = newSATPath;
 
+   percent = (countCoveredConditions() * 100) / (2 * countTotalConditions());
 
 
-   if (countOrgTotalConditions() == 0)
-   orgPercent =100 ;
-   else
    orgPercent = (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
    printf("COVERAGE = %f....\n",orgPercent);
 
@@ -3257,9 +3255,7 @@ if(savePath != ((void *)0))
 
       percent = (countCoveredConditions() * 100) / (2 * countTotalConditions());
 
-      if (countOrgTotalConditions() == 0)
-      orgPercent =100 ;
-      else
+
       orgPercent = (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
       printf("COVERAGE = %f....\n",orgPercent);
 
@@ -3286,7 +3282,7 @@ if(savePath != ((void *)0))
     printf("Error opening file!\n");
     exit(1);
   }
-# 537 "src/src/cdgWrapper.c"
+# 533 "src/src/cdgWrapper.c"
   while (curr != ((void *)0)) {
     if (curr->id == 0)
       break;

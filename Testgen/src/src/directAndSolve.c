@@ -180,7 +180,7 @@ int getOutputFromConstraintSolver()	//returns 1 for sat and 0 for unsat
       if (negative)
 	value = value * -1;
 
-      // printf("save=%s, token=%s value=%d\n",save,token,value);
+      printf("save=%s, token=%s value=%d\n",save,token,value);
       updateValBySymbolicName(save, &value);
       break;
 
@@ -205,13 +205,11 @@ void directPathConditions() {
 
   //printf("countNoNewConditionAttempts = %d\n",countNoNewConditionAttempts);
 
-  /*percent =  (countCoveredConditions() * 100)/(2 * countTotalConditions());*/
+  percent =  (countCoveredConditions() * 100)/(2 * countTotalConditions());
   /*printf("\nCOVERAGE = %f....\n",percent);*/
-  if (countOrgTotalConditions() == 0)
-  orgPercent = 100 ;
-  else
+  
   orgPercent =  (countOrgCoveredConditions() * 100)/(2 * countOrgTotalConditions());
-  printf("COVERAGE = %f....(%d*100/2*%d)\n",orgPercent,countOrgCoveredConditions(),countOrgTotalConditions());   
+  printf("COVERAGE = %f....\n",orgPercent);   
   
   FILE *coveragefile = fopen("src/src/coverage.txt","ab+");
   fprintf(coveragefile, "%.1f\n", orgPercent); 
@@ -396,6 +394,7 @@ void directPathConditions() {
 
     getPrint();
     writeProgramSVariables();
+    printf("Path Condition : %s\n",(newPathCondition != NULL ? newPathCondition:"null"));
     writeConditionsToFile(newPathCondition);
 
     if (!getOutputFromConstraintSolver()) {
