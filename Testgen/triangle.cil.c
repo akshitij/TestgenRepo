@@ -15932,7 +15932,7 @@ int main1(int side1 , int side2 , int side3 )
   __cil_tmp9 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp9", "Function", & __cil_tmp9, & __cil_tmp9, -1);
   sprintf(__cil_tmp9, "\t%d\t%d\t%d\n", side1, side2, side3);
-  printTestCase("triangle_main1_1435875532.tc", __cil_tmp9);
+  printTestCase("triangle_main1_1436149297.tc", __cil_tmp9);
   add_entryToSTable("side3", "s2", & side3, & side3, 1);
   add_entryToSTable("side2", "s1", & side2, & side2, 1);
   add_entryToSTable("side1", "s0", & side1, & side1, 1);

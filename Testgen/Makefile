@@ -43,7 +43,7 @@ ifdef RELEASE
 endif
 
 ifndef CAMLNATTL
-  ifeq (0, 1)
+  ifeq (1, 1)
     CAMLNATTL := 1
   endif
 endif
@@ -103,7 +103,7 @@ CILLY_LIBRARY_MODULES = pretty inthash errormsg alpha trace stats util clist \
 	      dataslicing sfi expcompare\
               cfg liveness reachingdefs deadcodeelim availexps \
               availexpslv predabst\
-	test param handleCalls insertTestDriver handleExp modifyVars loopUnroll extractStruct makeCDG loopUnrollOthers sidTable sym level_struct vartype varUpdated helperpathsym pathSymbol handleUnseenNodes insertReturnHolders instMapConcolic entryExit fixMainForGlobals\
+	test param handleBreak handleAssert testgenStub handleCalls insertTestDriver handleExp modifyVars loopUnroll extractStruct makeCDG loopUnrollOthers sidTable sym level_struct vartype varUpdated helperpathsym pathSymbol handleUnseenNodes insertReturnHolders instMapConcolic entryExit fixMainForGlobals\
               testcil\
 	      $(CILLY_FEATURES) \
 	      ciloptions feature_config

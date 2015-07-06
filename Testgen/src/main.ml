@@ -106,6 +106,9 @@ let features : C.featureDescr list =
     Liveness.feature;
     (* Our features *)
     Param.feature;
+    HandleBreak.feature;
+    HandleAssert.feature;
+    TestgenStub.feature;
     HandleCalls.feature;
     InsertTestDriver.feature;
     HandleExp.feature;
