@@ -15865,338 +15865,102 @@ int Inhibit_Biased_Climb(void)
 }
 }
 int Own_Below_Threat(void) ;
-void createCDG(void) 
+int Non_Crossing_Biased_Climb(void) 
 { 
-
-
-  {
-  addtoCDGnode(0, 0, 0);
-  addtoCDGnode(1, 0, 1);
-  addtoCDGnode(2, 0, 1);
-  setArray(2, "upward_preferred");
-  addtoCDGnode(3, 2, 1);
-  addtoCDGnode(14, 2, 0);
-  setArray(14, "(>= Cur_Vertical_Sep 300)");
-  addtoCDGnode(4, 2, 1);
-  setArray(4, "tmp___0");
-  addtoCDGnode(5, 4, 1);
-  addtoCDGnode(12, 4, 0);
-  addtoCDGnode(6, 4, 1);
-  setArray(6, "tmp___1");
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(11, 6, 0);
-  addtoCDGnode(8, 6, 1);
-  setArray(8, "(>= Down_Separation tmp___2)");
-  addtoCDGnode(9, 8, 1);
-  addtoCDGnode(10, 8, 0);
-  addtoCDGnode(13, 2, 1);
-  addtoCDGnode(13, 2, 1);
-  addtoCDGnode(13, 2, 1);
-  addtoCDGnode(13, 2, 1);
-  addtoCDGnode(21, 0, 1);
-  addtoCDGnode(15, 14, 1);
-  addtoCDGnode(19, 14, 0);
-  addtoCDGnode(16, 14, 1);
-  setArray(16, "(>= Up_Separation tmp___4)");
-  addtoCDGnode(17, 16, 1);
-  addtoCDGnode(18, 16, 0);
-  addtoCDGnode(20, 2, 0);
-  addtoCDGnode(20, 2, 0);
-  addtoCDGnode(20, 2, 0);
-  addtoCDGnode(21, 0, 1);
-  addtoCDGnode(22, 0, 1);
-}
-}
-void isCopyOfHolder(void) 
-{ 
-
-
-  {
-
-}
-}
-void createSidTable(void) 
-{ 
-
-
-  {
-  add_condition(8, "(>= Down_Separation tmp___2)", "(not (>= Down_Separation tmp___2))",
-                0, 0);
-  add_condition(6, "tmp___1", "(not tmp___1)", 0, 0);
-  add_condition(4, "tmp___0", "(not tmp___0)", 0, 0);
-  add_condition(16, "(>= Up_Separation tmp___4)", "(not (>= Up_Separation tmp___4))",
-                0, 0);
-  add_condition(14, "(>= Cur_Vertical_Sep 300)", "(not (>= Cur_Vertical_Sep 300))",
-                0, 0);
-  add_condition(2, "upward_preferred", "(not upward_preferred)", 0, 0);
-}
-}
-struct arguments {
-   int Cur_Vertical_Sep ;
-   int High_Confidence ;
-   int Two_of_Three_Reports_Valid ;
-   int Own_Tracked_Alt ;
-   int Own_Tracked_Alt_Rate ;
-   int Other_Tracked_Alt ;
-   int Alt_Layer_Value ;
-   int Positive_RA_Alt_Thresh[4] ;
-   int Up_Separation ;
-   int Down_Separation ;
-   int Other_RAC ;
-   int Other_Capability ;
-   int Climb_Inhibit ;
-};
-struct arguments argvar ;
-int Non_Crossing_Biased_Climb(int global_Cur_Vertical_Sep , int global_High_Confidence ,
-                              int global_Two_of_Three_Reports_Valid , int global_Own_Tracked_Alt ,
-                              int global_Own_Tracked_Alt_Rate , int global_Other_Tracked_Alt ,
-                              int global_Alt_Layer_Value , int global_Positive_RA_Alt_Thresh[4] ,
-                              int global_Up_Separation , int global_Down_Separation ,
-                              int global_Other_RAC , int global_Other_Capability ,
-                              int global_Climb_Inhibit ) 
-{ 
-  int upward_preferred ;
-  int result ;
-  int tmp ;
-  int tmp___0 ;
-  int tmp___1 ;
-  int tmp___2 ;
-  int tmp___3 ;
-  int tmp___4 ;
-  int tmp___5 ;
-  int exp_outcome ;
-  int overall_outcome ;
-  int __cil_tmp13 ;
-  char *__cil_tmp14 ;
+  int Non_Crossing_Biased_Climb_upward_preferred ;
+  int Non_Crossing_Biased_Climb_result ;
+  int Non_Crossing_Biased_Climb_tmp ;
+  int Non_Crossing_Biased_Climb_tmp___0 ;
+  int Non_Crossing_Biased_Climb_tmp___1 ;
+  int Non_Crossing_Biased_Climb_tmp___2 ;
+  int Non_Crossing_Biased_Climb_tmp___3 ;
+  int Non_Crossing_Biased_Climb_tmp___4 ;
+  int Non_Crossing_Biased_Climb_tmp___5 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  Climb_Inhibit = global_Climb_Inhibit;
-  Other_Capability = global_Other_Capability;
-  Other_RAC = global_Other_RAC;
-  Down_Separation = global_Down_Separation;
-  Up_Separation = global_Up_Separation;
-  Alt_Layer_Value = global_Alt_Layer_Value;
-  Other_Tracked_Alt = global_Other_Tracked_Alt;
-  Own_Tracked_Alt_Rate = global_Own_Tracked_Alt_Rate;
-  Own_Tracked_Alt = global_Own_Tracked_Alt;
-  Two_of_Three_Reports_Valid = global_Two_of_Three_Reports_Valid;
-  High_Confidence = global_High_Confidence;
-  Cur_Vertical_Sep = global_Cur_Vertical_Sep;
-  __cil_tmp14 = malloc(100 * sizeof(char ));
-  add_entryToSTable("__cil_tmp14", "Function", & __cil_tmp14, & __cil_tmp14, -1);
-  sprintf(__cil_tmp14, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
-          Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
-          Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh[0],
-          Positive_RA_Alt_Thresh[1], Positive_RA_Alt_Thresh[2], Positive_RA_Alt_Thresh[3],
-          Positive_RA_Alt_Thresh[4], Up_Separation, Down_Separation, Other_RAC, Other_Capability,
-          Climb_Inhibit);
-  printTestCase("tcas_Non_Crossing_Biased_Climb_1435864532.tc", __cil_tmp14);
-  add_entryToSTable("Climb_Inhibit", "s12", & Climb_Inhibit, & Climb_Inhibit, 1);
-  add_entryToSTable("Other_Capability", "s11", & Other_Capability, & Other_Capability,
-                    1);
-  add_entryToSTable("Other_RAC", "s10", & Other_RAC, & Other_RAC, 1);
-  add_entryToSTable("Down_Separation", "s9", & Down_Separation, & Down_Separation,
-                    1);
-  add_entryToSTable("Up_Separation", "s8", & Up_Separation, & Up_Separation, 1);
-  add_entryToSTable("Alt_Layer_Value", "s6", & Alt_Layer_Value, & Alt_Layer_Value,
-                    1);
-  add_entryToSTable("Other_Tracked_Alt", "s5", & Other_Tracked_Alt, & Other_Tracked_Alt,
-                    1);
-  add_entryToSTable("Own_Tracked_Alt_Rate", "s4", & Own_Tracked_Alt_Rate, & Own_Tracked_Alt_Rate,
-                    1);
-  add_entryToSTable("Own_Tracked_Alt", "s3", & Own_Tracked_Alt, & Own_Tracked_Alt,
-                    1);
-  add_entryToSTable("Two_of_Three_Reports_Valid", "s2", & Two_of_Three_Reports_Valid,
-                    & Two_of_Three_Reports_Valid, 1);
-  add_entryToSTable("High_Confidence", "s1", & High_Confidence, & High_Confidence,
-                    1);
-  add_entryToSTable("Cur_Vertical_Sep", "s0", & Cur_Vertical_Sep, & Cur_Vertical_Sep,
-                    1);
   funcEntry("", "Inhibit_Biased_Climb_tmp", "Inhibit_Biased_Climb");
-  tmp = Inhibit_Biased_Climb();
+  Non_Crossing_Biased_Climb_tmp = Inhibit_Biased_Climb();
   funcExit();
-  add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 1);
-  upward_preferred = tmp > Down_Separation;
-  handleAssignmentSymbolically("upward_preferred", "(> tmp Down_Separation)", & upward_preferred,
-                               & upward_preferred, 1);
-  {
-  exp_outcome = upward_preferred;
-  handleAssignmentSymbolically("exp_outcome", "upward_preferred", & upward_preferred,
-                               & upward_preferred, 1);
-  overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(2, 1, 0);
-    setTrueExpr(2, "upward_preferred");
-    setFalseExpr(2, "(not upward_preferred)");
-    addToTree(2, 1, "upward_preferred", "(not upward_preferred)", 0, 1);
-    delete_allVariableTableEntry();
+  add_entryToSTable("Non_Crossing_Biased_Climb_tmp", ret_SymValue, ret_ConValue, & Non_Crossing_Biased_Climb_tmp,
+                    1);
+  Non_Crossing_Biased_Climb_upward_preferred = Non_Crossing_Biased_Climb_tmp > Down_Separation;
+  handleAssignmentSymbolically("Non_Crossing_Biased_Climb_upward_preferred", "(> Non_Crossing_Biased_Climb_tmp Down_Separation)",
+                               & Non_Crossing_Biased_Climb_upward_preferred, & Non_Crossing_Biased_Climb_upward_preferred,
+                               1);
+  if (Non_Crossing_Biased_Climb_upward_preferred) {
     funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-    tmp___0 = Own_Below_Threat();
+    Non_Crossing_Biased_Climb_tmp___0 = Own_Below_Threat();
     funcExit();
-    add_entryToSTable("tmp___0", ret_SymValue, ret_ConValue, & tmp___0, 1);
-    {
-    exp_outcome = tmp___0;
-    handleAssignmentSymbolically("exp_outcome", "tmp___0", & tmp___0, & tmp___0, 1);
-    overall_outcome = (int )getConditionalOutcome(4, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(4, 1, 0);
-      setTrueExpr(4, "tmp___0");
-      setFalseExpr(4, "(not tmp___0)");
-      addToTree(4, 2, "tmp___0", "(not tmp___0)", 2, 1);
-      delete_allVariableTableEntry();
+    add_entryToSTable("Non_Crossing_Biased_Climb_tmp___0", ret_SymValue, ret_ConValue,
+                      & Non_Crossing_Biased_Climb_tmp___0, 1);
+    if (Non_Crossing_Biased_Climb_tmp___0) {
       funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-      tmp___1 = Own_Below_Threat();
+      Non_Crossing_Biased_Climb_tmp___1 = Own_Below_Threat();
       funcExit();
-      add_entryToSTable("tmp___1", ret_SymValue, ret_ConValue, & tmp___1, 1);
-      {
-      exp_outcome = tmp___1;
-      handleAssignmentSymbolically("exp_outcome", "tmp___1", & tmp___1, & tmp___1,
-                                   1);
-      overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(6, 1, 0);
-        setTrueExpr(6, "tmp___1");
-        setFalseExpr(6, "(not tmp___1)");
-        addToTree(6, 3, "tmp___1", "(not tmp___1)", 4, 1);
-        delete_allVariableTableEntry();
+      add_entryToSTable("Non_Crossing_Biased_Climb_tmp___1", ret_SymValue, ret_ConValue,
+                        & Non_Crossing_Biased_Climb_tmp___1, 1);
+      if (Non_Crossing_Biased_Climb_tmp___1) {
         funcEntry("", "ALIM___cil_tmp1", "ALIM");
-        tmp___2 = ALIM();
+        Non_Crossing_Biased_Climb_tmp___2 = ALIM();
         funcExit();
-        add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
-        {
-        exp_outcome = Down_Separation >= tmp___2;
-        handleAssignmentSymbolically("exp_outcome", "(>= Down_Separation tmp___2)",
-                                     & exp_outcome, & exp_outcome, 1);
-        overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
-        if (overall_outcome) {
-          setBranchInfo(8, 1, 0);
-          setTrueExpr(8, "(>= Down_Separation tmp___2)");
-          setFalseExpr(8, "(not (>= Down_Separation tmp___2))");
-          addToTree(8, 4, "(>= Down_Separation tmp___2)", "(not (>= Down_Separation tmp___2))",
-                    6, 1);
-          delete_allVariableTableEntry();
-          tmp___3 = 0;
-          add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
+        add_entryToSTable("Non_Crossing_Biased_Climb_tmp___2", ret_SymValue, ret_ConValue,
+                          & Non_Crossing_Biased_Climb_tmp___2, 1);
+        if (Down_Separation >= Non_Crossing_Biased_Climb_tmp___2) {
+          Non_Crossing_Biased_Climb_tmp___3 = 0;
+          add_entryToSTable("Non_Crossing_Biased_Climb_tmp___3", "Constant", & Non_Crossing_Biased_Climb_tmp___3,
+                            & Non_Crossing_Biased_Climb_tmp___3, 1);
         } else {
-          setBranchInfo(8, 0, 1);
-          setTrueExpr(8, "(>= Down_Separation tmp___2)");
-          setFalseExpr(8, "(not (>= Down_Separation tmp___2))");
-          addToTree(8, 4, "(>= Down_Separation tmp___2)", "(not (>= Down_Separation tmp___2))",
-                    6, 0);
-          delete_allVariableTableEntry();
-          tmp___3 = 1;
-          add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
-        }
+          Non_Crossing_Biased_Climb_tmp___3 = 1;
+          add_entryToSTable("Non_Crossing_Biased_Climb_tmp___3", "Constant", & Non_Crossing_Biased_Climb_tmp___3,
+                            & Non_Crossing_Biased_Climb_tmp___3, 1);
         }
       } else {
-        setBranchInfo(6, 0, 1);
-        setTrueExpr(6, "tmp___1");
-        setFalseExpr(6, "(not tmp___1)");
-        addToTree(6, 3, "tmp___1", "(not tmp___1)", 4, 0);
-        delete_allVariableTableEntry();
-        tmp___3 = 0;
-        add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
-      }
+        Non_Crossing_Biased_Climb_tmp___3 = 0;
+        add_entryToSTable("Non_Crossing_Biased_Climb_tmp___3", "Constant", & Non_Crossing_Biased_Climb_tmp___3,
+                          & Non_Crossing_Biased_Climb_tmp___3, 1);
       }
     } else {
-      setBranchInfo(4, 0, 1);
-      setTrueExpr(4, "tmp___0");
-      setFalseExpr(4, "(not tmp___0)");
-      addToTree(4, 2, "tmp___0", "(not tmp___0)", 2, 0);
-      delete_allVariableTableEntry();
-      tmp___3 = 1;
-      add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
+      Non_Crossing_Biased_Climb_tmp___3 = 1;
+      add_entryToSTable("Non_Crossing_Biased_Climb_tmp___3", "Constant", & Non_Crossing_Biased_Climb_tmp___3,
+                        & Non_Crossing_Biased_Climb_tmp___3, 1);
     }
-    }
-    result = tmp___3;
-    handleAssignmentSymbolically("result", "tmp___3", & tmp___3, & tmp___3, 1);
+    Non_Crossing_Biased_Climb_result = Non_Crossing_Biased_Climb_tmp___3;
+    handleAssignmentSymbolically("Non_Crossing_Biased_Climb_result", "Non_Crossing_Biased_Climb_tmp___3",
+                                 & Non_Crossing_Biased_Climb_tmp___3, & Non_Crossing_Biased_Climb_tmp___3,
+                                 1);
   } else {
-    setBranchInfo(2, 0, 1);
-    setTrueExpr(2, "upward_preferred");
-    setFalseExpr(2, "(not upward_preferred)");
-    addToTree(2, 1, "upward_preferred", "(not upward_preferred)", 0, 0);
-    delete_allVariableTableEntry();
-    {
-    exp_outcome = Cur_Vertical_Sep >= 300;
-    handleAssignmentSymbolically("exp_outcome", "(>= Cur_Vertical_Sep 300)", & exp_outcome,
-                                 & exp_outcome, 1);
-    overall_outcome = (int )getConditionalOutcome(14, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(14, 1, 0);
-      setTrueExpr(14, "(>= Cur_Vertical_Sep 300)");
-      setFalseExpr(14, "(not (>= Cur_Vertical_Sep 300))");
-      addToTree(14, 2, "(>= Cur_Vertical_Sep 300)", "(not (>= Cur_Vertical_Sep 300))",
-                2, 1);
-      delete_allVariableTableEntry();
+    if (Cur_Vertical_Sep >= 300) {
       funcEntry("", "ALIM___cil_tmp1", "ALIM");
-      tmp___4 = ALIM();
+      Non_Crossing_Biased_Climb_tmp___4 = ALIM();
       funcExit();
-      add_entryToSTable("tmp___4", ret_SymValue, ret_ConValue, & tmp___4, 1);
-      {
-      exp_outcome = Up_Separation >= tmp___4;
-      handleAssignmentSymbolically("exp_outcome", "(>= Up_Separation tmp___4)", & exp_outcome,
-                                   & exp_outcome, 1);
-      overall_outcome = (int )getConditionalOutcome(16, exp_outcome);
-      if (overall_outcome) {
-        setBranchInfo(16, 1, 0);
-        setTrueExpr(16, "(>= Up_Separation tmp___4)");
-        setFalseExpr(16, "(not (>= Up_Separation tmp___4))");
-        addToTree(16, 3, "(>= Up_Separation tmp___4)", "(not (>= Up_Separation tmp___4))",
-                  14, 1);
-        delete_allVariableTableEntry();
-        tmp___5 = 1;
-        add_entryToSTable("tmp___5", "Constant", & tmp___5, & tmp___5, 1);
+      add_entryToSTable("Non_Crossing_Biased_Climb_tmp___4", ret_SymValue, ret_ConValue,
+                        & Non_Crossing_Biased_Climb_tmp___4, 1);
+      if (Up_Separation >= Non_Crossing_Biased_Climb_tmp___4) {
+        Non_Crossing_Biased_Climb_tmp___5 = 1;
+        add_entryToSTable("Non_Crossing_Biased_Climb_tmp___5", "Constant", & Non_Crossing_Biased_Climb_tmp___5,
+                          & Non_Crossing_Biased_Climb_tmp___5, 1);
       } else {
-        setBranchInfo(16, 0, 1);
-        setTrueExpr(16, "(>= Up_Separation tmp___4)");
-        setFalseExpr(16, "(not (>= Up_Separation tmp___4))");
-        addToTree(16, 3, "(>= Up_Separation tmp___4)", "(not (>= Up_Separation tmp___4))",
-                  14, 0);
-        delete_allVariableTableEntry();
-        tmp___5 = 0;
-        add_entryToSTable("tmp___5", "Constant", & tmp___5, & tmp___5, 1);
-      }
+        Non_Crossing_Biased_Climb_tmp___5 = 0;
+        add_entryToSTable("Non_Crossing_Biased_Climb_tmp___5", "Constant", & Non_Crossing_Biased_Climb_tmp___5,
+                          & Non_Crossing_Biased_Climb_tmp___5, 1);
       }
     } else {
-      setBranchInfo(14, 0, 1);
-      setTrueExpr(14, "(>= Cur_Vertical_Sep 300)");
-      setFalseExpr(14, "(not (>= Cur_Vertical_Sep 300))");
-      addToTree(14, 2, "(>= Cur_Vertical_Sep 300)", "(not (>= Cur_Vertical_Sep 300))",
-                2, 0);
-      delete_allVariableTableEntry();
-      tmp___5 = 0;
-      add_entryToSTable("tmp___5", "Constant", & tmp___5, & tmp___5, 1);
+      Non_Crossing_Biased_Climb_tmp___5 = 0;
+      add_entryToSTable("Non_Crossing_Biased_Climb_tmp___5", "Constant", & Non_Crossing_Biased_Climb_tmp___5,
+                        & Non_Crossing_Biased_Climb_tmp___5, 1);
     }
-    }
-    result = tmp___5;
-    handleAssignmentSymbolically("result", "tmp___5", & tmp___5, & tmp___5, 1);
+    Non_Crossing_Biased_Climb_result = Non_Crossing_Biased_Climb_tmp___5;
+    handleAssignmentSymbolically("Non_Crossing_Biased_Climb_result", "Non_Crossing_Biased_Climb_tmp___5",
+                                 & Non_Crossing_Biased_Climb_tmp___5, & Non_Crossing_Biased_Climb_tmp___5,
+                                 1);
   }
+  {
+  mapConcolicValues("Non_Crossing_Biased_Climb_result", & Non_Crossing_Biased_Climb_result);
+  return (Non_Crossing_Biased_Climb_result);
   }
-  __cil_tmp13 = isNotQueueEmpty();
-  if (__cil_tmp13) {
-    enQueue();
-    directPathConditions();
-    delete_allSTableEntry();
-    delete_allStructTableEntry();
-    Non_Crossing_Biased_Climb(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
-                              Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt,
-                              Alt_Layer_Value, Positive_RA_Alt_Thresh, Up_Separation,
-                              Down_Separation, Other_RAC, Other_Capability, Climb_Inhibit);
-  } else {
-    __cil_tmp13 = startCDG();
-    add_entryToSTable("__cil_tmp13", "Function", & __cil_tmp13, & __cil_tmp13, 1);
-    if (__cil_tmp13) {
-      __cil_tmp13 = getTestCases();
-      Non_Crossing_Biased_Climb(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
-                                Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt,
-                                Alt_Layer_Value, Positive_RA_Alt_Thresh, Up_Separation,
-                                Down_Separation, Other_RAC, Other_Capability, Climb_Inhibit);
-    }
-  }
-  return (result);
 }
 }
 int Own_Above_Threat(void) ;
@@ -16350,171 +16114,641 @@ int Own_Above_Threat(void)
   }
 }
 }
-int alt_sep_test(void) 
+void createCDG(void) 
 { 
-  int alt_sep_test_enabled ;
-  int alt_sep_test_tcas_equipped ;
-  int alt_sep_test_intent_not_known ;
-  int alt_sep_test_need_upward_RA ;
-  int alt_sep_test_need_downward_RA ;
-  int alt_sep_test_alt_sep ;
-  int alt_sep_test_tmp ;
-  int alt_sep_test_tmp___0 ;
-  int alt_sep_test_tmp___1 ;
-  int alt_sep_test_tmp___2 ;
-  int alt_sep_test_tmp___3 ;
-  int alt_sep_test_tmp___4 ;
-  int alt_sep_test_tmp___5 ;
-  int alt_sep_test_tmp___6 ;
+
+
+  {
+  addtoCDGnode(0, 0, 0);
+  addtoCDGnode(1, 0, 1);
+  setArray(1, "High_Confidence");
+  addtoCDGnode(2, 1, 1);
+  setArray(2, "(<= Own_Tracked_Alt_Rate 600)");
+  addtoCDGnode(7, 1, 0);
+  addtoCDGnode(3, 2, 1);
+  setArray(3, "(> Cur_Vertical_Sep 600)");
+  addtoCDGnode(6, 2, 0);
+  addtoCDGnode(4, 3, 1);
+  addtoCDGnode(5, 3, 0);
+  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(8, 0, 1);
+  addtoCDGnode(9, 0, 1);
+  setArray(9, "Two_of_Three_Reports_Valid");
+  addtoCDGnode(10, 9, 1);
+  setArray(10, "(= Other_RAC 0)");
+  addtoCDGnode(13, 9, 0);
+  addtoCDGnode(11, 10, 1);
+  addtoCDGnode(12, 10, 0);
+  addtoCDGnode(14, 0, 1);
+  addtoCDGnode(14, 0, 1);
+  addtoCDGnode(14, 0, 1);
+  addtoCDGnode(15, 0, 1);
+  setArray(15, "enabled");
+  addtoCDGnode(16, 15, 1);
+  setArray(16, "tcas_equipped");
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(17, 16, 1);
+  setArray(17, "intent_not_known");
+  addtoCDGnode(20, 16, 0);
+  setArray(20, "(! tcas_equipped)");
+  addtoCDGnode(18, 17, 1);
+  addtoCDGnode(19, 17, 0);
+  addtoCDGnode(21, 20, 1);
+  addtoCDGnode(20, 17, 0);
+  setArray(20, "(! tcas_equipped)");
+  addtoCDGnode(21, 20, 1);
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(22, 20, 1);
+  setArray(22, "tmp___1");
+  addtoCDGnode(23, 22, 1);
+  addtoCDGnode(27, 22, 0);
+  addtoCDGnode(24, 22, 1);
+  setArray(24, "tmp___2");
+  addtoCDGnode(25, 24, 1);
+  addtoCDGnode(26, 24, 0);
+  addtoCDGnode(28, 20, 1);
+  addtoCDGnode(28, 20, 1);
+  addtoCDGnode(28, 20, 1);
+  addtoCDGnode(29, 20, 1);
+  setArray(29, "tmp___4");
+  addtoCDGnode(30, 29, 1);
+  addtoCDGnode(34, 29, 0);
+  addtoCDGnode(31, 29, 1);
+  setArray(31, "tmp___5");
+  addtoCDGnode(32, 31, 1);
+  addtoCDGnode(33, 31, 0);
+  addtoCDGnode(35, 20, 1);
+  addtoCDGnode(35, 20, 1);
+  addtoCDGnode(35, 20, 1);
+  addtoCDGnode(36, 20, 1);
+  setArray(36, "need_upward_RA");
+  addtoCDGnode(37, 36, 1);
+  setArray(37, "need_downward_RA");
+  addtoCDGnode(40, 36, 0);
+  setArray(40, "need_upward_RA");
+  addtoCDGnode(38, 37, 1);
+  addtoCDGnode(39, 37, 0);
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(40, 37, 0);
+  setArray(40, "need_upward_RA");
+  addtoCDGnode(41, 40, 1);
+  addtoCDGnode(42, 40, 0);
+  setArray(42, "need_downward_RA");
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(43, 42, 1);
+  addtoCDGnode(44, 42, 0);
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(45, 0, 1);
+  addtoCDGnode(46, 0, 1);
+}
+}
+void isCopyOfHolder(void) 
+{ 
+
+
+  {
+
+}
+}
+void createSidTable(void) 
+{ 
+
+
+  {
+  add_condition(3, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))", 0,
+                0);
+  add_condition(2, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
+                0, 0);
+  add_condition(1, "High_Confidence", "(not High_Confidence)", 0, 0);
+  add_condition(10, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 0, 0);
+  add_condition(9, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
+                0, 0);
+  add_condition(17, "intent_not_known", "(not intent_not_known)", 0, 0);
+  add_condition(24, "tmp___2", "(not tmp___2)", 0, 0);
+  add_condition(22, "tmp___1", "(not tmp___1)", 0, 0);
+  add_condition(31, "tmp___5", "(not tmp___5)", 0, 0);
+  add_condition(29, "tmp___4", "(not tmp___4)", 0, 0);
+  add_condition(37, "need_downward_RA", "(not need_downward_RA)", 0, 0);
+  add_condition(42, "need_downward_RA", "(not need_downward_RA)", 0, 0);
+  add_condition(40, "need_upward_RA", "(not need_upward_RA)", 0, 0);
+  add_condition(36, "need_upward_RA", "(not need_upward_RA)", 0, 0);
+  add_condition(20, "(not tcas_equipped)", "tcas_equipped", 0, 0);
+  add_condition(16, "tcas_equipped", "(not tcas_equipped)", 0, 0);
+  add_condition(15, "enabled", "(not enabled)", 0, 0);
+}
+}
+struct arguments {
+   int Cur_Vertical_Sep ;
+   int High_Confidence ;
+   int Two_of_Three_Reports_Valid ;
+   int Own_Tracked_Alt ;
+   int Own_Tracked_Alt_Rate ;
+   int Other_Tracked_Alt ;
+   int Alt_Layer_Value ;
+   int Positive_RA_Alt_Thresh[4] ;
+   int Up_Separation ;
+   int Down_Separation ;
+   int Other_RAC ;
+   int Other_Capability ;
+   int Climb_Inhibit ;
+};
+struct arguments argvar ;
+int alt_sep_test(int global_Cur_Vertical_Sep , int global_High_Confidence , int global_Two_of_Three_Reports_Valid ,
+                 int global_Own_Tracked_Alt , int global_Own_Tracked_Alt_Rate , int global_Other_Tracked_Alt ,
+                 int global_Alt_Layer_Value , int global_Positive_RA_Alt_Thresh[4] ,
+                 int global_Up_Separation , int global_Down_Separation , int global_Other_RAC ,
+                 int global_Other_Capability , int global_Climb_Inhibit ) 
+{ 
+  int enabled ;
+  int tcas_equipped ;
+  int intent_not_known ;
+  int need_upward_RA ;
+  int need_downward_RA ;
+  int alt_sep ;
+  int tmp ;
+  int tmp___0 ;
+  int tmp___1 ;
+  int tmp___2 ;
+  int tmp___3 ;
+  int tmp___4 ;
+  int tmp___5 ;
+  int tmp___6 ;
+  int exp_outcome ;
+  int overall_outcome ;
+  int __cil_tmp17 ;
+  char *__cil_tmp18 ;
   char *symName ;
   void *addr ;
   char in[15] ;
 
   {
-  if (High_Confidence) {
-    if (Own_Tracked_Alt_Rate <= 600) {
-      if (Cur_Vertical_Sep > 600) {
-        alt_sep_test_tmp = 1;
-        add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
-                          1);
+  Climb_Inhibit = global_Climb_Inhibit;
+  Other_Capability = global_Other_Capability;
+  Other_RAC = global_Other_RAC;
+  Down_Separation = global_Down_Separation;
+  Up_Separation = global_Up_Separation;
+  Alt_Layer_Value = global_Alt_Layer_Value;
+  Other_Tracked_Alt = global_Other_Tracked_Alt;
+  Own_Tracked_Alt_Rate = global_Own_Tracked_Alt_Rate;
+  Own_Tracked_Alt = global_Own_Tracked_Alt;
+  Two_of_Three_Reports_Valid = global_Two_of_Three_Reports_Valid;
+  High_Confidence = global_High_Confidence;
+  Cur_Vertical_Sep = global_Cur_Vertical_Sep;
+  __cil_tmp18 = malloc(100 * sizeof(char ));
+  add_entryToSTable("__cil_tmp18", "Function", & __cil_tmp18, & __cil_tmp18, -1);
+  sprintf(__cil_tmp18, "\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\n",
+          Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
+          Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh[0],
+          Positive_RA_Alt_Thresh[1], Positive_RA_Alt_Thresh[2], Positive_RA_Alt_Thresh[3],
+          Positive_RA_Alt_Thresh[4], Up_Separation, Down_Separation, Other_RAC, Other_Capability,
+          Climb_Inhibit);
+  printTestCase("tcas_alt_sep_test_1436249652.tc", __cil_tmp18);
+  add_entryToSTable("Climb_Inhibit", "s12", & Climb_Inhibit, & Climb_Inhibit, 1);
+  add_entryToSTable("Other_Capability", "s11", & Other_Capability, & Other_Capability,
+                    1);
+  add_entryToSTable("Other_RAC", "s10", & Other_RAC, & Other_RAC, 1);
+  add_entryToSTable("Down_Separation", "s9", & Down_Separation, & Down_Separation,
+                    1);
+  add_entryToSTable("Up_Separation", "s8", & Up_Separation, & Up_Separation, 1);
+  add_entryToSTable("Alt_Layer_Value", "s6", & Alt_Layer_Value, & Alt_Layer_Value,
+                    1);
+  add_entryToSTable("Other_Tracked_Alt", "s5", & Other_Tracked_Alt, & Other_Tracked_Alt,
+                    1);
+  add_entryToSTable("Own_Tracked_Alt_Rate", "s4", & Own_Tracked_Alt_Rate, & Own_Tracked_Alt_Rate,
+                    1);
+  add_entryToSTable("Own_Tracked_Alt", "s3", & Own_Tracked_Alt, & Own_Tracked_Alt,
+                    1);
+  add_entryToSTable("Two_of_Three_Reports_Valid", "s2", & Two_of_Three_Reports_Valid,
+                    & Two_of_Three_Reports_Valid, 1);
+  add_entryToSTable("High_Confidence", "s1", & High_Confidence, & High_Confidence,
+                    1);
+  add_entryToSTable("Cur_Vertical_Sep", "s0", & Cur_Vertical_Sep, & Cur_Vertical_Sep,
+                    1);
+  {
+  exp_outcome = High_Confidence;
+  handleAssignmentSymbolically("exp_outcome", "High_Confidence", & High_Confidence,
+                               & High_Confidence, 1);
+  overall_outcome = (int )getConditionalOutcome(1, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(1, 1, 0);
+    setTrueExpr(1, "High_Confidence");
+    setFalseExpr(1, "(not High_Confidence)");
+    addToTree(1, 1, "High_Confidence", "(not High_Confidence)", 0, 1);
+    delete_allVariableTableEntry();
+    {
+    exp_outcome = Own_Tracked_Alt_Rate <= 600;
+    handleAssignmentSymbolically("exp_outcome", "(<= Own_Tracked_Alt_Rate 600)", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(2, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(2, 1, 0);
+      setTrueExpr(2, "(<= Own_Tracked_Alt_Rate 600)");
+      setFalseExpr(2, "(not (<= Own_Tracked_Alt_Rate 600))");
+      addToTree(2, 2, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
+                1, 1);
+      delete_allVariableTableEntry();
+      {
+      exp_outcome = Cur_Vertical_Sep > 600;
+      handleAssignmentSymbolically("exp_outcome", "(> Cur_Vertical_Sep 600)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(3, 1, 0);
+        setTrueExpr(3, "(> Cur_Vertical_Sep 600)");
+        setFalseExpr(3, "(not (> Cur_Vertical_Sep 600))");
+        addToTree(3, 3, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))",
+                  2, 1);
+        delete_allVariableTableEntry();
+        tmp = 1;
+        add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
       } else {
-        alt_sep_test_tmp = 0;
-        add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
-                          1);
+        setBranchInfo(3, 0, 1);
+        setTrueExpr(3, "(> Cur_Vertical_Sep 600)");
+        setFalseExpr(3, "(not (> Cur_Vertical_Sep 600))");
+        addToTree(3, 3, "(> Cur_Vertical_Sep 600)", "(not (> Cur_Vertical_Sep 600))",
+                  2, 0);
+        delete_allVariableTableEntry();
+        tmp = 0;
+        add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
+      }
       }
     } else {
-      alt_sep_test_tmp = 0;
-      add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
-                        1);
+      setBranchInfo(2, 0, 1);
+      setTrueExpr(2, "(<= Own_Tracked_Alt_Rate 600)");
+      setFalseExpr(2, "(not (<= Own_Tracked_Alt_Rate 600))");
+      addToTree(2, 2, "(<= Own_Tracked_Alt_Rate 600)", "(not (<= Own_Tracked_Alt_Rate 600))",
+                1, 0);
+      delete_allVariableTableEntry();
+      tmp = 0;
+      add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
+    }
     }
   } else {
-    alt_sep_test_tmp = 0;
-    add_entryToSTable("alt_sep_test_tmp", "Constant", & alt_sep_test_tmp, & alt_sep_test_tmp,
-                      1);
+    setBranchInfo(1, 0, 1);
+    setTrueExpr(1, "High_Confidence");
+    setFalseExpr(1, "(not High_Confidence)");
+    addToTree(1, 1, "High_Confidence", "(not High_Confidence)", 0, 0);
+    delete_allVariableTableEntry();
+    tmp = 0;
+    add_entryToSTable("tmp", "Constant", & tmp, & tmp, 1);
   }
-  alt_sep_test_enabled = alt_sep_test_tmp;
-  handleAssignmentSymbolically("alt_sep_test_enabled", "alt_sep_test_tmp", & alt_sep_test_tmp,
-                               & alt_sep_test_tmp, 1);
-  alt_sep_test_tcas_equipped = Other_Capability == 1;
-  handleAssignmentSymbolically("alt_sep_test_tcas_equipped", "(= Other_Capability 1)",
-                               & alt_sep_test_tcas_equipped, & alt_sep_test_tcas_equipped,
-                               1);
-  if (Two_of_Three_Reports_Valid) {
-    if (Other_RAC == 0) {
-      alt_sep_test_tmp___0 = 1;
-      add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
-                        & alt_sep_test_tmp___0, 1);
+  }
+  enabled = tmp;
+  handleAssignmentSymbolically("enabled", "tmp", & tmp, & tmp, 1);
+  tcas_equipped = Other_Capability == 1;
+  handleAssignmentSymbolically("tcas_equipped", "(= Other_Capability 1)", & tcas_equipped,
+                               & tcas_equipped, 1);
+  {
+  exp_outcome = Two_of_Three_Reports_Valid;
+  handleAssignmentSymbolically("exp_outcome", "Two_of_Three_Reports_Valid", & Two_of_Three_Reports_Valid,
+                               & Two_of_Three_Reports_Valid, 1);
+  overall_outcome = (int )getConditionalOutcome(9, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(9, 1, 0);
+    setTrueExpr(9, "Two_of_Three_Reports_Valid");
+    setFalseExpr(9, "(not Two_of_Three_Reports_Valid)");
+    addToTree(9, 1, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
+              0, 1);
+    delete_allVariableTableEntry();
+    {
+    exp_outcome = Other_RAC == 0;
+    handleAssignmentSymbolically("exp_outcome", "(= Other_RAC 0)", & exp_outcome,
+                                 & exp_outcome, 1);
+    overall_outcome = (int )getConditionalOutcome(10, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(10, 1, 0);
+      setTrueExpr(10, "(= Other_RAC 0)");
+      setFalseExpr(10, "(not (= Other_RAC 0))");
+      addToTree(10, 2, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 9, 1);
+      delete_allVariableTableEntry();
+      tmp___0 = 1;
+      add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
     } else {
-      alt_sep_test_tmp___0 = 0;
-      add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
-                        & alt_sep_test_tmp___0, 1);
+      setBranchInfo(10, 0, 1);
+      setTrueExpr(10, "(= Other_RAC 0)");
+      setFalseExpr(10, "(not (= Other_RAC 0))");
+      addToTree(10, 2, "(= Other_RAC 0)", "(not (= Other_RAC 0))", 9, 0);
+      delete_allVariableTableEntry();
+      tmp___0 = 0;
+      add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
+    }
     }
   } else {
-    alt_sep_test_tmp___0 = 0;
-    add_entryToSTable("alt_sep_test_tmp___0", "Constant", & alt_sep_test_tmp___0,
-                      & alt_sep_test_tmp___0, 1);
+    setBranchInfo(9, 0, 1);
+    setTrueExpr(9, "Two_of_Three_Reports_Valid");
+    setFalseExpr(9, "(not Two_of_Three_Reports_Valid)");
+    addToTree(9, 1, "Two_of_Three_Reports_Valid", "(not Two_of_Three_Reports_Valid)",
+              0, 0);
+    delete_allVariableTableEntry();
+    tmp___0 = 0;
+    add_entryToSTable("tmp___0", "Constant", & tmp___0, & tmp___0, 1);
   }
-  alt_sep_test_intent_not_known = alt_sep_test_tmp___0;
-  handleAssignmentSymbolically("alt_sep_test_intent_not_known", "alt_sep_test_tmp___0",
-                               & alt_sep_test_tmp___0, & alt_sep_test_tmp___0, 1);
-  alt_sep_test_alt_sep = 0;
-  add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep, & alt_sep_test_alt_sep,
-                    1);
-  if (alt_sep_test_enabled) {
-    if (alt_sep_test_tcas_equipped) {
-      if (alt_sep_test_intent_not_known) {
+  }
+  intent_not_known = tmp___0;
+  handleAssignmentSymbolically("intent_not_known", "tmp___0", & tmp___0, & tmp___0,
+                               1);
+  alt_sep = 0;
+  add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
+  {
+  exp_outcome = enabled;
+  handleAssignmentSymbolically("exp_outcome", "enabled", & enabled, & enabled, 1);
+  overall_outcome = (int )getConditionalOutcome(15, exp_outcome);
+  if (overall_outcome) {
+    setBranchInfo(15, 1, 0);
+    setTrueExpr(15, "enabled");
+    setFalseExpr(15, "(not enabled)");
+    addToTree(15, 1, "enabled", "(not enabled)", 0, 1);
+    delete_allVariableTableEntry();
+    {
+    exp_outcome = tcas_equipped;
+    handleAssignmentSymbolically("exp_outcome", "tcas_equipped", & tcas_equipped,
+                                 & tcas_equipped, 1);
+    overall_outcome = (int )getConditionalOutcome(16, exp_outcome);
+    if (overall_outcome) {
+      setBranchInfo(16, 1, 0);
+      setTrueExpr(16, "tcas_equipped");
+      setFalseExpr(16, "(not tcas_equipped)");
+      addToTree(16, 2, "tcas_equipped", "(not tcas_equipped)", 15, 1);
+      delete_allVariableTableEntry();
+      {
+      exp_outcome = intent_not_known;
+      handleAssignmentSymbolically("exp_outcome", "intent_not_known", & intent_not_known,
+                                   & intent_not_known, 1);
+      overall_outcome = (int )getConditionalOutcome(17, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(17, 1, 0);
+        setTrueExpr(17, "intent_not_known");
+        setFalseExpr(17, "(not intent_not_known)");
+        addToTree(17, 3, "intent_not_known", "(not intent_not_known)", 16, 1);
+        delete_allVariableTableEntry();
         goto _L___0;
       } else {
+        setBranchInfo(17, 0, 1);
+        setTrueExpr(17, "intent_not_known");
+        setFalseExpr(17, "(not intent_not_known)");
+        addToTree(17, 3, "intent_not_known", "(not intent_not_known)", 16, 0);
+        delete_allVariableTableEntry();
         goto _L___1;
       }
-    } else
-    _L___1: /* CIL Label */ 
-    if (! alt_sep_test_tcas_equipped) {
-      _L___0: /* CIL Label */ ;
-      if (alt_sep_test_tmp___1) {
-        funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
-        alt_sep_test_tmp___2 = Own_Below_Threat();
-        funcExit();
-        add_entryToSTable("alt_sep_test_tmp___2", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___2,
-                          1);
-        if (alt_sep_test_tmp___2) {
-          alt_sep_test_tmp___3 = 1;
-          add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
-                            & alt_sep_test_tmp___3, 1);
-        } else {
-          alt_sep_test_tmp___3 = 0;
-          add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
-                            & alt_sep_test_tmp___3, 1);
-        }
-      } else {
-        alt_sep_test_tmp___3 = 0;
-        add_entryToSTable("alt_sep_test_tmp___3", "Constant", & alt_sep_test_tmp___3,
-                          & alt_sep_test_tmp___3, 1);
       }
-      alt_sep_test_need_upward_RA = alt_sep_test_tmp___3;
-      handleAssignmentSymbolically("alt_sep_test_need_upward_RA", "alt_sep_test_tmp___3",
-                                   & alt_sep_test_tmp___3, & alt_sep_test_tmp___3,
-                                   1);
-      funcEntry("", "Non_Crossing_Biased_Descend_upward_preferred Non_Crossing_Biased_Descend_result Non_Crossing_Biased_Descend_tmp Non_Crossing_Biased_Descend_tmp___0 Non_Crossing_Biased_Descend_tmp___1 Non_Crossing_Biased_Descend_tmp___2 Non_Crossing_Biased_Descend_tmp___3 Non_Crossing_Biased_Descend_tmp___4 Non_Crossing_Biased_Descend_tmp___5 Non_Crossing_Biased_Descend_tmp___6",
-                "Non_Crossing_Biased_Descend");
-      alt_sep_test_tmp___4 = Non_Crossing_Biased_Descend();
-      funcExit();
-      add_entryToSTable("alt_sep_test_tmp___4", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___4,
-                        1);
-      if (alt_sep_test_tmp___4) {
-        funcEntry("", "Own_Above_Threat___cil_tmp1", "Own_Above_Threat");
-        alt_sep_test_tmp___5 = Own_Above_Threat();
+    } else {
+      setBranchInfo(16, 0, 1);
+      setTrueExpr(16, "tcas_equipped");
+      setFalseExpr(16, "(not tcas_equipped)");
+      addToTree(16, 2, "tcas_equipped", "(not tcas_equipped)", 15, 0);
+      delete_allVariableTableEntry();
+      _L___1: /* CIL Label */ 
+      {
+      exp_outcome = ! tcas_equipped;
+      handleAssignmentSymbolically("exp_outcome", "(! tcas_equipped)", & exp_outcome,
+                                   & exp_outcome, 1);
+      overall_outcome = (int )getConditionalOutcome(20, exp_outcome);
+      if (overall_outcome) {
+        setBranchInfo(20, 1, 0);
+        setTrueExpr(20, "(not tcas_equipped)");
+        setFalseExpr(20, "tcas_equipped");
+        addToTree(20, 3, "(not tcas_equipped)", "tcas_equipped", 16, 1);
+        delete_allVariableTableEntry();
+        _L___0: /* CIL Label */ 
+        funcEntry("", "Non_Crossing_Biased_Climb_upward_preferred Non_Crossing_Biased_Climb_result Non_Crossing_Biased_Climb_tmp Non_Crossing_Biased_Climb_tmp___0 Non_Crossing_Biased_Climb_tmp___1 Non_Crossing_Biased_Climb_tmp___2 Non_Crossing_Biased_Climb_tmp___3 Non_Crossing_Biased_Climb_tmp___4 Non_Crossing_Biased_Climb_tmp___5",
+                  "Non_Crossing_Biased_Climb");
+        tmp___1 = Non_Crossing_Biased_Climb();
         funcExit();
-        add_entryToSTable("alt_sep_test_tmp___5", ret_SymValue, ret_ConValue, & alt_sep_test_tmp___5,
-                          1);
-        if (alt_sep_test_tmp___5) {
-          alt_sep_test_tmp___6 = 1;
-          add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
-                            & alt_sep_test_tmp___6, 1);
+        add_entryToSTable("tmp___1", ret_SymValue, ret_ConValue, & tmp___1, 1);
+        {
+        exp_outcome = tmp___1;
+        handleAssignmentSymbolically("exp_outcome", "tmp___1", & tmp___1, & tmp___1,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(22, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(22, 1, 0);
+          setTrueExpr(22, "tmp___1");
+          setFalseExpr(22, "(not tmp___1)");
+          addToTree(22, 4, "tmp___1", "(not tmp___1)", 20, 1);
+          delete_allVariableTableEntry();
+          funcEntry("", "Own_Below_Threat___cil_tmp1", "Own_Below_Threat");
+          tmp___2 = Own_Below_Threat();
+          funcExit();
+          add_entryToSTable("tmp___2", ret_SymValue, ret_ConValue, & tmp___2, 1);
+          {
+          exp_outcome = tmp___2;
+          handleAssignmentSymbolically("exp_outcome", "tmp___2", & tmp___2, & tmp___2,
+                                       1);
+          overall_outcome = (int )getConditionalOutcome(24, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(24, 1, 0);
+            setTrueExpr(24, "tmp___2");
+            setFalseExpr(24, "(not tmp___2)");
+            addToTree(24, 5, "tmp___2", "(not tmp___2)", 22, 1);
+            delete_allVariableTableEntry();
+            tmp___3 = 1;
+            add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
+          } else {
+            setBranchInfo(24, 0, 1);
+            setTrueExpr(24, "tmp___2");
+            setFalseExpr(24, "(not tmp___2)");
+            addToTree(24, 5, "tmp___2", "(not tmp___2)", 22, 0);
+            delete_allVariableTableEntry();
+            tmp___3 = 0;
+            add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
+          }
+          }
         } else {
-          alt_sep_test_tmp___6 = 0;
-          add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
-                            & alt_sep_test_tmp___6, 1);
+          setBranchInfo(22, 0, 1);
+          setTrueExpr(22, "tmp___1");
+          setFalseExpr(22, "(not tmp___1)");
+          addToTree(22, 4, "tmp___1", "(not tmp___1)", 20, 0);
+          delete_allVariableTableEntry();
+          tmp___3 = 0;
+          add_entryToSTable("tmp___3", "Constant", & tmp___3, & tmp___3, 1);
+        }
+        }
+        need_upward_RA = tmp___3;
+        handleAssignmentSymbolically("need_upward_RA", "tmp___3", & tmp___3, & tmp___3,
+                                     1);
+        funcEntry("", "Non_Crossing_Biased_Descend_upward_preferred Non_Crossing_Biased_Descend_result Non_Crossing_Biased_Descend_tmp Non_Crossing_Biased_Descend_tmp___0 Non_Crossing_Biased_Descend_tmp___1 Non_Crossing_Biased_Descend_tmp___2 Non_Crossing_Biased_Descend_tmp___3 Non_Crossing_Biased_Descend_tmp___4 Non_Crossing_Biased_Descend_tmp___5 Non_Crossing_Biased_Descend_tmp___6",
+                  "Non_Crossing_Biased_Descend");
+        tmp___4 = Non_Crossing_Biased_Descend();
+        funcExit();
+        add_entryToSTable("tmp___4", ret_SymValue, ret_ConValue, & tmp___4, 1);
+        {
+        exp_outcome = tmp___4;
+        handleAssignmentSymbolically("exp_outcome", "tmp___4", & tmp___4, & tmp___4,
+                                     1);
+        overall_outcome = (int )getConditionalOutcome(29, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(29, 1, 0);
+          setTrueExpr(29, "tmp___4");
+          setFalseExpr(29, "(not tmp___4)");
+          addToTree(29, 4, "tmp___4", "(not tmp___4)", 20, 1);
+          delete_allVariableTableEntry();
+          funcEntry("", "Own_Above_Threat___cil_tmp1", "Own_Above_Threat");
+          tmp___5 = Own_Above_Threat();
+          funcExit();
+          add_entryToSTable("tmp___5", ret_SymValue, ret_ConValue, & tmp___5, 1);
+          {
+          exp_outcome = tmp___5;
+          handleAssignmentSymbolically("exp_outcome", "tmp___5", & tmp___5, & tmp___5,
+                                       1);
+          overall_outcome = (int )getConditionalOutcome(31, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(31, 1, 0);
+            setTrueExpr(31, "tmp___5");
+            setFalseExpr(31, "(not tmp___5)");
+            addToTree(31, 5, "tmp___5", "(not tmp___5)", 29, 1);
+            delete_allVariableTableEntry();
+            tmp___6 = 1;
+            add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
+          } else {
+            setBranchInfo(31, 0, 1);
+            setTrueExpr(31, "tmp___5");
+            setFalseExpr(31, "(not tmp___5)");
+            addToTree(31, 5, "tmp___5", "(not tmp___5)", 29, 0);
+            delete_allVariableTableEntry();
+            tmp___6 = 0;
+            add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
+          }
+          }
+        } else {
+          setBranchInfo(29, 0, 1);
+          setTrueExpr(29, "tmp___4");
+          setFalseExpr(29, "(not tmp___4)");
+          addToTree(29, 4, "tmp___4", "(not tmp___4)", 20, 0);
+          delete_allVariableTableEntry();
+          tmp___6 = 0;
+          add_entryToSTable("tmp___6", "Constant", & tmp___6, & tmp___6, 1);
+        }
+        }
+        need_downward_RA = tmp___6;
+        handleAssignmentSymbolically("need_downward_RA", "tmp___6", & tmp___6, & tmp___6,
+                                     1);
+        {
+        exp_outcome = need_upward_RA;
+        handleAssignmentSymbolically("exp_outcome", "need_upward_RA", & need_upward_RA,
+                                     & need_upward_RA, 1);
+        overall_outcome = (int )getConditionalOutcome(36, exp_outcome);
+        if (overall_outcome) {
+          setBranchInfo(36, 1, 0);
+          setTrueExpr(36, "need_upward_RA");
+          setFalseExpr(36, "(not need_upward_RA)");
+          addToTree(36, 4, "need_upward_RA", "(not need_upward_RA)", 20, 1);
+          delete_allVariableTableEntry();
+          {
+          exp_outcome = need_downward_RA;
+          handleAssignmentSymbolically("exp_outcome", "need_downward_RA", & need_downward_RA,
+                                       & need_downward_RA, 1);
+          overall_outcome = (int )getConditionalOutcome(37, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(37, 1, 0);
+            setTrueExpr(37, "need_downward_RA");
+            setFalseExpr(37, "(not need_downward_RA)");
+            addToTree(37, 5, "need_downward_RA", "(not need_downward_RA)", 36, 1);
+            delete_allVariableTableEntry();
+            alt_sep = 0;
+            add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
+          } else {
+            setBranchInfo(37, 0, 1);
+            setTrueExpr(37, "need_downward_RA");
+            setFalseExpr(37, "(not need_downward_RA)");
+            addToTree(37, 5, "need_downward_RA", "(not need_downward_RA)", 36, 0);
+            delete_allVariableTableEntry();
+            goto _L;
+          }
+          }
+        } else {
+          setBranchInfo(36, 0, 1);
+          setTrueExpr(36, "need_upward_RA");
+          setFalseExpr(36, "(not need_upward_RA)");
+          addToTree(36, 4, "need_upward_RA", "(not need_upward_RA)", 20, 0);
+          delete_allVariableTableEntry();
+          _L: /* CIL Label */ 
+          {
+          exp_outcome = need_upward_RA;
+          handleAssignmentSymbolically("exp_outcome", "need_upward_RA", & need_upward_RA,
+                                       & need_upward_RA, 1);
+          overall_outcome = (int )getConditionalOutcome(40, exp_outcome);
+          if (overall_outcome) {
+            setBranchInfo(40, 1, 0);
+            setTrueExpr(40, "need_upward_RA");
+            setFalseExpr(40, "(not need_upward_RA)");
+            addToTree(40, 5, "need_upward_RA", "(not need_upward_RA)", 36, 1);
+            delete_allVariableTableEntry();
+            alt_sep = 1;
+            add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
+          } else {
+            setBranchInfo(40, 0, 1);
+            setTrueExpr(40, "need_upward_RA");
+            setFalseExpr(40, "(not need_upward_RA)");
+            addToTree(40, 5, "need_upward_RA", "(not need_upward_RA)", 36, 0);
+            delete_allVariableTableEntry();
+            {
+            exp_outcome = need_downward_RA;
+            handleAssignmentSymbolically("exp_outcome", "need_downward_RA", & need_downward_RA,
+                                         & need_downward_RA, 1);
+            overall_outcome = (int )getConditionalOutcome(42, exp_outcome);
+            if (overall_outcome) {
+              setBranchInfo(42, 1, 0);
+              setTrueExpr(42, "need_downward_RA");
+              setFalseExpr(42, "(not need_downward_RA)");
+              addToTree(42, 6, "need_downward_RA", "(not need_downward_RA)", 40, 1);
+              delete_allVariableTableEntry();
+              alt_sep = 2;
+              add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
+            } else {
+              setBranchInfo(42, 0, 1);
+              setTrueExpr(42, "need_downward_RA");
+              setFalseExpr(42, "(not need_downward_RA)");
+              addToTree(42, 6, "need_downward_RA", "(not need_downward_RA)", 40, 0);
+              delete_allVariableTableEntry();
+              alt_sep = 0;
+              add_entryToSTable("alt_sep", "Constant", & alt_sep, & alt_sep, 1);
+            }
+            }
+          }
+          }
+        }
         }
       } else {
-        alt_sep_test_tmp___6 = 0;
-        add_entryToSTable("alt_sep_test_tmp___6", "Constant", & alt_sep_test_tmp___6,
-                          & alt_sep_test_tmp___6, 1);
+        setBranchInfo(20, 0, 1);
+        setTrueExpr(20, "(not tcas_equipped)");
+        setFalseExpr(20, "tcas_equipped");
+        addToTree(20, 3, "(not tcas_equipped)", "tcas_equipped", 16, 0);
+        delete_allVariableTableEntry();
       }
-      alt_sep_test_need_downward_RA = alt_sep_test_tmp___6;
-      handleAssignmentSymbolically("alt_sep_test_need_downward_RA", "alt_sep_test_tmp___6",
-                                   & alt_sep_test_tmp___6, & alt_sep_test_tmp___6,
-                                   1);
-      if (alt_sep_test_need_upward_RA) {
-        if (alt_sep_test_need_downward_RA) {
-          alt_sep_test_alt_sep = 0;
-          add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
-                            & alt_sep_test_alt_sep, 1);
-        } else {
-          goto _L;
-        }
-      } else
-      _L: /* CIL Label */ 
-      if (alt_sep_test_need_upward_RA) {
-        alt_sep_test_alt_sep = 1;
-        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
-                          & alt_sep_test_alt_sep, 1);
-      } else
-      if (alt_sep_test_need_downward_RA) {
-        alt_sep_test_alt_sep = 2;
-        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
-                          & alt_sep_test_alt_sep, 1);
-      } else {
-        alt_sep_test_alt_sep = 0;
-        add_entryToSTable("alt_sep_test_alt_sep", "Constant", & alt_sep_test_alt_sep,
-                          & alt_sep_test_alt_sep, 1);
       }
     }
+    }
+  } else {
+    setBranchInfo(15, 0, 1);
+    setTrueExpr(15, "enabled");
+    setFalseExpr(15, "(not enabled)");
+    addToTree(15, 1, "enabled", "(not enabled)", 0, 0);
+    delete_allVariableTableEntry();
   }
-  {
-  mapConcolicValues("alt_sep_test_alt_sep", & alt_sep_test_alt_sep);
-  return (alt_sep_test_alt_sep);
   }
+  __cil_tmp17 = isNotQueueEmpty();
+  if (__cil_tmp17) {
+    enQueue();
+    directPathConditions();
+    delete_allSTableEntry();
+    delete_allStructTableEntry();
+    alt_sep_test(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid, Own_Tracked_Alt,
+                 Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value, Positive_RA_Alt_Thresh,
+                 Up_Separation, Down_Separation, Other_RAC, Other_Capability, Climb_Inhibit);
+  } else {
+    __cil_tmp17 = startCDG();
+    add_entryToSTable("__cil_tmp17", "Function", & __cil_tmp17, & __cil_tmp17, 1);
+    if (__cil_tmp17) {
+      __cil_tmp17 = getTestCases();
+      alt_sep_test(Cur_Vertical_Sep, High_Confidence, Two_of_Three_Reports_Valid,
+                   Own_Tracked_Alt, Own_Tracked_Alt_Rate, Other_Tracked_Alt, Alt_Layer_Value,
+                   Positive_RA_Alt_Thresh, Up_Separation, Down_Separation, Other_RAC,
+                   Other_Capability, Climb_Inhibit);
+    }
+  }
+  return (alt_sep);
 }
 }
 int main1(int argc , char **argv ) 
@@ -16559,11 +16793,11 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  Non_Crossing_Biased_Climb(argvar.Cur_Vertical_Sep, argvar.High_Confidence, argvar.Two_of_Three_Reports_Valid,
-                            argvar.Own_Tracked_Alt, argvar.Own_Tracked_Alt_Rate, argvar.Other_Tracked_Alt,
-                            argvar.Alt_Layer_Value, argvar.Positive_RA_Alt_Thresh,
-                            argvar.Up_Separation, argvar.Down_Separation, argvar.Other_RAC,
-                            argvar.Other_Capability, argvar.Climb_Inhibit);
+  alt_sep_test(argvar.Cur_Vertical_Sep, argvar.High_Confidence, argvar.Two_of_Three_Reports_Valid,
+               argvar.Own_Tracked_Alt, argvar.Own_Tracked_Alt_Rate, argvar.Other_Tracked_Alt,
+               argvar.Alt_Layer_Value, argvar.Positive_RA_Alt_Thresh, argvar.Up_Separation,
+               argvar.Down_Separation, argvar.Other_RAC, argvar.Other_Capability,
+               argvar.Climb_Inhibit);
 }
 }
 void main(void) 

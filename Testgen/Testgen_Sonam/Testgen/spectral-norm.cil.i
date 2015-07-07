@@ -15922,6 +15922,146 @@ void eval_A_times_u(int eval_A_times_u_N , float *eval_A_times_u_u , float *eval
   return;
 }
 }
+void eval_At_times_u(int eval_At_times_u_N , float *eval_At_times_u_u , float *eval_At_times_u_Au )
+{
+  int eval_At_times_u_i___0 ;
+  int eval_At_times_u_j ;
+  float eval_At_times_u_tmp ;
+  char *symName ;
+  void *addr ;
+  char in[15] ;
+
+  {
+  eval_At_times_u_i___0 = 0;
+  add_entryToSTable("eval_At_times_u_i___0", "Constant", & eval_At_times_u_i___0,
+                    & eval_At_times_u_i___0, 1);
+  {
+  if (eval_At_times_u_i___0 < eval_At_times_u_N) {
+    *(eval_At_times_u_Au + eval_At_times_u_i___0) = (float )0;
+    add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "Constant",
+                           eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                           2);
+    eval_At_times_u_j = 0;
+    add_entryToSTable("eval_At_times_u_j", "Constant", & eval_At_times_u_j, & eval_At_times_u_j,
+                      1);
+    {
+    if (eval_At_times_u_j < eval_At_times_u_N) {
+      funcEntry("(int,eval_A_i___0,variable,eval_At_times_u_j)#(int,eval_A_j,variable,eval_At_times_u_i___0)",
+                "eval_A___cil_tmp3", "eval_A");
+      eval_At_times_u_tmp = eval_A(eval_At_times_u_j, eval_At_times_u_i___0);
+      funcExit();
+      add_entryToSTable("eval_At_times_u_tmp", ret_SymValue, ret_ConValue, & eval_At_times_u_tmp,
+                        2);
+      *(eval_At_times_u_Au + eval_At_times_u_i___0) += eval_At_times_u_tmp * *(eval_At_times_u_u + eval_At_times_u_j);
+      addEntryToVariableTable("*(eval_At_times_u_Au + eval_At_times_u_i___0)", eval_At_times_u_i___0);
+      add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "eval_At_times_u_Au18",
+                             eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                             1);
+      addEntryToVariableTable("*(eval_At_times_u_u + eval_At_times_u_j)", eval_At_times_u_j);
+      add_entryToArraySTable("eval_At_times_u_u", eval_At_times_u_j, "eval_At_times_u_u19",
+                             eval_At_times_u_u + eval_At_times_u_j, eval_At_times_u_u + eval_At_times_u_j,
+                             1);
+      handleArraySymbolically("eval_At_times_u_Au", eval_At_times_u_i___0, "(+ *(eval_At_times_u_Au + eval_At_times_u_i___0) (* eval_At_times_u_tmp *(eval_At_times_u_u + eval_At_times_u_j)))",
+                              eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                              2);
+      eval_At_times_u_j ++;
+      handleAssignmentSymbolically("eval_At_times_u_j", "(+ eval_At_times_u_j 1)",
+                                   & eval_At_times_u_j, & eval_At_times_u_j, 1);
+    }
+    if (eval_At_times_u_j < eval_At_times_u_N) {
+      funcEntry("(int,eval_A_i___0,variable,eval_At_times_u_j)#(int,eval_A_j,variable,eval_At_times_u_i___0)",
+                "eval_A___cil_tmp3", "eval_A");
+      eval_At_times_u_tmp = eval_A(eval_At_times_u_j, eval_At_times_u_i___0);
+      funcExit();
+      add_entryToSTable("eval_At_times_u_tmp", ret_SymValue, ret_ConValue, & eval_At_times_u_tmp,
+                        2);
+      *(eval_At_times_u_Au + eval_At_times_u_i___0) += eval_At_times_u_tmp * *(eval_At_times_u_u + eval_At_times_u_j);
+      addEntryToVariableTable("*(eval_At_times_u_Au + eval_At_times_u_i___0)", eval_At_times_u_i___0);
+      add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "eval_At_times_u_Au110",
+                             eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                             1);
+      addEntryToVariableTable("*(eval_At_times_u_u + eval_At_times_u_j)", eval_At_times_u_j);
+      add_entryToArraySTable("eval_At_times_u_u", eval_At_times_u_j, "eval_At_times_u_u111",
+                             eval_At_times_u_u + eval_At_times_u_j, eval_At_times_u_u + eval_At_times_u_j,
+                             1);
+      handleArraySymbolically("eval_At_times_u_Au", eval_At_times_u_i___0, "(+ *(eval_At_times_u_Au + eval_At_times_u_i___0) (* eval_At_times_u_tmp *(eval_At_times_u_u + eval_At_times_u_j)))",
+                              eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                              2);
+      eval_At_times_u_j ++;
+      handleAssignmentSymbolically("eval_At_times_u_j", "(+ eval_At_times_u_j 1)",
+                                   & eval_At_times_u_j, & eval_At_times_u_j, 1);
+    }
+    }
+    eval_At_times_u_i___0 ++;
+    handleAssignmentSymbolically("eval_At_times_u_i___0", "(+ eval_At_times_u_i___0 1)",
+                                 & eval_At_times_u_i___0, & eval_At_times_u_i___0,
+                                 1);
+  }
+  if (eval_At_times_u_i___0 < eval_At_times_u_N) {
+    *(eval_At_times_u_Au + eval_At_times_u_i___0) = (float )0;
+    add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "Constant",
+                           eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                           2);
+    eval_At_times_u_j = 0;
+    add_entryToSTable("eval_At_times_u_j", "Constant", & eval_At_times_u_j, & eval_At_times_u_j,
+                      1);
+    {
+    if (eval_At_times_u_j < eval_At_times_u_N) {
+      funcEntry("(int,eval_A_i___0,variable,eval_At_times_u_j)#(int,eval_A_j,variable,eval_At_times_u_i___0)",
+                "eval_A___cil_tmp3", "eval_A");
+      eval_At_times_u_tmp = eval_A(eval_At_times_u_j, eval_At_times_u_i___0);
+      funcExit();
+      add_entryToSTable("eval_At_times_u_tmp", ret_SymValue, ret_ConValue, & eval_At_times_u_tmp,
+                        2);
+      *(eval_At_times_u_Au + eval_At_times_u_i___0) += eval_At_times_u_tmp * *(eval_At_times_u_u + eval_At_times_u_j);
+      addEntryToVariableTable("*(eval_At_times_u_Au + eval_At_times_u_i___0)", eval_At_times_u_i___0);
+      add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "eval_At_times_u_Au112",
+                             eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                             1);
+      addEntryToVariableTable("*(eval_At_times_u_u + eval_At_times_u_j)", eval_At_times_u_j);
+      add_entryToArraySTable("eval_At_times_u_u", eval_At_times_u_j, "eval_At_times_u_u113",
+                             eval_At_times_u_u + eval_At_times_u_j, eval_At_times_u_u + eval_At_times_u_j,
+                             1);
+      handleArraySymbolically("eval_At_times_u_Au", eval_At_times_u_i___0, "(+ *(eval_At_times_u_Au + eval_At_times_u_i___0) (* eval_At_times_u_tmp *(eval_At_times_u_u + eval_At_times_u_j)))",
+                              eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                              2);
+      eval_At_times_u_j ++;
+      handleAssignmentSymbolically("eval_At_times_u_j", "(+ eval_At_times_u_j 1)",
+                                   & eval_At_times_u_j, & eval_At_times_u_j, 1);
+    }
+    if (eval_At_times_u_j < eval_At_times_u_N) {
+      funcEntry("(int,eval_A_i___0,variable,eval_At_times_u_j)#(int,eval_A_j,variable,eval_At_times_u_i___0)",
+                "eval_A___cil_tmp3", "eval_A");
+      eval_At_times_u_tmp = eval_A(eval_At_times_u_j, eval_At_times_u_i___0);
+      funcExit();
+      add_entryToSTable("eval_At_times_u_tmp", ret_SymValue, ret_ConValue, & eval_At_times_u_tmp,
+                        2);
+      *(eval_At_times_u_Au + eval_At_times_u_i___0) += eval_At_times_u_tmp * *(eval_At_times_u_u + eval_At_times_u_j);
+      addEntryToVariableTable("*(eval_At_times_u_Au + eval_At_times_u_i___0)", eval_At_times_u_i___0);
+      add_entryToArraySTable("eval_At_times_u_Au", eval_At_times_u_i___0, "eval_At_times_u_Au114",
+                             eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                             1);
+      addEntryToVariableTable("*(eval_At_times_u_u + eval_At_times_u_j)", eval_At_times_u_j);
+      add_entryToArraySTable("eval_At_times_u_u", eval_At_times_u_j, "eval_At_times_u_u115",
+                             eval_At_times_u_u + eval_At_times_u_j, eval_At_times_u_u + eval_At_times_u_j,
+                             1);
+      handleArraySymbolically("eval_At_times_u_Au", eval_At_times_u_i___0, "(+ *(eval_At_times_u_Au + eval_At_times_u_i___0) (* eval_At_times_u_tmp *(eval_At_times_u_u + eval_At_times_u_j)))",
+                              eval_At_times_u_Au + eval_At_times_u_i___0, eval_At_times_u_Au + eval_At_times_u_i___0,
+                              2);
+      eval_At_times_u_j ++;
+      handleAssignmentSymbolically("eval_At_times_u_j", "(+ eval_At_times_u_j 1)",
+                                   & eval_At_times_u_j, & eval_At_times_u_j, 1);
+    }
+    }
+    eval_At_times_u_i___0 ++;
+    handleAssignmentSymbolically("eval_At_times_u_i___0", "(+ eval_At_times_u_i___0 1)",
+                                 & eval_At_times_u_i___0, & eval_At_times_u_i___0,
+                                 1);
+  }
+  }
+  return;
+}
+}
 void createCDG(void)
 {
 
@@ -15931,38 +16071,6 @@ void createCDG(void)
   addtoCDGnode(1, 0, 1);
   addtoCDGnode(2, 0, 1);
   addtoCDGnode(3, 0, 1);
-  setArray(3, "(< i___0 N)");
-  addtoCDGnode(4, 3, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(< i___0 N)");
-  addtoCDGnode(5, 3, 1);
-  addtoCDGnode(6, 3, 1);
-  setArray(6, "(< j N)");
-  addtoCDGnode(7, 6, 1);
-  addtoCDGnode(8, 3, 1);
-  setArray(8, "(< j N)");
-  addtoCDGnode(8, 3, 1);
-  setArray(8, "(< j N)");
-  addtoCDGnode(9, 8, 1);
-  addtoCDGnode(10, 3, 1);
-  addtoCDGnode(10, 3, 1);
-  addtoCDGnode(11, 0, 1);
-  setArray(11, "(< i___0 N)");
-  addtoCDGnode(12, 11, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(13, 11, 1);
-  addtoCDGnode(14, 11, 1);
-  setArray(14, "(< j N)");
-  addtoCDGnode(15, 14, 1);
-  addtoCDGnode(16, 11, 1);
-  setArray(16, "(< j N)");
-  addtoCDGnode(16, 11, 1);
-  setArray(16, "(< j N)");
-  addtoCDGnode(17, 16, 1);
-  addtoCDGnode(18, 11, 1);
-  addtoCDGnode(18, 11, 1);
-  addtoCDGnode(19, 0, 1);
-  addtoCDGnode(20, 0, 1);
 }
 }
 void isCopyOfHolder(void)
@@ -15970,12 +16078,7 @@ void isCopyOfHolder(void)
 
 
   {
-  isCopyOf(6, 6);
-  isCopyOf(8, 6);
-  isCopyOf(14, 6);
-  isCopyOf(16, 6);
-  isCopyOf(3, 3);
-  isCopyOf(11, 3);
+
 }
 }
 void createSidTable(void)
@@ -15983,25 +16086,20 @@ void createSidTable(void)
 
 
   {
-  add_condition(6, "(< j N)", "(not (< j N))", 0, 0);
-  add_condition(8, "(< j N)", "(not (< j N))", 0, 0);
-  add_condition(3, "(< i___0 N)", "(not (< i___0 N))", 0, 0);
-  add_condition(14, "(< j N)", "(not (< j N))", 0, 0);
-  add_condition(16, "(< j N)", "(not (< j N))", 0, 0);
-  add_condition(11, "(< i___0 N)", "(not (< i___0 N))", 0, 0);
+
 }
 }
 struct arguments {
    int N ;
    float *u ;
-   float *Au ;
+   float *AtAu ;
 };
 struct arguments argvar ;
-void eval_At_times_u(int N , float *u , float *Au )
+void eval_AtA_times_u(int N , float *u , float *AtAu )
 {
-  int i___0 ;
-  int j ;
-  float tmp ;
+  float *v ;
+  unsigned long __lengthofv ;
+  void *tmp ;
   int exp_outcome ;
   int overall_outcome ;
   int __cil_tmp9 ;
@@ -16014,243 +16112,40 @@ void eval_At_times_u(int N , float *u , float *Au )
   __cil_tmp10 = malloc(100 * sizeof(char ));
   add_entryToSTable("__cil_tmp10", "Function", & __cil_tmp10, & __cil_tmp10, -1);
   sprintf(__cil_tmp10, "\t%d\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\t%f\n", N, u[0],
-          u[1], u[2], u[3], u[4], Au[0], Au[1], Au[2], Au[3], Au[4]);
-  printTestCase("spectral-norm_eval_At_times_u_1435867221.tc", __cil_tmp10);
-  add_entryToArraySTable("Au", 0, "Au_0", Au, Au, 0);
+          u[1], u[2], u[3], u[4], AtAu[0], AtAu[1], AtAu[2], AtAu[3], AtAu[4]);
+  printTestCase("spectral-norm_eval_AtA_times_u_1436251010.tc", __cil_tmp10);
+  add_entryToArraySTable("AtAu", 0, "AtAu_0", AtAu, AtAu, 0);
   add_entryToArraySTable("u", 0, "u_0", u, u, 0);
   add_entryToSTable("N", "s0", & N, & N, 1);
-  i___0 = 0;
-  add_entryToSTable("i___0", "Constant", & i___0, & i___0, 1);
-  {
-  {
-  exp_outcome = i___0 < N;
-  handleAssignmentSymbolically("exp_outcome", "(< i___0 N)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(3, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(3, 1, 0);
-    setTrueExpr(3, "(< i___0 N)");
-    setFalseExpr(3, "(not (< i___0 N))");
-    addToTree(3, 1, "(< i___0 N)", "(not (< i___0 N))", 0, 1);
-    delete_allVariableTableEntry();
-    *(Au + i___0) = (float )0;
-    add_entryToArraySTable("Au", i___0, "Constant", Au + i___0, Au + i___0, 2);
-    j = 0;
-    add_entryToSTable("j", "Constant", & j, & j, 1);
-    {
-    {
-    exp_outcome = j < N;
-    handleAssignmentSymbolically("exp_outcome", "(< j N)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(6, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(6, 1, 0);
-      setTrueExpr(6, "(< j N)");
-      setFalseExpr(6, "(not (< j N))");
-      addToTree(6, 2, "(< j N)", "(not (< j N))", 3, 1);
-      delete_allVariableTableEntry();
-      funcEntry("(int,eval_A_i___0,variable,j)#(int,eval_A_j,variable,i___0)", "eval_A___cil_tmp3",
-                "eval_A");
-      tmp = eval_A(j, i___0);
-      funcExit();
-      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 2);
-      *(Au + i___0) += tmp * *(u + j);
-      addEntryToVariableTable("*(Au + i___0)", i___0);
-      add_entryToArraySTable("Au", i___0, "Au18", Au + i___0, Au + i___0, 1);
-      addEntryToVariableTable("*(u + j)", j);
-      add_entryToArraySTable("u", j, "u19", u + j, u + j, 1);
-      handleArraySymbolically("Au", i___0, "(+ *(Au + i___0) (* tmp *(u + j)))", Au + i___0,
-                              Au + i___0, 2);
-      j ++;
-      handleAssignmentSymbolically("j", "(+ j 1)", & j, & j, 1);
-    } else {
-      setBranchInfo(6, 0, 1);
-      setTrueExpr(6, "(< j N)");
-      setFalseExpr(6, "(not (< j N))");
-      addToTree(6, 2, "(< j N)", "(not (< j N))", 3, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    {
-    exp_outcome = j < N;
-    handleAssignmentSymbolically("exp_outcome", "(< j N)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(8, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(8, 1, 0);
-      setTrueExpr(8, "(< j N)");
-      setFalseExpr(8, "(not (< j N))");
-      addToTree(8, 2, "(< j N)", "(not (< j N))", 3, 1);
-      delete_allVariableTableEntry();
-      funcEntry("(int,eval_A_i___0,variable,j)#(int,eval_A_j,variable,i___0)", "eval_A___cil_tmp3",
-                "eval_A");
-      tmp = eval_A(j, i___0);
-      funcExit();
-      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 2);
-      *(Au + i___0) += tmp * *(u + j);
-      addEntryToVariableTable("*(Au + i___0)", i___0);
-      add_entryToArraySTable("Au", i___0, "Au110", Au + i___0, Au + i___0, 1);
-      addEntryToVariableTable("*(u + j)", j);
-      add_entryToArraySTable("u", j, "u111", u + j, u + j, 1);
-      handleArraySymbolically("Au", i___0, "(+ *(Au + i___0) (* tmp *(u + j)))", Au + i___0,
-                              Au + i___0, 2);
-      j ++;
-      handleAssignmentSymbolically("j", "(+ j 1)", & j, & j, 1);
-    } else {
-      setBranchInfo(8, 0, 1);
-      setTrueExpr(8, "(< j N)");
-      setFalseExpr(8, "(not (< j N))");
-      addToTree(8, 2, "(< j N)", "(not (< j N))", 3, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    }
-    i___0 ++;
-    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(3, 0, 1);
-    setTrueExpr(3, "(< i___0 N)");
-    setFalseExpr(3, "(not (< i___0 N))");
-    addToTree(3, 1, "(< i___0 N)", "(not (< i___0 N))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  {
-  exp_outcome = i___0 < N;
-  handleAssignmentSymbolically("exp_outcome", "(< i___0 N)", & exp_outcome, & exp_outcome,
-                               1);
-  overall_outcome = (int )getConditionalOutcome(11, exp_outcome);
-  if (overall_outcome) {
-    setBranchInfo(11, 1, 0);
-    setTrueExpr(11, "(< i___0 N)");
-    setFalseExpr(11, "(not (< i___0 N))");
-    addToTree(11, 1, "(< i___0 N)", "(not (< i___0 N))", 0, 1);
-    delete_allVariableTableEntry();
-    *(Au + i___0) = (float )0;
-    add_entryToArraySTable("Au", i___0, "Constant", Au + i___0, Au + i___0, 2);
-    j = 0;
-    add_entryToSTable("j", "Constant", & j, & j, 1);
-    {
-    {
-    exp_outcome = j < N;
-    handleAssignmentSymbolically("exp_outcome", "(< j N)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(14, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(14, 1, 0);
-      setTrueExpr(14, "(< j N)");
-      setFalseExpr(14, "(not (< j N))");
-      addToTree(14, 2, "(< j N)", "(not (< j N))", 11, 1);
-      delete_allVariableTableEntry();
-      funcEntry("(int,eval_A_i___0,variable,j)#(int,eval_A_j,variable,i___0)", "eval_A___cil_tmp3",
-                "eval_A");
-      tmp = eval_A(j, i___0);
-      funcExit();
-      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 2);
-      *(Au + i___0) += tmp * *(u + j);
-      addEntryToVariableTable("*(Au + i___0)", i___0);
-      add_entryToArraySTable("Au", i___0, "Au112", Au + i___0, Au + i___0, 1);
-      addEntryToVariableTable("*(u + j)", j);
-      add_entryToArraySTable("u", j, "u113", u + j, u + j, 1);
-      handleArraySymbolically("Au", i___0, "(+ *(Au + i___0) (* tmp *(u + j)))", Au + i___0,
-                              Au + i___0, 2);
-      j ++;
-      handleAssignmentSymbolically("j", "(+ j 1)", & j, & j, 1);
-    } else {
-      setBranchInfo(14, 0, 1);
-      setTrueExpr(14, "(< j N)");
-      setFalseExpr(14, "(not (< j N))");
-      addToTree(14, 2, "(< j N)", "(not (< j N))", 11, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    {
-    exp_outcome = j < N;
-    handleAssignmentSymbolically("exp_outcome", "(< j N)", & exp_outcome, & exp_outcome,
-                                 1);
-    overall_outcome = (int )getConditionalOutcome(16, exp_outcome);
-    if (overall_outcome) {
-      setBranchInfo(16, 1, 0);
-      setTrueExpr(16, "(< j N)");
-      setFalseExpr(16, "(not (< j N))");
-      addToTree(16, 2, "(< j N)", "(not (< j N))", 11, 1);
-      delete_allVariableTableEntry();
-      funcEntry("(int,eval_A_i___0,variable,j)#(int,eval_A_j,variable,i___0)", "eval_A___cil_tmp3",
-                "eval_A");
-      tmp = eval_A(j, i___0);
-      funcExit();
-      add_entryToSTable("tmp", ret_SymValue, ret_ConValue, & tmp, 2);
-      *(Au + i___0) += tmp * *(u + j);
-      addEntryToVariableTable("*(Au + i___0)", i___0);
-      add_entryToArraySTable("Au", i___0, "Au114", Au + i___0, Au + i___0, 1);
-      addEntryToVariableTable("*(u + j)", j);
-      add_entryToArraySTable("u", j, "u115", u + j, u + j, 1);
-      handleArraySymbolically("Au", i___0, "(+ *(Au + i___0) (* tmp *(u + j)))", Au + i___0,
-                              Au + i___0, 2);
-      j ++;
-      handleAssignmentSymbolically("j", "(+ j 1)", & j, & j, 1);
-    } else {
-      setBranchInfo(16, 0, 1);
-      setTrueExpr(16, "(< j N)");
-      setFalseExpr(16, "(not (< j N))");
-      addToTree(16, 2, "(< j N)", "(not (< j N))", 11, 0);
-      delete_allVariableTableEntry();
-    }
-    }
-    }
-    i___0 ++;
-    handleAssignmentSymbolically("i___0", "(+ i___0 1)", & i___0, & i___0, 1);
-  } else {
-    setBranchInfo(11, 0, 1);
-    setTrueExpr(11, "(< i___0 N)");
-    setFalseExpr(11, "(not (< i___0 N))");
-    addToTree(11, 1, "(< i___0 N)", "(not (< i___0 N))", 0, 0);
-    delete_allVariableTableEntry();
-  }
-  }
-  }
+  __lengthofv = (unsigned long )N;
+  handleAssignmentSymbolically("__lengthofv", "N", & __lengthofv, & __lengthofv, 1);
+  tmp = __builtin_alloca(sizeof(*v) * __lengthofv);
+  add_entryToSTable("tmp", "Function", & tmp, & tmp, -1);
+  v = (float *)tmp;
+  handleAssignmentSymbolically("v", "tmp", & v, & v, 1);
+  funcEntry("(int,eval_A_times_u_N,variable,N)#(float *,eval_A_times_u_u,array,u)#(float *,eval_A_times_u_Au,array,v)",
+            "eval_A_times_u_i___0 eval_A_times_u_j", "eval_A_times_u");
+  eval_A_times_u(N, u, v);
+  funcExit();
+  funcEntry("(int,eval_At_times_u_N,variable,N)#(float *,eval_At_times_u_u,array,v)#(float *,eval_At_times_u_Au,array,AtAu)",
+            "eval_At_times_u_i___0 eval_At_times_u_j eval_At_times_u_tmp", "eval_At_times_u");
+  eval_At_times_u(N, v, AtAu);
+  funcExit();
   __cil_tmp9 = isNotQueueEmpty();
   if (__cil_tmp9) {
     enQueue();
     directPathConditions();
     delete_allSTableEntry();
     delete_allStructTableEntry();
-    eval_At_times_u(N, u, Au);
+    eval_AtA_times_u(N, u, AtAu);
   } else {
     __cil_tmp9 = startCDG();
     add_entryToSTable("__cil_tmp9", "Function", & __cil_tmp9, & __cil_tmp9, 1);
     if (__cil_tmp9) {
       __cil_tmp9 = getTestCases();
-      eval_At_times_u(N, u, Au);
+      eval_AtA_times_u(N, u, AtAu);
     }
   }
-  return;
-}
-}
-void eval_AtA_times_u(int eval_AtA_times_u_N , float *eval_AtA_times_u_u , float *eval_AtA_times_u_AtAu )
-{
-  float *eval_AtA_times_u_v ;
-  unsigned long eval_AtA_times_u___lengthofv ;
-  void *eval_AtA_times_u_tmp ;
-  char *symName ;
-  void *addr ;
-  char in[15] ;
-
-  {
-  eval_AtA_times_u___lengthofv = (unsigned long )eval_AtA_times_u_N;
-  handleAssignmentSymbolically("eval_AtA_times_u___lengthofv", "eval_AtA_times_u_N",
-                               & eval_AtA_times_u___lengthofv, & eval_AtA_times_u___lengthofv,
-                               1);
-  eval_AtA_times_u_tmp = __builtin_alloca(sizeof(*eval_AtA_times_u_v) * eval_AtA_times_u___lengthofv);
-  add_entryToSTable("eval_AtA_times_u_tmp", "Function", & eval_AtA_times_u_tmp, & eval_AtA_times_u_tmp,
-                    -1);
-  eval_AtA_times_u_v = (float *)eval_AtA_times_u_tmp;
-  handleAssignmentSymbolically("eval_AtA_times_u_v", "eval_AtA_times_u_tmp", & eval_AtA_times_u_v,
-                               & eval_AtA_times_u_v, 1);
-  funcEntry("(int,eval_A_times_u_N,variable,eval_AtA_times_u_N)#(float *,eval_A_times_u_u,array,eval_AtA_times_u_u)#(float *,eval_A_times_u_Au,array,eval_AtA_times_u_v)",
-            "eval_A_times_u_i___0 eval_A_times_u_j", "eval_A_times_u");
-  eval_A_times_u(eval_AtA_times_u_N, eval_AtA_times_u_u, eval_AtA_times_u_v);
-  funcExit();
   return;
 }
 }
@@ -16283,8 +16178,6 @@ int main1(void)
   }
   i___0 = 0;
   while (i___0 < 10) {
-    eval_AtA_times_u(N, u, v);
-    eval_AtA_times_u(N, v, u);
     i___0 ++;
   }
   vv = (float )0;
@@ -16314,14 +16207,14 @@ void callInstrumentedFun(void)
 
   {
   enQueue();
-  eval_At_times_u(argvar.N, argvar.u, argvar.Au);
+  eval_AtA_times_u(argvar.N, argvar.u, argvar.AtAu);
 }
 }
 void main(void)
 {
   int N ;
   float *u ;
-  float *Au ;
+  float *AtAu ;
   int temp ;
   int __cil_tmp2 ;
   int __cil_tmp3 ;
@@ -16341,14 +16234,14 @@ void main(void)
       __cil_tmp3 ++;
     }
   }
-  argvar.Au = (float *)malloc(30 * sizeof(float ));
+  argvar.AtAu = (float *)malloc(30 * sizeof(float ));
   __cil_tmp2 = 0;
   while (1) {
     if (__cil_tmp2 >= 30) {
       break;
     } else {
       temp = rand();
-      *(argvar.Au + __cil_tmp2) = temp % 20;
+      *(argvar.AtAu + __cil_tmp2) = temp % 20;
       __cil_tmp2 ++;
     }
   }
