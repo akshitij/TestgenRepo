@@ -1,0 +1,100 @@
+@inproceedings{dart,
+  title={DART: directed automated random testing},
+  author={Godefroid, Patrice and Klarlund, Nils and Sen, Koushik},
+  booktitle={ACM Sigplan Notices},
+  volume={40},
+  number={6},
+  pages={213--223},
+  year={2005},
+  organization={ACM}
+}
+
+@book{cute,
+  title={CUTE: a concolic unit testing engine for C},
+  author={Sen, Koushik and Marinov, Darko and Agha, Gul},
+  volume={30},
+  number={5},
+  year={2005},
+  publisher={ACM}
+}
+
+@inproceedings{concolicTesting,
+  title={Concolic testing},
+  author={Sen, Koushik},
+  booktitle={Proceedings of the twenty-second IEEE/ACM international conference on Automated software engineering},
+  pages={571--572},
+  year={2007},
+  organization={ACM}
+}
+
+@book{pnueli,
+  title={Two approaches to interprocedural data flow analysis},
+  author={Sharir, Micha and Pnueli, Amir},
+  year={1978},
+  publisher={New York University. Courant Institute of Mathematical Sciences. ComputerScience Department}
+}
+
+@inproceedings{concolicEngine,
+  title={Automatic Generation Of Test Cases For High MCDC Coverage},
+  author={Tiwari, Sonam},
+  year={2014},
+  publisher={Indian Institute Of Technology Kanpur. Computer Science Department}
+}
+
+@article{decadeslater,
+  title={Symbolic execution for software testing: three decades later},
+  author={Cadar, Cristian and Sen, Koushik},
+  journal={Communications of the ACM},
+  volume={56},
+  number={2},
+  pages={82--90},
+  year={2013},
+  publisher={ACM}
+}
+
+@article{mcdc,
+  title={Automatic Generation of Test Input data for MC/DC test coverage},
+  author={Awedikian, Zeina},
+  journal={Soccer Lab, Ecole Polytechnique de Montreal}
+}
+
+@misc{crest,
+  title = {CREST},
+  howpublished = {\url{http://jburnim.github.io/crest/}},
+  note = {Accessed: 2015-06-27}
+}
+
+@misc{cilapi,
+  title = {CIL-Infrastructure for C Program Analysis and Transformation},
+  howpublished = {\url{http://www.cs.berkeley.edu/necula/cil/api/Cil.html}},
+  note = {Accessed: 2015-01-12}
+}
+
+@misc{random,
+  title = {Random Testing},
+  howpublished = {\url{http://www.slideshare.net/cankaya07/random-testing-15393318}},
+  note = {Accessed: 2015-05-18}
+}
+
+@misc{z3,
+  title = {Z3 Constraint Solver},
+  howpublished = {\url{http://z3.codeplex.com/}},
+  note = {Accessed: 2015-05-18}
+}
+
+@misc{callstring,
+  title = {Call String Approach},
+  howpublished = {\url{http://nptel.ac.in/courses/106108052/module20/interproc-a.pdf},
+  note = {Accessed: 2015-05-23}
+}
+
+
+@incollection{pathcrawler,
+  title={Pathcrawler: Automatic generation of path tests by combining static and dynamic analysis},
+  author={Williams, Nicky and Marre, Bruno and Mouy, Patricia and Roger, Muriel},
+  booktitle={Dependable Computing-EDCC 5},
+  pages={281--292},
+  year={2005},
+  publisher={Springer}
+}
+

@@ -1,0 +1,70 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: thesis.aux
+The style file: plain.bst
+Database file #1: reference.bib
+I was expecting a `,' or a `}'---line 109 of file reference.bib
+ : 
+ : @misc{callstring,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+I was expecting a `,' or a `}'---line 116 of file reference.bib
+ : 
+ : @incollection{pathcrawler,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Warning--to sort, need author or key in cil
+Warning--to sort, need author or key in tcas
+Warning--to sort, need author or key in crest
+Warning--to sort, need author or key in ipa1
+Warning--to sort, need author or key in callstring
+Warning--to sort, need author or key in random
+Warning--to sort, need author or key in z3
+Warning--to sort, need author or key in cilapi
+Warning--to sort, need author or key in time
+Warning--empty year in mcdc
+Warning--can't use both volume and number fields in dart
+Warning--can't use both volume and number fields in cute
+Warning--empty booktitle in concolicEngine
+You've used 16 entries,
+            2118 wiz_defined-function locations,
+            569 strings with 5955 characters,
+and the built_in function-call counts, 3859 in all, are:
+= -- 380
+> -- 108
+< -- 4
++ -- 48
+- -- 32
+* -- 195
+:= -- 551
+add.period$ -- 48
+call.type$ -- 16
+change.case$ -- 62
+chr.to.int$ -- 0
+cite$ -- 29
+duplicate$ -- 168
+empty$ -- 402
+format.name$ -- 32
+if$ -- 882
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 9
+newline$ -- 81
+num.names$ -- 14
+pop$ -- 137
+preamble$ -- 1
+purify$ -- 48
+quote$ -- 0
+skip$ -- 122
+stack$ -- 0
+substring$ -- 163
+swap$ -- 39
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 60
+warning$ -- 13
+while$ -- 22
+width$ -- 18
+write$ -- 155
+(There were 2 error messages)
