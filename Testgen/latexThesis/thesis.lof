@@ -1,0 +1,18 @@
+\select@language {english}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Basic Module\relax }}{3}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Function Inlined\relax }}{7}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Calling Context\relax }}{8}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Concolic Testing\relax }}{10}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Variable Renaming\relax }}{15}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces sample program\relax }}{17}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Transformed Call Site\relax }}{18}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Two arguments at \textit {line 12} in \textit {figure 3.3}\relax }}{19}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Variable Stack\relax }}{20}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Concolic Return\relax }}{21}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Program to compute factorial\relax }}{22}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Function Variable Versions in Symbol Table\relax }}{23}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

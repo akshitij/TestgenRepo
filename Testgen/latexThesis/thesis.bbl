@@ -1,0 +1,88 @@
+\begin{thebibliography}{10}
+
+\bibitem{decadeslater}
+Cristian Cadar and Koushik Sen.
+\newblock Symbolic execution for software testing: three decades later.
+\newblock {\em Communications of the ACM}, 56(2):82--90, 2013.
+
+\bibitem{concolicTesting}
+Koushik Sen.
+\newblock Concolic testing.
+\newblock In {\em Proceedings of the twenty-second IEEE/ACM international
+  conference on Automated software engineering}, pages 571--572. ACM, 2007.
+
+\bibitem{dart}
+Patrice Godefroid, Nils Klarlund, and Koushik Sen.
+\newblock Dart: directed automated random testing.
+\newblock In {\em ACM Sigplan Notices}, volume~40, pages 213--223. ACM, 2005.
+
+\bibitem{crest}
+Crest.
+\newblock \url{http://jburnim.github.io/crest/}.
+\newblock Accessed: 2015-06-27.
+
+\bibitem{mcdc}
+Zeina Awedikian.
+\newblock Automatic generation of test input data for mc/dc test coverage.
+\newblock {\em Soccer Lab, Ecole Polytechnique de Montreal}.
+
+\bibitem{concolicEngine}
+Sonam Tiwari.
+\newblock Automatic generation of test cases for high mcdc coverage.
+\newblock Indian Institute Of Technology Kanpur. Computer Science Department,
+  2014.
+
+\bibitem{cil}
+Cil documentation.
+\newblock \url{https://www.cs.berkeley.edu/~necula/cil/api/Cil.html}.
+\newblock Accessed: 2015-02-12.
+
+\bibitem{pnueli}
+Micha Sharir and Amir Pnueli.
+\newblock {\em Two approaches to interprocedural data flow analysis}.
+\newblock New York University. Courant Institute of Mathematical Sciences.
+  ComputerScience Department, 1978.
+
+\bibitem{callstring}
+Call string approach.
+\newblock \url{http://nptel.ac.in/courses/106108052/module20/interproc-a.pdf}.
+\newblock Accessed: 2015-05-23.
+
+\bibitem{random}
+Random testing.
+\newblock \url{http://www.slideshare.net/cankaya07/random-testing-15393318}.
+\newblock Accessed: 2015-05-18.
+
+\bibitem{z3}
+Z3 constraint solver.
+\newblock \url{http://z3.codeplex.com/}.
+\newblock Accessed: 2015-05-18.
+
+\bibitem{summary}
+Erik~M Nystrom, Hong-Seok Kim, and W~Hwu Wen-mei.
+\newblock Bottom-up and top-down context-sensitive summary-based pointer
+  analysis.
+\newblock In {\em Static Analysis}, pages 165--180. Springer, 2004.
+
+\bibitem{cute}
+Koushik Sen, Darko Marinov, and Gul Agha.
+\newblock {\em CUTE: a concolic unit testing engine for C}, volume~30.
+\newblock ACM, 2005.
+
+\bibitem{cilapi}
+Cil-infrastructure for c program analysis and transformation.
+\newblock \url{http://www.cs.berkeley.edu/necula/cil/api/Cil.html}.
+\newblock Accessed: 2015-01-12.
+
+\bibitem{time}
+Gnu time.
+\newblock \url{http://man7.org/linux/man-pages/man1/time.1.html}.
+\newblock Accessed: 2015-06-29.
+
+\bibitem{pathcrawler}
+Nicky Williams, Bruno Marre, Patricia Mouy, and Muriel Roger.
+\newblock Pathcrawler: Automatic generation of path tests by combining static
+  and dynamic analysis.
+\newblock In {\em Dependable Computing-EDCC 5}, pages 281--292. Springer, 2005.
+
+\end{thebibliography}

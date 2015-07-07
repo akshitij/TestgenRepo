@@ -3,22 +3,18 @@
 
 \usepackage{fullpage}
 \usepackage{amsmath}
-%%\usepackage{amssymb}
-%%\usepackage{amsfonts}
 \usepackage{listings}
 \usepackage{color}
 \usepackage{graphicx}
 \usepackage{soul}
 \usepackage{subcaption}
-%%\usepackage[utf8]{inputenc}
 \usepackage{geometry}
 \usepackage{fancyhdr}
+\usepackage{url}
 \usepackage{epsfig}
-%%\usepackage{multirow}
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
 \usepackage{algorithm}
-%%\PassOptionsToPackage{noend}{algpseudocode}
 \usepackage{algpseudocode}
 \usepackage{setspace}
 
@@ -183,7 +179,7 @@
 \textbf{\Large{CERTIFICATE}}
 \end{center}
 \vspace*{3\baselineskip}
-This is to certify that the work contained in this thesis entitled \textbf{\textit{"Inter-procedural analysis on Concolic Execution"}}, by \textbf{Ashwini Kshitij (Roll No. 10327165)}, has been carried out under my supervision and this work has not been submitted elsewhere for a degree.\\
+This is to certify that the work contained in this thesis entitled \textbf{\textit{"Inter-procedural analysis of Concolic Execution"}}, by \textbf{Ashwini Kshitij (Roll No. 10327165)}, has been carried out under my supervision and this work has not been submitted elsewhere for a degree.\\
 \\[4\baselineskip]
 
   \small
@@ -351,7 +347,7 @@ Interprocedural analysis\cite{pnueli} is more demanding and challenging than int
 %%----------------------------------------------FUNCTION INLINING 
 
 \subsection {Function Inlining}
-One of the approaches is \textit{function inlining}\cite{ipa1} which is the simplest and most widely used approach for accurate interprocedural symbolic execution. We simply use the copy of procedure's Control Flow Graph (CFG) at each call site. This leads to function being re-analyzed at every call site. This is can be avoided using \textit{function summaries}. They are implemented by merging all states at the function exit after computing an intraprocedural path constraint in terms of function input.\\ 
+One of the approaches is \textit{function inlining} which is the simplest and most widely used approach for accurate interprocedural symbolic execution. We simply use the copy of procedure's Control Flow Graph (CFG) at each call site. This leads to function being re-analyzed at every call site. This is can be avoided using \textit{function summaries}. They are implemented by merging all states at the function exit after computing an intraprocedural path constraint in terms of function input.\\ 
 
 \begin{figure}[htbp]
 \centering
@@ -438,7 +434,7 @@ Let the new inputs generated be \textit{x = 5} and \textit{y = 15} we will lead 
 %%----------------------------------------------SUMMARY BASED ANALYSIS
 
 \subsection {Summary-based Analysis}
-New techniques have been invented that compute procedure summaries for performing an interprocedural analysis of programs. In summary-based context-sensitive analysis we create "summary"\cite{ipa1} which is succinct description of the observable behavior of each procedure. The purpose of this approach is to prevent renanalysing the behavior of same procedure when there are invoked at each call site.
+New techniques have been invented that compute procedure summaries for performing an interprocedural analysis of programs. In summary-based context-sensitive analysis we create "summary"\cite{summary} which is succinct description of the observable behavior of each procedure. The purpose of this approach is to prevent renanalysing the behavior of same procedure when there are invoked at each call site.
 
 The representation of every procedure has a single entry point. The analysis is divided into following two phases:
 \begin{itemize}
@@ -541,7 +537,7 @@ Now on function call we want the symbolic execution to be able to continue in th
 %%This can be understood using \textit{figure 3.3} which shows a function \textit{foo} which is not the function to be tested. Originally, \textit{foo} is unchanged since it plays no role in symbolic execution of program. Since we have want to extend the concolic engine to be executed interprocedurally, it is modified as shown. 
 
 \subsection{Call Site Transformation}
-Without interprocedural call handling whenever the concolic execution encountered a function call, it used the concrete value of the function result. There interprocedural symbolic analysis could not be done. This problem is addressed by setting up a function call environment and function return environment, that will facilitate the transfer of symbolic state from caller to callee and back. The pseudo-code of the algorithm is mentioned ahead.\\
+Without interprocedural call handling whenever the concolic execution encountered a function call, it used the concrete value of the function result. There interprocedural symbolic analysis could not be done. This problem is addressed by setting up a function call environment and function return environment, that will facilitate the transfer of symbolic state from caller to callee and back. \textit{Algorithm 1} states the pseudocode of this approach.\\
 
 
 \begin{algorithm}[H]
@@ -939,7 +935,7 @@ A small C unit test suite have also been a contribution which can be used to ver
 
 
 
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \bibliography{reference}
 
 
